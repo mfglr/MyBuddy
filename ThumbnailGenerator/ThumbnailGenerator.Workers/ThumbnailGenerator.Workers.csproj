@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-ThumbnailGenerator.Workers-21345c95-648f-4670-a20e-70d50d1bf138</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.5.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\ThumbnailGenerator.Application\ThumbnailGenerator.Application.csproj" />
+    <ProjectReference Include="..\ThumbnailGenerator.Infrastructure\ThumbnailGenerator.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

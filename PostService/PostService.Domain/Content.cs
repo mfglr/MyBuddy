@@ -1,0 +1,26 @@
+﻿namespace PostService.Domain
+{
+    public class Content
+    {
+        public readonly static int MinLength = 2;
+        public readonly static int MaxLength = 5096;
+        public string Value { get; private set; }
+        public ModerationResult? ModerationResult { get; private set; }
+
+        private Content(string value, ModerationResult? moderationResult)
+        {
+            Value = value;
+            ModerationResult = moderationResult;
+        }
+
+        public Content(string value)
+        {
+            if (value == null || value.Length < MinLength || value.Length > MaxLength)
+                throw new Exception("Content exception");
+            Value = value;
+            ModerationResult = null;
+        }
+
+        public Content SetModerationResult(ModerationResult result) => new(Value, result);
+    }
+}
