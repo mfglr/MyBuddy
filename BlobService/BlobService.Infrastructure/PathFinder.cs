@@ -1,11 +1,15 @@
-﻿namespace BlobService.Infrastructure
-{
-    internal class PathFinder
-    {
-        public string GetContainerPath(string containerName)
-            => $"{AppContext.BaseDirectory}Blobs/{containerName}";
+﻿using Microsoft.Extensions.Configuration;
 
+namespace BlobService.Infrastructure
+{
+    internal class PathFinder(IConfiguration configuration)
+    {
+        private readonly IConfiguration _configuration = configuration;
+
+        public string GetContainerPath(string containerName)
+            => $"{_configuration["RootPath"]}/Blobs/{containerName}";
+        
         public string GetPath(string containerName, string blobName)
-            => $"{AppContext.BaseDirectory}Blobs/{containerName}/{blobName}";
+            => $"{_configuration["RootPath"]}/Blobs/{containerName}/{blobName}";
     }
 }

@@ -47,13 +47,12 @@ namespace PostService.Domain
 
         public void SetContentModerationResult(ModerationResult result)
         {
-            Version++;
             Content = Content?.SetModerationResult(result);
+            Version++;
         }
 
         public void SetMedia(string blobName,string? transcodedBlobName, Metadata metaData, ModerationResult moderationResult, IEnumerable<Thumbnail> thumbnails)
         {
-            Version++;
             Media =
                 [
                     ..Media
@@ -63,6 +62,17 @@ namespace PostService.Domain
                                 : x
                         )
                 ];
+            Version++;
+        }
+
+        public Media DeleMedia(string blobName)
+        {
+            var media = Media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new Exception("Post media not found!");
+            Media = [.. Media.Where(x => x.BlobName != blobName)];
+
+            Version++;
+            UpdatedAt = DateTime.UtcNow;
+            return media;
         }
 
     }

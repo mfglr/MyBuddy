@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostService.Application.UseCases.CreatePost;
+using PostService.Application.UseCases.DeleteMedia;
 using PostService.Application.UseCases.SetContentModerationResult;
 using PostService.Application.UseCases.SetMedia;
 using System.Reflection;
@@ -27,6 +28,7 @@ namespace PostService.Application
                     cfg.AddConsumer<CreatePostConsumer>();
                     cfg.AddConsumer<SetContentModerationResultConsumer>();
                     cfg.AddConsumer<SetMediaConsumer>();
+                    cfg.AddConsumer<DeleteMediaConsumer>();
                 });
     }
 }

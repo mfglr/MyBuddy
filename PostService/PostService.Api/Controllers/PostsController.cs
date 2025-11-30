@@ -2,6 +2,8 @@
 using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Application.UseCases.CreatePost;
+using PostService.Application.UseCases.DeleteMedia;
+using Shared.Events.Media;
 using Shared.Events.PostService;
 
 namespace PostService.Api.Controllers
@@ -35,6 +37,21 @@ namespace PostService.Api.Controllers
                 cancellationToken
             );   
             return response.Message.Id;
+        }
+
+
+        [HttpPut]
+        public async Task DeleteMedia(DeleteMediaRequest request, CancellationToken cancellationToken)
+        {
+            var client = _mediator.CreateRequestClient<DeleteMediaRequest>();
+            var response = await client.GetResponse<DeleteMediaResponse>(request, cancellationToken);
+            await _publishEndpoint.Publish(
+                new MediaDeletedEvent(
+                    response.Message.ContainerName,
+                    response.Message.BlobNames
+                ),
+                cancellationToken
+            );
         }
     }
 }

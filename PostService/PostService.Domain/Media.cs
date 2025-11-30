@@ -34,5 +34,10 @@ namespace PostService.Domain
         }
 
         public Media Set(string? transcodedBlobName, Metadata metaData, ModerationResult moderationResult, IEnumerable<Thumbnail> thumbnails) => new(ContainerName, BlobName, Type, transcodedBlobName, metaData, moderationResult, [.. thumbnails]);
+
+        public IReadOnlyList<string> BlobNames =>
+            TranscodedBlobName == null
+                ? [.. Thumbnails.Select(x => x.BlobName), BlobName]
+                : [.. Thumbnails.Select(x => x.BlobName), BlobName, TranscodedBlobName];
     }
 }
