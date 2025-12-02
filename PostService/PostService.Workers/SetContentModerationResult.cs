@@ -1,21 +1,28 @@
-﻿using MassTransit;
-using MassTransit.Mediator;
-using PostService.Application.UseCases.SetContentModerationResult;
+﻿using AutoMapper;
+using MassTransit;
+using PostService.Domain;
 using Shared.Events.PostService;
 
 namespace PostService.Workers
 {
-    internal class SetContentModerationResult(IMediator mediator) : IConsumer<PostContentClassifiedEvent>
+    internal class SetContentModerationResult(IMapper mapper, IPublishEndpoint publishEndpoint, IPostRepository repository) : IConsumer<PostContentClassifiedEvent>
     {
-        private readonly IMediator _mediator = mediator;
+        private readonly IPostRepository _repository = repository;
+        private readonly IMapper _mapper = mapper;
+        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
-        public Task Consume(ConsumeContext<PostContentClassifiedEvent> context) =>
-            _mediator.Send(
-                new SetContentModerationResultRequest(
-                    context.Message.Id,
-                    context.Message.ModerationResult
-                ),
-                context.CancellationToken
-            );
+        public async Task Consume(ConsumeContext<PostContentClassifiedEvent> context)
+        {
+            var post = (await _repository.GetByIdAsync(context.Message.Id, context.CancellationToken))!;
+            post.SetContentModerationResult(context.Message.ModerationResult);
+            await _repository.UpdateAsync(post, context.CancellationToken);
+
+            if (post.IsPreprocessingCompleted)
+                await _publishEndpoint
+                    .Publish(
+                        _mapper.Map<Post, PostPreprocessingCompletedEvent>(post),
+                        context.CancellationToken
+                    );
+        }
     }
 }

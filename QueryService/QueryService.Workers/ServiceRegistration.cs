@@ -1,9 +1,10 @@
 ﻿using MassTransit;
-using PostService.Infrastructure;
-using PostService.Workers;
+using Microsoft.EntityFrameworkCore;
+using QueryService.Workers;
+using QueryService.Workers.PostDomain;
 using System.Reflection;
 
-namespace PostService.Workers
+namespace QueryService.Workers
 {
     internal static class ServiceRegistration
     {
@@ -21,8 +22,7 @@ namespace PostService.Workers
             services.AddMassTransit(
                 x =>
                 {
-                    x.AddConsumer<SetContentModerationResult>();
-                    x.AddConsumer<SetMedia>();
+                    x.AddConsumer<CreatePost>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {
@@ -32,26 +32,16 @@ namespace PostService.Workers
                             h.Password(configration["RabbitMQ:Password"]!);
                         });
 
-                        var retryLimit = 5;
+                        var retryLimit = 1;
 
-                        cfg.ReceiveEndpoint("SetContentModerationResult", e =>
+                        cfg.ReceiveEndpoint("CreatePost", e =>
                         {
                             e.UseMessageRetry(rc =>
                             {
                                 rc.Immediate(retryLimit);
-                                rc.Handle<AppConcurrencyException>();
+                                rc.Handle<DbUpdateConcurrencyException>();
                             });
-                            e.ConfigureConsumer<SetContentModerationResult>(context);
-                        });
-
-                        cfg.ReceiveEndpoint("SetMedia", e =>
-                        {
-                            e.UseMessageRetry(rc =>
-                            {
-                                rc.Immediate(retryLimit);
-                                rc.Handle<AppConcurrencyException>();
-                            });
-                            e.ConfigureConsumer<SetMedia>(context);
+                            e.ConfigureConsumer<CreatePost>(context);
                         });
                     });
 

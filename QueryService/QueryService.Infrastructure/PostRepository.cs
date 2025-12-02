@@ -1,0 +1,20 @@
+﻿using Microsoft.EntityFrameworkCore;
+using PostService.Domain;
+using QueryService.Domain.PostDomain;
+
+namespace QueryService.Infrastructure
+{
+    internal class PostRepository(SqlContext sqlContext) : IPostRepository
+    {
+        private readonly SqlContext _sqlContext = sqlContext;
+
+        public async Task CreateAsync(Post post, CancellationToken cancellationToken) =>
+            await _sqlContext.Posts.AddAsync(post, cancellationToken);
+
+        public void Delete(Post post, CancellationToken cancellationToken) =>
+            _sqlContext.Remove(post);
+
+        public Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
+            _sqlContext.Posts.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+}

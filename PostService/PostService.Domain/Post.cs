@@ -14,6 +14,7 @@ namespace PostService.Domain
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; }
+        public bool IsPreprocessingCompleted => Version == 1 + Media.Count;
 
         [JsonConstructor]
         private Post(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Content? content, IReadOnlyList<Media> media)
@@ -51,7 +52,7 @@ namespace PostService.Domain
             Version++;
         }
 
-        public void SetMedia(string blobName,string? transcodedBlobName, Metadata metaData, ModerationResult moderationResult, IEnumerable<Thumbnail> thumbnails)
+        public void SetMedia(string blobName,string? transcodedBlobName, Metadata metaData, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails)
         {
             Media =
                 [
@@ -74,6 +75,5 @@ namespace PostService.Domain
             UpdatedAt = DateTime.UtcNow;
             return media;
         }
-
     }
 }

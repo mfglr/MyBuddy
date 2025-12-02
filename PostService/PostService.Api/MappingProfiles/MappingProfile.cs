@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
+using PostService.Application.UseCases;
 using PostService.Application.UseCases.CreatePost;
 using PostService.Domain;
 
-namespace PostService.Application.MappingProfiles
+namespace PostService.Api.MappingProfiles
 {
     public class MappingProfile : Profile
     {

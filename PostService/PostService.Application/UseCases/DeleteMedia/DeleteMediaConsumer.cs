@@ -9,7 +9,7 @@ namespace PostService.Application.UseCases.DeleteMedia
 
         public async Task Consume(ConsumeContext<DeleteMediaRequest> context)
         {
-            var post = 
+            var post =
                 await _postRepository.GetByIdAsync(context.Message.Id, context.CancellationToken) ??
                 throw new Exception("Post not found!");
             var media = post.DeleMedia(context.Message.BlobName);

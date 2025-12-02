@@ -1,9 +1,19 @@
 ﻿using MassTransit;
+using System.Reflection;
 
 namespace PostService.Api
 {
     internal static class ServiceRegistration
     {
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services, IConfiguration configuration) =>
+            services
+                .AddAutoMapper(
+                    cfg => {
+                        cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
+                    },
+                    Assembly.GetExecutingAssembly()
+                );
+
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration) =>
             services.AddMassTransit(
                 x =>

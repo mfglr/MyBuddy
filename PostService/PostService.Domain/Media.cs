@@ -33,7 +33,7 @@ namespace PostService.Domain
             Thumbnails = [];
         }
 
-        public Media Set(string? transcodedBlobName, Metadata metaData, ModerationResult moderationResult, IEnumerable<Thumbnail> thumbnails) => new(ContainerName, BlobName, Type, transcodedBlobName, metaData, moderationResult, [.. thumbnails]);
+        public Media Set(string? transcodedBlobName, Metadata metaData, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails) => new(ContainerName, BlobName, Type, transcodedBlobName, metaData, moderationResult, [.. thumbnails]);
 
         public IReadOnlyList<string> BlobNames =>
             TranscodedBlobName == null
