@@ -9,6 +9,8 @@ namespace PostService.Domain
         public string Value { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
 
+        public bool IsValidVersion => ModerationResult != null;
+
         private Content(string value, ModerationResult? moderationResult)
         {
             Value = value;

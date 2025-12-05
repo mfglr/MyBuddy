@@ -1,20 +1,20 @@
 ﻿using MassTransit;
 using PostService.Domain;
 
-namespace PostService.Application.UseCases.DeleteMedia
+namespace PostService.Application.UseCases.DeletePostMedia
 {
-    internal class DeleteMediaConsumer(IPostRepository postRepository) : IConsumer<DeleteMediaRequest>
+    internal class DeletePostMediaConsumer(IPostRepository postRepository) : IConsumer<DeletePostMediaRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
 
-        public async Task Consume(ConsumeContext<DeleteMediaRequest> context)
+        public async Task Consume(ConsumeContext<DeletePostMediaRequest> context)
         {
             var post =
                 await _postRepository.GetByIdAsync(context.Message.Id, context.CancellationToken) ??
                 throw new Exception("Post not found!");
-            var media = post.DeleMedia(context.Message.BlobName);
+            var deletedMedia = post.DeleMedia(context.Message.BlobName);
             await _postRepository.UpdateAsync(post, context.CancellationToken);
-            await context.RespondAsync(new DeleteMediaResponse(media.ContainerName, media.BlobNames));
+            await context.RespondAsync(DeletePostMediaMapper.Map(post,deletedMedia));
         }
     }
 }

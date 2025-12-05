@@ -4,9 +4,8 @@ using Shared.Objects;
 
 namespace PostService.Application.UseCases.CreatePost
 {
-    internal static class CreatePostConsumerHelpers
+    internal static class CreatePostHelpers
     {
-
         public static IReadOnlyList<Media> GenerateMedia(IReadOnlyList<MediaType> types, IReadOnlyList<string> blobNames)
         {
             List<Media> medias = [];

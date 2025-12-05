@@ -13,7 +13,7 @@ namespace MediaService.Application.UseCases.SetMediaMetadata
         {
             var media = (await _mediaRepository.GetByIdAsync(context.Message.Id, context.CancellationToken))!;
             media.SetMetadata(context.Message.Metadata);
-            await _mediaRepository.UdateAsync(media, context.CancellationToken);
+            await _mediaRepository.UpdateAsync(media, context.CancellationToken);
 
             var response = _mapper.Map<Media, MediaResponse>(media);
             await context.RespondAsync(response);

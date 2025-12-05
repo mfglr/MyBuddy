@@ -14,7 +14,11 @@ namespace PostService.Domain
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; }
-        public bool IsPreprocessingCompleted => Version == 1 + Media.Count;
+
+        public bool IsValidVersion =>
+            (Content != null || Media.Count >= 1) &&
+            (Content == null || Content.IsValidVersion) &&
+            !Media.Any(x => !x.IsValidVersion);
 
         [JsonConstructor]
         private Post(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Content? content, IReadOnlyList<Media> media)
@@ -45,11 +49,16 @@ namespace PostService.Domain
             CreatedAt = DateTime.UtcNow;
             Version = 0;
         }
+        public void Update()
+        {
+            Version++;
+            UpdatedAt = DateTime.UtcNow;
+        }
 
         public void SetContentModerationResult(ModerationResult result)
         {
             Content = Content?.SetModerationResult(result);
-            Version++;
+            Update();
         }
 
         public void SetMedia(string blobName,string? transcodedBlobName, Metadata metaData, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails)
@@ -63,16 +72,14 @@ namespace PostService.Domain
                                 : x
                         )
                 ];
-            Version++;
+            Update();
         }
 
         public Media DeleMedia(string blobName)
         {
             var media = Media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new Exception("Post media not found!");
             Media = [.. Media.Where(x => x.BlobName != blobName)];
-
-            Version++;
-            UpdatedAt = DateTime.UtcNow;
+            Update();
             return media;
         }
     }

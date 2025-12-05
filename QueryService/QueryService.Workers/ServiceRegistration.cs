@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
 using QueryService.Workers;
 using QueryService.Workers.PostDomain;
 using System.Reflection;
@@ -8,21 +7,23 @@ namespace QueryService.Workers
 {
     internal static class ServiceRegistration
     {
-
         public static IServiceCollection AddAutoMapper(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddAutoMapper(
                     cfg => {
                         cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
                     },
-                    Assembly.GetExecutingAssembly()
+                    Assembly.GetExecutingAssembly(),
+                    Assembly.GetAssembly(typeof(Application.ServiceRegistration))
                 );
 
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configration) =>
             services.AddMassTransit(
                 x =>
                 {
-                    x.AddConsumer<CreatePost>();
+                    x.AddConsumer<PostContentModerationResultSetEventQueryService>();
+                    x.AddConsumer<SetPostMediaQueryService>();
+                    x.AddConsumer<DeletePostMediaQueryService>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {
@@ -32,19 +33,8 @@ namespace QueryService.Workers
                             h.Password(configration["RabbitMQ:Password"]!);
                         });
 
-                        var retryLimit = 1;
-
-                        cfg.ReceiveEndpoint("CreatePost", e =>
-                        {
-                            e.UseMessageRetry(rc =>
-                            {
-                                rc.Immediate(retryLimit);
-                                rc.Handle<DbUpdateConcurrencyException>();
-                            });
-                            e.ConfigureConsumer<CreatePost>(context);
-                        });
+                        cfg.ConfigureEndpoints(context);
                     });
-
                 }
             );
     }

@@ -13,7 +13,7 @@ namespace MediaService.Application.UseCases.SetMediaModerationResult
         {
             var media = (await _mediaRepository.GetByIdAsync(context.Message.Id, context.CancellationToken))!;
             media.SetModerationResult(context.Message.ModerationResult);
-            await _mediaRepository.UdateAsync(media, context.CancellationToken);
+            await _mediaRepository.UpdateAsync(media, context.CancellationToken);
 
             var response = _mapper.Map<Media, MediaResponse>(media);
             await context.RespondAsync(response);

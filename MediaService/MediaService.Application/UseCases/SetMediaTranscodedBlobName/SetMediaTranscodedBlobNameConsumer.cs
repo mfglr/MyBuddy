@@ -13,7 +13,7 @@ namespace MediaService.Application.UseCases.SetMediaTranscodedBlobName
         {
             var media = (await _repository.GetByIdAsync(context.Message.Id, context.CancellationToken))!;
             media.SetTranscodedBlobName(context.Message.BlobName);
-            await _repository.UdateAsync(media, context.CancellationToken);
+            await _repository.UpdateAsync(media, context.CancellationToken);
 
             var response = _mapper.Map<Media, MediaResponse>(media);
             await context.RespondAsync(response);

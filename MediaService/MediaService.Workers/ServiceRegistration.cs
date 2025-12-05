@@ -23,11 +23,11 @@ namespace MediaService.Workers
                     x =>
                     {
                         x.AddConsumer<CreateMedia>();
+                        x.AddConsumer<DeleteMedia>();
                         x.AddConsumer<SetMediaModerationResult>();
                         x.AddConsumer<SetMediaThumbnail>();
                         x.AddConsumer<SetMediaTranscodedBlobName>();
                         x.AddConsumer<SetMediaMetadata>();
-                        x.AddConsumer<DeleteMedia>();
 
                         x.UsingRabbitMq((context, cfg) =>
                         {

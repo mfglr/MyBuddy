@@ -8,31 +8,23 @@ namespace QueryService.Domain.PostDomain
         public string BlobName { get; private set; } = null!;
         public MediaType Type { get; private set; }
         public string? TranscodedBlobName { get; private set; }
-        public Metadata? Metadata { get; private set; }
+        public Metadata Metadata { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
         public IReadOnlyList<Thumbnail> Thumbnails { get; private set; } = null!;
 
-        private Media() { }
-        
+        public bool IsValidVersion => ModerationResult != null;
 
-        public Media(string blobName, MediaType type)
+        private Media() { }
+
+        public Media(string containerName, string blobName, MediaType type, string? transcodedBlobName, Metadata metadata, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails)
         {
-            ContainerName = Post.MediaContainerName;
+            ContainerName = containerName;
             BlobName = blobName;
             Type = type;
-            Thumbnails = [];
+            TranscodedBlobName = transcodedBlobName;
+            Metadata = metadata;
+            ModerationResult = moderationResult;
+            Thumbnails = [..thumbnails];
         }
-
-        public Media Set(string? transcodedBlobName, Metadata metadata, ModerationResult moderationResult, IEnumerable<Thumbnail> thumbnails) => 
-            new()
-            {
-                ContainerName = ContainerName,
-                BlobName = BlobName,
-                Type = Type,
-                TranscodedBlobName = transcodedBlobName,
-                Metadata = metadata,
-                ModerationResult = moderationResult,
-                Thumbnails = [.. thumbnails]
-            };
     }
 }

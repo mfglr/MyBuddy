@@ -1,14 +1,24 @@
 ﻿using AutoMapper;
-using QueryService.Application.UseCases.PostUseCases.CreatePost;
+using QueryService.Application.UseCases.PostUseCases.UpdatePost;
 using Shared.Events.PostService;
 
 namespace QueryService.Workers.MappingProfiles
 {
-    internal class MappingProfiles : Profile
+    public class MappingProfiles : Profile
     {
         public MappingProfiles()
         {
-            CreateMap<PostPreprocessingCompletedEvent, CreatePostRequest>();
+            CreateMap<PostMediaDeletedEvent_Content, UpdatePostRequest_Content>();
+            CreateMap<PostMediaDeletedEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<PostMediaDeletedEvent, UpdatePostRequest>();
+
+            CreateMap<PostContentModerationResultSetEvent_Content, UpdatePostRequest_Content>();
+            CreateMap<PostContentModerationResultSetEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<PostContentModerationResultSetEvent, UpdatePostRequest>();
+
+            CreateMap<PostMediaSetEvent_Content, UpdatePostRequest_Content>();
+            CreateMap<PostMediaSetEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<PostMediaSetEvent, UpdatePostRequest>();
         }
     }
 }

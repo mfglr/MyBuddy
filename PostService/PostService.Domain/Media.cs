@@ -13,6 +13,13 @@ namespace PostService.Domain
         public ModerationResult? ModerationResult { get; private set; }
         public IReadOnlyList<Thumbnail> Thumbnails { get; private set; }
 
+        public bool IsValidVersion =>
+            Metadata != null &&
+            Metadata.Duration <= 180 &&
+            ModerationResult != null &&
+            Thumbnails.Count == 2 &&
+            (Type == MediaType.Image || TranscodedBlobName != null);
+
         [JsonConstructor]
         private Media(string containerName, string blobName, MediaType type, string? transcodedBlobName, Metadata? metadata, ModerationResult? moderationResult, IReadOnlyList<Thumbnail> thumbnails)
         {

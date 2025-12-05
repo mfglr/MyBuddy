@@ -26,7 +26,7 @@ namespace MediaService.Infrastructure
             return await documents.FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task UdateAsync(Media media, CancellationToken cancellationToken)
+        public async Task UpdateAsync(Media media, CancellationToken cancellationToken)
         {
             var filter = Builders<Media>.Filter.And(
                 Builders<Media>.Filter.Eq(c => c.Id, media.Id),

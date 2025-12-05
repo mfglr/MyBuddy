@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using QueryService.Application.UseCases.PostUseCases.CreatePost;
+using QueryService.Application.UseCases.PostUseCases.UpdatePost;
 
 namespace QueryService.Application
 {
@@ -9,7 +9,7 @@ namespace QueryService.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
             services.AddMediator(cfg =>
             {
-                cfg.AddConsumer<CreatePostConsumer>();
+                cfg.AddConsumer<UpdatePostConsumer>();
             });
     }
 }

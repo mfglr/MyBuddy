@@ -10,9 +10,6 @@ namespace MediaService.Workers
         private readonly IMediator _mediator = mediator;
 
         public Task Consume(ConsumeContext<MediaPreprocessingCompletedEvent> context) =>
-            _mediator.Send(
-                new DeleteMediaRequest(context.Message.Id),
-                context.CancellationToken
-            );
+            _mediator.Send(new DeleteMediaRequest(context.Message.Id), context.CancellationToken);
     }
 }

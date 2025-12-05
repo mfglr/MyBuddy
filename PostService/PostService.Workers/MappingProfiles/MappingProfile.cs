@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using PostService.Application.UseCases;
-using PostService.Application.UseCases.CreatePost;
-using PostService.Domain;
+using PostService.Application.UseCases.SetPostContentModerationResult;
+using PostService.Application.UseCases.SetPostMedia;
+using Shared.Events.Media;
 using Shared.Events.PostService;
 
 namespace PostService.Workers.MappingProfiles
@@ -10,12 +10,14 @@ namespace PostService.Workers.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<Post, CreatePostResponse>();
-            CreateMap<Media, CreatePostResponse_Media>();
+            CreateMap<SetPostContentModerationResultResponse_Content, PostContentModerationResultSetEvent_Content>();
+            CreateMap<SetPostContentModerationResultResponse_Media, PostContentModerationResultSetEvent_Media>();
+            CreateMap<SetPostContentModerationResultResponse, PostContentModerationResultSetEvent>();
 
-            CreateMap<Post, PostPreprocessingCompletedEvent>();
-            CreateMap<Content, PostPreprocessingCompletedEvent_Content>();
-            CreateMap<Media, PostPreprocessingCompletedEvent_Media>();
+            CreateMap<MediaPreprocessingCompletedEvent, SetPostMediaRequest>();
+            CreateMap<SetPostMediaResponse_Content, PostMediaSetEvent_Content>();
+            CreateMap<SetPostMediaResponse_Media, PostMediaSetEvent_Media>();
+            CreateMap<SetPostMediaResponse, PostMediaSetEvent>();
         }
     }
 }

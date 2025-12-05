@@ -1,7 +1,9 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using PostService.Application.UseCases.CreatePost;
-using PostService.Application.UseCases.DeleteMedia;
+using PostService.Application.UseCases.DeletePostMedia;
+using PostService.Application.UseCases.SetPostContentModerationResult;
+using PostService.Application.UseCases.SetPostMedia;
 
 namespace PostService.Application
 {
@@ -12,7 +14,9 @@ namespace PostService.Application
                 .AddMediator(cfg =>
                 {
                     cfg.AddConsumer<CreatePostConsumer>();
-                    cfg.AddConsumer<DeleteMediaConsumer>();
+                    cfg.AddConsumer<DeletePostMediaConsumer>();
+                    cfg.AddConsumer<SetPostMediaConsumer>();
+                    cfg.AddConsumer<SetPostContentModerationResultConsumer>();
                 });
     }
 }

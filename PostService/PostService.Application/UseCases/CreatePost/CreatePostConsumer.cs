@@ -12,11 +12,11 @@ namespace PostService.Application.UseCases.CreatePost
 
         public async Task Consume(ConsumeContext<CreatePostRequest> context)
         {
-            var types = CreatePostConsumerHelpers.GetMediaTypes(context.Message.Media);
+            var types = CreatePostHelpers.GetMediaTypes(context.Message.Media);
             var content = new Content(context.Message.Content);
 
             var blobNames = await _blobService.UploadAsync(Post.MediaContainerName, context.Message.Media, context.CancellationToken);
-            var media = CreatePostConsumerHelpers.GenerateMedia(types, blobNames);
+            var media = CreatePostHelpers.GenerateMedia(types, blobNames);
 
             try
             {

@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MassTransit.Mediator;
-using QueryService.Application.UseCases.PostUseCases.CreatePost;
+using QueryService.Application.UseCases.PostUseCases.UpdatePost;
 using Shared.Events.PostService;
 
 namespace QueryService.Workers.PostDomain
 {
-    internal class CreatePost(IMediator mediator, IMapper mapper) : IConsumer<PostPreprocessingCompletedEvent>
+    internal class DeletePostMediaQueryService(IMediator mediator, IMapper mapper) : IConsumer<PostMediaDeletedEvent>
     {
         private readonly IMediator _mediator = mediator;
         private readonly IMapper _mapper = mapper;
 
-        public Task Consume(ConsumeContext<PostPreprocessingCompletedEvent> context) =>
+        public Task Consume(ConsumeContext<PostMediaDeletedEvent> context) =>
             _mediator
                 .Send(
-                    _mapper.Map<PostPreprocessingCompletedEvent,CreatePostRequest>(context.Message),
+                    _mapper.Map<PostMediaDeletedEvent, UpdatePostRequest>(context.Message),
                     context.CancellationToken
                 );
     }

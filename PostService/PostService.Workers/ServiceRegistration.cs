@@ -14,6 +14,7 @@ namespace PostService.Workers
                     cfg => {
                         cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
                     },
+                    Assembly.GetAssembly(typeof(Application.ServiceRegistration)),
                     Assembly.GetExecutingAssembly()
                 );
 
@@ -21,8 +22,8 @@ namespace PostService.Workers
             services.AddMassTransit(
                 x =>
                 {
-                    x.AddConsumer<SetContentModerationResult>();
-                    x.AddConsumer<SetMedia>();
+                    x.AddConsumer<SetPostContentModerationResultPostService>();
+                    x.AddConsumer<SetPostMediaPostService>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {
@@ -34,24 +35,24 @@ namespace PostService.Workers
 
                         var retryLimit = 5;
 
-                        cfg.ReceiveEndpoint("SetContentModerationResult", e =>
+                        cfg.ReceiveEndpoint("SetPostContentModerationResultPostService", e =>
                         {
                             e.UseMessageRetry(rc =>
                             {
                                 rc.Immediate(retryLimit);
                                 rc.Handle<AppConcurrencyException>();
                             });
-                            e.ConfigureConsumer<SetContentModerationResult>(context);
+                            e.ConfigureConsumer<SetPostContentModerationResultPostService>(context);
                         });
 
-                        cfg.ReceiveEndpoint("SetMedia", e =>
+                        cfg.ReceiveEndpoint("SetPostMediaPostService", e =>
                         {
                             e.UseMessageRetry(rc =>
                             {
                                 rc.Immediate(retryLimit);
                                 rc.Handle<AppConcurrencyException>();
                             });
-                            e.ConfigureConsumer<SetMedia>(context);
+                            e.ConfigureConsumer<SetPostMediaPostService>(context);
                         });
                     });
 

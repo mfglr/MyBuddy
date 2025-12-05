@@ -1,19 +1,20 @@
-﻿using MassTransit;
+﻿using AutoMapper;
+using MassTransit;
 using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Application.UseCases.CreatePost;
-using PostService.Application.UseCases.DeleteMedia;
-using Shared.Events.Media;
+using PostService.Application.UseCases.DeletePostMedia;
 using Shared.Events.PostService;
 
 namespace PostService.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PostsController(IMediator mediator, IPublishEndpoint publishEndpoint) : ControllerBase
+    public class PostsController(IMediator mediator, IPublishEndpoint publishEndpoint, IMapper mapper) : ControllerBase
     {
 
         private readonly IMediator _mediator = mediator;
+        private readonly IMapper _mapper = mapper;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
         [HttpPost]
@@ -21,35 +22,23 @@ namespace PostService.Api.Controllers
         {
             var client = _mediator.CreateRequestClient<CreatePostRequest>();
             var response = await client.GetResponse<CreatePostResponse>(new(content, media), cancellationToken);
-            
+
             await _publishEndpoint.Publish(
-                new PostCreatedEvent(
-                    response.Message.Id,
-                    response.Message.Content,
-                    [..
-                        response.Message.Media.Select(x => new PostCreatedEvent_Media(
-                            x.ContainerName,
-                            x.BlobName,
-                            x.Type
-                        ))
-                    ]
-                ),
+                _mapper.Map<CreatePostResponse,PostCreatedEvent>(response.Message),
                 cancellationToken
-            );   
+            );
             return response.Message.Id;
         }
 
 
         [HttpPut]
-        public async Task DeleteMedia(DeleteMediaRequest request, CancellationToken cancellationToken)
+        public async Task DeleteMedia(DeletePostMediaRequest request, CancellationToken cancellationToken)
         {
-            var client = _mediator.CreateRequestClient<DeleteMediaRequest>();
-            var response = await client.GetResponse<DeleteMediaResponse>(request, cancellationToken);
+            var client = _mediator.CreateRequestClient<DeletePostMediaRequest>();
+            var response = await client.GetResponse<DeletePostMediaResponse>(request, cancellationToken);
+            
             await _publishEndpoint.Publish(
-                new MediaDeletedEvent(
-                    response.Message.ContainerName,
-                    response.Message.BlobNames
-                ),
+                _mapper.Map<DeletePostMediaResponse, PostMediaDeletedEvent>(response.Message),
                 cancellationToken
             );
         }

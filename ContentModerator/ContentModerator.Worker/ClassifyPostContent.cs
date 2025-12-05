@@ -16,11 +16,14 @@ namespace ContentModerator.Worker
             if (context.Message.Content == null) return;
 
             var client = _mediator.CreateRequestClient<ClassifyTextRequest>();
-            var response = await client.GetResponse<ModerationResult>(new ClassifyTextRequest(context.Message.Content));
+            var request = new ClassifyTextRequest(context.Message.Content.Value);
+            var response = await client.GetResponse<ModerationResult>(request);
+            
             await _publishEndpoint.Publish(
                 new PostContentClassifiedEvent(context.Message.Id, response.Message),
                 context.CancellationToken
             );
+            
         }
     }
 }

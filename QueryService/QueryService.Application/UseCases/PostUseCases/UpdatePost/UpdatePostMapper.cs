@@ -1,0 +1,15 @@
+﻿using AutoMapper;
+using QueryService.Domain.PostDomain;
+
+namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
+{
+    internal class UpdatePostMapper : Profile
+    {
+        public UpdatePostMapper()
+        {
+            CreateMap<UpdatePostRequest_Content, Content>();
+            CreateMap<UpdatePostRequest_Media, Media>();
+            CreateMap<UpdatePostRequest, Post>();
+        }
+    }
+}

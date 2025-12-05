@@ -16,6 +16,7 @@ namespace MediaService.Domain
         public ModerationResult? ModerationResult { get; private set; }
         public IReadOnlyCollection<Thumbnail> Thumbnails { get; private set; }
 
+
         [JsonConstructor]
         private Media(Guid id, Guid ownerId, int version, string containerName, string blobName, string? transcodedBlobName, Metadata? metadata, MediaType type, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails)
         {
