@@ -14,7 +14,9 @@ namespace CommentService.Domain
         public Guid PostId  { get; private set; }
         public Guid? ParentId { get; private set; }
         public Guid? RepliedId { get; private set; }
-        public Content Content { get; private set; }
+        public Content Content { get; private set; } = null!;
+
+        private Comment() { }
 
         public Comment(Guid userId, Guid postId, Guid? parentId, Guid? repliedId, Content content)
         {
@@ -27,8 +29,8 @@ namespace CommentService.Domain
 
         internal void Create()
         {
+            Version = 1;
             Id = Guid.NewGuid();
-            Version = 0;
             CreatedAt = DateTime.UtcNow;
         }
         public void Update()
@@ -39,6 +41,14 @@ namespace CommentService.Domain
         public void Delete()
         {
             IsDeleted = true;
+            Update();
+        }
+        public void Restore()
+        {
+            if(!IsDeleted)
+                throw new CommentAlreadyAvailableException();
+
+            IsDeleted = false;
             Update();
         }
 

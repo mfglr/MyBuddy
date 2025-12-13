@@ -4,13 +4,13 @@ using CommetService.Workers;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-DbConfigurator.Configure();
-
 builder.Services
     .AddAutoMapper(builder.Configuration)
     .AddMassTransit(builder.Configuration)
     .AddApplicationServices()
-    .AddInfrastructureServices();
+    .AddInfrastructureServices(builder.Configuration);
+
+DbConfigurator.Configure(builder.Services);
 
 var host = builder.Build();
 host.Run();

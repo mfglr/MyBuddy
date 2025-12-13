@@ -2,12 +2,11 @@
 
 namespace CommentService.Application.UseCases.DeleteComentReplies
 {
-
-    public record DeletCommentRepliesResponse_Content(
+    public record DeleteCommentRepliesResponse_Content(
         string Value,
         ModerationResult ModerationResult
     );
-    public record DeletCommentRepliesResponse_Comment(
+    public record DeleteCommentRepliesResponse_Comment(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
@@ -17,8 +16,8 @@ namespace CommentService.Application.UseCases.DeleteComentReplies
         Guid PostId,
         Guid? ParentId,
         Guid? RepliedId,
-        DeletCommentRepliesResponse_Content Content
+        DeleteCommentRepliesResponse_Content Content
     );
 
-    public record DeletCommentRepliesResponse(IEnumerable<DeletCommentRepliesResponse_Comment> Comments);
+    public record DeleteCommentRepliesResponse(IEnumerable<DeleteCommentRepliesResponse_Comment> Comments);
 }

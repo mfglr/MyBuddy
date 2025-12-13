@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CommentService.Application.UseCases.CreateComment;
 using CommentService.Application.UseCases.DeleteComment;
+using CommentService.Application.UseCases.RestoreComment;
 using CommentService.Application.UseCases.UpdateCommentContent;
 using MassTransit;
 using MassTransit.Mediator;
@@ -16,7 +17,7 @@ namespace Comment.Api.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
         private readonly IMapper _mapper = mapper;
-
+        
         [HttpPost]
         public async Task<Guid> Create(CreateCommentRequest request, CancellationToken cancellationToken)
         {
@@ -44,9 +45,20 @@ namespace Comment.Api.Controllers
         public async Task Delete(Guid id, CancellationToken cancellationToken)
         {
             var client = _mediator.CreateRequestClient<DeleteCommentRequest>();
-            var response = await client.GetResponse<DeleteCommentResponse>(new DeleteCommentRequest(id),cancellationToken);
+            var response = await client.GetResponse<DeleteCommentResponse>(new DeleteCommentRequest(id), cancellationToken);
             await _publishEndpoint.Publish(
                 _mapper.Map<DeleteCommentResponse, CommentDeletedEvent>(response.Message),
+                cancellationToken
+            );
+        }
+
+        [HttpPut]
+        public async Task Restore(RestoreCommentRequest request, CancellationToken cancellationToken)
+        {
+            var client = _mediator.CreateRequestClient<RestoreCommentRequest>();
+            var response = await client.GetResponse<RestoreCommentResponse>(request, cancellationToken);
+            await _publishEndpoint.Publish(
+                _mapper.Map<RestoreCommentResponse, CommentRestoredEvent>(response.Message),
                 cancellationToken
             );
         }

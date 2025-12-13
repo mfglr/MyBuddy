@@ -1,28 +1,15 @@
-﻿using CommentService.Domain;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace CommentService.Infrastructure
 {
     public static class DbConfigurator
     {
-        public static void Configure()
+        public static void Configure(IServiceCollection services)
         {
-            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-            BsonClassMap.RegisterClassMap<Comment>(cm =>
-            {
-                cm.MapIdMember(x => x.Id);
-                cm.MapMember(x => x.CreatedAt);
-                cm.MapMember(x => x.UpdatedAt);
-                cm.MapMember(x => x.IsDeleted);
-                cm.MapMember(x => x.Version);
-                cm.MapMember(x => x.UserId);
-                cm.MapMember(x => x.PostId);
-                cm.MapMember(x => x.ParentId);
-                cm.MapMember(x => x.RepliedId);
-                cm.MapMember(x => x.Content);
-            });
+
+            using var scope = services.BuildServiceProvider().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<MongoContext>();
+            context.Database.EnsureCreated();
         }
     }
 }

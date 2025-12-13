@@ -1,20 +1,21 @@
 ﻿using CommentService.Domain;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace CommentService.Infrastructure
 {
-    internal class MongoContext
+    internal class MongoContext(DbContextOptions<MongoContext> options) : DbContext(options)
     {
-        public IMongoClient Client { get; set; }
-        public IMongoCollection<Comment> Comments { get; set; }
+        public DbSet<Comment> Comments { get; init; }
 
-        public MongoContext(IConfiguration configuration)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Client = new MongoClient(configuration["MongoDbSettings:ConnectionString"]!);
-            var database = Client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]!);
-            Comments = database.GetCollection<Comment>("comments");
-        }
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Comment>().HasIndex(x => x.RepliedId);
+            modelBuilder.Entity<Comment>().HasIndex(x => x.PostId);
+            modelBuilder.Entity<Comment>().Property(x => x.Version).IsConcurrencyToken();
+            modelBuilder.Entity<Comment>().ToCollection("comments");
+        }
     }
 }
