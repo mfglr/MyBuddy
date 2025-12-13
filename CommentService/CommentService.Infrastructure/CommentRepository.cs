@@ -33,5 +33,30 @@ namespace CommentService.Infrastructure
             if (result.ModifiedCount == 0)
                 throw new AppConcurrencyException();
         }
+
+        public async Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Comment>.Filter.Eq(c => c.Id, id);
+            var documents = await _context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
+            return await documents.AnyAsync(cancellationToken);
+        }
+
+        public async Task<List<Comment>> GetByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Comment>.Filter.Eq(c => c.RepliedId, id);
+            var documents = await _context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
+            return await documents.ToListAsync(cancellationToken);
+        }
+
+        public Task UpdateAsync(List<Comment> comment, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Comment>.Filter.And(
+                Builders<Comment>.Filter.Eq(c => c.Id, comment.Id),
+                Builders<Comment>.Filter.Eq(c => c.Version, comment.Version - 1)
+            );
+            var result = await _context.Comments.UpdateManyAsync Async(filter, comment, cancellationToken: cancellationToken);
+            if (result.ModifiedCount == 0)
+                throw new AppConcurrencyException();
+        }
     }
 }

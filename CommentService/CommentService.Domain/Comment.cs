@@ -12,16 +12,20 @@ namespace CommentService.Domain
         public int Version { get; private set; }
         public Guid UserId { get; private set; }
         public Guid PostId  { get; private set; }
+        public Guid? ParentId { get; private set; }
+        public Guid? RepliedId { get; private set; }
         public Content Content { get; private set; }
 
-        public Comment(Guid userId, Guid postId,  Content content)
+        public Comment(Guid userId, Guid postId, Guid? parentId, Guid? repliedId, Content content)
         {
             UserId = userId;
             PostId = postId;
+            ParentId = parentId;
+            RepliedId = repliedId ?? parentId;
             Content = content ?? throw new ContentRequiredException();
         }
 
-        public void Create()
+        internal void Create()
         {
             Id = Guid.NewGuid();
             Version = 0;

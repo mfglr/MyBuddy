@@ -1,5 +1,5 @@
 ﻿using CommetService.Workers;
-using CommetService.Workers.SetCommentContentModerationResult;
+using CommetService.Workers.Consumers.SetCommentContentModerationResult;
 using MassTransit;
 using System.Reflection;
 

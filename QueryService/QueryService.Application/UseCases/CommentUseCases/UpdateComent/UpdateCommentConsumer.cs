@@ -11,7 +11,6 @@ namespace QueryService.Application.UseCases.CommentUseCases.UpdateComent
 
         public async Task Consume(ConsumeContext<UpdateCommentRequest> context)
         {
-
             var prev = await _commentRepository.GetByIdAsync(context.Message.Id, context.CancellationToken);
 
             if (prev != null && context.Message.Version <= prev.Version)

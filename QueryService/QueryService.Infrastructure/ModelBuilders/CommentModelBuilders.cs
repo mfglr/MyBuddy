@@ -16,6 +16,8 @@ namespace QueryService.Infrastructure.ModelBuilders
                     }
                 );
             builder.Property(x => x.RowVerstion).IsRowVersion();
+            builder.HasIndex(x => x.ParentId);
+            builder.HasIndex(x => x.PostId);
         }
     }
 }

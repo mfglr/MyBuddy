@@ -11,9 +11,11 @@ namespace Shared.Events.Comment
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         bool IsDeleted,
+        int Version,
         Guid UserId,
         Guid PostId,
-        int Version,
+        Guid? ParentId,
+        Guid? RepliedId,
         CommentContentModerationResultSetEvent_Content Content
     );
 }

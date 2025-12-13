@@ -1,22 +1,21 @@
 ﻿using Shared.Objects;
 
-namespace QueryService.Application.UseCases.CommentUseCases.UpdateComent
+namespace CommentService.Application.UseCases.UpdateCommentContent
 {
-
-    public record UpdateCommentRequest_Content(
+    public record UpdateCommentContentResponse_Content(
         string Value,
         ModerationResult ModerationResult
     );
-    public record UpdateCommentRequest(
+    public record UpdateCommentContentResponse(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         bool IsDeleted,
+        int Version,
         Guid UserId,
         Guid PostId,
         Guid? ParentId,
         Guid? RepliedId,
-        int Version,
-        UpdateCommentRequest_Content Content
+        UpdateCommentContentResponse_Content Content
     );
 }

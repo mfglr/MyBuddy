@@ -12,14 +12,16 @@ namespace CommentService.Infrastructure
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             BsonClassMap.RegisterClassMap<Comment>(cm =>
             {
-                cm.MapIdMember(q => q.Id);
-                cm.MapMember(q => q.CreatedAt);
-                cm.MapMember(q => q.UpdatedAt);
-                cm.MapMember(q => q.Version);
-                cm.MapMember(q => q.UserId);
-                cm.MapMember(q => q.PostId);
-                cm.MapMember(q => q.Content);
-                cm.MapMember(q => q.IsDeleted);
+                cm.MapIdMember(x => x.Id);
+                cm.MapMember(x => x.CreatedAt);
+                cm.MapMember(x => x.UpdatedAt);
+                cm.MapMember(x => x.IsDeleted);
+                cm.MapMember(x => x.Version);
+                cm.MapMember(x => x.UserId);
+                cm.MapMember(x => x.PostId);
+                cm.MapMember(x => x.ParentId);
+                cm.MapMember(x => x.RepliedId);
+                cm.MapMember(x => x.Content);
             });
         }
     }

@@ -10,10 +10,12 @@ namespace CommentService.Application.UseCases.SetCommentContentModerationResult
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
+        int Version,
         bool IsDeleted,
         Guid UserId,
         Guid PostId,
-        int Version,
+        Guid? ParentId,
+        Guid? RepliedId,
         SetCommentContentModerationResultResponse_Content Content
     );
 }

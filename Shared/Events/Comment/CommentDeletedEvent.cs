@@ -1,22 +1,21 @@
 ﻿using Shared.Objects;
 
-namespace QueryService.Application.UseCases.CommentUseCases.UpdateComent
+namespace Shared.Events.Comment
 {
-
-    public record UpdateCommentRequest_Content(
+    public record CommentDeletedEvent_Content(
         string Value,
         ModerationResult ModerationResult
     );
-    public record UpdateCommentRequest(
+    public record CommentDeletedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         bool IsDeleted,
+        int Version,
         Guid UserId,
         Guid PostId,
         Guid? ParentId,
         Guid? RepliedId,
-        int Version,
-        UpdateCommentRequest_Content Content
+        CommentDeletedEvent_Content Content
     );
 }

@@ -6,7 +6,7 @@ using Shared.Objects;
 
 namespace ContentModerator.Worker
 {
-    internal class ClassifyCommentContentOnCommentCreated(IMediator mediator, IPublishEndpoint publishEndpoint) : IConsumer<CommentCreatedEvent>
+    internal class ClassifyCommentContentOnCreated(IMediator mediator, IPublishEndpoint publishEndpoint) : IConsumer<CommentCreatedEvent>
     {
         private readonly IMediator _mediator = mediator;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;

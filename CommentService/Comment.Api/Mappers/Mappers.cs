@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CommentService.Application.UseCases.CreateComment;
+using CommentService.Application.UseCases.DeleteComment;
+using CommentService.Application.UseCases.UpdateCommentContent;
 using Shared.Events.Comment;
 
 namespace Comment.Api.Mappers
@@ -10,6 +12,12 @@ namespace Comment.Api.Mappers
         {
             CreateMap<CreateCommentResponse_Content, CommentCreatedEvent_Content>();
             CreateMap<CreateCommentResponse, CommentCreatedEvent>();
+
+            CreateMap<UpdateCommentContentResponse_Content, CommentContentUpdatedEvent_Content>();
+            CreateMap<UpdateCommentContentResponse, CommentContentUpdatedEvent>();
+
+            CreateMap<DeleteCommentResponse_Content, CommentDeletedEvent_Content>();
+            CreateMap<DeleteCommentResponse, CommentDeletedEvent>();
         }
     }
 }

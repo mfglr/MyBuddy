@@ -2,7 +2,7 @@
 using CommentService.Application.UseCases.SetCommentContentModerationResult;
 using Shared.Events.Comment;
 
-namespace CommetService.Workers.SetCommentContentModerationResult
+namespace CommetService.Workers.Consumers.SetCommentContentModerationResult
 {
     internal class SetCommentContentModerationResultMapper : Profile
     {

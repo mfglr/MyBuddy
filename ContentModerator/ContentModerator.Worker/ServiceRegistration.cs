@@ -12,7 +12,8 @@ namespace ContentModerator.Worker
                     x.AddConsumer<ClassifyMedia>();
                     x.AddConsumer<ClassifyPostContentOnPostCreated>();
                     x.AddConsumer<ClassifyPostContentOnPostContentUpdated>();
-                    x.AddConsumer<ClassifyCommentContentOnCommentCreated>();
+                    x.AddConsumer<ClassifyCommentContentOnCreated>();
+                    x.AddConsumer<ClassifyCommentContentOnContentUpdated>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CommentService.Application.UseCases.CreateComment;
+using CommentService.Application.UseCases.DeleteComment;
+using CommentService.Application.UseCases.UpdateCommentContent;
 using MassTransit;
 using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
@@ -27,5 +29,26 @@ namespace Comment.Api.Controllers
             return response.Message.Id;
         }
 
+        [HttpPut]
+        public async Task UpdateContent(UpdateCommentContentRequest request, CancellationToken cancellationToken)
+        {
+            var client = _mediator.CreateRequestClient<UpdateCommentContentRequest>();
+            var response = await client.GetResponse<UpdateCommentContentResponse>(request, cancellationToken);
+            await _publishEndpoint.Publish(
+                _mapper.Map<UpdateCommentContentResponse, CommentContentUpdatedEvent>(response.Message),
+                cancellationToken
+            );
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task Delete(Guid id, CancellationToken cancellationToken)
+        {
+            var client = _mediator.CreateRequestClient<DeleteCommentRequest>();
+            var response = await client.GetResponse<DeleteCommentResponse>(new DeleteCommentRequest(id),cancellationToken);
+            await _publishEndpoint.Publish(
+                _mapper.Map<DeleteCommentResponse, CommentDeletedEvent>(response.Message),
+                cancellationToken
+            );
+        }
     }
 }

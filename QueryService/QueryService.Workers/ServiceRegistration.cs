@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using QueryService.Workers;
+using QueryService.Workers.Consumers.CommentDomain.DeleteComment;
 using QueryService.Workers.Consumers.CommentDomain.SetCommentContentModerationResult;
 using QueryService.Workers.Consumers.PostDomain.DeletePost;
 using QueryService.Workers.Consumers.PostDomain.DeletePostMedia;
@@ -31,6 +32,7 @@ namespace QueryService.Workers
                     x.AddConsumer<DeletePost_QueryService>();
 
                     x.AddConsumer<SetCommentContentModerationResult_QueryService>();
+                    x.AddConsumer<DeleteComment>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {

@@ -9,11 +9,13 @@
         public int Version { get; private set; }
         public Guid UserId { get; private set; }
         public Guid PostId { get; private set; }
+        public Guid? ParentId { get; private set; }
+        public Guid? RepliedId { get; private set; }
         public CommentContent Content { get; private set; } = null!;
 
         private Comment() { }
 
-        public Comment(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Guid userId, Guid postId, CommentContent content)
+        public Comment(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Guid userId, Guid postId, Guid? parentId, Guid? repliedId, CommentContent content)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -21,6 +23,8 @@
             Version = version;
             UserId = userId;
             PostId = postId;
+            ParentId = parentId;
+            RepliedId = repliedId;
             Content = content;
         }
 

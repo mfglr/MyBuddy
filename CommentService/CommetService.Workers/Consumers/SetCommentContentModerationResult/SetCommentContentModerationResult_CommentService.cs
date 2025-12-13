@@ -4,7 +4,7 @@ using MassTransit;
 using MassTransit.Mediator;
 using Shared.Events.Comment;
 
-namespace CommetService.Workers.SetCommentContentModerationResult
+namespace CommetService.Workers.Consumers.SetCommentContentModerationResult
 {
     internal class SetCommentContentModerationResult_CommentService(IMediator mediator, IPublishEndpoint publishEndpoint, IMapper mapper) : IConsumer<CommentContentClassifiedEvent>
     {
