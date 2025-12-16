@@ -1,6 +1,5 @@
 ﻿using PostService.Domain.Exceptions;
 using Shared.Objects;
-//using System.Text.Json.Serialization;
 
 namespace PostService.Domain
 {
@@ -16,17 +15,6 @@ namespace PostService.Domain
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; }
-
-        //[JsonConstructor]
-        //private Post(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Content? content, IReadOnlyList<Media> media)
-        //{
-        //    Id = id;
-        //    CreatedAt = createdAt;
-        //    UpdatedAt = updatedAt;
-        //    Version = version;
-        //    Content = content;
-        //    Media = media;
-        //}
 
         public Post(Content? content, IReadOnlyList<Media> media)
         {

@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.SetPostContentModerationResult
 {
-    internal class SetPostContentModerationResultConsumer(IPostRepository repository, IMapper mapper) : IConsumer<SetPostContentModerationResultRequest>
+    public class SetPostContentModerationResultConsumer(IPostRepository repository, IMapper mapper) : IConsumer<SetPostContentModerationResultRequest>
     {
         private readonly IPostRepository _repository = repository;
         private readonly IMapper _mapper = mapper;

@@ -5,6 +5,7 @@ using CommentService.Application.UseCases.RestoreComment;
 using CommentService.Application.UseCases.UpdateCommentContent;
 using MassTransit;
 using MassTransit.Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Events.Comment;
 
@@ -17,7 +18,8 @@ namespace Comment.Api.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
         private readonly IMapper _mapper = mapper;
-        
+
+        [Authorize("Password",Roles = "user")]
         [HttpPost]
         public async Task<Guid> Create(CreateCommentRequest request, CancellationToken cancellationToken)
         {
@@ -30,6 +32,7 @@ namespace Comment.Api.Controllers
             return response.Message.Id;
         }
 
+        [Authorize("Password", Roles = "user")]
         [HttpPut]
         public async Task UpdateContent(UpdateCommentContentRequest request, CancellationToken cancellationToken)
         {
@@ -41,6 +44,7 @@ namespace Comment.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "user, admin")]
         [HttpDelete("{id:guid}")]
         public async Task Delete(Guid id, CancellationToken cancellationToken)
         {
@@ -52,6 +56,7 @@ namespace Comment.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "admin")]
         [HttpPut]
         public async Task Restore(RestoreCommentRequest request, CancellationToken cancellationToken)
         {

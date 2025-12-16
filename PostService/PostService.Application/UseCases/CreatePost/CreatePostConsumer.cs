@@ -4,7 +4,7 @@ using PostService.Domain;
 
 namespace PostService.Application.UseCases.CreatePost
 {
-    internal class CreatePostConsumer(IPostRepository postRepository, IBlobService blobService, IMapper mapper) : IConsumer<CreatePostRequest>
+    public class CreatePostConsumer(IPostRepository postRepository, IBlobService blobService, IMapper mapper) : IConsumer<CreatePostRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IBlobService _blobService = blobService;
@@ -24,7 +24,7 @@ namespace PostService.Application.UseCases.CreatePost
                 post.Create();
                 await _postRepository.CreateAsync(post, context.CancellationToken);
 
-                await context.RespondAsync(_mapper.Map<Post,CreatePostResponse>(post));
+                await context.RespondAsync(_mapper.Map<Post, CreatePostResponse>(post));
             }
             catch (Exception)
             {

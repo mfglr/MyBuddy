@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CommentService.Infrastructure
 {
-    internal class CommentRepository(MongoContext context) : ICommentRepository
+    public class CommentRepository(MongoContext context) : ICommentRepository
     {
         private readonly MongoContext _context = context;
 
         public Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken) =>
-            _context.Comments.AnyAsync(x => x.Id == id, cancellationToken);
+            _context.Comments.AnyAsync(x => x.Id == id && !x.IsDeleted, cancellationToken);
         
         public Task<Comment?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
            _context.Comments.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);

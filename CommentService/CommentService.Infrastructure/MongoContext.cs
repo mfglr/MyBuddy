@@ -4,7 +4,7 @@ using MongoDB.EntityFrameworkCore.Extensions;
 
 namespace CommentService.Infrastructure
 {
-    internal class MongoContext(DbContextOptions<MongoContext> options) : DbContext(options)
+    public class MongoContext(DbContextOptions<MongoContext> options) : DbContext(options)
     {
         public DbSet<Comment> Comments { get; init; }
 

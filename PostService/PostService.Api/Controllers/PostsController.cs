@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MassTransit.Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Application.UseCases.CreatePost;
 using PostService.Application.UseCases.CreatePostMedia;
@@ -21,6 +22,7 @@ namespace PostService.Api.Controllers
         private readonly IMapper _mapper = mapper;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
+        [Authorize("Password", Roles = "user")]
         [HttpPost]
         public async Task<Guid> Create([FromForm] string content, [FromForm] IFormFileCollection media, CancellationToken cancellationToken)
         {
@@ -34,6 +36,7 @@ namespace PostService.Api.Controllers
             return response.Message.Id;
         }
 
+        [Authorize("Password", Roles = "user")]
         [HttpPut]
         public async Task CreateMedia([FromForm] Guid id, [FromForm] IFormFileCollection media, [FromForm] string? offset, CancellationToken cancellationToken)
         {
@@ -46,6 +49,7 @@ namespace PostService.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "user")]
         [HttpPut]
         public async Task DeleteMedia(DeletePostMediaRequest request, CancellationToken cancellationToken)
         {
@@ -58,6 +62,7 @@ namespace PostService.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "user")]
         [HttpPut]
         public async Task UpdateContent(UpdatePostContentRequest request, CancellationToken cancellationToken)
         {
@@ -68,6 +73,7 @@ namespace PostService.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "user, admin")]
         [HttpDelete("{id:guid}")]
         public async Task Delete(Guid id, CancellationToken cancellationToken)
         {
@@ -82,6 +88,7 @@ namespace PostService.Api.Controllers
             );
         }
 
+        [Authorize("Password", Roles = "admin")]
         [HttpPut]
         public async Task Restore(RestorePostRequest request, CancellationToken cancellationToken)
         {

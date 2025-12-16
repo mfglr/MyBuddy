@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.DeletePost
 {
-    internal class DeletePostConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<DeletePostRequest>
+    public class DeletePostConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<DeletePostRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;

@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QueryService.Api.Exceptions;
 using QueryService.Application.QueryRepositories;
 using QueryService.Application.UseCases.CommentUseCases;
 
 namespace QueryService.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize("ClientCredential")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CommentsController(ICommentQueryRepository commentQueryRepository) : ControllerBase
     {

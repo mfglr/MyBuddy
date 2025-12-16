@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.CreatePostMedia
 {
-    internal class CreatePostMediaConsumer(IBlobService blobService, IPostRepository postRepository) : IConsumer<CreatePostMediaRequest>
+    public class CreatePostMediaConsumer(IBlobService blobService, IPostRepository postRepository) : IConsumer<CreatePostMediaRequest>
     {
         private readonly IBlobService _blobService = blobService;
         private readonly IPostRepository _postRepository = postRepository;

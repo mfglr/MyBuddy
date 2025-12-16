@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.SetPostMedia
 {
-    internal class SetPostMediaConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<SetPostMediaRequest>
+    public class SetPostMediaConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<SetPostMediaRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;

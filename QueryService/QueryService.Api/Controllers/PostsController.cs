@@ -1,9 +1,11 @@
 ﻿using MassTransit.Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QueryService.Application.UseCases.PostUseCases.GetPostById;
 
 namespace QueryService.Api.Controllers
 {
+    [Authorize($"ClientCredential")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostsController(IMediator mediator) : ControllerBase

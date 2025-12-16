@@ -4,7 +4,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.UpdatePostContent
 {
-    internal class UpdatePostContentConsumer(IPostRepository postRepository) : IConsumer<UpdatePostContentRequest>
+    public class UpdatePostContentConsumer(IPostRepository postRepository) : IConsumer<UpdatePostContentRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
 

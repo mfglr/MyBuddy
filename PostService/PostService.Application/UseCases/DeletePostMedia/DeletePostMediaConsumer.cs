@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.DeletePostMedia
 {
-    internal class DeletePostMediaConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<DeletePostMediaRequest>
+    public class DeletePostMediaConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<DeletePostMediaRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;

@@ -5,7 +5,7 @@ using PostService.Domain.Exceptions;
 
 namespace PostService.Application.UseCases.RestorePost
 {
-    internal class RestorePostConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<RestorePostRequest>
+    public class RestorePostConsumer(IPostRepository postRepository, IMapper mapper) : IConsumer<RestorePostRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;

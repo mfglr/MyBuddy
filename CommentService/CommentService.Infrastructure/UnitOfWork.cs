@@ -2,7 +2,7 @@
 
 namespace CommentService.Infrastructure
 {
-    internal class UnitOfWork(MongoContext context) : IUnitOfWork
+    public class UnitOfWork(MongoContext context) : IUnitOfWork
     {
         private readonly MongoContext _context = context;
 

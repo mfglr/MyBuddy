@@ -5,7 +5,7 @@ using MassTransit;
 
 namespace CommentService.Application.UseCases.UpdateCommentContent
 {
-    internal class UpdateCommentContentConsumer(ICommentRepository commentRepository, IMapper mapper, IUnitOfWork unitOfWork) : IConsumer<UpdateCommentContentRequest>
+    public class UpdateCommentContentConsumer(ICommentRepository commentRepository, IMapper mapper, IUnitOfWork unitOfWork) : IConsumer<UpdateCommentContentRequest>
     {
         private readonly ICommentRepository _commentRepository = commentRepository;
         private readonly IMapper _mapper = mapper;

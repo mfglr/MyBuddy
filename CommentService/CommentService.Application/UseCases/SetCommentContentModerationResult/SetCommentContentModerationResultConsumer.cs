@@ -5,7 +5,7 @@ using MassTransit;
 
 namespace CommentService.Application.UseCases.SetCommentContentModerationResult
 {
-    internal class SetCommentContentModerationResultConsumer(ICommentRepository commentRepository, IMapper mapper, IUnitOfWork unitOfWork) : IConsumer<SetCommentContentModerationResultRequest>
+    public class SetCommentContentModerationResultConsumer(ICommentRepository commentRepository, IMapper mapper, IUnitOfWork unitOfWork) : IConsumer<SetCommentContentModerationResultRequest>
     {
         private readonly ICommentRepository _commentRepository = commentRepository;
         private readonly IMapper _mapper = mapper;

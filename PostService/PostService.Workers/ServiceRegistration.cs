@@ -1,4 +1,8 @@
 ﻿using MassTransit;
+using PostService.Application;
+using PostService.Application.UseCases.SetPostContentModerationResult;
+using PostService.Application.UseCases.SetPostMedia;
+using PostService.Domain;
 using PostService.Infrastructure;
 using PostService.Workers;
 using PostService.Workers.Consumers.SetPostContentModerationResult;
@@ -9,6 +13,19 @@ namespace PostService.Workers
 {
     internal static class ServiceRegistration
     {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
+            services
+                .AddMediator(cfg =>
+                {
+                    cfg.AddConsumer<SetPostMediaConsumer>();
+                    cfg.AddConsumer<SetPostContentModerationResultConsumer>();
+                });
+
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) =>
+            services
+                .AddScoped<IBlobService, LocalBlobService>()
+                .AddScoped<MongoContext>()
+                .AddScoped<IPostRepository, PostRepository>();
 
         public static IServiceCollection AddAutoMapper(this IServiceCollection services, IConfiguration configuration) =>
             services
@@ -16,7 +33,7 @@ namespace PostService.Workers
                     cfg => {
                         cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
                     },
-                    Assembly.GetAssembly(typeof(Application.ServiceRegistration)),
+                    Assembly.GetAssembly(typeof(Application.IBlobService)),
                     Assembly.GetExecutingAssembly()
                 );
 

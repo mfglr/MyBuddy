@@ -1,10 +1,9 @@
 ﻿using MongoDB.Driver;
 using PostService.Domain;
-using static MassTransit.MessageHeaders;
 
 namespace PostService.Infrastructure
 {
-    internal class PostRepository(MongoContext context) : IPostRepository
+    public class PostRepository(MongoContext context) : IPostRepository
     {
         private readonly MongoContext _context = context;
 

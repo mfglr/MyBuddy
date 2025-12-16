@@ -7,7 +7,7 @@ using StackExchange.Redis;
 
 namespace PostService.Infrastructure
 {
-    internal class PostRedisCacheService : IPostCacheService
+    public class PostRedisCacheService : IPostCacheService
     {
         private readonly ConnectionMultiplexer _muxer;
         private readonly IDatabase _database;

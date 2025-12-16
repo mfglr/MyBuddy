@@ -4,7 +4,7 @@ using PostService.Domain;
 
 namespace PostService.Infrastructure
 {
-    internal class MongoContext
+    public class MongoContext
     {
         public IMongoClient Client { get; set; }
         public IMongoCollection<Post> Posts { get; set; }

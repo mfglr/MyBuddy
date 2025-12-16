@@ -3,9 +3,9 @@ using CommentService.Domain;
 
 namespace CommentService.Application.UseCases.DeleteComentReplies
 {
-    internal class DeleCommentRepliesMapper : Profile
+    internal class DeleteCommentRepliesMapper : Profile
     {
-        public DeleCommentRepliesMapper()
+        public DeleteCommentRepliesMapper()
         {
             CreateMap<Content, DeleteCommentRepliesResponse_Content>();
             CreateMap<Comment, DeleteCommentRepliesResponse_Comment>();

@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace CommentService.Application.UseCases.RestorePostComments
 {
-    internal class RestorePostCommentsConsumer(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper) : IConsumer<RestorePostCommentsRequest>
+    public class RestorePostCommentsConsumer(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper) : IConsumer<RestorePostCommentsRequest>
     {
         private readonly ICommentRepository _commentRepository = commentRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;

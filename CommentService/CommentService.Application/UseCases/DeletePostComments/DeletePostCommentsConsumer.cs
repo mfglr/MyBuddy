@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace CommentService.Application.UseCases.DeletePostComments
 {
-    internal class DeletePostCommentsConsumer(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper) : IConsumer<DeletePostCommentsRequest>
+    public class DeletePostCommentsConsumer(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper) : IConsumer<DeletePostCommentsRequest>
     {
         private readonly ICommentRepository _commentRepository = commentRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
