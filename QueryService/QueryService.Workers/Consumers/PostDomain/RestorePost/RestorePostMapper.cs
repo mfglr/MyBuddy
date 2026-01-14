@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using QueryService.Application.UseCases.PostUseCases.UpdatePost;
 using Shared.Events.PostService;
+using Shared.Objects;
 
 namespace QueryService.Workers.Consumers.PostDomain.RestorePost
 {
@@ -9,7 +10,7 @@ namespace QueryService.Workers.Consumers.PostDomain.RestorePost
         public RestorePostMapper()
         {
             CreateMap<PostRestoredEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<PostRestoredEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostRestoredEvent, UpdatePostRequest>();
         }
     }

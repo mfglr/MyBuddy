@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using MassTransit.Mediator;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 using Shared.Objects;
 using VideoTranscoder.Application.UseCases.TranscodeVideo;
 

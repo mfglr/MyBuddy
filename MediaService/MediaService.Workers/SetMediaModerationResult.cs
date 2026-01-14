@@ -3,7 +3,7 @@ using MassTransit;
 using MassTransit.Mediator;
 using MediaService.Application.UseCases;
 using MediaService.Application.UseCases.SetMediaModerationResult;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 
 namespace MediaService.Workers
 {

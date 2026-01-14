@@ -6,16 +6,6 @@ namespace Shared.Events.PostService
         string Value,
         ModerationResult ModerationResult
     );
-    public record PostRestoredEvent_Media(
-        string ContainerName,
-        string BlobName,
-        MediaType Type,
-        string? TranscodedBlobName,
-        Metadata? Metadata,
-        ModerationResult? ModerationResult,
-        IReadOnlyList<Thumbnail> Thumbnails,
-        bool IsDeleted
-    );
     public record PostRestoredEvent(
         Guid Id,
         DateTime CreatedAt,
@@ -24,6 +14,6 @@ namespace Shared.Events.PostService
         int Version,
         bool IsDeleted,
         PostRestoredEvent_Content? Content,
-        IReadOnlyList<PostRestoredEvent_Media> Media
+        IReadOnlyList<Media> Media
     );
 }

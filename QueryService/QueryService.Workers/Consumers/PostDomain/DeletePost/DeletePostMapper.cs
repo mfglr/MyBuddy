@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using QueryService.Application.UseCases.PostUseCases.UpdatePost;
+using QueryService.Domain.PostDomain;
 using Shared.Events.PostService;
 
 namespace QueryService.Workers.Consumers.PostDomain.DeletePost
@@ -9,7 +10,7 @@ namespace QueryService.Workers.Consumers.PostDomain.DeletePost
         public DeletePostMapper()
         {
             CreateMap<PostDeletedEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<PostDeletedEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostDeletedEvent, UpdatePostRequest>();
         }
     }

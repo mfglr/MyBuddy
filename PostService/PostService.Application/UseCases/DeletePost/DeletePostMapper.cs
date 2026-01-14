@@ -8,7 +8,6 @@ namespace PostService.Application.UseCases.DeletePost
         public DeletePostMapper()
         {
             CreateMap<Content, DeletePostResponse_Content>();
-            CreateMap<Media, DeletePostResponse_Media>();
             CreateMap<Post, DeletePostResponse>();
         }
     }

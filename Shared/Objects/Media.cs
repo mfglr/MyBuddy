@@ -1,7 +1,6 @@
-﻿using Shared.Objects;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace PostService.Domain
+namespace Shared.Objects
 {
     public class Media
     {
@@ -27,16 +26,41 @@ namespace PostService.Domain
             IsDeleted = isDeleted;
         }
 
-        public Media(string blobName, MediaType type)
+        public Media(string containerName, string blobName, MediaType type)
         {
-            ContainerName = Post.MediaContainerName;
+            ContainerName = containerName;
             BlobName = blobName;
             Type = type;
             Thumbnails = [];
         }
 
-        public Media Set(string? transcodedBlobName, Metadata metadata, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails) => new(ContainerName, BlobName, Type, transcodedBlobName, metadata, moderationResult, [.. thumbnails], IsDeleted);
+        public Media Set(
+            string? transcodedBlobName,
+            Metadata metadata,
+            ModerationResult? moderationResult,
+            IEnumerable<Thumbnail> thumbnails
+        ) => 
+            new(
+                ContainerName,
+                BlobName,
+                Type,
+                transcodedBlobName,
+                metadata,
+                moderationResult,
+                [.. thumbnails],
+                IsDeleted
+            );
 
-        public Media Delete() => new(ContainerName, BlobName, Type, TranscodedBlobName, Metadata, ModerationResult, Thumbnails, true);
+        public Media Delete() => 
+            new(
+                ContainerName,
+                BlobName,
+                Type,
+                TranscodedBlobName,
+                Metadata,
+                ModerationResult,
+                Thumbnails,
+                true
+            );
     }
 }

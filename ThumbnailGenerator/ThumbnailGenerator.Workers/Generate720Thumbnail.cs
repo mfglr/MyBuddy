@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using MassTransit.Mediator;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 using ThumbnailGenerator.Application.UseCases.GenerateThumbnail;
 
 namespace ThumbnailGenerator.Workers

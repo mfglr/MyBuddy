@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using QueryService.Application.UseCases.PostUseCases.UpdatePost;
 using Shared.Events.PostService;
+using Shared.Objects;
 
 namespace QueryService.Workers.Consumers.PostDomain.SetPostMedia
 {
@@ -9,7 +10,7 @@ namespace QueryService.Workers.Consumers.PostDomain.SetPostMedia
         public SetPostMediaMapper()
         {
             CreateMap<PostMediaSetEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<PostMediaSetEvent_Media, UpdatePostRequest_Media>();
+            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostMediaSetEvent, UpdatePostRequest>();
         }
     }

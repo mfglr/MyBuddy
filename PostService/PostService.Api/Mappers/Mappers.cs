@@ -14,26 +14,20 @@ namespace PostService.Api.Mappers
         public Mappers()
         {
             CreateMap<Content, CreatePostResponse_Content>();
-            CreateMap<Media, CreatePostResponse_Media>();
             CreateMap<Post, CreatePostResponse>();
 
             CreateMap<CreatePostResponse_Content, PostCreatedEvent_Content>();
-            CreateMap<CreatePostResponse_Media, PostCreatedEvent_Media>();
             CreateMap<CreatePostResponse, PostCreatedEvent>();
 
             CreateMap<DeletePostMediaResponse_Content, PostMediaDeletedEvent_Content>();
-            CreateMap<DeletePostMediaResponse_Media, PostMediaDeletedEvent_Media>();
             CreateMap<DeletePostMediaResponse, PostMediaDeletedEvent>();
 
-            CreateMap<CreatePostMediaResponse_Media, PostMediaCreatedEvent_Media>();
             CreateMap<CreatePostMediaResponse, PostMediaCreatedEvent>();
 
             CreateMap<DeletePostResponse_Content, PostDeletedEvent_Content>();
-            CreateMap<DeletePostResponse_Media, PostDeletedEvent_Media>();
             CreateMap<DeletePostResponse, PostDeletedEvent>();
 
             CreateMap<RestorePostResponse_Content, PostRestoredEvent_Content>();
-            CreateMap<RestorePostResponse_Media, PostRestoredEvent_Media>();
             CreateMap<RestorePostResponse, PostRestoredEvent>();
         }
     }

@@ -8,7 +8,6 @@ namespace PostService.Application.UseCases.SetPostMedia
         public SetPostMediaMapper()
         {
             CreateMap<Content, SetPostMediaResponse_Content>();
-            CreateMap<Media, SetPostMediaResponse_Media>();
             CreateMap<Post, SetPostMediaResponse>();
         }
     }

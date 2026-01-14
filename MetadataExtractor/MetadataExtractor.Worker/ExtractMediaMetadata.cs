@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using MassTransit.Mediator;
 using MetadataExtractor.Application.UseCases.ExtractMediaMetadata;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 using Shared.Objects;
 
 namespace MetadataExtractor.Worker

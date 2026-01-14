@@ -6,16 +6,6 @@ namespace Shared.Events.PostService
         string Value,
         ModerationResult ModerationResult
     );
-    public record PostContentModerationResultSetEvent_Media(
-        string ContainerName,
-        string BlobName,
-        MediaType Type,
-        string? TranscodedBlobName,
-        Metadata? Metadata,
-        ModerationResult? ModerationResult,
-        IReadOnlyList<Thumbnail> Thumbnails,
-        bool IsDeleted
-    );
     public record PostContentModerationResultSetEvent(
         Guid Id,
         DateTime CreatedAt,
@@ -24,6 +14,6 @@ namespace Shared.Events.PostService
         int Version,
         bool IsDeleted,
         PostContentModerationResultSetEvent_Content? Content,
-        IReadOnlyList<PostContentModerationResultSetEvent_Media> Media
+        IReadOnlyList<Media> Media
     );
 }

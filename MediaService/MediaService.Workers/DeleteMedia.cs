@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using MassTransit.Mediator;
 using MediaService.Application.UseCases.DeleteMedia;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 
 namespace MediaService.Workers
 {

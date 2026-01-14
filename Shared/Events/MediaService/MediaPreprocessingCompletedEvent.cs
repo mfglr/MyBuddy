@@ -1,6 +1,6 @@
 ﻿using Shared.Objects;
 
-namespace Shared.Events.Media
+namespace Shared.Events.MediaService
 {
     public record MediaPreprocessingCompletedEvent(
         Guid Id,

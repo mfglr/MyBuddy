@@ -2,7 +2,7 @@
 using MassTransit;
 using MassTransit.Mediator;
 using MediaService.Application.UseCases.CreateMedia;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 using Shared.Events.PostService;
 
 namespace MediaService.Workers

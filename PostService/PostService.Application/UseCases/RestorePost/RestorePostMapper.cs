@@ -8,7 +8,6 @@ namespace PostService.Application.UseCases.RestorePost
         public RestorePostMapper()
         {
             CreateMap<Content, RestorePostResponse_Content>();
-            CreateMap<Media, RestorePostResponse_Media>();
             CreateMap<Post, RestorePostResponse>();
         }
     }

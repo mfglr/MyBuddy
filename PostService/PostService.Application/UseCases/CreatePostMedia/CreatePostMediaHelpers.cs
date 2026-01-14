@@ -11,6 +11,7 @@ namespace PostService.Application.UseCases.CreatePostMedia
             List<Media> medias = [];
             for (int i = 0; i < blobNames.Count; i++)
                 medias.Add(new Media(
+                    Post.MediaContainerName,
                     blobNames.ElementAt(i),
                     types.ElementAt(i)
                 ));

@@ -2,7 +2,7 @@
 using MassTransit;
 using MassTransit.Mediator;
 using PostService.Application.UseCases.SetPostMedia;
-using Shared.Events.Media;
+using Shared.Events.MediaService;
 using Shared.Events.PostService;
 
 namespace PostService.Workers.Consumers.SetPostMedia
