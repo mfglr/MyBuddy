@@ -25,18 +25,17 @@ namespace PostService.Domain
             if (media.Count > MaxMediaCount)
                 throw new PostMediaCountException();
 
+            if (media.Any(x => x.ContainerName != MediaContainerName))
+                throw new InvalidContainerName();
+
+            Id = Guid.CreateVersion7();
             UserId = userId;
             Content = content;
             Media = media;
-        }
-
-        public void Create()
-        {
-            Id = Guid.CreateVersion7();
             CreatedAt = DateTime.UtcNow;
             Version = 1;
-            IsDeleted = false;
         }
+        
         public void Delete()
         {
             if (IsDeleted)
@@ -136,7 +135,5 @@ namespace PostService.Domain
             Version++;
             UpdatedAt = DateTime.UtcNow;
         }
-
-        
     }
 }
