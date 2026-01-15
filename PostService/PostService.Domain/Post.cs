@@ -32,7 +32,7 @@ namespace PostService.Domain
 
         public void Create()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.CreateVersion7();
             CreatedAt = DateTime.UtcNow;
             Version = 1;
             IsDeleted = false;

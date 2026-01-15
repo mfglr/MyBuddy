@@ -30,7 +30,7 @@ namespace CommentService.Domain
         internal void Create()
         {
             Version = 1;
-            Id = Guid.NewGuid();
+            Id = Guid.CreateVersion7();
             CreatedAt = DateTime.UtcNow;
         }
         public void Update()
