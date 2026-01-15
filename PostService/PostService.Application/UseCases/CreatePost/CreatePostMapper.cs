@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.CreatePost
 {
@@ -7,8 +8,8 @@ namespace PostService.Application.UseCases.CreatePost
     {
         public CreatePostMapper()
         {
-            CreateMap<Content, CreatePostResponse_Content>();
-            CreateMap<Post, CreatePostResponse>();
+            CreateMap<Content, PostCreatedEvent_Content>();
+            CreateMap<Post, PostCreatedEvent>();
         }
     }
 }

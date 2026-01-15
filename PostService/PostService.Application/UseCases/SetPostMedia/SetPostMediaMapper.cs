@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.SetPostMedia
 {
@@ -7,8 +8,8 @@ namespace PostService.Application.UseCases.SetPostMedia
     {
         public SetPostMediaMapper()
         {
-            CreateMap<Content, SetPostMediaResponse_Content>();
-            CreateMap<Post, SetPostMediaResponse>();
+            CreateMap<Content, PostMediaSetEvent_Content>();
+            CreateMap<Post, PostMediaSetEvent>();
         }
     }
 }

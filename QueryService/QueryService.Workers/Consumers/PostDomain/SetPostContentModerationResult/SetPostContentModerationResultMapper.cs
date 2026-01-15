@@ -10,7 +10,6 @@ namespace QueryService.Workers.Consumers.PostDomain.SetPostContentModerationResu
         public SetPostContentModerationResultMapper()
         {
             CreateMap<PostContentModerationResultSetEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostContentModerationResultSetEvent, UpdatePostRequest>();
         }
     }

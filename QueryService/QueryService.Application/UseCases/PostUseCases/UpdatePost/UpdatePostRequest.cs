@@ -3,19 +3,6 @@
 namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
 {
     public record UpdatePostRequest_Content(string Value, ModerationResult ModerationResult);
-    public record UpdatePostRequest_Media(
-        string ContainerName,
-        string BlobName,
-        MediaType Type,
-        string? TranscodedBlobName,
-        Metadata Metadata,
-        ModerationResult ModerationResult,
-        IReadOnlyList<Thumbnail> Thumbnails,
-        bool IsDeleted
-    )
-    {
-        public bool IsValidVersion => ModerationResult != null;
-    }
     public record UpdatePostRequest(
         Guid Id,
         DateTime CreatedAt,
@@ -24,9 +11,9 @@ namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
         bool IsDeleted,
         int Version,
         UpdatePostRequest_Content? Content,
-        List<UpdatePostRequest_Media> Media
+        List<Media> Media
     )
     {
-        public bool IsValidVersion => !Media.Any(x => !x.IsValidVersion);
+        public bool IsValidVersion => !Media.Any(x => x.ModerationResult == null);
     }
 }

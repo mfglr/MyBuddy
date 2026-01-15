@@ -1,4 +1,6 @@
-﻿namespace QueryService.Domain.PostDomain
+﻿using Shared.Objects;
+
+namespace QueryService.Domain.PostDomain
 {
     public class Post
     {
@@ -11,7 +13,7 @@
         public PostContent? Content { get; private set; }
         public List<Media> Media { get; private set; } = [];
 
-        public bool IsValidVersion => !Media.Any(x => !x.IsValidVersion);
+        public bool IsValidVersion => !Media.Any(x => x.ModerationResult == null);
 
         private Post() { }
 

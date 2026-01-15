@@ -10,7 +10,6 @@ namespace QueryService.Workers.Consumers.PostDomain.SetPostMedia
         public SetPostMediaMapper()
         {
             CreateMap<PostMediaSetEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostMediaSetEvent, UpdatePostRequest>();
         }
     }

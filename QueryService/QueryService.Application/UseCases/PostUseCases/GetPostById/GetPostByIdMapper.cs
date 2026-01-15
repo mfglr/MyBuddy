@@ -8,7 +8,6 @@ namespace QueryService.Application.UseCases.PostUseCases.GetPostById
         public GetPostByIdMapper()
         {
             CreateMap<PostContent, GetPostByIdResponse_Content>();
-            CreateMap<Media, GetPostByIdResponse_Media>();
             CreateMap<Post, GetPostByIdResponse>();
         }
     }

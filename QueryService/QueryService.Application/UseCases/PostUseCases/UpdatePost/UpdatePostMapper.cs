@@ -8,7 +8,6 @@ namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
         public UpdatePostMapper()
         {
             CreateMap<UpdatePostRequest_Content, PostContent>();
-            CreateMap<UpdatePostRequest_Media, Media>();
         }
     }
 }

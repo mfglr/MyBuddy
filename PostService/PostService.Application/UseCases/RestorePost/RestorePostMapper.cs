@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.RestorePost
 {
@@ -7,8 +8,8 @@ namespace PostService.Application.UseCases.RestorePost
     {
         public RestorePostMapper()
         {
-            CreateMap<Content, RestorePostResponse_Content>();
-            CreateMap<Post, RestorePostResponse>();
+            CreateMap<Content, PostRestoredEvent_Content>();
+            CreateMap<Post, PostRestoredEvent>();
         }
     }
 }

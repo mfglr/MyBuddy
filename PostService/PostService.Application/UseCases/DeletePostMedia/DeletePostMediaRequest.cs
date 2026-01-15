@@ -1,4 +1,6 @@
-﻿namespace PostService.Application.UseCases.DeletePostMedia
+﻿using MediatR;
+
+namespace PostService.Application.UseCases.DeletePostMedia
 {
-    public record DeletePostMediaRequest(Guid Id, string BlobName);
+    public record DeletePostMediaRequest(Guid Id, string BlobName) : IRequest;
 }

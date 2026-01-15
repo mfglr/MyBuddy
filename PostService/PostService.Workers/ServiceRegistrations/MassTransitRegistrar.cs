@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using PostService.Infrastructure;
-using PostService.Workers.Consumers.SetPostContentModerationResult;
-using PostService.Workers.Consumers.SetPostMedia;
+using PostService.Workers.Consumers;
 using PostService.Workers.ServiceRegistrations;
 
 namespace PostService.Workers.ServiceRegistrations
@@ -23,8 +22,8 @@ namespace PostService.Workers.ServiceRegistrations
             return services.AddMassTransit(
                 x =>
                 {
-                    x.AddConsumer<SetPostContentModerationResult_PostService>();
-                    x.AddConsumer<SetPostMedia_PostService>();
+                    x.AddConsumer<SetPostContentModerationResultConsumer_PostService>();
+                    x.AddConsumer<SetPostMediaConsumer_PostService>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {
@@ -36,24 +35,24 @@ namespace PostService.Workers.ServiceRegistrations
 
                         var retryLimit = 5;
 
-                        cfg.ReceiveEndpoint("SetPostContentModerationResult_PostService", e =>
+                        cfg.ReceiveEndpoint(nameof(SetPostContentModerationResultConsumer_PostService), e =>
                         {
                             e.UseMessageRetry(rc =>
                             {
                                 rc.Immediate(retryLimit);
                                 rc.Handle<AppConcurrencyException>();
                             });
-                            e.ConfigureConsumer<SetPostContentModerationResult_PostService>(context);
+                            e.ConfigureConsumer<SetPostContentModerationResultConsumer_PostService>(context);
                         });
 
-                        cfg.ReceiveEndpoint("SetPostMedia_PostService", e =>
+                        cfg.ReceiveEndpoint(nameof(SetPostMediaConsumer_PostService), e =>
                         {
                             e.UseMessageRetry(rc =>
                             {
                                 rc.Immediate(retryLimit);
                                 rc.Handle<AppConcurrencyException>();
                             });
-                            e.ConfigureConsumer<SetPostMedia_PostService>(context);
+                            e.ConfigureConsumer<SetPostMediaConsumer_PostService>(context);
                         });
                     });
 

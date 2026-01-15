@@ -3,7 +3,7 @@ using PostService.Domain;
 
 namespace PostService.Infrastructure
 {
-    public class PostRepository(MongoContext context) : IPostRepository
+    internal class PostRepository(MongoContext context) : IPostRepository
     {
         private readonly MongoContext _context = context;
 

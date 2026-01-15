@@ -10,7 +10,6 @@ namespace QueryService.Workers.Consumers.PostDomain.RestorePost
         public RestorePostMapper()
         {
             CreateMap<PostRestoredEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostRestoredEvent, UpdatePostRequest>();
         }
     }

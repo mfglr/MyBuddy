@@ -1,4 +1,6 @@
-﻿namespace PostService.Application.UseCases.RestorePost
+﻿using MediatR;
+
+namespace PostService.Application.UseCases.RestorePost
 {
-    public record RestorePostRequest(Guid Id);
+    public record RestorePostRequest(Guid Id) : IRequest;
 }

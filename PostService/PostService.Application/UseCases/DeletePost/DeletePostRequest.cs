@@ -1,4 +1,6 @@
-﻿namespace PostService.Application.UseCases.DeletePost
+﻿using MediatR;
+
+namespace PostService.Application.UseCases.DeletePost
 {
-    public record DeletePostRequest(Guid Id);
+    public record DeletePostRequest(Guid Id) : IRequest;
 }

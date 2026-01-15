@@ -1,4 +1,5 @@
-﻿using Shared.Objects;
+﻿using MediatR;
+using Shared.Objects;
 
 namespace PostService.Application.UseCases.SetPostMedia
 {
@@ -9,5 +10,5 @@ namespace PostService.Application.UseCases.SetPostMedia
         Metadata Metadata,
         ModerationResult? ModerationResult,
         IReadOnlyList<Thumbnail> Thumbnails
-    );
+    ) : IRequest;
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.DeletePost
 {
@@ -7,8 +8,8 @@ namespace PostService.Application.UseCases.DeletePost
     {
         public DeletePostMapper()
         {
-            CreateMap<Content, DeletePostResponse_Content>();
-            CreateMap<Post, DeletePostResponse>();
+            CreateMap<Content, PostDeletedEvent_Content>();
+            CreateMap<Post, PostDeletedEvent>();
         }
     }
 }

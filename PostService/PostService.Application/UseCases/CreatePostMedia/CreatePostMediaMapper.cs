@@ -1,17 +1,15 @@
-﻿using Shared.Objects;
+﻿using AutoMapper;
+using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.CreatePostMedia
 {
-    internal static class CreatePostMediaMapper
+    internal class CreatePostMediaMapper : Profile
     {
-        public static CreatePostMediaResponse ToCreatePostMediaResponse(Guid id, IEnumerable<Media> media) =>
-            new(
-                id,
-                media.Select(x => new Media(
-                    x.ContainerName,
-                    x.BlobName,
-                    x.Type
-                ))
-            );
+        public CreatePostMediaMapper()
+        {
+            CreateMap<Content, PostMediaCreatedEvent_Content>();
+            CreateMap<Post, PostMediaCreatedEvent>();
+        }
     }
 }

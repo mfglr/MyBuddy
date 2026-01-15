@@ -10,7 +10,6 @@ namespace QueryService.Workers.Consumers.PostDomain.DeletePostMedia
         public DeletePostMediaMapper()
         {
             CreateMap<PostMediaDeletedEvent_Content, UpdatePostRequest_Content>();
-            CreateMap<Media, UpdatePostRequest_Media>();
             CreateMap<PostMediaDeletedEvent, UpdatePostRequest>();
         }
     }

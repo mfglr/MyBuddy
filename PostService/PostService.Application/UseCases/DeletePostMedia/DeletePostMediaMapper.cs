@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PostService.Domain;
+using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.DeletePostMedia
 {
@@ -7,8 +8,8 @@ namespace PostService.Application.UseCases.DeletePostMedia
     {
         public DeletePostMediaMapper()
         {
-            CreateMap<Content, DeletePostMediaResponse_Content>();
-            CreateMap<Post, DeletePostMediaResponse>();
+            CreateMap<Content, PostMediaDeletedEvent_Content>();
+            CreateMap<Post, PostMediaDeletedEvent>();
         }
     }
 }

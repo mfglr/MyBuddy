@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace PostService.Infrastructure
 {
-    public class LocalBlobService(IConfiguration configuration) : IBlobService
+    internal class LocalBlobService(IConfiguration configuration) : IBlobService
     {
         private readonly IConfiguration _configuration = configuration;
 
