@@ -1,4 +1,6 @@
-﻿namespace BlobService.Application.UseCases.GetBlob
+﻿using MediatR;
+
+namespace BlobService.Application.UseCases.GetBlob
 {
-    public record GetBlobRequest(string ContainerName, string BlobName);
+    public record GetBlobRequest(string ContainerName, string BlobName) : IRequest<GetBlobResponse>;
 }

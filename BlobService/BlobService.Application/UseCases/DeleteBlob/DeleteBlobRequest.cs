@@ -1,4 +1,6 @@
-﻿namespace BlobService.Application.UseCases.DeleteBlob
+﻿using MediatR;
+
+namespace BlobService.Application.UseCases.DeleteBlob
 {
-    public record DeleteBlobRequest(string ContainerName, IEnumerable<string> BlobNames);
+    public record DeleteBlobRequest(string ContainerName, IEnumerable<string> BlobNames) : IRequest;
 }

@@ -4,11 +4,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1a865e74-146f-473a-8da3-16bad257bd79</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MassTransit" Version="8.5.5" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlobService.Application\BlobService.Application.csproj" />
