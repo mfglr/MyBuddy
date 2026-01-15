@@ -11,7 +11,7 @@ builder.Services
     .AddDomain()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
-    .AddJwt(builder.Configuration)
+    .AddIdentity(builder.Configuration)
     .AddMassTransit(builder.Configuration);
 
 DbConfigurator.Configure(builder.Services);

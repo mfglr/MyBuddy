@@ -14,22 +14,22 @@ namespace Comment.Api.Controllers
     {
         private readonly ISender _sender = sender;
 
-        [Authorize("Password", Roles = "user")]
+        [Authorize("user")]
         [HttpPost]
         public Task<CreateCommentResponse> Create(CreateCommentRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
-        [Authorize("Password", Roles = "user")]
+        [Authorize("user")]
         [HttpPut]
         public Task UpdateContent(UpdateCommentContentRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
-        [Authorize("Password", Roles = "user, admin")]
+        [Authorize("userOrAdmin")]
         [HttpDelete("{id:guid}")]
         public Task Delete(Guid id, CancellationToken cancellationToken) =>
             _sender.Send(new DeleteCommentRequest(id), cancellationToken);
 
-        [Authorize("Password", Roles = "admin")]
+        [Authorize("admin")]
         [HttpPut]
         public Task Restore(RestoreCommentRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
