@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommentService.Domain;
+using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.UpdateCommentContent
 {
@@ -7,8 +8,8 @@ namespace CommentService.Application.UseCases.UpdateCommentContent
     {
         public UpdateCommentContentMapper()
         {
-            CreateMap<Content, UpdateCommentContentResponse_Content>();
-            CreateMap<Comment, UpdateCommentContentResponse>();
+            CreateMap<Content, CommentContentUpdatedEvent_Content>();
+            CreateMap<Comment, CommentContentUpdatedEvent>();
         }
     }
 }

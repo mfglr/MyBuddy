@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommentService.Domain;
+using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.SetCommentContentModerationResult
 {
@@ -7,8 +8,8 @@ namespace CommentService.Application.UseCases.SetCommentContentModerationResult
     {
         public SetCommentContentModerationResultMapper()
         {
-            CreateMap<Content, SetCommentContentModerationResultResponse_Content>();
-            CreateMap<Comment, SetCommentContentModerationResultResponse>();
+            CreateMap<Content, CommentContentModerationResultSetEvent_Content>();
+            CreateMap<Comment, CommentContentModerationResultSetEvent>();
         }
     }
 }

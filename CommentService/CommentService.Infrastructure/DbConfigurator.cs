@@ -6,7 +6,6 @@ namespace CommentService.Infrastructure
     {
         public static void Configure(IServiceCollection services)
         {
-
             using var scope = services.BuildServiceProvider().CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<MongoContext>();
             context.Database.EnsureCreated();

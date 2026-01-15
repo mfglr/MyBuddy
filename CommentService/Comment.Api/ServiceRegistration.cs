@@ -18,40 +18,9 @@ namespace Comment.Api
     internal static class ServiceRegistration
     {
 
-        public static IServiceCollection AddDomainServices(this IServiceCollection services) =>
-            services
-                .AddScoped<CommentCreatorDomainService>();
+        
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
-            services
-                .AddMediator(cfg =>
-                {
-                    cfg.AddConsumer<CreateCommentConsumer>();
-                    cfg.AddConsumer<UpdateCommentContentConsumer>();
-                    cfg.AddConsumer<DeleteCommentConsumer>();
-                    cfg.AddConsumer<RestoreCommentConsumer>();
-                });
-
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) =>
-            services
-                .AddDbContext<MongoContext>(
-                    x => x.UseMongoDB(
-                        configuration["MongoDbSettings:ConnectionString"]!,
-                        configuration["MongoDbSettings:DatabaseName"]!
-                    )
-                )
-                .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<ICommentRepository, CommentRepository>();
-
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, IConfiguration configuration) =>
-            services
-                .AddAutoMapper(
-                    cfg => {
-                        cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
-                    },
-                    Assembly.GetExecutingAssembly(),
-                    Assembly.GetAssembly(typeof(IUnitOfWork))
-                );
+        
 
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration) =>
             services.AddMassTransit(

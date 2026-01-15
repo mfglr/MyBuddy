@@ -1,4 +1,6 @@
 using Comment.Api;
+using CommentService.Application;
+using CommentService.Domain;
 using CommentService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,11 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services
-    .AddDomainServices()
-    .AddApplicationServices()
-    .AddInfrastructureServices(builder.Configuration)
+    .AddDomain()
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration)
     .AddJwt(builder.Configuration)
-    .AddAutoMapper(builder.Configuration)
     .AddMassTransit(builder.Configuration);
 
 DbConfigurator.Configure(builder.Services);

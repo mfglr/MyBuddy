@@ -1,5 +1,7 @@
-﻿namespace CommentService.Application.UseCases.UpdateCommentContent
+﻿using MediatR;
+
+namespace CommentService.Application.UseCases.UpdateCommentContent
 {
 
-    public record UpdateCommentContentRequest(Guid Id, string Content);
+    public record UpdateCommentContentRequest(Guid Id, string Content) : IRequest;
 }

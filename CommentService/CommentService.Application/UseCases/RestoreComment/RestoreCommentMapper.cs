@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommentService.Domain;
+using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.RestoreComment
 {
@@ -7,8 +8,8 @@ namespace CommentService.Application.UseCases.RestoreComment
     {
         public RestoreCommentMapper()
         {
-            CreateMap<Content, RestoreCommentResponse_Content>();
-            CreateMap<Comment, RestoreCommentResponse>();
+            CreateMap<Content, CommentRestoredEvent_Content>();
+            CreateMap<Comment, CommentRestoredEvent>();
         }
     }
 }

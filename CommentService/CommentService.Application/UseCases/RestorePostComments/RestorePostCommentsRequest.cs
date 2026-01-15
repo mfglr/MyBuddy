@@ -1,4 +1,6 @@
-﻿namespace CommentService.Application.UseCases.RestorePostComments
+﻿using MediatR;
+
+namespace CommentService.Application.UseCases.RestorePostComments
 {
-    public record RestorePostCommentsRequest(Guid PostId);
+    public record RestorePostCommentsRequest(Guid PostId) : IRequest;
 }

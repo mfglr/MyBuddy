@@ -1,13 +1,15 @@
+using CommentService.Application;
+using CommentService.Domain;
 using CommentService.Infrastructure;
 using CommetService.Workers;
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
-    .AddApplicationServices()
-    .AddAutoMapper(builder.Configuration)
-    .AddMassTransit(builder.Configuration)
-    .AddInfrastructureServices(builder.Configuration);
+    .AddDomain()
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration)
+    .AddMassTransit(builder.Configuration);
 
 DbConfigurator.Configure(builder.Services);
 

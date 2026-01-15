@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommentService.Domain;
+using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.DeleteComentReplies
 {
@@ -7,8 +8,8 @@ namespace CommentService.Application.UseCases.DeleteComentReplies
     {
         public DeleteCommentRepliesMapper()
         {
-            CreateMap<Content, DeleteCommentRepliesResponse_Content>();
-            CreateMap<Comment, DeleteCommentRepliesResponse_Comment>();
+            CreateMap<Content, CommentDeletedEvent_Content>();
+            CreateMap<Comment, CommentDeletedEvent>();
         }
     }
 }

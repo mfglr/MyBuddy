@@ -1,6 +1,7 @@
-﻿using Shared.Objects;
+﻿using MediatR;
+using Shared.Objects;
 
 namespace CommentService.Application.UseCases.SetCommentContentModerationResult
 {
-    public record SetCommentContentModerationResultRequest(Guid Id, ModerationResult ModerationResult);
+    public record SetCommentContentModerationResultRequest(Guid Id, ModerationResult ModerationResult) : IRequest;
 }

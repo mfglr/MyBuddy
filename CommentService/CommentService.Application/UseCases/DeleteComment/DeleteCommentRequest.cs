@@ -1,4 +1,6 @@
-﻿namespace CommentService.Application.UseCases.DeleteComment
+﻿using MediatR;
+
+namespace CommentService.Application.UseCases.DeleteComment
 {
-    public record DeleteCommentRequest(Guid Id);
+    public record DeleteCommentRequest(Guid Id) : IRequest;
 }
