@@ -1,4 +1,6 @@
-﻿namespace QueryService.Application.UseCases.PostUseCases.GetPostById
+﻿using MediatR;
+
+namespace QueryService.Application.UseCases.PostUseCases.GetPostById
 {
-    public record GetPostByIdRequest(Guid Id);
+    public record GetPostByIdRequest(Guid Id) : IRequest<GetPostByIdResponse>;
 }

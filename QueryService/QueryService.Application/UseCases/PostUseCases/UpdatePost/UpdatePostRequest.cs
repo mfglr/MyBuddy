@@ -1,4 +1,5 @@
-﻿using Shared.Objects;
+﻿using MediatR;
+using Shared.Objects;
 
 namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
 {
@@ -12,7 +13,7 @@ namespace QueryService.Application.UseCases.PostUseCases.UpdatePost
         int Version,
         UpdatePostRequest_Content? Content,
         List<Media> Media
-    )
+    ) : IRequest
     {
         public bool IsValidVersion => !Media.Any(x => x.ModerationResult == null);
     }

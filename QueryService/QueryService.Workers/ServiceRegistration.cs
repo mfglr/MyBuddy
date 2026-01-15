@@ -19,7 +19,7 @@ namespace QueryService.Workers
             services
                 .AddAutoMapper(
                     cfg => {
-                        cfg.LicenseKey = configuration["AutoMapper:LicenseKey"]!;
+                        cfg.LicenseKey = configuration["LuckPenny:LicenseKey"]!;
                     },
                     Assembly.GetExecutingAssembly(),
                     Assembly.GetAssembly(typeof(Application.ServiceRegistration))

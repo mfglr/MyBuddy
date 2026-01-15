@@ -5,7 +5,6 @@ namespace QueryService.Infrastructure
 {
     internal class UserRepository(SqlContext context) : IUserRepository
     {
-
         private readonly SqlContext _context = context;
 
         public async Task CreateAsync(User user, CancellationToken cancellationToken) =>

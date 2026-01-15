@@ -1,4 +1,5 @@
-﻿using Shared.Objects;
+﻿using MediatR;
+using Shared.Objects;
 
 namespace QueryService.Application.UseCases.UserUseCases.UpdateUser
 {
@@ -12,5 +13,5 @@ namespace QueryService.Application.UseCases.UserUseCases.UpdateUser
         string Username,
         string Gender,
         IEnumerable<Media> Media
-    );
+    ) : IRequest;
 }

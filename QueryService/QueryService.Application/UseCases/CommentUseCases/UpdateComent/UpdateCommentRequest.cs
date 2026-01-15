@@ -1,4 +1,5 @@
-﻿using Shared.Objects;
+﻿using MediatR;
+using Shared.Objects;
 
 namespace QueryService.Application.UseCases.CommentUseCases.UpdateComent
 {
@@ -18,5 +19,5 @@ namespace QueryService.Application.UseCases.CommentUseCases.UpdateComent
         Guid? RepliedId,
         int Version,
         UpdateCommentRequest_Content Content
-    );
+    ) : IRequest;
 }
