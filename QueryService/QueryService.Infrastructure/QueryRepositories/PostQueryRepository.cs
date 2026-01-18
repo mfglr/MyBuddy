@@ -35,10 +35,12 @@ namespace QueryService.Infrastructure.QueryRepositories
                 ? query
                     .Where(x => x.CreatedAt < page.Cursor)
                     .OrderByDescending(x => x.CreatedAt)
+                    .ThenByDescending(x => x.Id)
                     .Take(page.RecordsPerPage)
                 : query
                     .Where(x => x.CreatedAt > page.Cursor)
                     .OrderBy(x => x.CreatedAt)
+                    .ThenBy(x => x.Id)
                     .Take(page.RecordsPerPage);
     }
 

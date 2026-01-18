@@ -20,12 +20,22 @@ namespace QueryService.Infrastructure
         }
     }
 
+    //internal class AppDbContextFactory : IDesignTimeDbContextFactory<SqlContext>
+    //{
+    //    public SqlContext CreateDbContext(string[] args)
+    //    {
+    //        var builder = new DbContextOptionsBuilder<SqlContext>();
+    //        builder.UseSqlServer("Server=localhost; Database=AppQueryDB; User Id=sa; Password=123456789Abc*;TrustServerCertificate=True;");
+    //        return new SqlContext(builder.Options);
+    //    }
+    //}
+
     internal class AppDbContextFactory : IDesignTimeDbContextFactory<SqlContext>
     {
         public SqlContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<SqlContext>();
-            builder.UseSqlServer("Server=localhost; Database=AppQueryDB; User Id=sa; Password=123456789Abc*;TrustServerCertificate=True;");
+            builder.UseNpgsql("Host=localhost;Port=5431;Database=AppQueryDB;Username=postgres;Password=123456789");
             return new SqlContext(builder.Options);
         }
     }

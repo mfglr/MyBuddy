@@ -10,7 +10,7 @@ namespace QueryService.Infrastructure.ModelBuilders
         {
             builder.HasIndex(x => x.UserId);
             builder.HasIndex(x => x.CreatedAt);
-            builder.Property(x => x.RowVersion).IsRowVersion();
+            builder.Property(x => x.ReadVersion).IsConcurrencyToken();
             builder
                 .OwnsOne(
                     x => x.Content,

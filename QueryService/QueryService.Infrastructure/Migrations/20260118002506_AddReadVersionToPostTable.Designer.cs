@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using QueryService.Infrastructure;
 
 #nullable disable
@@ -12,8 +12,8 @@ using QueryService.Infrastructure;
 namespace QueryService.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlContext))]
-    [Migration("20260114193940_CreateUserTable")]
-    partial class CreateUserTable
+    [Migration("20260118002506_AddReadVersionToPostTable")]
+    partial class AddReadVersionToPostTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,42 +21,42 @@ namespace QueryService.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "10.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("QueryService.Domain.CommentDomain.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("ParentId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("RepliedId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<byte[]>("RowVerstion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Version")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -71,27 +71,29 @@ namespace QueryService.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<byte[]>("RowVersion")
+                    b.Property<long>("ReadVersion")
                         .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Version")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -100,36 +102,36 @@ namespace QueryService.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Version")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -141,11 +143,11 @@ namespace QueryService.Infrastructure.Migrations
                     b.OwnsOne("QueryService.Domain.CommentDomain.CommentContent", "Content", b1 =>
                         {
                             b1.Property<Guid>("CommentId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("text");
 
                             b1.HasKey("CommentId");
 
@@ -157,19 +159,19 @@ namespace QueryService.Infrastructure.Migrations
                             b1.OwnsOne("Shared.Objects.ModerationResult", "ModerationResult", b2 =>
                                 {
                                     b2.Property<Guid>("CommentContentCommentId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<int>("Hate")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("SelfHarm")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("Sexual")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("Violence")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.HasKey("CommentContentCommentId");
 
@@ -189,18 +191,20 @@ namespace QueryService.Infrastructure.Migrations
 
             modelBuilder.Entity("QueryService.Domain.PostDomain.Post", b =>
                 {
-                    b.OwnsMany("QueryService.Domain.PostDomain.Media", "Media", b1 =>
+                    b.OwnsMany("Shared.Objects.Media", "Media", b1 =>
                         {
                             b1.Property<Guid>("PostId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAddOrUpdate();
+                                .ValueGeneratedOnAdd();
 
                             b1.Property<string>("BlobName")
                                 .IsRequired();
 
                             b1.Property<string>("ContainerName")
                                 .IsRequired();
+
+                            b1.Property<bool>("IsDeleted");
 
                             b1.Property<string>("TranscodedBlobName");
 
@@ -264,7 +268,7 @@ namespace QueryService.Infrastructure.Migrations
                                     b2.Property<int>("Media__synthesizedOrdinal");
 
                                     b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAddOrUpdate();
+                                        .ValueGeneratedOnAdd();
 
                                     b2.Property<string>("BlobName")
                                         .IsRequired();
@@ -281,8 +285,7 @@ namespace QueryService.Infrastructure.Migrations
                                         .HasForeignKey("MediaPostId", "Media__synthesizedOrdinal");
                                 });
 
-                            b1.Navigation("Metadata")
-                                .IsRequired();
+                            b1.Navigation("Metadata");
 
                             b1.Navigation("ModerationResult");
 
@@ -292,11 +295,11 @@ namespace QueryService.Infrastructure.Migrations
                     b.OwnsOne("QueryService.Domain.PostDomain.PostContent", "Content", b1 =>
                         {
                             b1.Property<Guid>("PostId")
-                                .HasColumnType("uniqueidentifier");
+                                .HasColumnType("uuid");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("nvarchar(max)");
+                                .HasColumnType("text");
 
                             b1.HasKey("PostId");
 
@@ -308,19 +311,19 @@ namespace QueryService.Infrastructure.Migrations
                             b1.OwnsOne("Shared.Objects.ModerationResult", "ModerationResult", b2 =>
                                 {
                                     b2.Property<Guid>("PostContentPostId")
-                                        .HasColumnType("uniqueidentifier");
+                                        .HasColumnType("uuid");
 
                                     b2.Property<int>("Hate")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("SelfHarm")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("Sexual")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.Property<int>("Violence")
-                                        .HasColumnType("int");
+                                        .HasColumnType("integer");
 
                                     b2.HasKey("PostContentPostId");
 
@@ -346,7 +349,7 @@ namespace QueryService.Infrastructure.Migrations
                             b1.Property<Guid>("UserId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAddOrUpdate();
+                                .ValueGeneratedOnAdd();
 
                             b1.Property<string>("BlobName")
                                 .IsRequired();
@@ -418,7 +421,7 @@ namespace QueryService.Infrastructure.Migrations
                                     b2.Property<int>("Media__synthesizedOrdinal");
 
                                     b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAddOrUpdate();
+                                        .ValueGeneratedOnAdd();
 
                                     b2.Property<string>("BlobName")
                                         .IsRequired();

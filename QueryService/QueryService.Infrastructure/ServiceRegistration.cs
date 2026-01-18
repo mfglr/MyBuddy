@@ -11,10 +11,9 @@ namespace QueryService.Infrastructure
 {
     public static class ServiceRegistration
     {
-
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddDbContext<SqlContext>(x => x.UseSqlServer(configuration.GetConnectionString("SqlServer")))
+                .AddDbContext<SqlContext>(x => x.UseNpgsql(configuration.GetConnectionString("PostgreSql")))
                 .AddQueryRepositories()
                 .AddScoped<IPostRepository,PostRepository>()
                 .AddScoped<ICommentRepository,CommentRepository>()
