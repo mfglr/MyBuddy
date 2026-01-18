@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>2cbd19ab-087f-4b9a-9a7e-7c9262f7da9b</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MetadataExtractor.Application\MetadataExtractor.Application.csproj" />
+    <ProjectReference Include="..\MetadataExtractor.Infrastructure\MetadataExtractor.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

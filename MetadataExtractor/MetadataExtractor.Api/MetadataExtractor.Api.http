@@ -1,0 +1,6 @@
+@MetadataExtractor.Api_HostAddress = http://localhost:5063
+
+GET {{MetadataExtractor.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
