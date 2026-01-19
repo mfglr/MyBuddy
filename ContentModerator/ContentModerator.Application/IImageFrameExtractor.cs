@@ -2,6 +2,6 @@
 {
     public interface IImageFrameExtractor
     {
-        Task ExtractAsync(string inputPath, string outputPath, double resulation, CancellationToken cancellationToken);
+        Task<string> ExtractAsync(string inputPath, string tempPath, double resolution, CancellationToken cancellationToken);
     }
 }

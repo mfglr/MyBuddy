@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using StackExchange.Redis;
 
-namespace ContentModerator.Infrastructure
+namespace ContentModerator.Infrastructure.LocalBlobService
 {
     internal class RedisAccessTokenProvider(ConnectionMultiplexer connectionMultiplexer, IConfiguration configuration) : IAccessTokenProvider
     {

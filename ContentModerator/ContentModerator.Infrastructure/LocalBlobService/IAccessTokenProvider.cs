@@ -1,4 +1,4 @@
-﻿namespace ContentModerator.Application
+﻿namespace ContentModerator.Infrastructure.LocalBlobService
 {
     public interface IAccessTokenProvider
     {

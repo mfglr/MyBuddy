@@ -1,33 +1,36 @@
 ﻿using ContentModerator.Application;
 using Xabe.FFmpeg;
 
-namespace ContentModerator.Infrastructure
+namespace ContentModerator.Infrastructure.FFmpegFrameExtractor
 {
     internal class VideoFrameExtractor : IVideoFrameExtractor
     {
-        public async Task<IEnumerable<string>> ExtractAsync(string inputPath, string outputPath, double resulation, double fps, CancellationToken cancellationToken)
+        public async Task<IEnumerable<string>> ExtractAsync(string inputPath, string tempPath, double resolution, double fps, CancellationToken cancellationToken)
         {
             var info = await FFmpeg.GetMediaInfo(inputPath, cancellationToken);
             var duration = (int)info.Duration.TotalSeconds;
             var vStream = info.VideoStreams.First();
-            bool isScaleDownRequired = vStream.Height > vStream.Width ? vStream.Height > resulation : vStream.Height > resulation;
-            var scale = $"scale='if(gt(iw,ih),{resulation},-2)':'if(gt(ih,iw),{resulation},-2)'";
+            bool isScaleDownRequired = vStream.Height > vStream.Width ? vStream.Height > resolution : vStream.Height > resolution;
 
             var filter = $"fps={fps}";
             if (isScaleDownRequired)
+            {
+                var scale = $"scale='if(gt(iw,ih),{resolution},-2)':'if(gt(ih,iw),{resolution},-2)'";
                 filter = $"{filter},{scale}";
+            }
 
             await FFmpeg.Conversions.New()
                 .AddParameter($"-i \"{inputPath}\"")
                 .AddParameter($"-vf \"{filter}\"")
-                .SetOutput($"{outputPath}_%d.jpg")
+                .AddParameter("-loglevel error")
+                .SetOutput($"{tempPath}_%d.jpeg")
                 .Start(cancellationToken);
 
             int lengthOfFrames = (int)(duration * fps);
             var outputPaths = new string[lengthOfFrames];
 
             for (int i = 1; i <= lengthOfFrames; i++)
-                outputPaths[i - 1] = $"{outputPath}_{i}.jpg";
+                outputPaths[i - 1] = $"{tempPath}_{i}.jpeg";
 
             return outputPaths;
         }

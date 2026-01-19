@@ -1,7 +1,7 @@
 ﻿using ContentModerator.Application;
 using Microsoft.Extensions.Configuration;
 
-namespace ContentModerator.Infrastructure
+namespace ContentModerator.Infrastructure.LocalBlobService
 {
     internal class LocalBlobService(IConfiguration configuration, IAccessTokenProvider accessTokenProvider) : IBlobService
     {

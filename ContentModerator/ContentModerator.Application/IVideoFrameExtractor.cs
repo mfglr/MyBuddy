@@ -2,6 +2,6 @@
 {
     public interface IVideoFrameExtractor
     {
-        Task<IEnumerable<string>> ExtractAsync(string inputPath, string outputPath, double resulation, double fps, CancellationToken cancellationToken);
+        Task<IEnumerable<string>> ExtractAsync(string inputPath, string tempPath, double resulation, double fps, CancellationToken cancellationToken);
     }
 }

@@ -4,9 +4,9 @@ using MassTransit.Mediator;
 using Shared.Events.Comment;
 using Shared.Objects;
 
-namespace ContentModerator.Worker
+namespace ContentModerator.Worker.Consumers
 {
-    internal class ClassifyCommentContentOnCreated(IMediator mediator, IPublishEndpoint publishEndpoint) : IConsumer<CommentCreatedEvent>
+    internal class ClassifyCommentContent_OnCommentCreated_ContentModerator(IMediator mediator, IPublishEndpoint publishEndpoint) : IConsumer<CommentCreatedEvent>
     {
         private readonly IMediator _mediator = mediator;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;

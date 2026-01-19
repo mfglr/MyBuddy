@@ -1,21 +1,18 @@
-﻿using ContentModerator.Application.UseCases.ClassifyImage;
-using ContentModerator.Application.UseCases.ClassifyText;
-using ContentModerator.Application.UseCases.ClassifyVideo;
-using MassTransit;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ContentModerator.Application
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
+        public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddScoped<TempDirectoryManager>()
-                .AddMediator(cfg =>
+                .AddMediatR(cfg =>
                 {
-                    cfg.AddConsumer<ClassifyTextConsumer>();
-                    cfg.AddConsumer<ClassifyImageConsumer>();
-                    cfg.AddConsumer<ClassifyVideoConsumer>();
+                    cfg.LicenseKey = configuration["LuckPenny:LicenseKey"];
+                    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 });
     }
 }
