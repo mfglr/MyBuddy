@@ -61,7 +61,7 @@ namespace QueryService.Infrastructure.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("QueryService.Domain.PostDomain.Post", b =>
@@ -98,7 +98,7 @@ namespace QueryService.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("QueryService.Domain.UserDomain.User", b =>
@@ -138,7 +138,7 @@ namespace QueryService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("QueryService.Domain.CommentDomain.Comment", b =>
@@ -154,7 +154,7 @@ namespace QueryService.Infrastructure.Migrations
 
                             b1.HasKey("CommentId");
 
-                            b1.ToTable("Comments", (string)null);
+                            b1.ToTable("Comments");
 
                             b1.WithOwner()
                                 .HasForeignKey("CommentId");
@@ -178,7 +178,7 @@ namespace QueryService.Infrastructure.Migrations
 
                                     b2.HasKey("CommentContentCommentId");
 
-                                    b2.ToTable("Comments", (string)null);
+                                    b2.ToTable("Comments");
 
                                     b2.WithOwner()
                                         .HasForeignKey("CommentContentCommentId");
@@ -205,7 +205,7 @@ namespace QueryService.Infrastructure.Migrations
 
                             b1.HasKey("PostId");
 
-                            b1.ToTable("Posts", (string)null);
+                            b1.ToTable("Posts");
 
                             b1.WithOwner()
                                 .HasForeignKey("PostId");
@@ -229,7 +229,7 @@ namespace QueryService.Infrastructure.Migrations
 
                                     b2.HasKey("PostContentPostId");
 
-                                    b2.ToTable("Posts", (string)null);
+                                    b2.ToTable("Posts");
 
                                     b2.WithOwner()
                                         .HasForeignKey("PostContentPostId");
@@ -265,32 +265,12 @@ namespace QueryService.Infrastructure.Migrations
 
                             b1.HasKey("UserId", "__synthesizedOrdinal");
 
-                            b1.ToTable("Users", (string)null);
+                            b1.ToTable("Users");
 
                             b1.ToJson("Media");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
-
-                            b1.OwnsOne("Shared.Objects.Metadata", "Metadata", b2 =>
-                                {
-                                    b2.Property<Guid>("MediaUserId");
-
-                                    b2.Property<int>("Media__synthesizedOrdinal");
-
-                                    b2.Property<double>("Duration");
-
-                                    b2.Property<double>("Height");
-
-                                    b2.Property<double>("Width");
-
-                                    b2.HasKey("MediaUserId", "Media__synthesizedOrdinal");
-
-                                    b2.ToTable("Users", (string)null);
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("MediaUserId", "Media__synthesizedOrdinal");
-                                });
 
                             b1.OwnsOne("Shared.Objects.ModerationResult", "ModerationResult", b2 =>
                                 {
@@ -308,7 +288,27 @@ namespace QueryService.Infrastructure.Migrations
 
                                     b2.HasKey("MediaUserId", "Media__synthesizedOrdinal");
 
-                                    b2.ToTable("Users", (string)null);
+                                    b2.ToTable("Users");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("MediaUserId", "Media__synthesizedOrdinal");
+                                });
+
+                            b1.OwnsOne("Shared.Objects.Metadata", "Metadata", b2 =>
+                                {
+                                    b2.Property<Guid>("MediaUserId");
+
+                                    b2.Property<int>("Media__synthesizedOrdinal");
+
+                                    b2.Property<double>("Duration");
+
+                                    b2.Property<double>("Height");
+
+                                    b2.Property<double>("Width");
+
+                                    b2.HasKey("MediaUserId", "Media__synthesizedOrdinal");
+
+                                    b2.ToTable("Users");
 
                                     b2.WithOwner()
                                         .HasForeignKey("MediaUserId", "Media__synthesizedOrdinal");
@@ -328,11 +328,11 @@ namespace QueryService.Infrastructure.Migrations
 
                                     b2.Property<bool>("IsSquare");
 
-                                    b2.Property<double>("Resulation");
+                                    b2.Property<double>("Resolution");
 
                                     b2.HasKey("MediaUserId", "Media__synthesizedOrdinal", "__synthesizedOrdinal");
 
-                                    b2.ToTable("Users", (string)null);
+                                    b2.ToTable("Users");
 
                                     b2.WithOwner()
                                         .HasForeignKey("MediaUserId", "Media__synthesizedOrdinal");
