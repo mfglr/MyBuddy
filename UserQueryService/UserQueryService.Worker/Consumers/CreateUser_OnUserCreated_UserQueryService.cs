@@ -1,0 +1,29 @@
+﻿using AutoMapper;
+using MassTransit;
+using MediatR;
+using Shared.Events.UserService;
+using UserQueryService.Application.UseCases;
+
+namespace UserQueryService.Worker.Consumers
+{
+    internal class CreateUserMapper : Profile
+    {
+        public CreateUserMapper()
+        {
+            CreateMap<UserCreatedEvent, UpsertUserRequest>();
+        }
+    }
+
+    internal class CreateUser_OnUserCreated_UserQueryService(ISender sender, IMapper mapper) : IConsumer<UserCreatedEvent>
+    {
+        private readonly ISender _sender = sender;
+        private readonly IMapper _mapper = mapper;
+
+        public Task Consume(ConsumeContext<UserCreatedEvent> context) =>
+            _sender
+                .Send(
+                    _mapper.Map<UserCreatedEvent, UpsertUserRequest>(context.Message),
+                    context.CancellationToken
+                );
+    }
+}

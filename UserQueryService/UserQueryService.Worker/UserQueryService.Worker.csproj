@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-UserQueryService.Worker-a64335cf-7d99-4e1c-8274-697613057b97</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.0.0" />
+    <PackageReference Include="MassTransit" Version="9.0.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserQueryService.Application\UserQueryService.Application.csproj" />
+    <ProjectReference Include="..\UserQueryService.Infrastructure\UserQueryService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
