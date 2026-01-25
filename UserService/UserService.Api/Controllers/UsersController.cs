@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.UseCases.CreateUser;
 using UserService.Application.UseCases.SendEmailVerificationMail;
+using UserService.Application.UseCases.UpdateName;
 
 namespace UserService.Api.Controllers
 {
@@ -20,5 +21,10 @@ namespace UserService.Api.Controllers
         [Authorize("user")]
         public Task SendEmailVerificationMail(CancellationToken cancellationToken) =>
             _sender.Send(new SendEmailVeificationMailRequest(), cancellationToken);
+
+        [HttpPut]
+        [Authorize("user")]
+        public Task UpdateName(UpdateNameRequest request, CancellationToken cancellationToken) =>
+            _sender.Send(request, cancellationToken);
     }
 }

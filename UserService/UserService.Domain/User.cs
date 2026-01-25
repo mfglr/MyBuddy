@@ -26,5 +26,15 @@ namespace UserService.Domain
             Version = 1;
             Gender = Gender.Unknown();
         }
+
+        public void UpdateName(Name name)
+        {
+            if (IsDeleted)
+                throw new UserNotFoundException();
+
+            Name = name;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
     }
 }
