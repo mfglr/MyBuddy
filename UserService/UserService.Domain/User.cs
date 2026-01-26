@@ -36,5 +36,16 @@ namespace UserService.Domain
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
+
+        public void AddMedia(Media media)
+        {
+            if (IsDeleted)
+                throw new UserNotFoundException();
+            
+            Media = [media, ..Media];
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
     }
 }

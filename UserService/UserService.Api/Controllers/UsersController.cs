@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserService.Application.UseCases.CreateMedia;
 using UserService.Application.UseCases.CreateUser;
 using UserService.Application.UseCases.SendEmailVerificationMail;
 using UserService.Application.UseCases.UpdateName;
@@ -16,6 +17,11 @@ namespace UserService.Api.Controllers
         [HttpPost]
         public Task Create(CreateUserRequest request, CancellationToken cancellationToken)
             => _sender.Send(request, cancellationToken);
+
+        [HttpPost]
+        [Authorize("user")]
+        public Task CreateMedia([FromForm]CreateMediaRequest request ,CancellationToken cancellationToken) =>
+            _sender.Send(request, cancellationToken);
 
         [HttpGet]
         [Authorize("user")]
