@@ -41,6 +41,9 @@ namespace UserService.Domain
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
+
+            if(media.Type != MediaType.Image)
+                throw new InvalidMediaTypeException();
             
             Media = [media, ..Media];
             UpdatedAt = DateTime.UtcNow;
