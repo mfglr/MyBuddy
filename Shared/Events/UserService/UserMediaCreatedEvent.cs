@@ -1,9 +1,8 @@
-﻿using Shared.Objects;
-
-namespace Shared.Events.UserService
+﻿namespace Shared.Events.UserService
 {
     public record UserMediaCreatedEvent(
         Guid Id,
-        Media Media
+        string ContainerName,
+        string BlobName
     );
 }

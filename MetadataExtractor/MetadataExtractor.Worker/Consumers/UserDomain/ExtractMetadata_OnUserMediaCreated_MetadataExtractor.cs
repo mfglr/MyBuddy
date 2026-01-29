@@ -12,9 +12,9 @@ namespace MetadataExtractor.Worker.Consumers.UserDomain
 
         public async Task Consume(ConsumeContext<UserMediaCreatedEvent> context)
         {
-            var metadata = await _sender.Send(new ExtractMetadataRequest(context.Message.Media.ContainerName, context.Message.Media.BlobName));
+            var metadata = await _sender.Send(new ExtractMetadataRequest(context.Message.ContainerName, context.Message.BlobName));
             await _publishEndpoint.Publish(
-                new UserMediaMetadataExtractedEvent(context.Message.Id, context.Message.Media.BlobName, metadata),
+                new UserMediaMetadataExtractedEvent(context.Message.Id, context.Message.BlobName, metadata),
                 context.CancellationToken
             );
         }

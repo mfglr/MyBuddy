@@ -3,6 +3,7 @@
 namespace Shared.Events.PostService
 {
     public record PostCreatedEvent_Content(string Value);
+    public record PostCreatedEvent_Media(string ContainerName, string BlobName, MediaType Type);
     public record PostCreatedEvent(
         Guid Id,
         DateTime CreatedAt,
@@ -11,6 +12,6 @@ namespace Shared.Events.PostService
         int Version,
         bool IsDeleted,
         PostDeletedEvent_Content? Content,
-        IReadOnlyList<Media> Media
+        IReadOnlyList<PostCreatedEvent_Media> Media
     );
 }

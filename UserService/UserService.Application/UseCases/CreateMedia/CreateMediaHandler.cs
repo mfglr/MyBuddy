@@ -1,14 +1,12 @@
-﻿using AutoMapper;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
 using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.CreateMedia
 {
-    internal class CreateMediaHandler(IMapper mapper, IBlobService blobService, IGrainFactory grainFactory, IPublishEndpoint publishEndpoint, MediaTypeExtractor mediaTypeExtractor, IIdentityService idendityService) : IRequestHandler<CreateMediaRequest>
+    internal class CreateMediaHandler(IBlobService blobService, IGrainFactory grainFactory, IPublishEndpoint publishEndpoint, MediaTypeExtractor mediaTypeExtractor, IIdentityService idendityService) : IRequestHandler<CreateMediaRequest>
     {
-
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
             var userId = idendityService.UserId;
@@ -22,8 +20,7 @@ namespace UserService.Application.UseCases.CreateMedia
                 var media = new Media(blobName);
                 await userGrain.AddMedia(media);
                 
-                var sharedMedia = mapper.Map<Media, Shared.Objects.Media>(media);
-                var @event = new UserMediaCreatedEvent(userId, sharedMedia);
+                var @event = new UserMediaCreatedEvent(userId, media.ContainerName, media.BlobName);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
             catch (Exception)
