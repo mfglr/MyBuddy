@@ -8,9 +8,9 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.DeletePost
 {
-    internal class DeletePostHandler(IPostRepository postRepository, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<DeletePostRequest>
+    internal class DeletePostHandler(IPostGrain postRepository, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<DeletePostRequest>
     {
-        private readonly IPostRepository _postRepository = postRepository;
+        private readonly IPostGrain _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;
         private readonly IIdentityService _identityService = identityService;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;

@@ -7,9 +7,9 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.SetPostContentModerationResult
 {
-    internal class SetPostContentModerationResultHandler(IPostRepository repository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<SetPostContentModerationResultRequest>
+    internal class SetPostContentModerationResultHandler(IPostGrain repository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<SetPostContentModerationResultRequest>
     {
-        private readonly IPostRepository _repository = repository;
+        private readonly IPostGrain _repository = repository;
         private readonly IMapper _mapper = mapper;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 

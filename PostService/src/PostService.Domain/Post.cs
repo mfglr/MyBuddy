@@ -1,23 +1,51 @@
-﻿using PostService.Domain.Exceptions;
-using Shared.Objects;
+﻿using Newtonsoft.Json;
+using Orleans;
+using PostService.Domain.Exceptions;
 
 namespace PostService.Domain
 {
+    [GenerateSerializer]
+    [Alias("PostService.Domain.Post")]
     public class Post
     {
         public readonly static int MaxMediaCount = 5;
         public readonly static string MediaContainerName = "PostMedia";
 
+        [Id(0)]
         public Guid Id { get; private set; }
+        [Id(1)]
         public DateTime CreatedAt { get; private set; }
+        [Id(2)]
         public DateTime? UpdatedAt { get; private set; }
+        [Id(3)]
         public Guid UserId { get; private set; }
+        [Id(4)]
         public bool IsDeleted { get; private set; }
+        [Id(5)]
         public int Version { get; private set; }
+        [Id(6)]
         public Content? Content { get; private set; }
-        public IReadOnlyList<Media> Media { get; private set; }
+        [Id(7)]
+        public List<Media> Media { get; private set; }
 
-        public Post(Guid userId, Content? content, IReadOnlyList<Media> media)
+        public bool IsPreprocessingCompletedAndIsValid() =>
+            !Media.Any(x => !x.IsPreprocessingCompletedAndIsValid()) &&
+            Content != null && Content.IsPreprocessingCompletedAndIsValid();
+
+        [JsonConstructor]
+        public Post(Guid id, DateTime createdAt, DateTime? updatedAt, Guid userId, bool isDeleted, int version, Content? content, List<Media> media)
+        {
+            Id = id;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            UserId = userId;
+            IsDeleted = isDeleted;
+            Version = version;
+            Content = content;
+            Media = media;
+        }
+
+        public Post(Guid userId, Content? content, List<Media> media)
         {
             if (media.Count <= 0)
                 throw new PostMediaRequiredException();
@@ -35,15 +63,15 @@ namespace PostService.Domain
             CreatedAt = DateTime.UtcNow;
             Version = 1;
         }
-        
+
         public void Delete()
         {
             if (IsDeleted)
                 throw new PostNotFoundException();
 
             IsDeleted = true;
-            Version++;
             UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
         public void Restore()
         {
@@ -51,72 +79,29 @@ namespace PostService.Domain
                 throw new PostAlreadyAvailableException();
 
             IsDeleted = false;
-            Version++;
             UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
 
         public void SetContentModerationResult(ModerationResult result)
         {
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
             Content = Content?.SetModerationResult(result);
-            Version++;
             UpdatedAt = DateTime.UtcNow;
-        }
-
-        public void SetMedia(string blobName,string? transcodedBlobName, Metadata metaData, ModerationResult? moderationResult, IEnumerable<Thumbnail> thumbnails)
-        {
-            var media =
-                Media.FirstOrDefault(x => x.BlobName == blobName) ??
-                throw new PostMediaNotFoundException();
-
-            Media =
-                [
-                    ..Media
-                        .Select(
-                            x => x == media
-                                ? x.Set(transcodedBlobName, metaData, moderationResult, thumbnails)
-                                : x
-                        )
-                ];
             Version++;
-            UpdatedAt = DateTime.UtcNow;
         }
-
         public void UpdateContent(Content content)
         {
             if (IsDeleted)
                 throw new PostNotFoundException();
-
             Content = content;
-            Version++;
             UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
 
-        public void AddMedia(IReadOnlyList<Media> media, string? offset)
-        {
-            if (IsDeleted)
-                throw new PostNotFoundException();
-
-            int index;
-            if (offset == null)
-                index = -1;
-            else
-            {
-                var item = Media.Index().First(x => x.Item.BlobName == offset);
-                if (item.Item == null)
-                    throw new Exception("Ofset not found");
-                index = item.Index;
-            }
-
-            if (Media.Where(x => !x.IsDeleted).Count() + media.Count > MaxMediaCount)
-                throw new PostMediaCountException();
-
-            var list = Media.ToList();
-            Media = [.. list[0..(index + 1)], .. media, .. list[(index + 1)..]];
-            Version++;
-            UpdatedAt = DateTime.UtcNow;
-        }
-
-        public void DeleMedia(string blobName)
+        public void SetMediaTranscodedBlobName(string blobName, string transcodedBlobName)
         {
             if (IsDeleted)
                 throw new PostNotFoundException();
@@ -125,15 +110,48 @@ namespace PostService.Domain
                 Media.FirstOrDefault(x => x.BlobName == blobName) ??
                 throw new PostMediaNotFoundException();
 
-            if (media.IsDeleted)
+            media.SetTranscodedBlobName(transcodedBlobName);
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+        public void SetMediaMetadata(string blobName, Metadata metadata)
+        {
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
+            var media =
+                Media.FirstOrDefault(x => x.BlobName == blobName) ??
                 throw new PostMediaNotFoundException();
 
-            if (Media.Where(x => !x.IsDeleted).Count() <= 1)
-                throw new PostMediaRequiredException();
-
-            Media = [.. Media.Select(x => x == media ? x.Delete() : x)];
-            Version++;
+            media.SetMetadata(metadata);
             UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
+        public void SetMediaModerationResult(string blobName, ModerationResult result)
+        {
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
+            var media =
+                Media.FirstOrDefault(x => x.BlobName == blobName) ??
+                throw new PostMediaNotFoundException();
+
+            media.SetModerationResult(result);
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+        public void AddThumbnail(string blobName, Thumbnail thumbnail)
+        {
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
+            var media =
+                Media.FirstOrDefault(x => x.BlobName == blobName) ??
+                throw new PostMediaNotFoundException();
+            media.AddThumbnail(thumbnail);
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+       
     }
 }

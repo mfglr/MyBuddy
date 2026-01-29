@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PostService.Application;
-using PostService.Infrastructure.MongoDb;
-using StackExchange.Redis;
+using PostService.Infrastructure.LocalBlobService;
+using PostService.Infrastructure.Orleans;
 
 namespace PostService.Infrastructure
 {
@@ -10,9 +9,7 @@ namespace PostService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddMongoDb(configuration)
-                .AddSingleton(ConnectionMultiplexer.Connect(configuration["Redis:Host"]!))
-                .AddSingleton<IAccessTokenProvider, RedisAccessTokenProvider>()
-                .AddSingleton<IBlobService, LocalBlobService>();
+                .AddOrleans()
+                .AddLocalBlobService(configuration);
     }
 }

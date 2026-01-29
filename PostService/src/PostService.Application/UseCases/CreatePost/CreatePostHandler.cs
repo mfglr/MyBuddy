@@ -1,38 +1,40 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MediatR;
+using Orleans;
 using PostService.Domain;
 using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.CreatePost
 {
-    internal class CreatePostHandler(IPostRepository postRepository, IBlobService blobService, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<CreatePostRequest, CreatePostResponse>
+    internal class CreatePostHandler(IGrainFactory grainFactory, IBlobService blobService, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<CreatePostRequest, CreatePostResponse>
     {
-        private readonly IPostRepository _postRepository = postRepository;
-        private readonly IBlobService _blobService = blobService;
-        private readonly IMapper _mapper = mapper;
-        private readonly IIdentityService _identityService = identityService;
-        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
-
         public async Task<CreatePostResponse> Handle(CreatePostRequest request, CancellationToken cancellationToken)
         {
+            var userId = identityService.UserId;
             var types = CreatePostHelpers.GetMediaTypes(request.Media);
             var content = new Content(request.Content);
-            var blobNames = await _blobService.UploadAsync(Post.MediaContainerName, request.Media, cancellationToken);
+            var blobNames = await blobService.UploadAsync(Post.MediaContainerName, request.Media, cancellationToken);
             var media = CreatePostHelpers.GenerateMedia(types, blobNames);
             try
             {
-                var post = new Post(_identityService.UserId, content, media);
-                await _postRepository.CreateAsync(post, cancellationToken);
+                var postId = Guid.CreateVersion7();
+                var posGrain = grainFactory.GetGrain<IPostGrain>(postId);
 
-                var @event = _mapper.Map<Post, PostCreatedEvent>(post);
-                await _publishEndpoint.Publish(@event,cancellationToken);
+                await posGrain.Create(userId,content, media);
 
+                var post = await posGrain.Get();
+                var @event = mapper.Map<Post, PostCreatedEvent>(post);
+                await publishEndpoint.Publish(@event, cancellationToken);
+                await publishEndpoint.PublishBatch(
+                    media.Select(m => new PostMediaCreatedEvent(postId,m.ContainerName,m.BlobName,(Shared.Objects.MediaType)m.Type)),
+                    cancellationToken
+                );
                 return new(post.Id);
             }
             catch (Exception)
             {
-                await _blobService.DeleteAsync(Post.MediaContainerName, blobNames, cancellationToken);
+                await blobService.DeleteAsync(Post.MediaContainerName, blobNames, cancellationToken);
                 throw;
             }
         }

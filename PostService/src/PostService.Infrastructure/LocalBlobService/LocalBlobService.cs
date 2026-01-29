@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace PostService.Infrastructure
+namespace PostService.Infrastructure.LocalBlobService
 {
     internal class LocalBlobService(IConfiguration configuration, IAccessTokenProvider accessTokenProvider) : IBlobService
     {

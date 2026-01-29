@@ -1,24 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PostService.Domain;
-using Shared.Objects;
+using UserService.Domain;
 
 namespace PostService.Application.UseCases.CreatePost
 {
     internal static class CreatePostHelpers
     {
-        public static IReadOnlyList<Media> GenerateMedia(IReadOnlyList<MediaType> types, IReadOnlyList<string> blobNames)
+        public static List<Media> GenerateMedia(IReadOnlyList<MediaType> types, IReadOnlyList<string> blobNames)
         {
             List<Media> medias = [];
             for (int i = 0; i < blobNames.Count; i++)
                 medias.Add(new Media(
-                    Post.MediaContainerName,
                     blobNames.ElementAt(i),
                     types.ElementAt(i)
                 ));
             return medias;
         }
 
-        public static IReadOnlyList<MediaType> GetMediaTypes(IFormFileCollection media) =>
+        public static List<MediaType> GetMediaTypes(IFormFileCollection media) =>
             [
                 .. media
                     .Select(x =>

@@ -10,7 +10,7 @@ namespace PostService.Domain
         public string Value { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
 
-        public bool IsValidVersion => ModerationResult != null;
+        public bool IsPreprocessingCompletedAndIsValid() => ModerationResult != null && ModerationResult.IsValid();
 
         private Content(string value, ModerationResult? moderationResult)
         {

@@ -7,9 +7,9 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.RestorePost
 {
-    internal class RestorePostHandler(IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<RestorePostRequest>
+    internal class RestorePostHandler(IPostGrain postRepository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<RestorePostRequest>
     {
-        private readonly IPostRepository _postRepository = postRepository;
+        private readonly IPostGrain _postRepository = postRepository;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
         private readonly IMapper _mapper = mapper;
 

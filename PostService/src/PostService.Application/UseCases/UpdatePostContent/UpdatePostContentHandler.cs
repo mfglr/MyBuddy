@@ -7,9 +7,9 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.UpdatePostContent
 {
-    internal class UpdatePostContentHandler(IPostRepository postRepository, IPublishEndpoint publishEndpoint, IMapper mapper) : IRequestHandler<UpdatePostContentRequest>
+    internal class UpdatePostContentHandler(IPostGrain postRepository, IPublishEndpoint publishEndpoint, IMapper mapper) : IRequestHandler<UpdatePostContentRequest>
     {
-        private readonly IPostRepository _postRepository = postRepository;
+        private readonly IPostGrain _postRepository = postRepository;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
         private readonly IMapper _mapper = mapper;
 

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Orleans.Hosting;
 
-namespace UserService.Infrastructure.Grains
+namespace PostService.Infrastructure.Orleans
 {
     internal static class ServiceRegistration
     {

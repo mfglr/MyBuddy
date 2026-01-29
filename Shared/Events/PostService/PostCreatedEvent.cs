@@ -11,6 +11,6 @@ namespace Shared.Events.PostService
         int Version,
         bool IsDeleted,
         PostDeletedEvent_Content? Content,
-        IReadOnlyList<Media> Media
+        IEnumerable<Media> Media
     );
 }
