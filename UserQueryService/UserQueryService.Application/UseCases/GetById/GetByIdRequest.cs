@@ -2,5 +2,5 @@
 
 namespace UserQueryService.Application.UseCases.GetById
 {
-    public record GetByIdRequest(string Id) : IRequest<UserResponse>;
+    public record GetByIdRequest(string Id) : IRequest<GetByIdResponse>;
 }

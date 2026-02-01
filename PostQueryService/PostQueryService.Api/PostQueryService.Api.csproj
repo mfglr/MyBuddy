@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ffa0a360-1fea-4b8f-b753-7574c4f71589</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.0" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PostQueryService.Application\PostQueryService.Application.csproj" />
+    <ProjectReference Include="..\PostQueryService.Infrastructure\PostQueryService.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

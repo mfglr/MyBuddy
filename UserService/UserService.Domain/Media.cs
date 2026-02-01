@@ -20,6 +20,9 @@ namespace UserService.Domain
         public List<Thumbnail> Thumbnails { get; private set; }
         [Id(6)]
         public bool IsDeleted { get; private set; }
+        [Id(7)]
+        public bool IsActive { get; private set; }
+
 
         public Media(string blobName)
         {
@@ -28,10 +31,11 @@ namespace UserService.Domain
             Thumbnails = [];
             Type = MediaType.Image;
             IsDeleted = false;
+            IsActive = false;
         }
 
         [JsonConstructor]
-        private Media(string containerName, string blobName, MediaType type,  Metadata? metadata, ModerationResult? moderationResult, List<Thumbnail> thumbnails, bool isDeleted)
+        private Media(string containerName, string blobName, MediaType type,  Metadata? metadata, ModerationResult? moderationResult, List<Thumbnail> thumbnails, bool isDeleted, bool isActive)
         {
             ContainerName = containerName;
             BlobName = blobName;
@@ -40,6 +44,7 @@ namespace UserService.Domain
             ModerationResult = moderationResult;
             Thumbnails = thumbnails;
             IsDeleted = isDeleted;
+            IsActive = isActive;
         }
 
         public bool IsPreprocessingCompleted() =>
@@ -51,5 +56,8 @@ namespace UserService.Domain
         public void SetModerationResult(ModerationResult moderationResult) => ModerationResult = moderationResult;
         public void AddThumbnail(Thumbnail thumbnail) => Thumbnails.Add(thumbnail);
         public void Delete() => IsDeleted = true;
+
+        internal void Activate() => IsActive = true;
+        internal void Inactivate() => IsActive = false;
     }
 }

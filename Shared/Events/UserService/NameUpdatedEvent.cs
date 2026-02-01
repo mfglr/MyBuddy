@@ -6,9 +6,10 @@
         MediaType Type,
         Metadata? Metadata,
         ModerationResult? ModerationResult,
-        IEnumerable<Thumbnail> Thumbnails
+        IEnumerable<Thumbnail> Thumbnails,
+        bool IsDeleted,
+        bool IsActive
     );
-
     public record NameUpdatedEvent(
         Guid Id,
         DateTime CreatedAt,
@@ -16,7 +17,7 @@
         int Version,
         bool IsDeleted,
         string? Name,
-        string Username,
+        string UserName,
         string Gender,
         IEnumerable<NameUpdatedEvent_Media> Media
     );

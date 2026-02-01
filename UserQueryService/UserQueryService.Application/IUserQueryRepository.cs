@@ -1,9 +1,9 @@
-﻿using UserQueryService.Application.UseCases;
+﻿using UserQueryService.Application.UseCases.GetByUserName;
 
 namespace UserQueryService.Application
 {
     public interface IUserQueryRepository
     {
-        Task<UserResponse?> GetByUserNameAsync(string userName, CancellationToken cancelToken);
+        Task<GetByUserNameResponse?> GetByUserNameAsync(string userName, CancellationToken cancelToken);
     }
 }

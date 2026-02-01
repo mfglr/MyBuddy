@@ -16,6 +16,8 @@ namespace CommentService.Application.UseCases.RestoreCommentReplies
         public async Task Handle(RestoreCommentRepliesRequest request, CancellationToken cancellationToken)
         {
             var replies = await _commentRepository.GetByRepliedIdAsync(request.Id, cancellationToken);
+            if (replies.Count == 0) return;
+
             foreach (var reply in replies)
                 reply.Restore();
             await _unitOfWork.CommitAsync(cancellationToken);

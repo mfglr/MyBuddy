@@ -12,13 +12,13 @@ namespace UserService.Application.UseCases.AddMediaThumbnail
         {
             var userGrain = grainFactory.GetGrain<IUserGrain>(request.Id);
 
-            var tumbnail = mapper.Map<Shared.Events.Thumbnail, Domain.Thumbnail>(request.Thumbnail);
+            var tumbnail = mapper.Map<Shared.Events.Thumbnail, Thumbnail>(request.Thumbnail);
             await userGrain.AddMediaThumbnail(request.BlobName, tumbnail);
 
             var user = await userGrain.Get();
             if (user.IsPreprocessingCompleted())
             {
-                var @event = mapper.Map<User, UserUpdatedEvent>(user);
+                var @event = mapper.Map<User, UserMediaPreprocessingCompletedEvent>(user);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

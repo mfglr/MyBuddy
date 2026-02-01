@@ -9,7 +9,7 @@ namespace UserService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<MediaTypeExtractor>()
+                .AddSingleton<MediaTypeValidator>()
                 .AddAutoMapper(
                     cfg => cfg.LicenseKey = configuration.GetSection("LuckPenny:LicenseKey").Value,
                     Assembly.GetExecutingAssembly()

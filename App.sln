@@ -135,6 +135,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostQueryService.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostQueryService.Infrastructure", "PostQueryService\PostQueryService.Infrastructure\PostQueryService.Infrastructure.csproj", "{92C01F7F-EA8C-4E37-8F60-CA37421245C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostQueryService.Worker", "PostQueryService\PostQueryService.Worker\PostQueryService.Worker.csproj", "{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostQueryService.Api", "PostQueryService\PostQueryService.Api\PostQueryService.Api.csproj", "{369E9BDB-3083-4C7C-954D-A019CA582C91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -341,6 +345,14 @@ Global
 		{92C01F7F-EA8C-4E37-8F60-CA37421245C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92C01F7F-EA8C-4E37-8F60-CA37421245C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92C01F7F-EA8C-4E37-8F60-CA37421245C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{369E9BDB-3083-4C7C-954D-A019CA582C91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369E9BDB-3083-4C7C-954D-A019CA582C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369E9BDB-3083-4C7C-954D-A019CA582C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369E9BDB-3083-4C7C-954D-A019CA582C91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -398,6 +410,8 @@ Global
 		{55AC2B5F-4F95-49DA-88C3-D887445EF80A} = {F9ECAACB-5B00-4F23-B933-5D18A73097D7}
 		{5F9E348C-63B4-4DD4-A61E-323AE174EF46} = {F9ECAACB-5B00-4F23-B933-5D18A73097D7}
 		{92C01F7F-EA8C-4E37-8F60-CA37421245C7} = {F9ECAACB-5B00-4F23-B933-5D18A73097D7}
+		{36314FA6-5B7A-4B88-A6E7-0BABE8A776FF} = {F9ECAACB-5B00-4F23-B933-5D18A73097D7}
+		{369E9BDB-3083-4C7C-954D-A019CA582C91} = {F9ECAACB-5B00-4F23-B933-5D18A73097D7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

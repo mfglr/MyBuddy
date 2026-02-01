@@ -17,7 +17,7 @@ namespace UserService.Application.UseCases.SetMediaModerationResult
             var user = await userGrain.Get();
             if (user.IsPreprocessingCompleted())
             {
-                var @event = mapper.Map<User, UserUpdatedEvent>(user);
+                var @event = mapper.Map<User, UserMediaPreprocessingCompletedEvent>(user);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

@@ -21,25 +21,25 @@ namespace UserService.Domain
         [Id(5)]
         public Name? Name { get; private set; }
         [Id(6)]
-        public Username Username { get; private set; }
+        public UserName UserName { get; private set; }
         [Id(7)]
         public Gender Gender { get; private set; }
         [Id(8)]
         public List<Media> Media { get; private set; }
 
 
-        public User(Guid id, Username username)
+        public User(Guid id, UserName userName)
         {
             Id = id;
             CreatedAt = DateTime.UtcNow;
-            Username = username;
+            UserName = userName;
             Gender = Gender.Unknown();
             IsDeleted = false;
             Media = [];
         }
 
         [JsonConstructor]
-        public User(Guid id, DateTime createdAt, DateTime? updatedAt, int version, bool isDeleted, Name? name, Username username, Gender gender, List<Media> media)
+        public User(Guid id, DateTime createdAt, DateTime? updatedAt, int version, bool isDeleted, Name? name, UserName userName, Gender gender, List<Media> media)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -47,7 +47,7 @@ namespace UserService.Domain
             Version = version;
             IsDeleted = isDeleted;
             Name = name;
-            Username = username;
+            UserName = userName;
             Gender = gender;
             Media = media;
         }
@@ -58,18 +58,24 @@ namespace UserService.Domain
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
+            
             Name = name;
+            
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
 
-        public void AddMedia(Media media)
+        public void CreateMedia(Media media)
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
             if(media.Type != MediaType.Image)
                 throw new InvalidMediaTypeException();
+
+            Media.FirstOrDefault(x => x.IsActive)?.Inactivate();
+            media.Activate();
             Media.Add(media);
+            
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
@@ -78,8 +84,10 @@ namespace UserService.Domain
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
+            
             var media = Media.FirstOrDefault(m => m.BlobName == blobName) ?? throw new MediaNotFoundException();
             media.SetMetadata(metadata);
+            
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
@@ -88,8 +96,10 @@ namespace UserService.Domain
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
+            
             var media = Media.FirstOrDefault(m => m.BlobName == blobName) ?? throw new MediaNotFoundException();
             media.SetModerationResult(moderationResult);
+            
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
@@ -98,8 +108,10 @@ namespace UserService.Domain
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
+            
             var media = Media.FirstOrDefault(m => m.BlobName == blobName) ?? throw new MediaNotFoundException();
             media.AddThumbnail(thumbnail);
+            
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

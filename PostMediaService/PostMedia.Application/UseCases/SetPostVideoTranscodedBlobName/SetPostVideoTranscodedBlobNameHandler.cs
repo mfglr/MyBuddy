@@ -15,7 +15,7 @@ namespace PostMedia.Application.UseCases.SetPostVideoTranscodedBlobName
 
             if (post.IsPreprocessingCompleted())
             {
-                var @event = mapper.Map<Post, PostMediaPreproccessingCompletedEvent>(post);
+                var @event = mapper.Map<Post, PostMediaPreprocessingCompletedEvent>(post);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

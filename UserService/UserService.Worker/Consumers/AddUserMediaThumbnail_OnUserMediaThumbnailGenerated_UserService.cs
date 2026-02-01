@@ -10,7 +10,11 @@ namespace UserService.Worker.Consumers
         public Task Consume(ConsumeContext<UserMediaThumbnailGeneratedEvent> context) =>
             sender
                 .Send(
-                    new AddMediaThumbnailRequest(context.Message.Id, context.Message.BlobName, context.Message.Thumbnail),
+                    new AddMediaThumbnailRequest(
+                        context.Message.Id,
+                        context.Message.BlobName,
+                        context.Message.Thumbnail
+                    ),
                     context.CancellationToken
                 );
     }

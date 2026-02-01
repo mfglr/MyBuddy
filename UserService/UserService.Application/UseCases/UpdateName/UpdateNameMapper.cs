@@ -8,13 +8,13 @@ namespace UserService.Application.UseCases.UpdateName
     {
         public UpdateNameMapper()
         {
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
             CreateMap<Metadata, Shared.Events.Metadata>();
+            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
+            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Media, NameUpdatedEvent_Media>();
             CreateMap<User, NameUpdatedEvent>()
-                .ForCtorParam("Username", cfg => cfg.MapFrom(x => x.Username.Value))
-                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name.Value))
+                .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))
+                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name != null ? x.Name.Value : null))
                 .ForCtorParam("Gender", cfg => cfg.MapFrom(x => x.Gender.Value));
         }
     }

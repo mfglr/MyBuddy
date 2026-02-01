@@ -18,9 +18,7 @@ namespace UserQueryService.Application.UseCases.UpsertUser
                 return;
             }
 
-
             var media = mapper.Map<IEnumerable<UpsertUserRequest_Media>, IEnumerable<Media>>(request.Media).Where(x => !x.IsDeleted);
-
             if (user == null)
             {
                 user = new User(
@@ -29,7 +27,7 @@ namespace UserQueryService.Application.UseCases.UpsertUser
                     request.UpdatedAt,
                     request.Version,
                     request.Name,
-                    request.Username,
+                    request.UserName,
                     request.Gender,
                     media
                 );
@@ -42,7 +40,7 @@ namespace UserQueryService.Application.UseCases.UpsertUser
                 request.UpdatedAt,
                 request.Version,
                 request.Name,
-                request.Username,
+                request.UserName,
                 request.Gender,
                 media
             );

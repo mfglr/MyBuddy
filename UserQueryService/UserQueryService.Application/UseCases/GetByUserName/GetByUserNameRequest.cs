@@ -2,5 +2,5 @@
 
 namespace UserQueryService.Application.UseCases.GetByUserName
 {
-    public record GetByUserNameRequest(string UserName) : IRequest<UserResponse>;
+    public record GetByUserNameRequest(string UserName) : IRequest<GetByUserNameResponse>;
 }

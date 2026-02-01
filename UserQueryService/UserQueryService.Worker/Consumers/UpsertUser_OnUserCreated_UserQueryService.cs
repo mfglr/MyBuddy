@@ -19,11 +19,10 @@ namespace UserQueryService.Worker.Consumers
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
 
-        public Task Consume(ConsumeContext<UserCreatedEvent> context) =>
-            _sender
-                .Send(
-                    _mapper.Map<UserCreatedEvent, UpsertUserRequest>(context.Message),
-                    context.CancellationToken
-                );
+        public Task Consume(ConsumeContext<UserCreatedEvent> context)
+        {
+            var request = _mapper.Map<UserCreatedEvent, UpsertUserRequest>(context.Message);
+            return _sender.Send(request, context.CancellationToken);
+        }
     }
 }

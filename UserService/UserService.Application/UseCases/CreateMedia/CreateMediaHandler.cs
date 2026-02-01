@@ -5,20 +5,20 @@ using UserService.Domain;
 
 namespace UserService.Application.UseCases.CreateMedia
 {
-    internal class CreateMediaHandler(IBlobService blobService, IGrainFactory grainFactory, IPublishEndpoint publishEndpoint, MediaTypeExtractor mediaTypeExtractor, IIdentityService idendityService) : IRequestHandler<CreateMediaRequest>
+    internal class CreateMediaHandler(IBlobService blobService, IGrainFactory grainFactory, IPublishEndpoint publishEndpoint, MediaTypeValidator mediaTypeExtractor, IIdentityService idendityService) : IRequestHandler<CreateMediaRequest>
     {
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
+            mediaTypeExtractor.Validate(request.Media);
+
             var userId = idendityService.UserId;
             var userGrain = grainFactory.GetGrain<IUserGrain>(userId);
-            
             string? blobName = null;
             try
             {
-                var type = mediaTypeExtractor.Extract(request.Media);
                 blobName = await blobService.UploadAsync(User.MediaContainerName, request.Media, cancellationToken);
                 var media = new Media(blobName);
-                await userGrain.AddMedia(media);
+                await userGrain.CreateMedia(media);
                 
                 var @event = new UserMediaCreatedEvent(userId, media.ContainerName, media.BlobName);
                 await publishEndpoint.Publish(@event, cancellationToken);

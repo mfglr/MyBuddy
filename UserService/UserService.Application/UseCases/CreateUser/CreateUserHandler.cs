@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MediatR;
-using Orleans;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -11,7 +10,7 @@ namespace UserService.Application.UseCases.CreateUser
     {
         public async Task Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
-            var username = Username.GenerateRandom();
+            var username = UserName.GenerateRandom();
             Guid userId = await authService.RegisterAsync(
                 username.Value,
                 request.Email,

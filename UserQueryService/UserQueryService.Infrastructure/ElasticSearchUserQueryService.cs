@@ -1,6 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 using UserQueryService.Application;
-using UserQueryService.Application.UseCases;
+using UserQueryService.Application.UseCases.GetByUserName;
 
 namespace UserQueryService.Infrastructure
 {
@@ -9,10 +9,10 @@ namespace UserQueryService.Infrastructure
         private readonly ElasticSearchOptions option = option;
         private readonly ElasticsearchClient _client = client;
 
-        public async Task<UserResponse?> GetByUserNameAsync(string userName, CancellationToken cancellationToken)
+        public async Task<GetByUserNameResponse?> GetByUserNameAsync(string userName, CancellationToken cancellationToken)
         {
             var response = await _client
-                .SearchAsync<UserResponse>(
+                .SearchAsync<GetByUserNameResponse>(
                     u => u
                         .Indices(option.IndexName)
                         .Query(q => q.Term(t => t.Field(f => f.UserName).Value(userName)))

@@ -9,7 +9,8 @@ namespace UserService.Application.UseCases.GetUserById
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        bool IsDeleted
+        bool IsDeleted,
+        bool IsActive
     );
 
     public record GetUserByIdResponse(
@@ -19,7 +20,7 @@ namespace UserService.Application.UseCases.GetUserById
         int Version,
         bool IsDeleted,
         string? Name,
-        string Username,
+        string UserName,
         string Gender,
         IEnumerable<GetUserByIdResponse_Media> Media
     );

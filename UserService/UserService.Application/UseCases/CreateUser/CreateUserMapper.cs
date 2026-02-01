@@ -8,13 +8,13 @@ namespace UserService.Application.UseCases.CreateUser
     {
         public CreateUserMapper()
         {
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
             CreateMap<Metadata, Shared.Events.Metadata>();
+            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
+            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Media, UserCreatedEvent_Media>();
             CreateMap<User, UserCreatedEvent>()
-                .ForCtorParam("Username", cfg => cfg.MapFrom(x => x.Username.Value))
-                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name.Value))
+                .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))
+                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name != null ? x.Name.Value : null))
                 .ForCtorParam("Gender", cfg => cfg.MapFrom(x => x.Gender.Value));
         }
     }

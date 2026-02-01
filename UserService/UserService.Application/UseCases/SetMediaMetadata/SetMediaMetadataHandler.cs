@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MediatR;
-using Orleans;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -19,7 +18,7 @@ namespace UserService.Application.UseCases.SetMediaMetadata
             var user = await userGrain.Get();
             if (user.IsPreprocessingCompleted())
             {
-                var @event = mapper.Map<User, UserUpdatedEvent>(user);
+                var @event = mapper.Map<User, UserMediaPreprocessingCompletedEvent>(user);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

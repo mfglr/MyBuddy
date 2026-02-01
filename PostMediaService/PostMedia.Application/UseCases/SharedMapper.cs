@@ -12,7 +12,7 @@ namespace PostMedia.Application.UseCases
             CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Thumbnail, Shared.Events.Thumbnail>();
             CreateMap<Media, PostMediaPreproccessingCompletedEvent_Media>();
-            CreateMap<Post, PostMediaPreproccessingCompletedEvent>();
+            CreateMap<Post, PostMediaPreprocessingCompletedEvent>();
         }
     }
 }

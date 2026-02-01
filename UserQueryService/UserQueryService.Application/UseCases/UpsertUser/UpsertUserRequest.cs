@@ -10,7 +10,8 @@ namespace UserQueryService.Application.UseCases.UpsertUser
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        bool IsDeleted
+        bool IsDeleted,
+        bool IsActive
     );
     public record UpsertUserRequest(
         Guid Id,
@@ -19,7 +20,7 @@ namespace UserQueryService.Application.UseCases.UpsertUser
         int Version,
         bool IsDeleted,
         string? Name,
-        string Username,
+        string UserName,
         string Gender,
         IEnumerable<UpsertUserRequest_Media> Media
     ) : IRequest;

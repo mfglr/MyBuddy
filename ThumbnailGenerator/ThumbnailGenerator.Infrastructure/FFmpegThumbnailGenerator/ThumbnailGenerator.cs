@@ -21,7 +21,7 @@ namespace ThumbnailGenerator.Infrastructure.FFmpegThumbnailGenerator
                 filter = $"{crop},{scale}";
             }
             else
-                filter = $"scale='if(gt(iw,ih),if(gt({resulation},iw),iw,{resulation}),-2)':'if(gt(ih,iw),if(gt({resulation},ih),ih,{resulation}),-2)'";
+                filter = $"scale='if(gte(iw,ih),if(gte({resulation},iw),iw,{resulation}),-2)':'if(gte(ih,iw),if(gte({resulation},ih),ih,{resulation}),-2)'";
 
             await FFmpeg.Conversions.New()
                 .AddParameter($"-i \"{input}\"")

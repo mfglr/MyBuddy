@@ -31,14 +31,14 @@ namespace UserService.Domain.Tests
         {
             var userGrain = _grainFactory.GetGrain<IUserGrain>(Guid.NewGuid());
 
-            var userName = Username.GenerateRandom();
+            var userName = UserName.GenerateRandom();
 
             var dateTimeBefore = DateTime.UtcNow;
             await userGrain.Create(userName);
             var user = await userGrain.Get();
             var dateTimeAfter = DateTime.UtcNow;
 
-            Assert.Equal(userName.Value, user.Username.Value);
+            Assert.Equal(userName.Value, user.UserName.Value);
             Assert.Equal(1, user.Version);
             Assert.True(user.CreatedAt >= dateTimeBefore && user.CreatedAt <= dateTimeAfter);
             Assert.Equal(Gender.Unknown(), user.Gender);

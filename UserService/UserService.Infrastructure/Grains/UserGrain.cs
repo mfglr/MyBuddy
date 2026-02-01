@@ -1,5 +1,4 @@
-﻿using Orleans;
-using Orleans.Providers;
+﻿using Orleans.Providers;
 using UserService.Domain;
 
 namespace UserService.Infrastructure.Grains
@@ -9,17 +8,17 @@ namespace UserService.Infrastructure.Grains
     {
         public Task<User> Get() => Task.FromResult(State);
 
-        public Task Create(Username username)
+        public Task Create(UserName userName)
         {
-            State = new User(this.GetPrimaryKey(), username);
+            State = new User(this.GetPrimaryKey(), userName);
             return WriteStateAsync();
         }
 
-        public Task AddMedia(Media media)
+        public Task CreateMedia(Media media)
         {
             if (State == default)
                 throw new UserNotFoundException();
-            State.AddMedia(media);
+            State.CreateMedia(media);
             return WriteStateAsync();
         }
 

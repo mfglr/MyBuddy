@@ -2,7 +2,7 @@
 {
     public record CommentRestoredEvent_Content(
         string Value,
-        ModerationResult ModerationResult
+        ModerationResult? ModerationResult
     );
     public record CommentRestoredEvent(
         Guid Id,

@@ -9,6 +9,7 @@ namespace UserQueryService.Domain
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        bool IsDeleted
+        bool IsDeleted,
+        bool IsActive
     );
 }

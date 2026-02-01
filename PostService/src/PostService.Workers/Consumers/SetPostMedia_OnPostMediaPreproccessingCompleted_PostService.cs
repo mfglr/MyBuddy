@@ -11,17 +11,17 @@ namespace PostService.Workers.Consumers
         public SetPostMedia_OnPostMediaPreproccessingCompleted_Mapper()
         {
             CreateMap<PostMediaPreproccessingCompletedEvent_Media, SetPostMediaRequest_Media>();
-            CreateMap<PostMediaPreproccessingCompletedEvent, SetPostMediaRequest>();
+            CreateMap<PostMediaPreprocessingCompletedEvent, SetPostMediaRequest>();
         }
 
     }
 
-    internal class SetPostMedia_OnPostMediaPreproccessingCompleted_PostService(ISender sender, IMapper mapper) : IConsumer<PostMediaPreproccessingCompletedEvent>
+    internal class SetPostMedia_OnPostMediaPreproccessingCompleted_PostService(ISender sender, IMapper mapper) : IConsumer<PostMediaPreprocessingCompletedEvent>
     {
-        public Task Consume(ConsumeContext<PostMediaPreproccessingCompletedEvent> context) =>
+        public Task Consume(ConsumeContext<PostMediaPreprocessingCompletedEvent> context) =>
             sender
                 .Send(
-                    mapper.Map<PostMediaPreproccessingCompletedEvent, SetPostMediaRequest>(context.Message),
+                    mapper.Map<PostMediaPreprocessingCompletedEvent, SetPostMediaRequest>(context.Message),
                     context.CancellationToken
                 );
     }

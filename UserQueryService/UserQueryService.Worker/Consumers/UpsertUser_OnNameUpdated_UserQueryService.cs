@@ -6,11 +6,11 @@ using UserQueryService.Application.UseCases.UpsertUser;
 
 namespace UserQueryService.Worker.Consumers
 {
-
     internal class UpdateUer_OnUserNameUpdated_Mapper : Profile
     {
         public UpdateUer_OnUserNameUpdated_Mapper()
         {
+            CreateMap<NameUpdatedEvent_Media, UpsertUserRequest_Media>();
             CreateMap<NameUpdatedEvent, UpsertUserRequest>();
         }
     }

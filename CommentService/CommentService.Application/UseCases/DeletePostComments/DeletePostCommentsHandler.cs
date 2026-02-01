@@ -8,20 +8,17 @@ namespace CommentService.Application.UseCases.DeletePostComments
 {
     public class DeletePostCommentsHandler(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<DeletePostCommentsRequest>
     {
-        private readonly ICommentRepository _commentRepository = commentRepository;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IMapper _mapper = mapper;
-        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
-
         public async Task Handle(DeletePostCommentsRequest request, CancellationToken cancellationToken)
         {
-            var comments = await _commentRepository.GetByPostIdAsync(request.PostId, cancellationToken);
+            var comments = await commentRepository.GetByPostIdAsync(request.PostId, cancellationToken);
+            if (comments.Count == 0) return;
+
             foreach (var comment in comments)
                 comment.Delete();
-            await _unitOfWork.CommitAsync(cancellationToken);
+            await unitOfWork.CommitAsync(cancellationToken);
 
-            var events = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDeletedEvent>>(comments);
-            await _publishEndpoint.PublishBatch(events, cancellationToken);
+            var events = mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDeletedEvent>>(comments);
+            await publishEndpoint.PublishBatch(events, cancellationToken);
         }
     }
 }

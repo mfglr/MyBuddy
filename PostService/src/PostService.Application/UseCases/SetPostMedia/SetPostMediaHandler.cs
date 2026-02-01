@@ -21,7 +21,7 @@ namespace PostService.Application.UseCases.SetPostMedia
 
             if (post.IsValid())
             {
-                var @event = mapper.Map<Post, PostPreproccessingCompletedEvent>(post);
+                var @event = mapper.Map<Post, PostPreprocessingCompletedEvent>(post);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

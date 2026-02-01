@@ -12,8 +12,8 @@ namespace UserService.Application.UseCases.GetUserById
             CreateMap<Metadata, Shared.Events.Metadata>();
             CreateMap<Media, GetUserByIdResponse_Media>();
             CreateMap<User, GetUserByIdResponse>()
-                .ForCtorParam("Username", cfg => cfg.MapFrom(x => x.Username.Value))
-                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name.Value))
+                .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))
+                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name != null ? x.Name.Value : null))
                 .ForCtorParam("Gender", cfg => cfg.MapFrom(x => x.Gender.Value));
         }
     }

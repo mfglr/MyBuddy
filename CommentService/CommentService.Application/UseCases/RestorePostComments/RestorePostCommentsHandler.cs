@@ -16,11 +16,13 @@ namespace CommentService.Application.UseCases.RestorePostComments
         public async Task Handle(RestorePostCommentsRequest request, CancellationToken cancellationToken)
         {
             var comments = await _commentRepository.GetByPostIdAsync(request.PostId, cancellationToken);
+            if (comments.Count == 0) return;
+
             foreach (var comment in comments)
                 comment.Restore();
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            var events = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentRestoredEvent>>(comments);
+            var events = _mapper.Map<List<Comment>, List<CommentRestoredEvent>>(comments);
             await _publishEndpoint.Publish(events, cancellationToken);
         }
     }

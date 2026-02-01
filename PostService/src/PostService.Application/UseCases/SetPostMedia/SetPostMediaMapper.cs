@@ -12,7 +12,7 @@ namespace PostService.Application.UseCases.SetPostMedia
 
             CreateMap<Content, PostPreproccessingCompletedEvent_Content>();
             CreateMap<Media, PostPreproccessingCompletedEvent_Media>();
-            CreateMap<Post, PostPreproccessingCompletedEvent>();
+            CreateMap<Post, PostPreprocessingCompletedEvent>();
         }
     }
 }
