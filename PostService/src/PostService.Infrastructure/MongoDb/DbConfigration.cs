@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using PostService.Domain;
@@ -8,7 +9,7 @@ namespace PostService.Infrastructure.MongoDb
     public static class DbConfiguration
     {
         public static void Configure()
-        {
+        {   
             BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             BsonClassMap.RegisterClassMap<Post>(cm =>
             {
