@@ -151,6 +151,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageService.Api", "Messa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageCleanUp.Worker", "MessageCleanUp\MessageCleanUp.Worker\MessageCleanUp.Worker.csproj", "{C6885573-FE0D-444E-905F-6C61C627B448}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RealtimeService", "RealtimeService", "{706E5073-E3F0-4CD8-AF56-90D84578AE5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Api", "RealtimeService\RealtimeService.Api\RealtimeService.Api.csproj", "{A0FE7301-0D59-4C65-AF21-F65DF6375172}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Domain", "RealtimeService\RealtimeService.Domain\RealtimeService.Domain.csproj", "{9AE9CCCE-3297-4DBE-9E28-C06E807884EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Application", "RealtimeService\RealtimeService.Application\RealtimeService.Application.csproj", "{32FC2F8D-017B-4B1C-8728-193E60CA995A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Infrastructure", "RealtimeService\RealtimeService.Infrastructure\RealtimeService.Infrastructure.csproj", "{EF200AD3-05C3-4D75-BDE7-E193B90E4213}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -385,6 +395,22 @@ Global
 		{C6885573-FE0D-444E-905F-6C61C627B448}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6885573-FE0D-444E-905F-6C61C627B448}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6885573-FE0D-444E-905F-6C61C627B448}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0FE7301-0D59-4C65-AF21-F65DF6375172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0FE7301-0D59-4C65-AF21-F65DF6375172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0FE7301-0D59-4C65-AF21-F65DF6375172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0FE7301-0D59-4C65-AF21-F65DF6375172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32FC2F8D-017B-4B1C-8728-193E60CA995A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32FC2F8D-017B-4B1C-8728-193E60CA995A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32FC2F8D-017B-4B1C-8728-193E60CA995A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32FC2F8D-017B-4B1C-8728-193E60CA995A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -449,6 +475,10 @@ Global
 		{0FF10C47-F2A2-480B-BEE6-59E24AFCCF31} = {22EF22D1-287F-492B-ACF3-56C1ED16D75A}
 		{7ABEE8A6-23F9-4768-9012-4A3E3B5C71CE} = {22EF22D1-287F-492B-ACF3-56C1ED16D75A}
 		{C6885573-FE0D-444E-905F-6C61C627B448} = {22EF22D1-287F-492B-ACF3-56C1ED16D75A}
+		{A0FE7301-0D59-4C65-AF21-F65DF6375172} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
+		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
+		{32FC2F8D-017B-4B1C-8728-193E60CA995A} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
+		{EF200AD3-05C3-4D75-BDE7-E193B90E4213} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

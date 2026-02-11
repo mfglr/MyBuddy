@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RealtimeService.Application;
 using System.Security.Claims;
 
-namespace Gateway.ServiceRegistars
+namespace RealtimeService.Api.ServiceRegistrations
 {
-
     internal class IdentityOptions
     {
         public required string Issuer { get; set; }
@@ -26,10 +26,7 @@ namespace Gateway.ServiceRegistars
                         {
                             OnMessageReceived = context =>
                             {
-                                var path = context.HttpContext.Request.Path;
-                                if (path.StartsWithSegments("/realtime"))
-                                    context.Token = context.Request.Headers.Authorization;
-
+                                context.Token = context.Request.Headers.Authorization;
                                 return Task.CompletedTask;
                             }
                         };
@@ -44,7 +41,6 @@ namespace Gateway.ServiceRegistars
                             ValidateIssuerSigningKey = true,
                             ValidateLifetime = true,
                             ValidateIssuer = true,
-
                         };
                     }
                 );
@@ -53,16 +49,6 @@ namespace Gateway.ServiceRegistars
                 .AddAuthorization(
                     options =>
                     {
-                        options
-                            .AddPolicy(
-                                "client",
-                                p =>
-                                {
-                                    p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-                                    p.RequireAuthenticatedUser();
-                                }
-                            );
-
                         options
                             .AddPolicy(
                                 "user",
@@ -74,44 +60,11 @@ namespace Gateway.ServiceRegistars
                                     p.RequireRole("user");
                                 }
                             );
-
-                        options
-                            .AddPolicy(
-                                "admin",
-                                p =>
-                                {
-                                    p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-                                    p.RequireAuthenticatedUser();
-                                    p.RequireClaim(ClaimTypes.Email);
-                                    p.RequireRole("admin");
-                                }
-                            );
-
-                        options
-                            .AddPolicy(
-                                "adminOrUser",
-                                p =>
-                                {
-                                    p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-                                    p.RequireAuthenticatedUser();
-                                    p.RequireClaim(ClaimTypes.Email);
-                                    p.RequireRole("admin", "user");
-                                }
-                            );
-
-                        options
-                            .AddPolicy(
-                                "media-read",
-                                p =>
-                                {
-                                    p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
-                                    p.RequireAuthenticatedUser();
-                                    p.RequireRole("media-read");
-                                }
-                            );
                     }
                 );
-            return services;
+            return services
+                .AddHttpContextAccessor()
+                .AddScoped<IIdentityService,IdentityService>();
         }
     }
 }

@@ -8,7 +8,8 @@ namespace MessageService.Application.UseCases.CreateMessage
     {
         public CreateMessageMapper()
         {
-            CreateMap<Message, MessageCreatedEvent_Message>();
+            CreateMap<Message, MessageCreatedEvent_Message>()
+                .ForCtorParam("Content", x => x.MapFrom(x => x.Content.Value));
         }
     }
 }
