@@ -161,6 +161,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealtimeService.Infrastructure", "RealtimeService\RealtimeService.Infrastructure\RealtimeService.Infrastructure.csproj", "{EF200AD3-05C3-4D75-BDE7-E193B90E4213}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostLikeService", "PostLikeService", "{9DAC8A7A-8AF6-4DC8-8502-B9AB05C15BEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostLikeService.Domain", "PostLikeService\PostLikeService.Domain\PostLikeService.Domain.csproj", "{1136597D-4719-4218-80FC-617DD5AEDB9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostLikeService.Application", "PostLikeService\PostLikeService.Application\PostLikeService.Application.csproj", "{1DCE80F1-51E4-4C8B-8827-89AFA62174EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostLikeService.Infrastructure", "PostLikeService\PostLikeService.Infrastructure\PostLikeService.Infrastructure.csproj", "{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostLikeService.Api", "PostLikeService\PostLikeService.Api\PostLikeService.Api.csproj", "{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -411,6 +421,22 @@ Global
 		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF200AD3-05C3-4D75-BDE7-E193B90E4213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1136597D-4719-4218-80FC-617DD5AEDB9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1136597D-4719-4218-80FC-617DD5AEDB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1136597D-4719-4218-80FC-617DD5AEDB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1136597D-4719-4218-80FC-617DD5AEDB9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DCE80F1-51E4-4C8B-8827-89AFA62174EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DCE80F1-51E4-4C8B-8827-89AFA62174EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DCE80F1-51E4-4C8B-8827-89AFA62174EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DCE80F1-51E4-4C8B-8827-89AFA62174EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -479,6 +505,10 @@ Global
 		{9AE9CCCE-3297-4DBE-9E28-C06E807884EA} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
 		{32FC2F8D-017B-4B1C-8728-193E60CA995A} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
 		{EF200AD3-05C3-4D75-BDE7-E193B90E4213} = {706E5073-E3F0-4CD8-AF56-90D84578AE5D}
+		{1136597D-4719-4218-80FC-617DD5AEDB9F} = {9DAC8A7A-8AF6-4DC8-8502-B9AB05C15BEE}
+		{1DCE80F1-51E4-4C8B-8827-89AFA62174EA} = {9DAC8A7A-8AF6-4DC8-8502-B9AB05C15BEE}
+		{359B2452-75F8-4D7C-AC6F-A8D4ECBE325C} = {9DAC8A7A-8AF6-4DC8-8502-B9AB05C15BEE}
+		{28AF3FC5-F0DB-4B08-A3DF-2652B6846A09} = {9DAC8A7A-8AF6-4DC8-8502-B9AB05C15BEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}
