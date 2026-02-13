@@ -14,6 +14,8 @@ namespace PostLikeService.Infrastructure.MongoDb
             {
                 cm.MapIdMember(x => x.Id);
                 cm.MapMember(x => x.CreatedAt);
+                cm.MapMember(x => x.Version);
+                cm.MapMember(x => x.IsDeleted);
             });
         }
     }
