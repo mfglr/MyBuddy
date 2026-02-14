@@ -3,7 +3,7 @@ using Shared.Events.PostLikeService;
 
 namespace PostLikeQueryService.Worker.Consumers.UpgradePostLike_OnPostLiked
 {
-    internal class Mapper
+    internal class UpgradePostLike_OnPostLiked_Mapper
     {
         public UpgradePostLikeRequest Map(PostLikedEvent @event) =>
             new(

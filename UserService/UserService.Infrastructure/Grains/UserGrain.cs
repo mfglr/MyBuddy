@@ -68,5 +68,14 @@ namespace UserService.Infrastructure.Grains
             await WriteStateAsync();
             return State;
         }
+
+        public async Task<User> UpdateGender(Gender gender)
+        {
+            if (State == default)
+                throw new UserNotFoundException();
+            State.UpdateGender(gender);
+            await WriteStateAsync();
+            return State;
+        }
     }
 }

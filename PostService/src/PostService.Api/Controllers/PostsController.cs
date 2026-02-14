@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Application.UseCases.CreatePost;
 using PostService.Application.UseCases.DeletePost;
-using PostService.Application.UseCases.GetPostById;
 using PostService.Application.UseCases.RestorePost;
 using PostService.Application.UseCases.UpdatePostContent;
 
@@ -13,10 +12,6 @@ namespace PostService.Api.Controllers
     [ApiController]
     public class PostsController(ISender sender) : ControllerBase
     {
-        [HttpGet("{id:guid}")]
-        public Task<GetPostByIdResponse> GetById(Guid id, CancellationToken cancellationToken) =>
-            sender.Send(new GetPostByIdRequest(id), cancellationToken);
-
         [Authorize("user")]
         [HttpPost]
         public Task<CreatePostResponse> Create([FromForm] CreatePostRequest request, CancellationToken cancellationToken) =>

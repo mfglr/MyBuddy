@@ -1,0 +1,6 @@
+services:
+  postlikeservice.api:
+    image: ${DOCKER_REGISTRY-}postlikeserviceapi
+    build:
+      context: .
+      dockerfile: PostLikeService/PostLikeService.Api/Dockerfile

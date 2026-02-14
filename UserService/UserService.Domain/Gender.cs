@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace UserService.Domain
 {
@@ -8,16 +9,32 @@ namespace UserService.Domain
     {
         private static class GenderNames
         {
-            public readonly static string Unknown = "Unkown";
-            public readonly static string Male = "Male";
-            public readonly static string Female = "Female";
+            public readonly static string Unknown = "unkown";
+            public readonly static string Male = "male";
+            public readonly static string Female = "female";
+
+            public static bool IsValid(string value)
+            {
+                var formattedValue = value.Trim().ToLower();
+
+                return 
+                    formattedValue == Unknown ||
+                    formattedValue == Male ||
+                    formattedValue == Female;
+            }
+                
         }
 
         [Id(0)]
         public string Value { get; private set; }
 
         [JsonConstructor]
-        private Gender(string value) => Value = value;
+        public Gender(string value)
+        {
+            if (!GenderNames.IsValid(value))
+                throw new InvalidGenderNameException();
+            Value = value;
+        }
 
         public static Gender Unknown() => new(GenderNames.Unknown);
         public static Gender Male() => new(GenderNames.Male);

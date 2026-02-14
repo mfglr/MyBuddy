@@ -101,6 +101,16 @@ namespace UserService.Domain
             Version++;
         }
 
+        public void UpdateGender(Gender gender)
+        {
+            if (IsDeleted)
+                throw new UserNotFoundException();
+            Gender = gender;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
+
         public void SetMediaModerationResult(string blobName, ModerationResult moderationResult)
         {
             if (IsDeleted)

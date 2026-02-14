@@ -11,5 +11,6 @@
         [Alias("SetMediaMatadata")]Task<User> SetMediaMatadata(string blobName, Metadata metadata);
         [Alias("SetMediaModerationResult")]Task<User> SetMediaModerationResult(string blobName, ModerationResult moderationResult);
         [Alias("AddMediaThumbnail")]Task<User> AddMediaThumbnail(string blobName, Thumbnail thumbnail);
+        [Alias("UpdateGender")]Task<User> UpdateGender(Gender gender);
     }
 }

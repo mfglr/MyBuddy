@@ -2,13 +2,13 @@
 using PostLikeQueryService.Domain.UserAggregate;
 using Shared.Events.UserService;
 
-namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserNameUpdated
+namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnNameUpdated
 {
-    internal class Mapper
+    internal class UpgradeUser_OnNameUpdated_Mapper
     {
-        public UpgradeUserRequest Map(UserNameUpdatedEvent @event)
+        public UpgradeUserRequest Map(NameUpdatedEvent @event)
         {
-            var media = @event.Media.FirstOrDefault();
+            var media = @event.Media.FirstOrDefault(x => x.IsActive);
             return new(
                 @event.Id,
                 @event.Version,
@@ -41,6 +41,5 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserNameUpdated
                     : null
             );
         }
-
     }
 }

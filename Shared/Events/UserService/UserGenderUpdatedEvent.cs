@@ -1,8 +1,7 @@
-﻿using Shared.Events;
-
-namespace UserService.Application.UseCases.GetUserById
+﻿namespace Shared.Events.UserService
 {
-    public record GetUserByIdResponse_Media(
+
+    public record UserGenderUpdatedEvent_Media(
         string ContainerName,
         string BlobName,
         MediaType Type,
@@ -12,8 +11,7 @@ namespace UserService.Application.UseCases.GetUserById
         bool IsDeleted,
         bool IsActive
     );
-
-    public record GetUserByIdResponse(
+    public record UserGenderUpdatedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
@@ -22,6 +20,6 @@ namespace UserService.Application.UseCases.GetUserById
         string? Name,
         string UserName,
         string Gender,
-        IEnumerable<GetUserByIdResponse_Media> Media
+        IEnumerable<UserGenderUpdatedEvent_Media> Media
     );
 }

@@ -2,13 +2,13 @@
 using PostLikeQueryService.Domain.UserAggregate;
 using Shared.Events.UserService;
 
-namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserCreated
+namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserMediaPreprocessingCompleted
 {
-    internal class Mapper
+    internal class UpgradeUser_OnUserMediaPreprocessingCompleted_Mapper
     {
-        public UpgradeUserRequest Map(UserCreatedEvent @event)
+        public UpgradeUserRequest Map(UserMediaPreprocessingCompletedEvent @event)
         {
-            var media = @event.Media.FirstOrDefault();
+            var media = @event.Media.FirstOrDefault(x => x.IsActive);
             return new(
                 @event.Id,
                 @event.Version,
@@ -19,12 +19,12 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserCreated
                     ? new(
                         media.ContainerName,
                         media.BlobName,
-                        new (
+                        new(
                             media.Metadata!.Width,
                             media.Metadata!.Height,
                             media.Metadata.Duration
                         ),
-                        new (
+                        new(
                             media.ModerationResult!.Hate,
                             media.ModerationResult!.SelfHarm,
                             media.ModerationResult.Sexual,
@@ -41,6 +41,5 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserCreated
                     : null
             );
         }
-            
     }
 }

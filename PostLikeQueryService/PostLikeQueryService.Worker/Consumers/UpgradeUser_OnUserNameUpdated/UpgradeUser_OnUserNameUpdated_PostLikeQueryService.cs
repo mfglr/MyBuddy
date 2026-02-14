@@ -5,7 +5,7 @@ using Shared.Events.UserService;
 
 namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserNameUpdated
 {
-    internal class UpgradeUser_OnUserNameUpdated_PostLikeQueryService(ISender sender, Mapper mapper) : IConsumer<UserNameUpdatedEvent>
+    internal class UpgradeUser_OnUserNameUpdated_PostLikeQueryService(ISender sender, UpgradeUser_OnUserNameUpdated_Mapper mapper) : IConsumer<UserNameUpdatedEvent>
     {
         public Task Consume(ConsumeContext<UserNameUpdatedEvent> context)
         {

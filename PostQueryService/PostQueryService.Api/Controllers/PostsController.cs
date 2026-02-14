@@ -9,7 +9,6 @@ namespace PostQueryService.Api.Controllers
     [ApiController]
     public class PostsController(ISender sender) : ControllerBase
     {
-        //[FromQuery]Guid userId, [FromQuery] DateTime cursor, [FromQuery] int recordsPerPage, [FromQuery] bool isDescending,
         [HttpGet]
         public Task<IEnumerable<PostResponse>> GetByUserId([FromQuery] GetPostsByUserIdRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
