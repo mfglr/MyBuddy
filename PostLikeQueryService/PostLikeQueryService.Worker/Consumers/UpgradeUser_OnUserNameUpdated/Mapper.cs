@@ -2,11 +2,11 @@
 using PostLikeQueryService.Domain.UserAggregate;
 using Shared.Events.UserService;
 
-namespace PostLikeQueryService.Worker.Consumers.UpgradeUser
+namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserNameUpdated
 {
     internal class Mapper
     {
-        public UpgradeUserRequest Map(UserCreatedEvent @event)
+        public UpgradeUserRequest Map(UserNameUpdatedEvent @event)
         {
             var media = @event.Media.FirstOrDefault();
             return new(
@@ -19,12 +19,12 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser
                     ? new(
                         media.ContainerName,
                         media.BlobName,
-                        new (
+                        new(
                             media.Metadata!.Width,
                             media.Metadata!.Height,
                             media.Metadata.Duration
                         ),
-                        new (
+                        new(
                             media.ModerationResult!.Hate,
                             media.ModerationResult!.SelfHarm,
                             media.ModerationResult.Sexual,
@@ -41,6 +41,6 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser
                     : null
             );
         }
-            
+
     }
 }

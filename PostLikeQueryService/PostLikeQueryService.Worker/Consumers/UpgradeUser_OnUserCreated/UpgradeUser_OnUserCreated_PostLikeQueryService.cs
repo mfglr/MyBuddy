@@ -2,7 +2,7 @@
 using MediatR;
 using Shared.Events.UserService;
 
-namespace PostLikeQueryService.Worker.Consumers.UpgradeUser
+namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserCreated
 {
     internal class UpgradeUser_OnUserCreated_PostLikeQueryService(ISender sender, Mapper mapper) : IConsumer<UserCreatedEvent>
     {

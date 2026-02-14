@@ -127,5 +127,26 @@ namespace UserService.Infrastructure.Keycloak
             if (response.StatusCode != HttpStatusCode.NoContent)
                 throw new ServerSideException();
         }
+
+        public async Task UpdateUserName(Guid userId, string userName, CancellationToken cancellationToken)
+        {
+            var accessToken = await _accessTokenProvider.GetAccessTokenAsync(cancellationToken);
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri(_options.HostName)
+            };
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
+
+            var content = new { username = userName };
+            var jsonContent = JsonContent.Create(content);
+            var response = await client.PutAsync(
+                $"admin/realms/{_options.RealmName}/users/{userId}",
+                jsonContent,
+                cancellationToken
+            );
+
+            if (response.StatusCode != HttpStatusCode.NoContent)
+                throw new ServerSideException();
+        }
     }
 }

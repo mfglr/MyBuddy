@@ -6,6 +6,7 @@ using UserService.Application.UseCases.CreateUser;
 using UserService.Application.UseCases.GetUserById;
 using UserService.Application.UseCases.SendEmailVerificationMail;
 using UserService.Application.UseCases.UpdateName;
+using UserService.Application.UseCases.UpdateUserName;
 
 namespace UserService.Api.Controllers
 {
@@ -32,6 +33,11 @@ namespace UserService.Api.Controllers
         [HttpPut]
         [Authorize("user")]
         public Task UpdateName(UpdateNameRequest request, CancellationToken cancellationToken) =>
+            _sender.Send(request, cancellationToken);
+
+        [HttpPut]
+        [Authorize("user")]
+        public Task UpdateUserName(UpdateUserNameRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
         [HttpGet("{id:guid}")]

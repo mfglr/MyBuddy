@@ -24,6 +24,7 @@ namespace UserQueryService.Worker.ServiceRegistrations
                     x.AddConsumer<UpsertUser_OnUserCreated_UserQueryService>();
                     x.AddConsumer<UpsertUser_OnNameUpdated_UserQueryService>();
                     x.AddConsumer<UpsertUser_OnUserMediaPreprocessingCompleted_UserQueryService>();
+                    x.AddConsumer<UpsertUser_OnUserNameUpdated_UserQueryService>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {

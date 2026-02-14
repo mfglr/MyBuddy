@@ -30,6 +30,7 @@ namespace PostQueryService.Worker.ServiceRegistrations
                     x.AddConsumer<UpsertPost_OnPostProprecessingCompleted_PostQueryService>();
                     x.AddConsumer<UpsertPost_OnPostDeleted_PostQueryService>();
                     x.AddConsumer<UpsertPost_OnPostRestored_PostQueryService>();
+                    x.AddConsumer<UpsertUser_OnUserNameUpdated_PostQueryService>();
 
                     x.UsingRabbitMq((context, cfg) =>
                     {

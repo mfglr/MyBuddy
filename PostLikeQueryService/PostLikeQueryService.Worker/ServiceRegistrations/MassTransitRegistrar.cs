@@ -1,7 +1,8 @@
 ﻿using MassTransit;
 using PostLikeQueryService.Worker.Consumers.UpgradePostLike_OnPostDisliked;
 using PostLikeQueryService.Worker.Consumers.UpgradePostLike_OnPostLiked;
-using PostLikeQueryService.Worker.Consumers.UpgradeUser;
+using PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserCreated;
+using PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserNameUpdated;
 using PostLikeQueryService.Worker.ServiceRegistrations;
 
 namespace PostLikeQueryService.Worker.ServiceRegistrations
@@ -26,6 +27,7 @@ namespace PostLikeQueryService.Worker.ServiceRegistrations
                         brc.AddConsumer<UpgradeUser_OnUserCreated_PostLikeQueryService>();
                         brc.AddConsumer<UpgradePostLike_OnPostLiked_PostLikeQueryService>();
                         brc.AddConsumer<UpgradePostLiked_OnPostDisliked_PostLikeQueryService>();
+                        brc.AddConsumer<UpgradeUser_OnUserNameUpdated_PostLikeQueryService>();
 
                         brc.UsingRabbitMq((context, rbgc) =>
                         {

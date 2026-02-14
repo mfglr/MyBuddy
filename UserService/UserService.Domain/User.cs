@@ -65,6 +65,15 @@ namespace UserService.Domain
             Version++;
         }
 
+        public void UpdateUserName(UserName userName)
+        {
+            if (IsDeleted)
+                throw new UserNotFoundException();
+            UserName = userName;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
         public void CreateMedia(Media media)
         {
             if (IsDeleted)
