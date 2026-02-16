@@ -1,5 +1,5 @@
 ﻿using Shared.Events.StudyProgramService;
-using StudyProgramService.Domain;
+using StudyProgramService.Domain.StudyProgramAggregate.Entities;
 
 namespace StudyProgramService.Application.UseCases.CreateStudyProgram
 {

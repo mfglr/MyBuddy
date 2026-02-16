@@ -1,5 +1,7 @@
 ﻿using MassTransit;
+using MassTransit.Configuration;
 using StudyProgramService.Api.ServiceRegistrations;
+using StudyProgramService.Infrastructure.PostgreSqlDb;
 
 namespace StudyProgramService.Api.ServiceRegistrations
 {
@@ -20,6 +22,12 @@ namespace StudyProgramService.Api.ServiceRegistrations
                 .AddMassTransit(
                     brc =>
                     {
+                        brc.AddEntityFrameworkOutbox<PostgreSqlContext>(o =>
+                        {
+                            o.UsePostgres();
+                            o.UseBusOutbox();
+                        });
+
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(
