@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using MediatR;
-using StudyProgramService.Domain;
 using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
 using StudyProgramService.Domain.StudyProgramAggregate.ValueObjects;
 
@@ -20,11 +19,10 @@ namespace StudyProgramService.Application.UseCases.UpdateTitle
                 throw new UnauhtrizedOperationException();
 
             studyProgram.UpdateTitle(title);
-
-            await unitOfWork.CommitAsync(cancellationToken);
-
             var @event = mapper.Map(studyProgram);
             await publishEndpoint.Publish(@event, cancellationToken);
+
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

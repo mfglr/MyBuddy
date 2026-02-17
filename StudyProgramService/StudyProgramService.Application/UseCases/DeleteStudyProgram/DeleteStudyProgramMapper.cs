@@ -18,7 +18,8 @@ namespace StudyProgramService.Application.UseCases.DeleteStudyProgram
                 studyProgram.Schedule.DailyStudyTarget.Value,
                 studyProgram.Schedule.DaysPerWeek.Value,
                 studyProgram.Schedule.DurationInWeeks.Value,
-                studyProgram.Status.Value
+                studyProgram.Status.Value,
+                studyProgram.Capacity.Value
             );
     }
 }

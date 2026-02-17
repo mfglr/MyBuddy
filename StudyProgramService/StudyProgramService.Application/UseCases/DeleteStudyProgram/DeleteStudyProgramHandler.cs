@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using MediatR;
-using StudyProgramService.Domain;
 using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
 
 namespace StudyProgramService.Application.UseCases.DeleteStudyProgram
@@ -17,11 +16,12 @@ namespace StudyProgramService.Application.UseCases.DeleteStudyProgram
                 throw new UnauhtrizedOperationException();
 
             studyProgram.Delete();
+            var @event = mapper.Map(studyProgram);
+            await publishEndpoint.Publish(@event, cancellationToken);
 
             await unitOfWork.CommitAsync(cancellationToken);
 
-            var @event = mapper.Map(studyProgram);
-            await publishEndpoint.Publish(@event, cancellationToken);
+            
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MassTransit.Configuration;
 using StudyProgramService.Api.ServiceRegistrations;
 using StudyProgramService.Infrastructure.PostgreSqlDb;
 

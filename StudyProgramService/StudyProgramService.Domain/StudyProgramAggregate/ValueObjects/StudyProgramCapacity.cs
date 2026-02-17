@@ -13,18 +13,7 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.ValueObjects
             Value = value;
         }
 
-        public static bool operator >(StudyProgramCapacity x, StudyProgramCapacity y) => x.Value > y.Value;
-        public static bool operator <(StudyProgramCapacity x, StudyProgramCapacity y) => x.Value < y.Value;
-        public static bool operator >=(StudyProgramCapacity x, StudyProgramCapacity y) => x.Value >= y.Value;
-        public static bool operator <=(StudyProgramCapacity x, StudyProgramCapacity y) => x.Value <= y.Value;
-
-        public static bool operator >(int x, StudyProgramCapacity y) => x > y.Value;
-        public static bool operator <(int x, StudyProgramCapacity y) => x < y.Value;
-        public static bool operator >(StudyProgramCapacity x, int y) => x.Value > y;
-        public static bool operator <(StudyProgramCapacity x, int y) => x.Value < y;
-        public static bool operator >=(int x, StudyProgramCapacity y) => x >= y.Value;
-        public static bool operator <=(int x, StudyProgramCapacity y) => x <= y.Value;
-        public static bool operator >=(StudyProgramCapacity x, int y) => x.Value >= y;
-        public static bool operator <=(StudyProgramCapacity x, int y) => x.Value <= y;
+        public static StudyProgramCapacity operator +(int x, StudyProgramCapacity y) => new(x + y.Value);
+        public static StudyProgramCapacity operator +(StudyProgramCapacity x, int y) => new(x.Value + y);
     }
 }

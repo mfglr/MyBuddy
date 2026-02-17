@@ -13,6 +13,7 @@
         int DailyStudyTarget,
         int DaysPerWeek,
         int DurationInWeeks,
-        string Status
+        string Status,
+        int Capacity
     );
 }

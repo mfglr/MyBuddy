@@ -5,7 +5,7 @@ namespace StudyProgramService.Application.UseCases.UpdateTitle
 {
     internal class UpdateTitleMapper
     {
-        public StudyProgramUpdatedEvent Map(StudyProgram studyProgram) =>
+        public StudyProgramTitleUpdatedEvent Map(StudyProgram studyProgram) =>
             new(
                 studyProgram.Id,
                 studyProgram.CreatedAt,
@@ -18,7 +18,8 @@ namespace StudyProgramService.Application.UseCases.UpdateTitle
                 studyProgram.Schedule.DailyStudyTarget.Value,
                 studyProgram.Schedule.DaysPerWeek.Value,
                 studyProgram.Schedule.DurationInWeeks.Value,
-                studyProgram.Status.Value
+                studyProgram.Status.Value,
+                studyProgram.Capacity.Value
             );
     }
 }

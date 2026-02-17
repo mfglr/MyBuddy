@@ -17,7 +17,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         public StudyProgramStatus Status { get; private set; } = null!;
         public StudyProgramMoney Price { get; private set; } = price;
         public StudyProgramCapacity Capacity { get; private set; } = capacity;
-        public int EnrollmentCount { get; private set; }
 
         public bool IsFree => Price == 0;
 
@@ -28,13 +27,9 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
             Version = 1;
             IsDeleted = false;
             Status = StudyProgramStatus.Draft();
-            EnrollmentCount = 0;
         }
         public void MarkAsDraft()
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Active())
                 throw new InvalidStateTransitionException();
 
@@ -44,9 +39,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void MarkAsActive()
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new InvalidStateTransitionException();
 
@@ -56,9 +48,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void MarkAsInProgress()
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Active())
                 throw new InvalidStateTransitionException();
 
@@ -68,9 +57,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void MarkAsCompleted()
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.InProgress())
                 throw new InvalidStateTransitionException();
 
@@ -80,9 +66,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void Delete()
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status == StudyProgramStatus.InProgress())
                 throw new StudyProgramDeletionNotAllowedException();
 
@@ -93,9 +76,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
 
         public void UpdateSchedule(StudyProgramSchedule schedule)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new StudyProgramUpdateNotAllowedException();
 
@@ -105,9 +85,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void UpdatePrice(StudyProgramMoney price)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new StudyProgramUpdateNotAllowedException();
 
@@ -117,9 +94,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void UpdateTitle(StudyProgramTitle title)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new StudyProgramUpdateNotAllowedException();
 
@@ -129,9 +103,6 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
         }
         public void UpdateDescription(StudyProgramDescription description)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new StudyProgramUpdateNotAllowedException();
 
@@ -139,11 +110,10 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
+
+
         public void UpdateCapacity(StudyProgramCapacity capacity)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Draft())
                 throw new StudyProgramUpdateNotAllowedException();
 
@@ -151,19 +121,12 @@ namespace StudyProgramService.Domain.StudyProgramAggregate.Entities
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
-
-        public void IncreaseEnrollmentCount()
+        public void IncreaseCapacity(int increment)
         {
-            if (IsDeleted)
-                throw new StudyProgramNotFoundException();
-
             if (Status != StudyProgramStatus.Active())
                 throw new StudyProgramUpdateNotAllowedException();
 
-            if(EnrollmentCount >= Capacity)
-                throw new StudyProgramCapacityExceededException();
-
-            EnrollmentCount++;
+            Capacity += increment;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

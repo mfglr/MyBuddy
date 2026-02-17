@@ -1,3 +1,4 @@
+using StudyProgramService.Api.Identity;
 using StudyProgramService.Api.ServiceRegistrations;
 using StudyProgramService.Application;
 using StudyProgramService.Infrastructure;
@@ -13,6 +14,7 @@ builder.Services
 
 var app = builder.Build();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

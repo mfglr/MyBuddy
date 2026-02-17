@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using MediatR;
 using StudyProgramService.Application.UseCases.MarkStudyProgramAsCompleted;
-using StudyProgramService.Domain;
 using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
 
 namespace StudyProgramService.Application.UseCases.MarkStudyProgramAsActive
@@ -18,11 +17,10 @@ namespace StudyProgramService.Application.UseCases.MarkStudyProgramAsActive
                 throw new UnauhtrizedOperationException();
 
             studyProgram.MarkAsActive();
-            
-            await unitOfWork.CommitAsync(cancellationToken);
-            
             var @event = mapper.Map(studyProgram);
             await publishEndpoint.Publish(@event, cancellationToken);
+
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

@@ -1,0 +1,6 @@
+@StudyProgramCapacityService.Silo_HostAddress = http://localhost:5291
+
+GET {{StudyProgramCapacityService.Silo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

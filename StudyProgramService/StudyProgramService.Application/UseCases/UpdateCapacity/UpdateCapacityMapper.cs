@@ -5,7 +5,7 @@ namespace StudyProgramService.Application.UseCases.UpdateCapacity
 {
     internal class UpdateCapacityMapper
     {
-        public StudyProgramUpdatedEvent Map(StudyProgram studyProgram) =>
+        public StudyProgramCapacityUpdatedEvent Map(StudyProgram studyProgram) =>
             new(
                 studyProgram.Id,
                 studyProgram.CreatedAt,
@@ -18,7 +18,8 @@ namespace StudyProgramService.Application.UseCases.UpdateCapacity
                 studyProgram.Schedule.DailyStudyTarget.Value,
                 studyProgram.Schedule.DaysPerWeek.Value,
                 studyProgram.Schedule.DurationInWeeks.Value,
-                studyProgram.Status.Value
+                studyProgram.Status.Value,
+                studyProgram.Capacity.Value
             );
     }
 }
