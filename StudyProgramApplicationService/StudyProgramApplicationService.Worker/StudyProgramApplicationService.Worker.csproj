@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-StudyProgramApplicationService.Worker-58e7f8e8-27c2-4898-86fe-409e6b557033</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudyProgramApplicationService.Application\StudyProgramApplicationService.Application.csproj" />
+    <ProjectReference Include="..\StudyProgramApplicationService.Infrastructure\StudyProgramApplicationService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

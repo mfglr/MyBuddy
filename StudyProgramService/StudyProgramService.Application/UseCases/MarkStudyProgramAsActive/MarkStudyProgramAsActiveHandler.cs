@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using MediatR;
 using StudyProgramService.Application.UseCases.MarkStudyProgramAsCompleted;
-using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Application.UseCases.MarkStudyProgramAsActive
 {

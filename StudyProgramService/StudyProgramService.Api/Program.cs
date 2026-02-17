@@ -10,7 +10,7 @@ builder.Services
     .AddMassTransit(builder.Configuration)
     .AddIdentity(builder.Configuration)
     .AddApplication(builder.Configuration)
-    .AddInfrastructure();
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

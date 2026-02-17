@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using MediatR;
-using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
-using StudyProgramService.Domain.StudyProgramAggregate.ValueObjects;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Application.UseCases.UpdateCapacity
 {

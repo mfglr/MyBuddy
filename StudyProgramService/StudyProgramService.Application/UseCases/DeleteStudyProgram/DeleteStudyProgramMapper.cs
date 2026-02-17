@@ -1,5 +1,5 @@
 ﻿using Shared.Events.StudyProgramService;
-using StudyProgramService.Domain.StudyProgramAggregate.Entities;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Application.UseCases.DeleteStudyProgram
 {
@@ -15,10 +15,10 @@ namespace StudyProgramService.Application.UseCases.DeleteStudyProgram
                 studyProgram.UserId,
                 studyProgram.Title.Value,
                 studyProgram.Description.Value,
-                studyProgram.Schedule.DailyStudyTarget.Value,
-                studyProgram.Schedule.DaysPerWeek.Value,
-                studyProgram.Schedule.DurationInWeeks.Value,
-                studyProgram.Status.Value,
+                studyProgram.DailyStudyTarget.Value,
+                studyProgram.DaysPerWeek.Value,
+                studyProgram.DurationInWeeks.Value,
+                (int)studyProgram.Status,
                 studyProgram.Capacity.Value
             );
     }

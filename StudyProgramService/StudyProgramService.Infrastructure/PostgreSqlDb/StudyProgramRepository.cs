@@ -1,6 +1,5 @@
-﻿using MongoDB.Driver.Linq;
-using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
-using StudyProgramService.Domain.StudyProgramAggregate.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Infrastructure.PostgreSqlDb
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StudyProgramService.Domain.StudyProgramAggregate.Entities;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Infrastructure.PostgreSqlDb
 {
@@ -11,16 +11,11 @@ namespace StudyProgramService.Infrastructure.PostgreSqlDb
             builder.Property(x => x.Version).IsConcurrencyToken();
             builder.OwnsOne(x => x.Title);
             builder.OwnsOne(x => x.Description);
-            builder.OwnsOne(
-                x => x.Schedule,
-                x => {
-                    x.OwnsOne(x => x.DailyStudyTarget);
-                    x.OwnsOne(x => x.DaysPerWeek);
-                    x.OwnsOne(x => x.DurationInWeeks);
-                }
-            );
-            builder.OwnsOne(x => x.Status);
-            builder.OwnsOne(x => x.Price);
+            builder.OwnsOne(x => x.DailyStudyTarget);
+            builder.OwnsOne(x => x.DaysPerWeek);
+            builder.OwnsOne(x => x.DurationInWeeks);
+            builder.OwnsOne(x => x.Capacity);
+            builder.OwnsOne(x => x.Price,x => x.OwnsOne(x => x.Currency));
         }
     }
 }

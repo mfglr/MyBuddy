@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Events.StudyProgramService;
 using StudyProgramService.Application.UseCases.CreateStudyProgram;
 using StudyProgramService.Application.UseCases.DeleteStudyProgram;
+using StudyProgramService.Application.UseCases.IncreaseCapacity;
 using StudyProgramService.Application.UseCases.MarkStudyProgramAsActive;
 using StudyProgramService.Application.UseCases.MarkStudyProgramAsCompleted;
 using StudyProgramService.Application.UseCases.MarkStudyProgramAsDraft;
@@ -30,6 +32,7 @@ namespace StudyProgramService.Application
                 .AddSingleton<UpdateTitleMapper>()
                 .AddSingleton<UpdateDescriptionMapper>()
                 .AddSingleton<UpdateCapacityMapper>()
+                .AddSingleton<IncreaseCapacityMapper>()
                 .AddMediatR(x =>
                 {
                     x.LicenseKey = configuration["LuckPenny:LicenseKey"];

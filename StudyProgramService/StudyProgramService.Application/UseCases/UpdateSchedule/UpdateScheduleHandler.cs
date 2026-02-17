@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using MediatR;
-using StudyProgramService.Domain.StudyProgramAggregate.Abstracts;
-using StudyProgramService.Domain.StudyProgramAggregate.ValueObjects;
+using StudyProgramService.Domain;
 
 namespace StudyProgramService.Application.UseCases.UpdateSchedule
 {
@@ -12,7 +11,6 @@ namespace StudyProgramService.Application.UseCases.UpdateSchedule
             var dailyStudyTarget = new StudyProgramDailyStudyTarget(request.DailyStudyTarget);
             var daysPerWeek = new StudyProgramDaysPerWeek(request.DaysPerWeek);
             var durationInWeeks = new StudyProgramDurationInWeeks(request.DurationInWeeks);
-            var studySchedule = new StudyProgramSchedule(dailyStudyTarget, daysPerWeek, durationInWeeks);
 
             var studyProgram = await studyProgramRepository.GetByIdAsync(request.Id, cancellationToken);
             if (studyProgram == null || studyProgram.IsDeleted)
@@ -21,7 +19,7 @@ namespace StudyProgramService.Application.UseCases.UpdateSchedule
             if (identityService.UserId != studyProgram.UserId)
                 throw new UnauhtrizedOperationException();
 
-            studyProgram.UpdateSchedule(studySchedule);
+            studyProgram.UpdateSchedule(dailyStudyTarget, daysPerWeek, durationInWeeks);
             var @event = mapper.Map(studyProgram);
             await publishEndpoint.Publish(@event, cancellationToken);
 

@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using StudyProgramService.Worker.MassTransit.Consumers.ValidateEnrollmentRequest_OnEnrollmentRequestCreated;
+using StudyProgramService.Worker.MassTransit.Consumers.ValidateStudyApplication_OnStudyApplicationCreated;
 
 namespace StudyProgramService.Worker.MassTransit
 {
@@ -17,11 +17,11 @@ namespace StudyProgramService.Worker.MassTransit
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<ValidateEnrollmentRequest_OnEnrollmentRequestCreated_Mapper>()
+                .AddSingleton<ValidateStudyApplication_OnStudyApplicationCreated_Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<ValidateEnrollmentRequest_OnEnrollmentRequestCreated_StudyProgramService>();
+                        brc.AddConsumer<ValidateStudyApplication_OnStudyApplicationCreated_StudyProgramService>();
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(

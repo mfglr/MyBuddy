@@ -1,6 +1,0 @@
-@EnrollmentRequestService.Api_HostAddress = http://localhost:5121
-
-GET {{EnrollmentRequestService.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
