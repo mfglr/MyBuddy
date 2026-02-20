@@ -1,10 +1,12 @@
 ﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsApproved_OnSPCReserved;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsAwaitingCapacityReservation_OnSPAApprovalValidated;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPAAprovalInvalidated;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPACreationInvalidated;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPCExceeded;
 using StudyProgramApplicationService.Worker.MassTransit.Consumers.UpdateSPAStatus_OnSPACreationValidated;
+using StudyProgramService.Domain.Exceptions;
 
 namespace StudyProgramApplicationService.Worker.MassTransit
 {
@@ -40,6 +42,16 @@ namespace StudyProgramApplicationService.Worker.MassTransit
                         brc.AddConsumer<MarkSPAAsAwaitingCapacityReservation_OnSPAApprovalValidated>();
                         brc.AddConsumer<MarkSPAAsRejected_OnSPAAprovalInvalidated>();
 
+                        brc.AddConfigureEndpointsCallback((context, name, cfg) =>
+                        {
+                            cfg.UseMessageRetry(rc =>
+                            {
+                                rc.Exponential(5,TimeSpan.FromMilliseconds(200), TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(200));
+
+                                rc.Handle<DbUpdateConcurrencyException>();
+                                rc.Handle<InvalidSPStateTransitionException>();
+                            });
+                        });
 
                         brc.UsingRabbitMq((context, rbgc) =>
                         {

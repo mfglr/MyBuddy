@@ -85,10 +85,11 @@ namespace StudyProgramApplicationService.Domain
         }
         public void MarkAsUnderApprovalValidation()
         {
-            if (Status != SPAStatus.PendingApproval)
+            if (Status != SPAStatus.PendingApproval && Status != SPAStatus.Rejected)
                 throw new InvalidSPAStateTransitionException();
 
             Status = SPAStatus.UnderApprovalValidation;
+            RejectionReason = null;
 
             Version++;
             UpdatedAt = DateTime.UtcNow;
