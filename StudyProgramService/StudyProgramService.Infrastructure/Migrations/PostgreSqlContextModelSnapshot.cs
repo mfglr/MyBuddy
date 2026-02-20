@@ -22,175 +22,7 @@ namespace StudyProgramService.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.InboxState", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime?>("Consumed")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ConsumerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("Delivered")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ExpirationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("LastSequenceNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("LockId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("ReceiveCount")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Received")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Delivered");
-
-                    b.ToTable("InboxState");
-                });
-
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxMessage", b =>
-                {
-                    b.Property<long>("SequenceNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("SequenceNumber"));
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<Guid?>("ConversationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("CorrelationId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("DestinationAddress")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime?>("EnqueueTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ExpirationTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FaultAddress")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("Headers")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("InboxConsumerId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("InboxMessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("InitiatorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("MessageType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("OutboxId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Properties")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("RequestId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ResponseAddress")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime>("SentTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("SourceAddress")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.HasKey("SequenceNumber");
-
-                    b.HasIndex("EnqueueTime");
-
-                    b.HasIndex("ExpirationTime");
-
-                    b.HasIndex("OutboxId", "SequenceNumber")
-                        .IsUnique();
-
-                    b.HasIndex("InboxMessageId", "InboxConsumerId", "SequenceNumber")
-                        .IsUnique();
-
-                    b.ToTable("OutboxMessage");
-                });
-
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxState", b =>
-                {
-                    b.Property<Guid>("OutboxId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("Delivered")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long?>("LastSequenceNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<Guid>("LockId")
-                        .HasColumnType("uuid");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bytea");
-
-                    b.HasKey("OutboxId");
-
-                    b.HasIndex("Created");
-
-                    b.ToTable("OutboxState");
-                });
-
-            modelBuilder.Entity("StudyProgramService.Domain.StudyProgram", b =>
+            modelBuilder.Entity("StudyProgramService.Domain.Entities.SP", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,156 +52,142 @@ namespace StudyProgramService.Infrastructure.Migrations
                     b.ToTable("StudyPrograms");
                 });
 
-            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxMessage", b =>
+            modelBuilder.Entity("StudyProgramService.Domain.Entities.SP", b =>
                 {
-                    b.HasOne("MassTransit.EntityFrameworkCoreIntegration.OutboxState", null)
-                        .WithMany()
-                        .HasForeignKey("OutboxId");
-
-                    b.HasOne("MassTransit.EntityFrameworkCoreIntegration.InboxState", null)
-                        .WithMany()
-                        .HasForeignKey("InboxMessageId", "InboxConsumerId")
-                        .HasPrincipalKey("MessageId", "ConsumerId");
-                });
-
-            modelBuilder.Entity("StudyProgramService.Domain.StudyProgram", b =>
-                {
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramCapacity", "Capacity", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPDailyStudyTarget", "DailyStudyTarget", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
                         });
 
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramDailyStudyTarget", "DailyStudyTarget", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPDaysPerWeek", "DaysPerWeek", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
                         });
 
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramDaysPerWeek", "DaysPerWeek", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPDescription", "Description", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("integer");
-
-                            b1.HasKey("StudyProgramId");
-
-                            b1.ToTable("StudyPrograms");
-
-                            b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
-                        });
-
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramDescription", "Description", b1 =>
-                        {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("text");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
                         });
 
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramDurationInWeeks", "DurationInWeeks", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPDurationInWeeks", "DurationInWeeks", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("integer");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
                         });
 
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramMoney", "Price", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPEnrollmentStrategy", "EnrollmentStrategy", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("SPId");
+
+                            b1.ToTable("StudyPrograms");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SPId");
+                        });
+
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPMoney", "Price", b1 =>
+                        {
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<decimal>("Value")
                                 .HasColumnType("numeric");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
 
-                            b1.OwnsOne("StudyProgramService.Domain.StudyProgramCurrency", "Currency", b2 =>
+                            b1.OwnsOne("StudyProgramService.Domain.ValueObjects.SPCurrency", "Currency", b2 =>
                                 {
-                                    b2.Property<Guid>("StudyProgramMoneyStudyProgramId")
+                                    b2.Property<Guid>("SPMoneySPId")
                                         .HasColumnType("uuid");
 
                                     b2.Property<string>("Value")
                                         .IsRequired()
                                         .HasColumnType("text");
 
-                                    b2.HasKey("StudyProgramMoneyStudyProgramId");
+                                    b2.HasKey("SPMoneySPId");
 
                                     b2.ToTable("StudyPrograms");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("StudyProgramMoneyStudyProgramId");
+                                        .HasForeignKey("SPMoneySPId");
                                 });
 
                             b1.Navigation("Currency")
                                 .IsRequired();
                         });
 
-                    b.OwnsOne("StudyProgramService.Domain.StudyProgramTitle", "Title", b1 =>
+                    b.OwnsOne("StudyProgramService.Domain.ValueObjects.SPTitle", "Title", b1 =>
                         {
-                            b1.Property<Guid>("StudyProgramId")
+                            b1.Property<Guid>("SPId")
                                 .HasColumnType("uuid");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("text");
 
-                            b1.HasKey("StudyProgramId");
+                            b1.HasKey("SPId");
 
                             b1.ToTable("StudyPrograms");
 
                             b1.WithOwner()
-                                .HasForeignKey("StudyProgramId");
+                                .HasForeignKey("SPId");
                         });
-
-                    b.Navigation("Capacity")
-                        .IsRequired();
 
                     b.Navigation("DailyStudyTarget")
                         .IsRequired();
@@ -381,6 +199,9 @@ namespace StudyProgramService.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("DurationInWeeks")
+                        .IsRequired();
+
+                    b.Navigation("EnrollmentStrategy")
                         .IsRequired();
 
                     b.Navigation("Price")

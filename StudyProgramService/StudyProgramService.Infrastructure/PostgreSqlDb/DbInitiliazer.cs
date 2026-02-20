@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StudyProgramService.Infrastructure.PostgreSqlDb
 {
-    internal static class DbInitiliazer
+    public static class DbInitiliazer
     {
         public static void Init(IServiceCollection services)
         {

@@ -10,7 +10,7 @@ namespace PostQueryService.Domain.UserDomain
         public Guid Id { get; private set; }
         public int Version { get; private set; }
         public string? Name { get; private set; }
-        public string UserName { get; private set; }
+        public string UserName { get; private set; } = null!;
         public string? Media { get; private set; }
 
         private User() { }

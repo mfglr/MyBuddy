@@ -1,4 +1,5 @@
-﻿using StudyProgramService.Application;
+﻿using Shared.Exceptions;
+using StudyProgramService.Application;
 using System.Security.Claims;
 
 namespace StudyProgramService.Api.Identity
@@ -12,7 +13,7 @@ namespace StudyProgramService.Api.Identity
                     .Claims
                     .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?
                     .Value ??
-                throw new UnauthorizedException()
+                throw new AuthorizationException()
             );
     }
 }

@@ -10,16 +10,12 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="9.0.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Orleans.Core" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StudyProgramCapacityService.Application\StudyProgramCapacityService.Application.csproj" />
     <ProjectReference Include="..\StudyProgramCapacityService.Infrastructure\StudyProgramCapacityService.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MassTransit\Consumers\" />
   </ItemGroup>
 </Project>

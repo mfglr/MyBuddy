@@ -1,18 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Events.StudyProgramService;
-using StudyProgramService.Application.UseCases.CreateStudyProgram;
-using StudyProgramService.Application.UseCases.DeleteStudyProgram;
-using StudyProgramService.Application.UseCases.IncreaseCapacity;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsActive;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsCompleted;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsDraft;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsInProgress;
-using StudyProgramService.Application.UseCases.UpdateCapacity;
-using StudyProgramService.Application.UseCases.UpdateDescription;
-using StudyProgramService.Application.UseCases.UpdatePrice;
-using StudyProgramService.Application.UseCases.UpdateSchedule;
-using StudyProgramService.Application.UseCases.UpdateTitle;
+using StudyProgramService.Application.UseCases.CreateSP;
+using StudyProgramService.Application.UseCases.DeleteSP;
+using StudyProgramService.Application.UseCases.MarkSPAsActive;
+using StudyProgramService.Application.UseCases.MarkSPAsCompleted;
+using StudyProgramService.Application.UseCases.MarkSPAsDraft;
+using StudyProgramService.Application.UseCases.MarkSPAsInProgress;
+using StudyProgramService.Application.UseCases.UpdateSPDescription;
+using StudyProgramService.Application.UseCases.UpdateSPPrice;
+using StudyProgramService.Application.UseCases.UpdateSPSchedule;
+using StudyProgramService.Application.UseCases.UpdateSPTitle;
+using StudyProgramService.Application.UseCases.ValidateSPAApproval;
+using StudyProgramService.Application.UseCases.ValidateSPACreation;
 using System.Reflection;
 
 namespace StudyProgramService.Application
@@ -21,18 +20,18 @@ namespace StudyProgramService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<CreateStudyProgramMapper>()
-                .AddSingleton<MarkStudyProgramAsDraftMapper>()
-                .AddSingleton<MarkStudyProgramAsActiveMapper>()
-                .AddSingleton<MarkStudyProgramAsInprogressMapper>()
-                .AddSingleton<MarkStudyProgramAsCompletedMapper>()
-                .AddSingleton<DeleteStudyProgramMapper>()
-                .AddSingleton<UpdateScheduleMapper>()
-                .AddSingleton<UpdatePriceMapper>()
-                .AddSingleton<UpdateTitleMapper>()
-                .AddSingleton<UpdateDescriptionMapper>()
-                .AddSingleton<UpdateCapacityMapper>()
-                .AddSingleton<IncreaseCapacityMapper>()
+                .AddSingleton<CreateSPMapper>()
+                .AddSingleton<MarkSPAsDraftMapper>()
+                .AddSingleton<MarkSPAsActiveMapper>()
+                .AddSingleton<MarkSPAsInProgressMapper>()
+                .AddSingleton<MarkSPAsCompletedMapper>()
+                .AddSingleton<DeleteSPMapper>()
+                .AddSingleton<UpdateSPScheduleMapper>()
+                .AddSingleton<UpdateSPPriceMapper>()
+                .AddSingleton<UpdateSPTitleMapper>()
+                .AddSingleton<UpdateSPDescriptionMapper>()
+                .AddSingleton<ValidateSPACreationMapper>()
+                .AddSingleton<ValidateSPAApprovalMapper>()
                 .AddMediatR(x =>
                 {
                     x.LicenseKey = configuration["LuckPenny:LicenseKey"];

@@ -1,5 +1,6 @@
 ﻿using MassTransit;
-using StudyProgramService.Worker.MassTransit.Consumers.ValidateStudyApplication_OnStudyApplicationCreated;
+using StudyProgramService.Worker.MassTransit.Consumers.ValidateSPAAproval_OnSPAApprovalRequested;
+using StudyProgramService.Worker.MassTransit.Consumers.ValidateSPACreation_OnSPACreated;
 
 namespace StudyProgramService.Worker.MassTransit
 {
@@ -17,11 +18,14 @@ namespace StudyProgramService.Worker.MassTransit
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<ValidateStudyApplication_OnStudyApplicationCreated_Mapper>()
+                .AddSingleton<Consumers.ValidateSPACreation_OnSPACreated.Mapper>()
+                .AddSingleton<Consumers.ValidateSPAAproval_OnSPAApprovalRequested.Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<ValidateStudyApplication_OnStudyApplicationCreated_StudyProgramService>();
+                        brc.AddConsumer<ValidateSPACreation_OnSPACreated>();
+                        brc.AddConsumer<ValidateSPAAproval_OnSPAApprovalRequested>();
+
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(

@@ -1,8 +1,8 @@
-using EnrollmentRequestService.Worker.MassTransit;
 using StudyProgramApplicationService.Application;
 using StudyProgramApplicationService.Domain;
 using StudyProgramApplicationService.Infrastructure;
 using StudyProgramApplicationService.Worker.Identity;
+using StudyProgramApplicationService.Worker.MassTransit;
 
 var builder = Host.CreateApplicationBuilder(args);
 

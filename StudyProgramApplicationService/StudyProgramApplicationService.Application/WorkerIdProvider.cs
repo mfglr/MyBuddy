@@ -1,4 +1,6 @@
-﻿namespace StudyProgramApplicationService.Application
+﻿using Shared.Exceptions;
+
+namespace StudyProgramApplicationService.Application
 {
     internal class WorkerIdProvider
     {
@@ -7,7 +9,7 @@
         public void Validate(Guid workerId)
         {
             if (WorkerId != workerId)
-                throw new UnauthorizedException();
+                throw new AuthorizationException();
         }
     }
 }

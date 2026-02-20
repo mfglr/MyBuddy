@@ -1,8 +1,12 @@
 ﻿using MassTransit;
-using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkAsRejected_OnValidationFailedStudyProgram;
-using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkAsValidated_OnValidationSuccessByStudyProgram;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsApproved_OnSPCReserved;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsAwaitingCapacityReservation_OnSPAApprovalValidated;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPAAprovalInvalidated;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPACreationInvalidated;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.MarkSPAAsRejected_OnSPCExceeded;
+using StudyProgramApplicationService.Worker.MassTransit.Consumers.UpdateSPAStatus_OnSPACreationValidated;
 
-namespace EnrollmentRequestService.Worker.MassTransit
+namespace StudyProgramApplicationService.Worker.MassTransit
 {
     internal class MassTransitOptions
     {
@@ -18,14 +22,25 @@ namespace EnrollmentRequestService.Worker.MassTransit
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<MarkAsRejected_OnStudyProgramValidationFailed_Mapper>()
-                .AddSingleton<MarkAsValidated_OnValidationSuccessByStudyProgram_Mapper>()
+                .AddSingleton<Consumers.UpdateSPAStatus_OnSPACreationValidated.Mapper>()
+                .AddSingleton<Consumers.MarkSPAAsRejected_OnSPACreationInvalidated.Mapper>()
+                .AddSingleton<Consumers.MarkSPAAsApproved_OnSPCReserved.Mapper>()
+                .AddSingleton<Consumers.MarkSPAAsRejected_OnSPCExceeded.Mapper>()
+                .AddSingleton<Consumers.MarkSPAAsAwaitingCapacityReservation_OnSPAApprovalValidated.Mapper>()
+                .AddSingleton<Consumers.MarkSPAAsRejected_OnSPAAprovalInvalidated.Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<MarkAsRejected_OnStudyProgramValidationFailed_EnrrollmentRequestService>();
-                        brc.AddConsumer<MarkAsValidated_OnValidationSuccessByStudyProgram_StudyProgramApplicationService>();
-                        
+                        brc.AddConsumer<UpdateSPAStatus_OnSPACreationValidated>();
+                        brc.AddConsumer<MarkSPAAsRejected_OnSPACreationInvalidated>();
+
+                        brc.AddConsumer<MarkSPAAsApproved_OnSPCReserved>();
+                        brc.AddConsumer<MarkSPAAsRejected_OnSPCExceeded>();
+
+                        brc.AddConsumer<MarkSPAAsAwaitingCapacityReservation_OnSPAApprovalValidated>();
+                        brc.AddConsumer<MarkSPAAsRejected_OnSPAAprovalInvalidated>();
+
+
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(

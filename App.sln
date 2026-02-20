@@ -209,8 +209,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramCapacityService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramCapacityService.Worker", "StudyProgramCapacityService\StudyProgramCapacityService.Worker\StudyProgramCapacityService.Worker.csproj", "{507813C4-4C38-4031-8226-AA7F9F831160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramService.Worker", "StudyProgramService\StudyProgramService.Worker\StudyProgramService.Worker.csproj", "{B1F148A9-5127-455B-A926-BCF78AF1555A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StudyProgramApplicationService", "StudyProgramApplicationService", "{B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramApplicationService.Domain", "StudyProgramApplicationService\StudyProgramApplicationService.Domain\StudyProgramApplicationService.Domain.csproj", "{2165AE51-4843-499D-BB12-B8BF1D9B8672}"
@@ -221,7 +219,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramApplicationServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramApplicationService.Api", "StudyProgramApplicationService\StudyProgramApplicationService.Api\StudyProgramApplicationService.Api.csproj", "{15A33213-041F-431C-A924-39B3D6F1D181}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramApplicationService.Worker", "StudyProgramApplicationService\StudyProgramApplicationService.Worker\StudyProgramApplicationService.Worker.csproj", "{C45DBE41-87EB-49F5-94C5-CB16B943E73F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramCapacityService.Api", "StudyProgramCapacityService\StudyProgramCapacityService.Api\StudyProgramCapacityService.Api.csproj", "{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramApplicationService.Worker", "StudyProgramApplicationService\StudyProgramApplicationService.Worker\StudyProgramApplicationService.Worker.csproj", "{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyProgramService.Worker", "StudyProgramService\StudyProgramService.Worker\StudyProgramService.Worker.csproj", "{973DC5D9-895F-4C58-AC61-C3A3B5F685F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{163C942D-2CC4-4A9C-9510-CFF120E08296}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\CreateSPA.drawio = ..\..\..\Desktop\CreateSPA.drawio
+		..\..\..\Desktop\label.drawio = ..\..\..\Desktop\label.drawio
+		..\..\..\Desktop\RequestSPAApproval.drawio = ..\..\..\Desktop\RequestSPAApproval.drawio
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -553,10 +562,6 @@ Global
 		{507813C4-4C38-4031-8226-AA7F9F831160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{507813C4-4C38-4031-8226-AA7F9F831160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{507813C4-4C38-4031-8226-AA7F9F831160}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1F148A9-5127-455B-A926-BCF78AF1555A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1F148A9-5127-455B-A926-BCF78AF1555A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1F148A9-5127-455B-A926-BCF78AF1555A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1F148A9-5127-455B-A926-BCF78AF1555A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2165AE51-4843-499D-BB12-B8BF1D9B8672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2165AE51-4843-499D-BB12-B8BF1D9B8672}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2165AE51-4843-499D-BB12-B8BF1D9B8672}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -573,10 +578,18 @@ Global
 		{15A33213-041F-431C-A924-39B3D6F1D181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15A33213-041F-431C-A924-39B3D6F1D181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15A33213-041F-431C-A924-39B3D6F1D181}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C45DBE41-87EB-49F5-94C5-CB16B943E73F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C45DBE41-87EB-49F5-94C5-CB16B943E73F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C45DBE41-87EB-49F5-94C5-CB16B943E73F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C45DBE41-87EB-49F5-94C5-CB16B943E73F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{973DC5D9-895F-4C58-AC61-C3A3B5F685F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{973DC5D9-895F-4C58-AC61-C3A3B5F685F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{973DC5D9-895F-4C58-AC61-C3A3B5F685F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{973DC5D9-895F-4C58-AC61-C3A3B5F685F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -664,12 +677,13 @@ Global
 		{F99DB21A-8063-4EA6-B4B4-18743E14BF8D} = {A3ADFE47-C0D8-4690-850A-73567F73AD8D}
 		{469E61B6-3C33-4DCE-88DF-D14D2EE595DB} = {A3ADFE47-C0D8-4690-850A-73567F73AD8D}
 		{507813C4-4C38-4031-8226-AA7F9F831160} = {A3ADFE47-C0D8-4690-850A-73567F73AD8D}
-		{B1F148A9-5127-455B-A926-BCF78AF1555A} = {4029913D-77FF-4C16-886C-ED330F25D286}
 		{2165AE51-4843-499D-BB12-B8BF1D9B8672} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
 		{22AFEF1E-7EAD-4EE7-9E23-60417214DC56} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
 		{3A68594A-47AD-4C33-93CD-4DC6FA76A72E} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
 		{15A33213-041F-431C-A924-39B3D6F1D181} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
-		{C45DBE41-87EB-49F5-94C5-CB16B943E73F} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
+		{7912B2D0-33E3-46B3-B8DA-9F0E6FC205E7} = {A3ADFE47-C0D8-4690-850A-73567F73AD8D}
+		{D5EA80F1-7C5F-EF50-5E8B-63FCB469AF1B} = {B4935C7B-3577-46EB-9CF8-8A6864F8DA5B}
+		{973DC5D9-895F-4C58-AC61-C3A3B5F685F0} = {4029913D-77FF-4C16-886C-ED330F25D286}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

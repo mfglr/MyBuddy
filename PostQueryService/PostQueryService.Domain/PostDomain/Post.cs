@@ -12,8 +12,8 @@ namespace PostQueryService.Domain.PostDomain
         public int Version { get; private set; }
         public Guid UserId { get; private set; }
         public Content? Content { get; private set; }
-        public string Media { get; private set; }
-        
+        public string Media { get; private set; } = null!;
+
         private Post() { }
 
         public Post(Guid id, DateTime createdAt, DateTime? updatedAt, int version, Guid userId, Content? content, IEnumerable<PostMedia> media)

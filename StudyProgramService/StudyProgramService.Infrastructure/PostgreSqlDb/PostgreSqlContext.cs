@@ -1,21 +1,17 @@
-﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using StudyProgramService.Domain;
+using StudyProgramService.Domain.Entities;
 using System.Reflection;
 
 namespace StudyProgramService.Infrastructure.PostgreSqlDb
 {
     public class PostgreSqlContext(DbContextOptions<PostgreSqlContext> options) : DbContext(options)
     {
-        public DbSet<StudyProgram> StudyPrograms { get; private set; }
+        public DbSet<SP> StudyPrograms { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.AddInboxStateEntity();
-            modelBuilder.AddOutboxMessageEntity();
-            modelBuilder.AddOutboxStateEntity();
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

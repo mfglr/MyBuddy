@@ -6,7 +6,7 @@ builder.Host
     .UseOrleans(
         siloBuilder =>
         {
-            siloBuilder.UseLocalhostClustering(11112,30001);
+            siloBuilder.UseLocalhostClustering(11113,30002);
             siloBuilder
                 .AddAdoNetGrainStorage("StudyProgramCapacity", options =>
                 {

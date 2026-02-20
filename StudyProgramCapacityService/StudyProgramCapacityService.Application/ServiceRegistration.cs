@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StudyProgramCapacityService.Application.UseCases.Enroll;
+using StudyProgramCapacityService.Application.UseCases.GetSPCById;
+using StudyProgramCapacityService.Application.UseCases.ReserveSPC;
 using System.Reflection;
 
 namespace StudyProgramCapacityService.Application
@@ -9,7 +10,8 @@ namespace StudyProgramCapacityService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<EnrollMapper>()
+                .AddSingleton<ReserveSPCMapper>()
+                .AddSingleton<GetSPCByIdMapper>()
                 .AddMediatR(
                     x =>
                     {

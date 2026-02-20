@@ -1,17 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudyProgramService.Application.UseCases.CreateStudyProgram;
-using StudyProgramService.Application.UseCases.DeleteStudyProgram;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsActive;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsCompleted;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsDraft;
-using StudyProgramService.Application.UseCases.MarkStudyProgramAsInProgress;
-using StudyProgramService.Application.UseCases.UpdateCapacity;
-using StudyProgramService.Application.UseCases.UpdateDescription;
-using StudyProgramService.Application.UseCases.UpdatePrice;
-using StudyProgramService.Application.UseCases.UpdateSchedule;
-using StudyProgramService.Application.UseCases.UpdateTitle;
+using StudyProgramService.Application.UseCases.CreateSP;
+using StudyProgramService.Application.UseCases.DeleteSP;
+using StudyProgramService.Application.UseCases.MarkSPAsActive;
+using StudyProgramService.Application.UseCases.MarkSPAsCompleted;
+using StudyProgramService.Application.UseCases.MarkSPAsDraft;
+using StudyProgramService.Application.UseCases.MarkSPAsInProgress;
+using StudyProgramService.Application.UseCases.UpdateSPDescription;
+using StudyProgramService.Application.UseCases.UpdateSPPrice;
+using StudyProgramService.Application.UseCases.UpdateSPSchedule;
+using StudyProgramService.Application.UseCases.UpdateSPTitle;
 
 namespace StudyProgramService.Api.Controllers
 {
@@ -21,47 +20,43 @@ namespace StudyProgramService.Api.Controllers
     public class StudyProgramsController(ISender sender) : ControllerBase
     {
         [HttpPost]
-        public Task<CreateStudyProgramResponse> Create(CreateStudyProgramRequest request, CancellationToken cancellationToken) =>
+        public Task<CreateSPResponse> Create(CreateSPRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
         
         [HttpPut]
-        public Task MarkAsDraft(MarkStudyProgramAsDraftRequest request, CancellationToken cancellationToken) =>
+        public Task MarkAsDraft(MarkSPAsDraftRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
         
         [HttpPut]
-        public Task MarkAsActive(MarkStudyProgramAsActiveRequest request, CancellationToken cancellationToken) =>
+        public Task MarkAsActive(MarkSPAsActiveRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
         
         [HttpPut]
-        public Task MarkAsInProgress(MarkStudyProgramAsInProgressRequest request, CancellationToken cancellationToken) =>
+        public Task MarkAsInProgress(MarkSPAsInProgressRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
         
         [HttpPut]
-        public Task MarkAsCompleted(MarkStudyProgramAsCompletedRequest request, CancellationToken cancellationToken) =>
+        public Task MarkAsCompleted(MSPAsCompletedRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
         
         [HttpDelete("{id:guid}")]
         public Task Delete(Guid id, CancellationToken cancellationToken) =>
-            sender.Send(new DeleteStudyProgramRequest(id), cancellationToken);
+            sender.Send(new DeleteSPRequest(id), cancellationToken);
 
         [HttpPut]
-        public Task UpdateSchedule(UpdateScheduleRequest request, CancellationToken cancellationToken) =>
+        public Task UpdateSchedule(UpdateSPScheduleRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
         [HttpPut]
-        public Task UpdatePrice(UpdatePriceRequest request, CancellationToken cancellationToken) =>
+        public Task UpdatePrice(UpdateSPPriceRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
         [HttpPut]
-        public Task UpdateTitle(UpdateTitleRequest request, CancellationToken cancellationToken) =>
+        public Task UpdateTitle(UpdateSPTitleRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
         [HttpPut]
-        public Task UpdateDescription(UpdateDescriptionRequest request, CancellationToken cancellationToken) =>
-            sender.Send(request, cancellationToken);
-
-        [HttpPut]
-        public Task UpdateCapacity(UpdateCapacityRequest request, CancellationToken cancellationToken) =>
+        public Task UpdateDescription(UpdateSPDescriptionRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
     }
 }

@@ -1,5 +1,4 @@
-﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using StudyProgramApplicationService.Domain;
 using System.Reflection;
@@ -8,14 +7,11 @@ namespace StudyProgramApplicationService.Infrastructure.PostgreSqlDb
 {
     public class PostgreSqlContext(DbContextOptions<PostgreSqlContext> options) : DbContext(options)
     {
-        public DbSet<StudyProgramApplication> StudyProgramApplications { get; private set; }
+        public DbSet<SPA> StudyProgramApplications { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.AddInboxStateEntity();
-            modelBuilder.AddOutboxMessageEntity();
-            modelBuilder.AddOutboxStateEntity();
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

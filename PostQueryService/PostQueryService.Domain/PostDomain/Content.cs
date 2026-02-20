@@ -2,8 +2,8 @@
 {
     public class Content
     {
-        public string Value { get; private set; }
-        public ModerationResult ModerationResult { get; private set; }
+        public string Value { get; private set; } = null!;
+        public ModerationResult ModerationResult { get; private set; } = null!;
 
         private Content(){}
 

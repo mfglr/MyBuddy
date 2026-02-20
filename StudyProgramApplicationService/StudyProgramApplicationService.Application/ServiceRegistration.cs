@@ -1,7 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StudyProgramApplicationService.Application.UseCases.CreateStudyProgramApplication;
-using StudyProgramApplicationService.Application.UseCases.ValidateStudyProgramApplicationStudyProgram;
+using StudyProgramApplicationService.Application.UseCases.CreateSPA;
+using StudyProgramApplicationService.Application.UseCases.MarkSPAAsApproved;
+using StudyProgramApplicationService.Application.UseCases.MarkSPAAsAwaitingCapacityReservation;
+using StudyProgramApplicationService.Application.UseCases.MarkSPAAsPendingApprovel;
+using StudyProgramApplicationService.Application.UseCases.MarkSPAAsRejected;
+using StudyProgramApplicationService.Application.UseCases.RequestSPAApproval;
 using System.Reflection;
 
 namespace StudyProgramApplicationService.Application
@@ -10,8 +14,12 @@ namespace StudyProgramApplicationService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<CreateStudyProgramApplicationMapper>()
-                .AddSingleton<ValidateStudyProgramApplicationStudyProgramMapper>()
+                .AddSingleton<CreateSPAMapper>()
+                .AddSingleton<MarkSPAAsPendingApprovelMapper>()
+                .AddSingleton<RequestSPAApprovalMapper>()
+                .AddSingleton<MarkSPAAsRejectedMapper>()
+                .AddSingleton<MarkSPAAsApprovedMapper>()
+                .AddSingleton<MarkSPAAsAwaitingCapacityReservationMapper>()
                 .AddSingleton<WorkerIdProvider>()
                 .AddMediatR(
                     x =>

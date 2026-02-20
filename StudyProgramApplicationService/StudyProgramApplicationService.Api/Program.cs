@@ -3,6 +3,7 @@ using StudyProgramApplicationService.Api.MassTransit;
 using StudyProgramApplicationService.Application;
 using StudyProgramApplicationService.Domain;
 using StudyProgramApplicationService.Infrastructure;
+using StudyProgramApplicationService.Infrastructure.PostgreSqlDb;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services
     .AddDomain()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);
+
+DbInitiliazer.Init(builder.Services);
 
 var app = builder.Build();
 
