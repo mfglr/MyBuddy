@@ -27,6 +27,7 @@ namespace UserService.Worker.ServiceRegistrations
 
                         brc.AddConsumer<AddUserMediaThumbnail_OnUserMediaThumbnailGenerated_UserService>();
 
+                        brc.AddConsumer<ValidateSPICreation_OnSPICreated_User>();
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(

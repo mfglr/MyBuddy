@@ -1,25 +1,24 @@
 ﻿using MassTransit;
-using StudyProgramService.Worker.MassTransit.Consumers.ValidateSPAAproval_OnSPAApprovalRequested;
-using StudyProgramService.Worker.MassTransit.Consumers.ValidateSPACreation_OnSPACreated;
-using StudyProgramService.Worker.MassTransit.Consumers.ValidateSPICreation_OnSPICreated;
+using StudyProgramInviteService.Worker.MassTransit;
+using StudyProgramInviteService.Worker.MassTransit.Consumers.InvalidateSPICreation_OnSPICreationInvalidated;
+using StudyProgramInviteService.Worker.MassTransit.Consumers.ValidateSPICreation_OnSPICreationValidated;
 
-namespace StudyProgramService.Worker.MassTransit
+namespace StudyProgramInviteService.Worker.MassTransit
 {
     internal static class ServiceRegistration
     {
-        public static IServiceCollection AddConsumers(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<Consumers.ValidateSPACreation_OnSPACreated.Mapper>()
-                .AddSingleton<Consumers.ValidateSPAAproval_OnSPAApprovalRequested.Mapper>()
-                .AddSingleton<Consumers.ValidateSPICreation_OnSPICreated.Mapper>()
+                .AddSingleton<Consumers.InvalidateSPICreation_OnSPICreationInvalidated.Mapper>()
+                .AddSingleton<Consumers.ValidateSPICreation_OnSPICreationValidated.Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<ValidateSPACreation_OnSPACreated>();
-                        brc.AddConsumer<ValidateSPAAproval_OnSPAApprovalRequested>();
-                        brc.AddConsumer<ValidateSPICreation_OnSPICreated_SP>();
+                        brc.AddConsumer<InvalidateSPICreation_OnSPICreationInvalidated>();
+                        brc.AddConsumer<ValidateSPICreation_OnSPICreationValidated>();
+
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(
