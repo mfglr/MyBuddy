@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using PostService.Infrastructure.PostgreSql;
 
 namespace PostService.Api.ServiceRegistrations
 {
@@ -19,6 +20,12 @@ namespace PostService.Api.ServiceRegistrations
                 .AddMassTransit(
                     brc =>
                     {
+                        brc.AddEntityFrameworkOutbox<SqlContext>(o =>
+                        {
+                            o.UsePostgres();
+                            o.UseBusOutbox();
+                        });
+
                         brc.UsingRabbitMq((context, rbgc) =>
                         {
                             rbgc.Host(

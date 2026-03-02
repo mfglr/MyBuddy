@@ -1,6 +1,6 @@
 using ContentModerator.Application;
 using ContentModerator.Infrastructure;
-using ContentModerator.Worker;
+using ContentModerator.Worker.Consumers;
 
 var builder = Host.CreateApplicationBuilder(args);
 

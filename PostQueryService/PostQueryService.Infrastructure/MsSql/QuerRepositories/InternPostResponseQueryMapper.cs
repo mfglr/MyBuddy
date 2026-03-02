@@ -1,5 +1,5 @@
 ﻿using PostQueryService.Domain.PostDomain;
-using Shared.Events;
+using Shared.Events.SharedObjects;
 
 namespace PostQueryService.Infrastructure.MsSql.QuerRepositories
 {

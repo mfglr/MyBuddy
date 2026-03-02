@@ -7,7 +7,7 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.SetPostContentModerationResult
 {
-    internal class SetPostContentModerationResultHandler(IPostRepository repository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<SetPostContentModerationResultRequest>
+    internal class SetPostContentModerationResultHandler(IUnitOfWork unitOfWork, IPostRepository repository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<SetPostContentModerationResultRequest>
     {
         public async Task Handle(SetPostContentModerationResultRequest request, CancellationToken cancellationToken)
         {
@@ -15,15 +15,15 @@ namespace PostService.Application.UseCases.SetPostContentModerationResult
                 await repository.GetByIdAsync(request.Id, cancellationToken) ??
                 throw new PostNotFoundException();
 
-            var moderationResult = mapper.Map<Shared.Events.ModerationResult, ModerationResult>(request.ModerationResult);
-            post.SetContentModerationResult(moderationResult);
-            await repository.UpdateAsync(post, cancellationToken);
+            post.SetContentModerationResult(request.ModerationResult);
 
-            if (post.IsValid())
-            {
-                var @event = mapper.Map<Post, PostContentModerationResultSetEvent>(post);
-                await publishEndpoint.Publish(@event, cancellationToken);
-            }
+            //if (post.IsPreprocessingCompleted())
+            //{
+            //    var @event = mapper.Map<Post, PostContentModerationResultSetEvent>(post);
+            //    await publishEndpoint.Publish(@event, cancellationToken);
+            //}
+
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

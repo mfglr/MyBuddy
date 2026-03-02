@@ -1,6 +1,6 @@
 using ThumbnailGenerator.Application;
 using ThumbnailGenerator.Infrastructure;
-using ThumbnailGenerator.Workers;
+using ThumbnailGenerator.Workers.Consumers;
 
 var builder = Host.CreateApplicationBuilder(args);
 

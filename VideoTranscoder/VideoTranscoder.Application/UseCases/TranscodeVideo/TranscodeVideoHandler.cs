@@ -1,24 +1,25 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 
 namespace VideoTranscoder.Application.UseCases.TranscodeVideo
 {
-    internal class TranscodeVideoHandler(IBlobService blobService, IVideoTranscoder videoTranscoder, TempDirectoryManager tempDirectoryManager) : IRequestHandler<TranscodeVideoRequest, TranscodeVideoResponse>
+    internal class TranscodeVideoHandler(TranscodeVideoMapper mapper, IPublishEndpoint publishEndpoint, IBlobService blobService, IVideoTranscoder videoTranscoder, TempDirectoryManager tempDirectoryManager) : IRequestHandler<TranscodeVideoRequest>
     {
-        public async Task<TranscodeVideoResponse> Handle(TranscodeVideoRequest request, CancellationToken cancellationToken)
+        public async Task Handle(TranscodeVideoRequest request, CancellationToken cancellationToken)
         {
             string? blobName = null;
             try
             {
                 tempDirectoryManager.Create();
 
-                var inputStream = await blobService.GetAsync(request.ContainerName, request.BlobName, cancellationToken);
-
-                var inputPath = await tempDirectoryManager.AddAsync(inputStream, cancellationToken);
-                inputStream.Close();
-                inputStream.Dispose();
+                string inputPath;
+                using (var inputStream = await blobService.GetAsync(request.ContainerName, request.BlobName, cancellationToken))
+                {
+                    inputPath = await tempDirectoryManager.AddAsync(inputStream, cancellationToken);
+                }
 
                 var trancodedBlobPath = tempDirectoryManager.GenerateUniqPath("mp4");
-                await videoTranscoder.Transcode(inputPath, trancodedBlobPath, cancellationToken);
+                await videoTranscoder.Transcode(inputPath, trancodedBlobPath, request.Resolution, cancellationToken);
 
                 using (var transcodedBlobStream = File.OpenRead(trancodedBlobPath))
                 {
@@ -27,7 +28,8 @@ namespace VideoTranscoder.Application.UseCases.TranscodeVideo
 
                 tempDirectoryManager.Delete();
 
-                return new(blobName);
+                var @event = mapper.Map(request, blobName);
+                await publishEndpoint.Publish(@event, cancellationToken);
             }
             catch (Exception)
             {

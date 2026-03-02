@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ContentModerator.Application.UseCases.ClassifyMedia;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -8,6 +9,7 @@ namespace ContentModerator.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
+                .AddSingleton<ClassifyMediaMapper>()
                 .AddScoped<TempDirectoryManager>()
                 .AddMediatR(cfg =>
                 {

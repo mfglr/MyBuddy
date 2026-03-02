@@ -1,4 +1,6 @@
-﻿namespace Shared.Events.Comment
+﻿using Shared.Events.SharedObjects;
+
+namespace Shared.Events.Comment
 {
 
     public record CommentCreatedEvent_Content(

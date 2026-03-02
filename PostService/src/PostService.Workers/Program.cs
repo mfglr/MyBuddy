@@ -1,12 +1,10 @@
 using PostService.Application;
 using PostService.Infrastructure;
-using PostService.Infrastructure.MongoDb;
 using PostService.Workers;
+using PostService.Workers.Consumers;
 using PostService.Workers.ServiceRegistrations;
 
 var builder = Host.CreateApplicationBuilder(args);
-
-DbConfiguration.Configure();
 
 builder.Services
     .AddAutoMapper(builder.Configuration)

@@ -7,7 +7,7 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.RestorePost
 {
-    internal class RestorePostHandler(IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<RestorePostRequest>
+    internal class RestorePostHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<RestorePostRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
@@ -19,10 +19,11 @@ namespace PostService.Application.UseCases.RestorePost
                await _postRepository.GetByIdAsync(request.Id, cancellationToken) ??
                throw new PostNotFoundException();
             post.Restore();
-            await _postRepository.UpdateAsync(post, cancellationToken);
             
             var @event = _mapper.Map<Post, PostRestoredEvent>(post);
             await _publishEndpoint.Publish(@event, cancellationToken);
+
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

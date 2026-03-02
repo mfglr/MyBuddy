@@ -1,4 +1,6 @@
-﻿namespace Shared.Events.PostService
+﻿using Shared.Events.SharedObjects;
+
+namespace Shared.Events.PostService
 {
     public record PostContentModerationResultSetEvent_Content(
         string Value,

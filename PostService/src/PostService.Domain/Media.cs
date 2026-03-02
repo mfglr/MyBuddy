@@ -1,28 +1,70 @@
-﻿namespace PostService.Domain
+﻿using Shared.Events.SharedObjects;
+
+namespace PostService.Domain
 {
     public class Media
     {
-        public string ContainerName { get; private set; }
-        public string BlobName { get; private set; }
+        public string ContainerName { get; private set; } = Post.MediaContainerName;
+        public string BlobName { get; private set; } = null!;
         public MediaType Type { get; private set; }
         public Metadata? Metadata { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
-        public IReadOnlyList<Thumbnail> Thumbnails { get; private set; }
         public string? TranscodedBlobName { get; private set; }
+        public MediaInstruction Instruction { get; private set; } = null!;
+        private readonly List<Thumbnail> _thumbnails = [];
+        public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails;
 
-        public Media(string blobName, MediaType type)
+        private Media(){}
+
+        public Media(string blobName, MediaType type, MediaInstruction instruction)
         {
-            ContainerName = Post.MediaContainerName;
             BlobName = blobName;
             Type = type;
-            Thumbnails = [];
+            Instruction = instruction;
         }
 
-        public bool IsValid() =>
-            Metadata != null && Metadata.IsValid() &&
-            ModerationResult != null && ModerationResult.IsValid() &&
-            Thumbnails.Count == 3 &&
-            (Type == MediaType.Image || TranscodedBlobName != null);
-            
+        public void Set(
+            Metadata? metadata,
+            ModerationResult? moderationResult,
+            IEnumerable<Thumbnail> thumbnails,
+            string? transcodedBlobName
+        )
+        {
+            Metadata = metadata;
+            ModerationResult = moderationResult;
+            _thumbnails.AddRange(thumbnails);
+            TranscodedBlobName = transcodedBlobName;
+        }
+
+        public bool IsPreprocessingCompleted() =>
+            (
+                Metadata != null &&
+                !Instruction.MetadataInstruction.IsValidMetadata(Metadata)
+            ) ||
+            (
+                Metadata != null &&
+                Instruction.MetadataInstruction.IsValidMetadata(Metadata) &&
+                ModerationResult != null &&
+                Instruction.ModerationInstruction != null &&
+                !Instruction.ModerationInstruction.IsValidModerationResult(ModerationResult)
+            ) ||
+            (
+                Metadata != null &&
+                Instruction.MetadataInstruction.IsValidMetadata(Metadata) &&
+                (
+                    Instruction.ModerationInstruction == null ||
+                    (
+                        ModerationResult != null &&
+                        Instruction.ModerationInstruction != null &&
+                        Instruction.ModerationInstruction.IsValidModerationResult(ModerationResult)
+                    )
+                ) &&
+                Instruction.ThumbnailInstructions.Count() == Thumbnails.Count() &&
+                (
+                    Type == MediaType.Image ||
+                    Instruction.TranscodingInstruction == null ||
+                    TranscodedBlobName != null
+                )
+            );
     }
 }

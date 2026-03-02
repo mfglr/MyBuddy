@@ -1,4 +1,6 @@
-﻿namespace Shared.Events.PostService
+﻿using Shared.Events.SharedObjects;
+
+namespace Shared.Events.PostService
 {
     public record PostRestoredEvent_Content(
         string Value,

@@ -1,4 +1,4 @@
-﻿using Shared.Events;
+﻿using Shared.Events.SharedObjects;
 
 namespace PostQueryService.Application.QueryRepositories
 {

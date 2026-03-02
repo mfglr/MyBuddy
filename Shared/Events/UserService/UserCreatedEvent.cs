@@ -1,4 +1,6 @@
-﻿namespace Shared.Events.UserService
+﻿using Shared.Events.SharedObjects;
+
+namespace Shared.Events.UserService
 {
     public record UserCreatedEvent_Media(
         string ContainerName,

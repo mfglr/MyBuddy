@@ -2,6 +2,6 @@
 {
     public interface IVideoTranscoder
     {
-        Task Transcode(string inputPath, string outputPath, CancellationToken cancellationToken);
+        Task Transcode(string inputPath, string outputPath, double resolution, CancellationToken cancellationToken);
     }
 }

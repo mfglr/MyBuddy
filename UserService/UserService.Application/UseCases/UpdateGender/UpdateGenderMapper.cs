@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Events.SharedObjects;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -8,9 +9,6 @@ namespace UserService.Application.UseCases.UpdateGender
     {
         public UpdateGenderMapper()
         {
-            CreateMap<Metadata, Shared.Events.Metadata>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Media, UserGenderUpdatedEvent_Media>();
             CreateMap<User, UserGenderUpdatedEvent>()
                 .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))

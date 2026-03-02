@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MassTransit;
 using MediatR;
+using Shared.Events.SharedObjects;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -11,8 +12,8 @@ namespace UserService.Application.UseCases.SetMediaModerationResult
         public async Task Handle(SetMediaModerationResultRequest request, CancellationToken cancellationToken)
         {
             var userGrain = grainFactory.GetGrain<IUserGrain>(request.Id);
-            var moderationResult = mapper.Map<Shared.Events.ModerationResult, ModerationResult>(request.ModerationResult);
-            await userGrain.SetMediaModerationResult(request.BlobName, moderationResult);
+            //var moderationResult = mapper.Map<Shared.Events.SharedObjects.ModerationResult, ModerationResult>(request.ModerationResult);
+            //await userGrain.SetMediaModerationResult(request.BlobName, moderationResult);
 
             var user = await userGrain.Get();
             if (user.IsPreprocessingCompleted())

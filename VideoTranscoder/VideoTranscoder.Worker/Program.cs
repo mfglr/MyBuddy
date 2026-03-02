@@ -1,6 +1,6 @@
 using VideoTranscoder.Application;
 using VideoTranscoder.Infrastructure;
-using VideoTranscoder.Worker;
+using VideoTranscoder.Worker.Consumers;
 
 var builder = Host.CreateApplicationBuilder(args);
 

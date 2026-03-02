@@ -1,4 +1,5 @@
 ﻿using PostService.Domain.Exceptions;
+using Shared.Events.SharedObjects;
 
 namespace PostService.Domain
 {
@@ -14,16 +15,24 @@ namespace PostService.Domain
         public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
-        public IReadOnlyList<Media> Media { get; private set; }
+        private readonly List<Media> _media = [];
+        public IReadOnlyList<Media> Media => _media;
 
-        public bool IsValid() => !Media.Any(x => !x.IsValid());
+        public bool IsPreprocessingCompleted() =>
+            (
+                Content == null ||
+                Content.ModerationResult != null
+            ) &&
+            !_media.Any(x => !x.IsPreprocessingCompleted());
 
-        public Post(Guid userId, Content? content, IReadOnlyList<Media> media)
+        private Post(){}
+
+        public Post(Guid userId, Content? content, IEnumerable<Media> media)
         {
-            if (media.Count <= 0)
+            if (!media.Any())
                 throw new PostMediaRequiredException();
 
-            if (media.Count > MaxMediaCount)
+            if (media.Count() > MaxMediaCount)
                 throw new PostMediaCountException();
 
             if (media.Any(x => x.ContainerName != MediaContainerName))
@@ -32,11 +41,11 @@ namespace PostService.Domain
             Id = Guid.CreateVersion7();
             UserId = userId;
             Content = content;
-            Media = media;
             CreatedAt = DateTime.UtcNow;
             Version = 1;
+            _media.AddRange(media);
         }
-        
+
         public void Delete()
         {
             if (IsDeleted)
@@ -70,9 +79,16 @@ namespace PostService.Domain
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
-        public void SetMedia(IEnumerable<Media> media)
+        public void SetMedia(
+            string blobName,
+            Metadata? metadata,
+            ModerationResult? moderationResult,
+            IEnumerable<Thumbnail> thumbnails,
+            string? transcodedBlobName
+        )
         {
-            Media = [.. media];
+            var media = _media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new PostMediaNotFoundException();
+            media.Set(metadata,moderationResult,thumbnails,transcodedBlobName);
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

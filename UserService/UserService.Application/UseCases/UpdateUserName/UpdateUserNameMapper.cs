@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Events.SharedObjects;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -8,9 +9,6 @@ namespace UserService.Application.UseCases.UpdateUserName
     {
         public UpdateUserNameMapper()
         {
-            CreateMap<Metadata, Shared.Events.Metadata>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Media, UserNameUpdatedEvent_Media>();
             CreateMap<User, UserNameUpdatedEvent>()
                 .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))

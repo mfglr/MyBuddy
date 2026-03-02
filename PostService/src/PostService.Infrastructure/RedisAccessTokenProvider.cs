@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using PostService.Application;
-using PostService.Infrastructure.MongoDb;
 using StackExchange.Redis;
 
 namespace PostService.Infrastructure

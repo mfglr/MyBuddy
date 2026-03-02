@@ -48,5 +48,17 @@ namespace ThumbnailGenerator.Infrastructure.LocalBlobService
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessTokenProvider.GetAccessToken()}");
             return await client.GetStreamAsync($"api/v1/blobs/get/{containerName}/{blobName}", cancellationToken);
         }
+
+        public async Task DeleteAsync(string containerName, IEnumerable<string> blobNames, CancellationToken cancellationToken)
+        {
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri(_configuration["BlobService:Host"]!)
+            };
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessTokenProvider.GetAccessToken()}");
+
+            var content = JsonContent.Create(new { containerName, blobNames });
+            await client.PostAsync("api/v1/blobs/delete", content, cancellationToken);
+        }
     }
 }

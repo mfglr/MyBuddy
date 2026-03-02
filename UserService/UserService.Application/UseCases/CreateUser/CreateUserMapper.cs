@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Events.SharedObjects;
 using Shared.Events.UserService;
 using UserService.Domain;
 
@@ -8,9 +9,6 @@ namespace UserService.Application.UseCases.CreateUser
     {
         public CreateUserMapper()
         {
-            CreateMap<Metadata, Shared.Events.Metadata>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
             CreateMap<Media, UserCreatedEvent_Media>();
             CreateMap<User, UserCreatedEvent>()
                 .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Events.SharedObjects;
 using UserQueryService.Domain;
 
 namespace UserQueryService.Application.UseCases.GetById
@@ -7,11 +8,11 @@ namespace UserQueryService.Application.UseCases.GetById
     {
         public GetByIdMapper()
         {
-            CreateMap<Metadata, Shared.Events.Metadata>();
-            CreateMap<ModerationResult, Shared.Events.ModerationResult>();
-            CreateMap<Thumbnail, Shared.Events.Thumbnail>();
-            CreateMap<Media, GetByIdResponse_Media>();
-            CreateMap<User, GetByIdResponse>();
+            //CreateMap<Metadata, Shared.Events.SharedObjects.Metadata>();
+            //CreateMap<ModerationResult, Shared.Events.SharedObjects.ModerationResult>();
+            //CreateMap<Thumbnail, Shared.Events.SharedObjects.Thumbnail>();
+            //CreateMap<Media, GetByIdResponse_Media>();
+            //CreateMap<User, GetByIdResponse>();
         }
     }
 }

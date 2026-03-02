@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Shared.Events.SharedObjects;
 using UserQueryService.Domain;
 
 namespace UserQueryService.Application.UseCases.UpsertUser
@@ -7,10 +8,10 @@ namespace UserQueryService.Application.UseCases.UpsertUser
     {
         public UpsertUserMapper()
         {
-            CreateMap<Shared.Events.Metadata, Metadata>();
-            CreateMap<Shared.Events.ModerationResult, ModerationResult>();
-            CreateMap<Shared.Events.Thumbnail, Thumbnail>();
-            CreateMap<UpsertUserRequest_Media, Media>();
+            //CreateMap<Shared.Events.SharedObjects.Metadata, Metadata>();
+            //CreateMap<Shared.Events.SharedObjects.ModerationResult, ModerationResult>();
+            //CreateMap<Shared.Events.SharedObjects.Thumbnail, Thumbnail>();
+            //CreateMap<UpsertUserRequest_Media, Media>();
         }
     }
 }

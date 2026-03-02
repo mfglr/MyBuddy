@@ -1,7 +1,12 @@
 ﻿using MediatR;
-using Shared.Events;
+using Shared.Events.SharedObjects;
 
 namespace ContentModerator.Application.UseCases.ClassifyMedia
 {
-    public record ClassifyMediaRequest(string ContainerName, string BlobName, MediaType Type) : IRequest<ModerationResult>;
+    public record ClassifyMediaRequest(
+        string ContainerName,
+        string BlobName,
+        MediaType Type,
+        MediaInstruction Instruction
+    ) : IRequest;
 }

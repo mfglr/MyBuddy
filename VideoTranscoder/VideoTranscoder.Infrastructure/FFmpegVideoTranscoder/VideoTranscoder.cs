@@ -5,20 +5,18 @@ namespace VideoTranscoder.Infrastructure.FFmpegVideoTranscoder
 {
     internal class VideoTranscoder : IVideoTranscoder
     {
-        public async Task Transcode(string inputPath, string outputPath, CancellationToken cancellationToken)
+        public async Task Transcode(string inputPath, string outputPath, double resolution, CancellationToken cancellationToken)
         {
-            int resulation = 720;
-
             var mediaInfo = await FFmpeg.GetMediaInfo(inputPath, cancellationToken);
             var vStream = mediaInfo.VideoStreams.First();
-            bool isScaleDownRequired = vStream.Height > vStream.Width ? vStream.Height > resulation : vStream.Width > resulation;
+            bool isScaleDownRequired = vStream.Height > vStream.Width ? vStream.Height > resolution : vStream.Width > resolution;
             var fps = vStream.Framerate;
 
             IConversion conversation = FFmpeg.Conversions.New().AddParameter($"-i \"{inputPath}\"");
 
             if (isScaleDownRequired)
             {
-                var scale = $"scale='if(gt(iw,ih),{resulation},-2)':'if(gt(ih,iw),{resulation},-2)'";
+                var scale = $"scale='if(gt(iw,ih),{resolution},-2)':'if(gt(ih,iw),{resolution},-2)'";
                 conversation.AddParameter($"-vf {scale}");
             }
 

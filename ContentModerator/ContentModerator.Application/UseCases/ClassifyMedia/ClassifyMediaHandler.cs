@@ -1,14 +1,22 @@
-﻿using MediatR;
-using Shared.Events;
+﻿using MassTransit;
+using MediatR;
+using Shared.Events.SharedObjects;
 
 namespace ContentModerator.Application.UseCases.ClassifyMedia
 {
-    internal class ClassifyMediaHandler(IImageFrameExtractor imageFrameExtractor, IVideoFrameExtractor videoFrameExtractor, TempDirectoryManager tempDirectoryManager, IBlobService blobService, IModerator moderator) : IRequestHandler<ClassifyMediaRequest, ModerationResult>
+    internal class ClassifyMediaHandler(ClassifyMediaMapper mapper, IPublishEndpoint publishEndpoint, IImageFrameExtractor imageFrameExtractor, IVideoFrameExtractor videoFrameExtractor, TempDirectoryManager tempDirectoryManager, IBlobService blobService, IModerator moderator) : IRequestHandler<ClassifyMediaRequest>
     {
-        public async Task<ModerationResult> Handle(ClassifyMediaRequest request, CancellationToken cancellationToken)
+        public async Task Handle(ClassifyMediaRequest request, CancellationToken cancellationToken)
         {
-            double resolution = 720;
-            double fps = 1;
+            if(request.Instruction.ModerationInstruction is null)
+            {
+                var @event = mapper.MapValidatedEvent(request, null);
+                await publishEndpoint.Publish(@event, cancellationToken);
+                return;
+            }
+                
+            double resolution = request.Instruction.ModerationInstruction.Resolution;
+            double fps = request.Instruction.ModerationInstruction.Fps;
 
             try
             {
@@ -31,14 +39,22 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
 
                 tempDirectoryManager.Delete();
 
-                return moderationResult;
+                if (request.Instruction.ModerationInstruction.IsValidModerationResult(moderationResult))
+                {
+                    var @event = mapper.MapValidatedEvent(request, moderationResult);
+                    await publishEndpoint.Publish(@event, cancellationToken);
+                }
+                else
+                {
+                    var @event = mapper.MapInvalidatedEvent(request, moderationResult);
+                    await publishEndpoint.Publish(@event, cancellationToken);
+                }
             }
             catch (Exception)
             {
                 tempDirectoryManager.Delete();
                 throw;
             }
-
         }
     }
 }

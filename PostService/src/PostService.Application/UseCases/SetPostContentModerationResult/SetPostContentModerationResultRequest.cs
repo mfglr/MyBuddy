@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Shared.Events;
+using Shared.Events.SharedObjects;
 
 namespace PostService.Application.UseCases.SetPostContentModerationResult
 {

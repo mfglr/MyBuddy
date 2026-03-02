@@ -8,7 +8,7 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.DeletePost
 {
-    internal class DeletePostHandler(IPostRepository postRepository, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<DeletePostRequest>
+    internal class DeletePostHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<DeletePostRequest>
     {
         private readonly IPostRepository _postRepository = postRepository;
         private readonly IMapper _mapper = mapper;
@@ -25,10 +25,11 @@ namespace PostService.Application.UseCases.DeletePost
                 throw new UnauthorizedOperationException();
 
             post.Delete();
-            await _postRepository.UpdateAsync(post, cancellationToken);
 
             var @event = _mapper.Map<Post, PostDeletedEvent>(post);
             await _publishEndpoint.Publish(@event, cancellationToken);
+
+            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

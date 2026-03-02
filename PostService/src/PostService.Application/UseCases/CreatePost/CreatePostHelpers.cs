@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PostService.Domain;
+using Shared.Events.SharedObjects;
 
 namespace PostService.Application.UseCases.CreatePost
 {
@@ -11,7 +12,8 @@ namespace PostService.Application.UseCases.CreatePost
             for (int i = 0; i < blobNames.Count; i++)
                 medias.Add(new Media(
                     blobNames.ElementAt(i),
-                    types.ElementAt(i)
+                    types.ElementAt(i),
+                    MediaInstructionCreator.Create()
                 ));
             return medias;
         }

@@ -1,6 +1,6 @@
 using MetadataExtractor.Application;
 using MetadataExtractor.Infrastructure;
-using MetadataExtractor.Worker;
+using MetadataExtractor.Worker.Consumers;
 
 var builder = Host.CreateApplicationBuilder(args);
 

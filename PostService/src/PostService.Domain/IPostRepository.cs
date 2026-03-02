@@ -2,10 +2,8 @@
 {
     public interface IPostRepository
     {
-        Task CreateAsync(Post post, CancellationToken cancellationToken);
-        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
         Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        Task UpdateAsync(Post post, CancellationToken cancellationToken);
-        Task UpdateAsync(IEnumerable<Post> posts, CancellationToken cancellationToken);
+        Task CreateAsync(Post post, CancellationToken cancellationToken);
+        void Delete(Post post, CancellationToken cancellationToken);
     }
 }
