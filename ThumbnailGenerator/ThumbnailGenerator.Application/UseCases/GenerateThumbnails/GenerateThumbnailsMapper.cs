@@ -14,7 +14,7 @@ namespace ThumbnailGenerator.Application.UseCases.GenerateThumbnails
                 var instruction = request.Instructions.ElementAt(i);
                 thumbnails.Add(new(blobName, instruction.Resolution, instruction.IsSquare));
             }
-            return new (request.ContainerName, request.BlobName, thumbnails);
+            return new (request.Id, request.ContainerName, request.BlobName, thumbnails);
         }
     }
 }

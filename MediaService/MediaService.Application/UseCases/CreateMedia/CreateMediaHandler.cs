@@ -4,17 +4,20 @@ using MediatR;
 
 namespace MediaService.Application.UseCases.CreateMedia
 {
-    internal class CreateMediaHandler(CreateMediaMapper mapper, IPublishEndpoint publishEndpoint, IMediaRepository mediaRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMediaRequest>
+    internal class CreateMediaHandler(
+        CreateMediaMapper mapper,
+        IPublishEndpoint publishEndpoint,
+        IMediaListRepository mediaListRepository
+    ) : IRequestHandler<CreateMediaRequest>
     {
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
-            var media = request.Media.Select(x => new Media(x.OwnerId, x.ContainerName, x.BlobName, x.Type, x.Instruction));
-            await mediaRepository.CreateMedia(media, cancellationToken);
+            var id = new MediaListId(request.Id, request.ContainerName);
+            var mediaList = new MediaList(id, request.Media.Select(x => new Media(x.BlobName, x.Type, x.Instruction)));
 
-            var events = media.Select(mapper.Map);
+            await mediaListRepository.CreateAsync(mediaList, cancellationToken);
+            var events = mapper.Map(mediaList);
             await publishEndpoint.PublishBatch(events, cancellationToken);
-
-            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

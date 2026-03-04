@@ -7,7 +7,7 @@ namespace MediaService.Worker.Consumers.SetModerationResult_OnClassificationInva
     {
         public SetModerationResultRequest Map(MediaClassificationInvalidatedEvent @event) =>
             new(
-                @event.ContainerName,
+                new(@event.Id, @event.ContainerName),
                 @event.BlobName,
                 @event.ModerationResult
             );

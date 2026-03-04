@@ -2,7 +2,6 @@
 using ContentModerator.Worker.Consumers.CommentDomain;
 using ContentModerator.Worker.Consumers.MediaDomain.ClassifyMedia;
 using ContentModerator.Worker.Consumers.PostDomain;
-using ContentModerator.Worker.Consumers.UserDomain;
 using MassTransit;
 
 namespace ContentModerator.Worker.Consumers
@@ -19,8 +18,6 @@ namespace ContentModerator.Worker.Consumers
 
                         x.AddConsumer<ClassifyPostContent_OnPostCreated_ContentModerator>();
                         x.AddConsumer<ClassifyPostContent_OnPostContentUpdated_ContentModerator>();
-
-                        x.AddConsumer<ClassifyImage_OnUserMediaCreated_ContentModerator>();
 
                         x.AddConsumer<ClassifyCommentContent_OnCommentCreated_ContentModerator>();
                         x.AddConsumer<ClassifyCommentContent_OnContentUpdated_ContentModerator>();

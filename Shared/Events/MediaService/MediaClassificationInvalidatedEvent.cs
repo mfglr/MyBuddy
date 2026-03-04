@@ -3,6 +3,7 @@
 namespace Shared.Events.MediaService
 {
     public record MediaClassificationInvalidatedEvent(
+        Guid Id,
         string ContainerName,
         string BlobName,
         ModerationResult ModerationResult

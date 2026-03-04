@@ -4,19 +4,21 @@ using MediatR;
 
 namespace MediaService.Application.UseCases.SetTranscodedBlobName
 {
-    internal class SetTranscodedBlobNameHandler(SetTranscodedBlobNameMapper mapper, IUnitOfWork unitOfWork, IMediaRepository mediaRepository, IPublishEndpoint publishEndpoint) : IRequestHandler<SetTranscodedBlobNameRequest>
+    internal class SetTranscodedBlobNameHandler(
+        SetTranscodedBlobNameMapper mapper,
+        IMediaListRepository mediaListRepository,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<SetTranscodedBlobNameRequest>
     {
         public async Task Handle(SetTranscodedBlobNameRequest request, CancellationToken cancellationToken)
         {
-            var media = await mediaRepository.GetAsync(request.ContainerName, request.BlobName, cancellationToken) ?? throw new MediaNotFoundException();
-            media.SetTranscodedBlobName(request.TranscodedBlobName);
+            var mediaList = await mediaListRepository.SetTranscodedBlobName(request.Id, request.BlobName, request.TranscodedBlobName, cancellationToken);
 
-            if (media.IsPreprocessingCompleted)
+            if (mediaList.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(media);
+                var @event = mapper.Map(mediaList);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
-            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

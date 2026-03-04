@@ -48,7 +48,7 @@ namespace PostService.Workers.Consumers
                         });
 
                         x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult>();
-                        x.AddConsumer<SetPostMedia.SetPostMedia>();
+                        //x.AddConsumer<SetPostMedia.SetPostMedia>();
 
                         x.UsingRabbitMq((context, cfg) =>
                         {

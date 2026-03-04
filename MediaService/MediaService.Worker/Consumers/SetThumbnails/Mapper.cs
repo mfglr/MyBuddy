@@ -7,7 +7,7 @@ namespace MediaService.Worker.Consumers.SetThumbnails
     {
         public SetThumbnailsRequest Map(ThumbnailsGeneratedEvent @event) =>
             new(
-                @event.ContainerName,
+                new(@event.Id, @event.ContainerName),
                 @event.BlobName,
                 @event.Thumbnails
             );

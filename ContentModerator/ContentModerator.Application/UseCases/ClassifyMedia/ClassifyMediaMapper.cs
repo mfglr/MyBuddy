@@ -7,6 +7,7 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
     {
         public MediaClassificationValidatedEvent MapValidatedEvent(ClassifyMediaRequest request, ModerationResult? moderationResult) =>
             new(
+                request.Id,
                 request.ContainerName,
                 request.BlobName,
                 request.Type,
@@ -16,6 +17,7 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
 
         public MediaClassificationInvalidatedEvent MapInvalidatedEvent(ClassifyMediaRequest request, ModerationResult moderationResult) =>
             new(
+                request.Id,
                 request.ContainerName,
                 request.BlobName,
                 moderationResult

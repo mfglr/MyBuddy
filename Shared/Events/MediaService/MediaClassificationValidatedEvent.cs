@@ -3,6 +3,7 @@
 namespace Shared.Events.MediaService
 {
     public record MediaClassificationValidatedEvent(
+        Guid Id,
         string ContainerName,
         string BlobName,
         MediaType Type,

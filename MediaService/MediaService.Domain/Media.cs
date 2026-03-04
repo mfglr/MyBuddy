@@ -2,31 +2,15 @@
 
 namespace MediaService.Domain
 {
-    public class Media
+    public class Media(string blobName, MediaType type, MediaInstruction instruction)
     {
-        public int Version { get; private set; }
-        public Guid OwnerId { get; private set; }
-        public string ContainerName { get; private set; } = null!;
-        public string BlobName { get; private set; } = null!;
-        public MediaType Type { get; private set; }
+        public string BlobName { get; private set; } = blobName;
+        public MediaType Type { get; private set; } = type;
         public Metadata? Metadata { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
+        public IReadOnlyList<Thumbnail> Thumbnails = [];
         public string? TranscodedBlobName { get; private set; }
-        private readonly List<Thumbnail> _thumbnails = [];
-        public IReadOnlyCollection<Thumbnail> Thumbnails => _thumbnails;
-        public MediaInstruction Instruction { get; private set; } = null!;
-
-        private Media(){ }
-
-        public Media(Guid ownerId, string containerName, string blobName, MediaType type, MediaInstruction instruction)
-        {
-            OwnerId = ownerId;
-            ContainerName = containerName;
-            BlobName = blobName;
-            Type = type;
-            Instruction = instruction;
-            Version = 1;
-        }
+        public MediaInstruction Instruction { get; private set; } = instruction;
 
         public bool IsPreprocessingCompleted =>
             (
@@ -57,26 +41,5 @@ namespace MediaService.Domain
                     TranscodedBlobName != null
                 )
             );
-
-        public void SetMetadata(Metadata metadata)
-        {
-            Metadata = metadata;
-            Version++;
-        }
-        public void SetModerationResult(ModerationResult? moderationResult)
-        {
-            ModerationResult = moderationResult;
-            Version++;
-        }
-        public void SetTranscodedBlobName(string blobName)
-        {
-            TranscodedBlobName = blobName;
-            Version++;
-        }
-        public void SetThumbnails(IEnumerable<Thumbnail> thumbnails)
-        {
-            _thumbnails.AddRange(thumbnails);
-            Version++;
-        }
     }
 }

@@ -1,10 +1,14 @@
 ﻿using MassTransit;
 using MediatR;
-using Shared.Events.MediaService;
 
 namespace MetadataExtractor.Application.UseCases.ExtractMetadata
 {
-    internal class ExtractMetadataHandler(IPublishEndpoint publishEndpoint, IBlobService blobService, IMetadataExtractor extractor) : IRequestHandler<ExtractMetadataRequest>
+    internal class ExtractMetadataHandler(
+        ExtractMetadataMapper mapper,
+        IPublishEndpoint publishEndpoint,
+        IBlobService blobService,
+        IMetadataExtractor extractor
+    ) : IRequestHandler<ExtractMetadataRequest>
     {
         public async Task Handle(ExtractMetadataRequest request, CancellationToken cancellationToken)
         {
@@ -13,9 +17,9 @@ namespace MetadataExtractor.Application.UseCases.ExtractMetadata
 
             object @event;
             if (request.Instruction.MetadataInstruction.IsValidMetadata(metadata))
-                @event = new MetadataExtractionValidatedEvent(request.ContainerName, request.BlobName, request.Type, metadata, request.Instruction);
+                @event = mapper.MapValidatedEvent(request,metadata);
             else
-                @event = new MetadataExtractionInvalidatedEvent(request.ContainerName, request.BlobName, metadata);
+                @event = mapper.MapInvalidatedEvent(request, metadata);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }

@@ -7,6 +7,7 @@ namespace ThumbnailGenerator.Workers.Consumers.MediaDomain
     {
         public GenerateThumbnailsRequest Map(MediaClassificationValidatedEvent @event) =>
             new(
+                @event.Id,
                 @event.ContainerName,
                 @event.BlobName,
                 @event.Instruction.ThumbnailInstructions

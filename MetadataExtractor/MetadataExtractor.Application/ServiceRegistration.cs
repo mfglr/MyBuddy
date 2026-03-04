@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MetadataExtractor.Application.UseCases.ExtractMetadata;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -8,6 +9,7 @@ namespace MetadataExtractor.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
+                .AddSingleton<ExtractMetadataMapper>()
                 .AddMediatR(cfg =>
                 {
                     cfg.LicenseKey = configuration["LuckPenny:LicenseKey"];

@@ -4,23 +4,21 @@ using MediatR;
 
 namespace MediaService.Application.UseCases.SetModerationResult
 {
-    internal class SetModerationResultHandler(SetModerationResultMapper mapper, IPublishEndpoint publishEndpoint, IMediaRepository mediaRepository,IUnitOfWork unitOfWork) : IRequestHandler<SetModerationResultRequest>
+    internal class SetModerationResultHandler(
+        SetModerationResultMapper mapper,
+        IPublishEndpoint publishEndpoint,
+        IMediaListRepository mediaListRepository
+    ) : IRequestHandler<SetModerationResultRequest>
     {
         public async Task Handle(SetModerationResultRequest request, CancellationToken cancellationToken)
         {
-            var media =
-                await mediaRepository.GetAsync(request.ContainerName, request.BlobName, cancellationToken) ??
-                throw new MediaNotFoundException();
+            var mediaList = await mediaListRepository.SetModerationResult(request.Id, request.BlobName, request.ModerationResult,cancellationToken);
 
-            media.SetModerationResult(request.ModerationResult);
-
-            if (media.IsPreprocessingCompleted)
+            if (mediaList.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(media);
+                var @event = mapper.Map(mediaList);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
-
-            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

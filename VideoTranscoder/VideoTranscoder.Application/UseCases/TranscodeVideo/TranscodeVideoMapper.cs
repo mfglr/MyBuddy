@@ -6,6 +6,7 @@ namespace VideoTranscoder.Application.UseCases.TranscodeVideo
     {
         public VideoTrascodedEvent Map(TranscodeVideoRequest request, string trascodedBlobName) =>
             new(
+                request.Id,
                 request.ContainerName,
                 request.BlobName,
                 trascodedBlobName

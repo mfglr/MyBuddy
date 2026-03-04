@@ -1,28 +1,24 @@
 ﻿using MassTransit;
-using MediaService.Application.UseCases.SetModerationResult;
-using MediaService.Application.UseCases.SetThumbnails;
 using MediaService.Domain;
 using MediatR;
 
 namespace MediaService.Application.UseCases.SetMetadata
 {
-    internal class SetMetadataHandler(SetMetadataMapper mapper, IUnitOfWork unitOfWork, IMediaRepository mediaRepository, IPublishEndpoint publishEndpoint) : IRequestHandler<SetMetadataRequest>
+    internal class SetMetadataHandler(
+        SetMetadataMapper mapper,
+        IMediaListRepository mediaListRepository,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<SetMetadataRequest>
     {
         public async Task Handle(SetMetadataRequest request, CancellationToken cancellationToken)
         {
-            var media = 
-                await mediaRepository.GetAsync(request.ContainerName, request.BlobName, cancellationToken) ??
-                throw new MediaNotFoundException();
+            var mediaList = await mediaListRepository.SetMetadata(request.Id, request.BlobName, request.Metadata, cancellationToken);
 
-            media.SetMetadata(request.Metadata);
-
-            if (media.IsPreprocessingCompleted)
+            if (mediaList.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(media);
+                var @event = mapper.Map(mediaList);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
-
-            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

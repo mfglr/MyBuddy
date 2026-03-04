@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using MediaService.Domain;
+using MediatR;
 
 namespace MediaService.Application.UseCases.DeleteMedia
 {
-    public record DeleteMediaRequest(string ContainerName, string BlobName) : IRequest;
+    public record DeleteMediaRequest(MediaListId Id) : IRequest;
 }

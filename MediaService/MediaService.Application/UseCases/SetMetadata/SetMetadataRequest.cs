@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using MediaService.Domain;
+using MediatR;
 using Shared.Events.SharedObjects;
 
 namespace MediaService.Application.UseCases.SetMetadata
 {
     public record SetMetadataRequest(
-        string ContainerName,
+        MediaListId Id,
         string BlobName,
         Metadata Metadata
     ) : IRequest;

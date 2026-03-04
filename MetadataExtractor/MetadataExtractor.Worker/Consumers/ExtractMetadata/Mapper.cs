@@ -7,6 +7,7 @@ namespace MetadataExtractor.Worker.Consumers.ExtractMetadata
     {
         public ExtractMetadataRequest Map(MediaCreatedEvent @event) =>
             new(
+                @event.Id,
                 @event.ContainerName,
                 @event.BlobName,
                 @event.Type,

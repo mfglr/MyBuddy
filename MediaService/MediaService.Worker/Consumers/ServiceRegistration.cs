@@ -1,8 +1,6 @@
 ﻿using MassTransit;
-using MassTransit.Configuration;
-using MediaService.Infrastructure.PostgreSql;
 using MediaService.Worker.Consumers;
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace MediaService.Worker.Consumers
 {
@@ -23,29 +21,6 @@ namespace MediaService.Worker.Consumers
                 .AddMassTransit(
                     brc =>
                     {
-                        var retryLimit = 4;
-                        brc.AddConfigureEndpointsCallback((context, name, cfg) =>
-                        {
-                            cfg.UseMessageRetry(r =>
-                            {
-                                r.Handle<DbUpdateConcurrencyException>();
-                                r.Immediate(retryLimit);
-                            });
-                            cfg.UseMessageRetry(r =>
-                            {
-                                r.Ignore<DbUpdateConcurrencyException>();
-                                r.Intervals(100, 500, 1000, 1000, 1000, 1000, 1000);
-                            });
-                            cfg.UseEntityFrameworkOutbox<SqlContext>(context);
-                        });
-
-                        brc.AddEntityFrameworkOutbox<SqlContext>(o =>
-                        {
-                            o.UsePostgres();
-                            o.UseBusOutbox();
-                        });
-                        
-
                         brc.AddConsumer<CreateMedia_OnPostCreated.CreateMedia_OnPostCreated>();
 
                         brc.AddConsumer<SetMetadata_OnMetadataExtractionValidated.SetMetadata_OnMetadataExtractionValidated>();
@@ -59,6 +34,21 @@ namespace MediaService.Worker.Consumers
                         brc.AddConsumer<SetTranscodedBlobName.SetTranscodedBlobName>();
                         
                         brc.AddConsumer<DeleteMedia.DeleteMedia>();
+
+                        brc.AddMongoDbOutbox(o =>
+                        {
+                            o.QueryDelay = TimeSpan.FromSeconds(1);
+                            o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                            o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+                            o.DuplicateDetectionWindow = TimeSpan.FromSeconds(30);
+                            o.UseBusOutbox();
+                        });
+
+                        brc.AddConfigureEndpointsCallback((context, name, cfg) =>
+                        {
+                            cfg.UseMessageRetry(r => r.Intervals(10, 50, 100, 1000, 1000, 1000, 1000, 1000));
+                            cfg.UseMongoDbOutbox(context);
+                        });
 
                         brc.UsingRabbitMq((context, cfg) =>
                         {

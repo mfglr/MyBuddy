@@ -7,6 +7,7 @@ namespace VideoTranscoder.Worker.Consumers.TranscodeVideo
     {
         public TranscodeVideoRequest Map(MediaClassificationValidatedEvent @event) =>
             new(
+                @event.Id,
                 @event.ContainerName,
                 @event.BlobName,
                 @event.Instruction.TranscodingInstruction!.Resolution

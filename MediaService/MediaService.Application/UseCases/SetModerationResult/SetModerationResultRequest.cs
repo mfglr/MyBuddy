@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using MediaService.Domain;
+using MediatR;
 using Shared.Events.SharedObjects;
 
 namespace MediaService.Application.UseCases.SetModerationResult
 {
     public record SetModerationResultRequest(
-        string ContainerName,
+        MediaListId Id,
         string BlobName,
         ModerationResult? ModerationResult
     ) : IRequest;

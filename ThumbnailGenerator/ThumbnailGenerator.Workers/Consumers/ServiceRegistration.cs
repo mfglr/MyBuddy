@@ -1,7 +1,6 @@
 ﻿using MassTransit;
 using ThumbnailGenerator.Workers.Consumers;
 using ThumbnailGenerator.Workers.Consumers.MediaDomain;
-using ThumbnailGenerator.Workers.Consumers.UserDomain;
 
 namespace ThumbnailGenerator.Workers.Consumers
 {
@@ -14,13 +13,6 @@ namespace ThumbnailGenerator.Workers.Consumers
                     x =>
                     {
                         x.AddConsumer<GenerateThumbnails>();
-
-                        //user domain
-                        x.AddConsumer<Generate64SquareThumbnail_OnUserMediaCreated_ThumbnailGenerator>();
-                        x.AddConsumer<Generate128SquareThumbnail_OnUserMediaCreated_ThumbnailGenerator>();
-                        x.AddConsumer<Generate256SquareThumbnail_OnUserMediaCreated_ThumbnailGenerator>();
-                        x.AddConsumer<Generate720Thumbnail_OnUserMediaCreated_ThumbnailGenerator>();
-                        //user domain
 
                         x.UsingRabbitMq((context, cfg) =>
                         {

@@ -4,7 +4,6 @@ namespace StudyProgramService.Domain.ValueObjects
 {
     public class SPCurrency
     {
-
         private class Values
         {
             public readonly static string TRY = "TRY";

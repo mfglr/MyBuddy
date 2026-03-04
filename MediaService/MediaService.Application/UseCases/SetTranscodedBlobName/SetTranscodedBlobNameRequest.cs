@@ -1,7 +1,7 @@
-﻿using MediatR;
-using Shared.Events.SharedObjects;
+﻿using MediaService.Domain;
+using MediatR;
 
 namespace MediaService.Application.UseCases.SetTranscodedBlobName
 {
-    public record SetTranscodedBlobNameRequest(string ContainerName, string BlobName, string TranscodedBlobName) : IRequest;
+    public record SetTranscodedBlobNameRequest(MediaListId Id, string BlobName, string TranscodedBlobName) : IRequest;
 }

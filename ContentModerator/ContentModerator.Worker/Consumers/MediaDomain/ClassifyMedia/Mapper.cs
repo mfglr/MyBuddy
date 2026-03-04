@@ -7,6 +7,7 @@ namespace ContentModerator.Worker.Consumers.MediaDomain.ClassifyMedia
     {
         public ClassifyMediaRequest Map(MetadataExtractionValidatedEvent @event) =>
             new (
+                @event.Id,
                 @event.ContainerName,
                 @event.BlobName,
                 @event.Type,
