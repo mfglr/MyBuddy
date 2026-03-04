@@ -4,7 +4,7 @@ namespace Shared.Events.PostService
 {
     public record PostDeletedEvent_Content(
         string Value,
-        ModerationResult ModerationResult
+        ModerationResult? ModerationResult
     );
     public record PostDeletedEvent_Media(
         string ContainerName,
@@ -13,7 +13,8 @@ namespace Shared.Events.PostService
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName
+        string? TranscodedBlobName,
+        MediaInstruction Instruction
     );
     public record PostDeletedEvent(
         Guid Id,

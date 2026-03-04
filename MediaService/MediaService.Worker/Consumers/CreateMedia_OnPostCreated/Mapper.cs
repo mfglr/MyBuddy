@@ -7,6 +7,7 @@ namespace MediaService.Worker.Consumers.CreateMedia_OnPostCreated
     {
         private CreateMediaRequest_Media Map(PostCreatedEvent_Media media) =>
             new(
+                media.ContainerName,
                 media.BlobName,
                 media.Type,
                 media.Instruction
@@ -15,7 +16,6 @@ namespace MediaService.Worker.Consumers.CreateMedia_OnPostCreated
         public CreateMediaRequest Map(PostCreatedEvent @event) =>
             new(
                 @event.Id,
-                @event.Media.First().ContainerName,
                 @event.Media.Select(Map)
             );
     }

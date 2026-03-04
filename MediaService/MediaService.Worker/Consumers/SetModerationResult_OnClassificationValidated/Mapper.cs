@@ -7,8 +7,7 @@ namespace MediaService.Worker.Consumers.SetModerationResult_OnClassificationVali
     {
         public SetModerationResultRequest Map(MediaClassificationValidatedEvent @event) =>
             new(
-                new(@event.Id, @event.ContainerName),
-                @event.BlobName,
+                new(@event.ContainerName, @event.BlobName),
                 @event.ModerationResult
             );
     }

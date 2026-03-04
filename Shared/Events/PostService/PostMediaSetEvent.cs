@@ -2,11 +2,11 @@
 
 namespace Shared.Events.PostService
 {
-    public record PostRestoredEvent_Content(
+    public record PostMediaSetEvent_Content(
         string Value,
         ModerationResult? ModerationResult
     );
-    public record PostRestoredEvent_Media(
+    public record PostMediaSetEvent_Media(
         string ContainerName,
         string BlobName,
         MediaType Type,
@@ -14,16 +14,16 @@ namespace Shared.Events.PostService
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
         string? TranscodedBlobName,
-        MediaInstruction Instruction
+        MediaInstruction Instuction
     );
-    public record PostRestoredEvent(
+    public record PostMediaSetEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         Guid UserId,
         int Version,
         bool IsDeleted,
-        PostRestoredEvent_Content? Content,
-        IEnumerable<PostRestoredEvent_Media> Media
+        PostMediaSetEvent_Content? Content,
+        IEnumerable<PostMediaSetEvent_Media> Media
     );
 }

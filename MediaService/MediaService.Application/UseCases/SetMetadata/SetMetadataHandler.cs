@@ -6,17 +6,19 @@ namespace MediaService.Application.UseCases.SetMetadata
 {
     internal class SetMetadataHandler(
         SetMetadataMapper mapper,
-        IMediaListRepository mediaListRepository,
+        IMediaRepository mediaRepository,
         IPublishEndpoint publishEndpoint
     ) : IRequestHandler<SetMetadataRequest>
     {
         public async Task Handle(SetMetadataRequest request, CancellationToken cancellationToken)
         {
-            var mediaList = await mediaListRepository.SetMetadata(request.Id, request.BlobName, request.Metadata, cancellationToken);
+            var media = await mediaRepository.GetByIdAsync(request.Id, cancellationToken) ?? throw new MediaNotFoundException();
+            media.SetMetadata(request.Metadata);
+            await mediaRepository.UpdateAsync(media, cancellationToken);
 
-            if (mediaList.IsPreprocessingCompleted)
+            if (media.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(mediaList);
+                var @event = mapper.Map(media);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

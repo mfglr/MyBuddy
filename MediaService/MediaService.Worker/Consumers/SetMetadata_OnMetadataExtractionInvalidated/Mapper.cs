@@ -7,8 +7,7 @@ namespace MediaService.Worker.Consumers.SetMetadata_OnMetadataExtractionInvalida
     {
         public SetMetadataRequest Map(MetadataExtractionInvalidatedEvent @event) =>
             new(
-                new(@event.Id,@event.ContainerName),
-                @event.BlobName,
+                new(@event.ContainerName,@event.BlobName),
                 @event.Metadata
             );
     }

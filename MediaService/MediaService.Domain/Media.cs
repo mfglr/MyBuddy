@@ -2,15 +2,38 @@
 
 namespace MediaService.Domain
 {
-    public class Media(string blobName, MediaType type, MediaInstruction instruction)
+    public class Media(MediaId mediaId, Guid ownerId, MediaType type, MediaInstruction instruction)
     {
-        public string BlobName { get; private set; } = blobName;
+        public MediaId Id { get; private set; } = mediaId;
+        public Guid OwnerId { get; private set; } = ownerId;
+        public int Version { get; private set; } = 1;
         public MediaType Type { get; private set; } = type;
         public Metadata? Metadata { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
         public IReadOnlyList<Thumbnail> Thumbnails = [];
         public string? TranscodedBlobName { get; private set; }
         public MediaInstruction Instruction { get; private set; } = instruction;
+
+        public void SetMetadata(Metadata metadata)
+        {
+            Metadata = metadata;
+            Version++;
+        }
+        public void SetModerationResult(ModerationResult? moderationResult)
+        {
+            ModerationResult = moderationResult;
+            Version++;
+        }
+        public void SetThumbnails(IEnumerable<Thumbnail> thumbnails)
+        {
+            Thumbnails = [.. thumbnails];
+            Version++;
+        }
+        public void SetTranscodedBlobName(string transcodedBlobName)
+        {
+            TranscodedBlobName = transcodedBlobName;
+            Version++;
+        }
 
         public bool IsPreprocessingCompleted =>
             (

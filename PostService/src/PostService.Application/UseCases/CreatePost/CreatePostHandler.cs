@@ -4,7 +4,13 @@ using PostService.Domain;
 
 namespace PostService.Application.UseCases.CreatePost
 {
-    internal class CreatePostHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IBlobService blobService, CreatePostMapper mapper, IIdentityService identityService, IPublishEndpoint publishEndpoint) : IRequestHandler<CreatePostRequest, CreatePostResponse>
+    internal class CreatePostHandler(
+        IPostRepository postRepository,
+        IBlobService blobService,
+        CreatePostMapper mapper,
+        IIdentityService identityService,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<CreatePostRequest, CreatePostResponse>
     {
         public async Task<CreatePostResponse> Handle(CreatePostRequest request, CancellationToken cancellationToken)
         {
@@ -19,9 +25,7 @@ namespace PostService.Application.UseCases.CreatePost
 
                 var @event = mapper.Map(post);
                 await publishEndpoint.Publish(@event,cancellationToken);
-              
-                await unitOfWork.CommitAsync(cancellationToken);
-
+                
                 return new(post.Id);
             }
             catch (Exception)

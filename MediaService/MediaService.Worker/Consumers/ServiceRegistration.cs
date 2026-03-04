@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using MediaService.Infrastructure.MongoDB;
 using MediaService.Worker.Consumers;
 using MongoDB.Driver;
 
@@ -46,7 +47,19 @@ namespace MediaService.Worker.Consumers
 
                         brc.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {
-                            cfg.UseMessageRetry(r => r.Intervals(10, 50, 100, 1000, 1000, 1000, 1000, 1000));
+                            cfg.UseMessageRetry(r =>
+                            {
+                                r.Handle<MongoCommandException>();
+                                r.Handle<ConflictDetectedException>();
+                                r.Immediate(3);
+                            });
+
+                            cfg.UseMessageRetry(r =>
+                            {
+                                r.Ignore<MongoCommandException>();
+                                r.Ignore<ConflictDetectedException>();
+                                r.Intervals(10, 50, 100, 1000, 1000, 1000, 1000, 1000);
+                            });
                             cfg.UseMongoDbOutbox(context);
                         });
 

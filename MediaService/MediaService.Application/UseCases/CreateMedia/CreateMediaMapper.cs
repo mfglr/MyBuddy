@@ -5,16 +5,13 @@ namespace MediaService.Application.UseCases.CreateMedia
 {
     internal class CreateMediaMapper
     {
-        public IEnumerable<MediaCreatedEvent> Map(MediaList mediaList) =>
-            mediaList.Items
-            .Select(
-                media => new MediaCreatedEvent(
-                    mediaList.Id.Id,
-                    mediaList.Id.ContainerName,
-                    media.BlobName,
-                    media.Type,
-                    media.Instruction
-                )
+        public MediaCreatedEvent Map(Guid id, Media media) =>
+            new(
+                id,
+                media.Id.ContainerName,
+                media.Id.BlobName,
+                media.Type,
+                media.Instruction
             );
     }
 }

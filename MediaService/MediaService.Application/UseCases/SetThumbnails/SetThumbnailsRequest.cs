@@ -5,8 +5,7 @@ using Shared.Events.SharedObjects;
 namespace MediaService.Application.UseCases.SetThumbnails
 {
     public record SetThumbnailsRequest(
-        MediaListId Id,
-        string BlobName,
+        MediaId Id,
         IEnumerable<Thumbnail> Thumbnails
     ) : IRequest;
 }

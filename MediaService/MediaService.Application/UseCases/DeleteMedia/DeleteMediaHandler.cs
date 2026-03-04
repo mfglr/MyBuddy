@@ -3,9 +3,12 @@ using MediatR;
 
 namespace MediaService.Application.UseCases.DeleteMedia
 {
-    internal class DeleteMediaHandler(IMediaListRepository mediaListRepository) : IRequestHandler<DeleteMediaRequest>
+    internal class DeleteMediaHandler(IMediaRepository mediaRepository) : IRequestHandler<DeleteMediaRequest>
     {
-        public Task Handle(DeleteMediaRequest request, CancellationToken cancellationToken) =>
-            mediaListRepository.DeleteAsync(request.Id, cancellationToken);
+        public async Task Handle(DeleteMediaRequest request, CancellationToken cancellationToken)
+        {
+            var media = await mediaRepository.GetByIdAsync(request.Id, cancellationToken) ?? throw new MediaNotFoundException();
+            await mediaRepository.DeleteAsync(media, cancellationToken);
+        }
     }
 }

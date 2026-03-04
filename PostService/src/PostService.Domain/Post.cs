@@ -15,24 +15,22 @@ namespace PostService.Domain
         public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
-        private readonly List<Media> _media = [];
-        public IReadOnlyList<Media> Media => _media;
+        public IReadOnlyList<Media> Media { get; private set; }
 
-        public bool IsPreprocessingCompleted() =>
+        public bool IsValidVersion =>
             (
                 Content == null ||
                 Content.ModerationResult != null
             ) &&
-            !_media.Any(x => !x.IsPreprocessingCompleted());
+            !Media.Any(x => !x.IsValid);
 
-        private Post(){}
 
-        public Post(Guid userId, Content? content, IEnumerable<Media> media)
+        public Post(Guid userId, Content? content, IReadOnlyList<Media> media)
         {
             if (!media.Any())
                 throw new PostMediaRequiredException();
 
-            if (media.Count() > MaxMediaCount)
+            if (media.Count > MaxMediaCount)
                 throw new PostMediaCountException();
 
             if (media.Any(x => x.ContainerName != MediaContainerName))
@@ -43,7 +41,7 @@ namespace PostService.Domain
             Content = content;
             CreatedAt = DateTime.UtcNow;
             Version = 1;
-            _media.AddRange(media);
+            Media = media;
         }
 
         public void Delete()
@@ -64,30 +62,40 @@ namespace PostService.Domain
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
-        public void SetContentModerationResult(ModerationResult result)
-        {
-            Content = Content?.SetModerationResult(result);
-            UpdatedAt = DateTime.UtcNow;
-            Version++;
-        }
         public void UpdateContent(Content content)
         {
-            if (IsDeleted)
+            if (!IsDeleted)
                 throw new PostNotFoundException();
 
             Content = content;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
+
+        public void SetContentModerationResult(ModerationResult moderationResult)
+        {
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
+            if (Content == null)
+                throw new PostContentNotAvailableException();
+            Content = Content.SetModerationResult(moderationResult);
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
         public void SetMedia(
             string blobName,
-            Metadata? metadata,
+            Metadata metadata,
             ModerationResult? moderationResult,
             IEnumerable<Thumbnail> thumbnails,
             string? transcodedBlobName
         )
         {
-            var media = _media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new PostMediaNotFoundException();
+            if (IsDeleted)
+                throw new PostNotFoundException();
+
+            var media = Media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new PostMediaNotFoundException();
             media.Set(metadata,moderationResult,thumbnails,transcodedBlobName);
             UpdatedAt = DateTime.UtcNow;
             Version++;

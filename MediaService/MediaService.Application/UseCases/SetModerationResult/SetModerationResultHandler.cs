@@ -7,16 +7,18 @@ namespace MediaService.Application.UseCases.SetModerationResult
     internal class SetModerationResultHandler(
         SetModerationResultMapper mapper,
         IPublishEndpoint publishEndpoint,
-        IMediaListRepository mediaListRepository
+        IMediaRepository mediaRepository
     ) : IRequestHandler<SetModerationResultRequest>
     {
         public async Task Handle(SetModerationResultRequest request, CancellationToken cancellationToken)
         {
-            var mediaList = await mediaListRepository.SetModerationResult(request.Id, request.BlobName, request.ModerationResult,cancellationToken);
+            var media = await mediaRepository.GetByIdAsync(request.Id,cancellationToken) ?? throw new MediaNotFoundException();
+            media.SetModerationResult(request.ModerationResult);
+            await mediaRepository.UpdateAsync(media, cancellationToken);
 
-            if (mediaList.IsPreprocessingCompleted)
+            if (media.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(mediaList);
+                var @event = mapper.Map(media);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

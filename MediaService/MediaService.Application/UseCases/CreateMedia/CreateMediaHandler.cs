@@ -7,16 +7,15 @@ namespace MediaService.Application.UseCases.CreateMedia
     internal class CreateMediaHandler(
         CreateMediaMapper mapper,
         IPublishEndpoint publishEndpoint,
-        IMediaListRepository mediaListRepository
+        IMediaRepository mediaRepository
     ) : IRequestHandler<CreateMediaRequest>
     {
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
-            var id = new MediaListId(request.Id, request.ContainerName);
-            var mediaList = new MediaList(id, request.Media.Select(x => new Media(x.BlobName, x.Type, x.Instruction)));
-
-            await mediaListRepository.CreateAsync(mediaList, cancellationToken);
-            var events = mapper.Map(mediaList);
+            var media = request.Media.Select(x => new Media(new(x.ContainerName, x.BlobName), request.Id, x.Type, x.Instruction));
+            await mediaRepository.CreateAsync(media, cancellationToken);
+            
+            var events = media.Select(x => mapper.Map(request.Id,x));
             await publishEndpoint.PublishBatch(events, cancellationToken);
         }
     }

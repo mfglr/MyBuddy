@@ -1,6 +1,6 @@
 ﻿using MassTransit;
-using Microsoft.EntityFrameworkCore;
-using PostService.Infrastructure.PostgreSql;
+using MongoDB.Driver;
+using PostService.Infrastructure.MongoDB;
 using PostService.Workers.Consumers;
 
 namespace PostService.Workers.Consumers
@@ -15,7 +15,6 @@ namespace PostService.Workers.Consumers
 
     internal static class ServiceRegistration
     {
-
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
@@ -25,30 +24,36 @@ namespace PostService.Workers.Consumers
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddEntityFrameworkOutbox<SqlContext>(o =>
+                        x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult>();
+                        x.AddConsumer<SetPostMedia.SetPostMedia>();
+
+                        x.AddMongoDbOutbox(o =>
                         {
-                            o.UsePostgres();
+                            o.QueryDelay = TimeSpan.FromSeconds(1);
+                            o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                            o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+                            o.DuplicateDetectionWindow = TimeSpan.FromSeconds(30);
                             o.UseBusOutbox();
                         });
 
-                        var retryLimit = 5;
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {
                             cfg.UseMessageRetry(r =>
                             {
-                                r.Handle<DbUpdateConcurrencyException>();
-                                r.Immediate(retryLimit);
+                                r.Handle<MongoCommandException>();
+                                r.Handle<ConflictDetectedException>();
+                                r.Immediate(5);
                             });
+
                             cfg.UseMessageRetry(r =>
                             {
-                                r.Ignore<DbUpdateConcurrencyException>();
-                                r.Intervals(100, 500, 1000, 1000, 1000, 1000, 1000);
+                                r.Ignore<MongoCommandException>();
+                                r.Ignore<ConflictDetectedException>();
+                                r.Intervals(10, 50, 100, 1000, 1000, 1000, 1000, 1000);
                             });
-                            cfg.UseEntityFrameworkOutbox<SqlContext>(context);
-                        });
 
-                        x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult>();
-                        //x.AddConsumer<SetPostMedia.SetPostMedia>();
+                            cfg.UseMongoDbOutbox(context);
+                        });
 
                         x.UsingRabbitMq((context, cfg) =>
                         {

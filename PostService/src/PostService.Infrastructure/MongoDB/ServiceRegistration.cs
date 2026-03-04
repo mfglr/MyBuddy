@@ -1,10 +1,10 @@
-﻿using MediaService.Application;
-using MediaService.Domain;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using PostService.Application;
+using PostService.Domain;
 
-namespace MediaService.Infrastructure.MongoDB
+namespace PostService.Infrastructure.MongoDB
 {
     internal static class ServiceRegistration
     {
@@ -18,9 +18,7 @@ namespace MediaService.Infrastructure.MongoDB
             });
             services.AddScoped<MongoContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IMediaRepository, MediaRepository>();
-
-            DbConfigration.Configure();
+            services.AddScoped<IPostRepository, PostRepository>();
             return services;
         }
     }

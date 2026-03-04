@@ -5,6 +5,6 @@ namespace MediaService.Infrastructure.MongoDB
 {
     internal class MongoContext(IMongoDatabase database)
     {
-        public IMongoCollection<MediaList> MediaLists = database.GetCollection<MediaList>("MediaLists");
+        public IMongoCollection<Media> Media = database.GetCollection<Media>("Media");
     }
 }

@@ -1,8 +1,9 @@
 ﻿using MediatR;
 
-namespace MediaService.Application
+namespace PostService.Application
 {
-    internal class UnitOfWorkPipelineBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    internal class UnitOfWorkPipelineBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork)
+        : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {

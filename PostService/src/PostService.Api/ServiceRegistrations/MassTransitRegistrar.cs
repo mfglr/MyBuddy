@@ -1,5 +1,5 @@
 ﻿using MassTransit;
-using PostService.Infrastructure.PostgreSql;
+using MongoDB.Driver;
 
 namespace PostService.Api.ServiceRegistrations
 {
@@ -20,10 +20,19 @@ namespace PostService.Api.ServiceRegistrations
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddEntityFrameworkOutbox<SqlContext>(o =>
+                        brc.AddMongoDbOutbox(o =>
                         {
-                            o.UsePostgres();
+                            o.QueryDelay = TimeSpan.FromSeconds(1);
+                            o.ClientFactory(provider => provider.GetRequiredService<IMongoClient>());
+                            o.DatabaseFactory(provider => provider.GetRequiredService<IMongoDatabase>());
+                            o.DuplicateDetectionWindow = TimeSpan.FromSeconds(30);
                             o.UseBusOutbox();
+                        });
+
+                        brc.AddConfigureEndpointsCallback((context, name, cfg) =>
+                        {
+                            cfg.UseMessageRetry(r => r.Intervals(10, 50, 100, 1000, 1000, 1000, 1000, 1000));
+                            cfg.UseMongoDbOutbox(context);
                         });
 
                         brc.UsingRabbitMq((context, rbgc) =>

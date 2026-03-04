@@ -4,7 +4,7 @@ namespace Shared.Events.PostService
 {
     public record PostContentModerationResultSetEvent_Content(
         string Value,
-        ModerationResult ModerationResult
+        ModerationResult? ModerationResult
     );
     public record PostContentModerationResultSetEvent_Media(
         string ContainerName,
@@ -13,7 +13,8 @@ namespace Shared.Events.PostService
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName
+        string? TranscodedBlobName,
+        MediaInstruction Instuction
     );
     public record PostContentModerationResultSetEvent(
         Guid Id,

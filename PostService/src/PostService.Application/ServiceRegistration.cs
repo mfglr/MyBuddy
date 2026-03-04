@@ -2,6 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostService.Application.UseCases.CreatePost;
+using PostService.Application.UseCases.DeletePost;
+using PostService.Application.UseCases.RestorePost;
+using PostService.Application.UseCases.SetPostContentModerationResult;
+using PostService.Application.UseCases.SetPostMedia;
 using System.Reflection;
 
 namespace PostService.Application
@@ -12,17 +16,18 @@ namespace PostService.Application
         {
             return services
                 .AddSingleton<CreatePostMapper>()
-                .AddAutoMapper(
-                    cfg => cfg.LicenseKey = configuraiton.GetSection("LuckPenny:LicenseKey").Value,
-                    Assembly.GetExecutingAssembly()
-                )
+                .AddSingleton<DeletePostMapper>()
+                .AddSingleton<RestorePostMapper>()
+                .AddSingleton<SetPostContentModerationResultMapper>()
+                .AddSingleton<SetPostMediaMapper>()
                 .AddMediatR(
                     cfg =>
                     {
                         cfg.LicenseKey = configuraiton.GetSection("LuckPenny:LicenseKey").Value;
                         cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                     }
-                );
+                )
+                .AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkPipelineBehavior<,>));
         }
     }
 }

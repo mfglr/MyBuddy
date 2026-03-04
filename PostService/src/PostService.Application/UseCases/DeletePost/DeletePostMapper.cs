@@ -1,16 +1,36 @@
-﻿using AutoMapper;
-using PostService.Domain;
+﻿using PostService.Domain;
 using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.DeletePost
 {
-    internal class DeletePostMapper : Profile
+    internal class DeletePostMapper
     {
-        public DeletePostMapper()
-        {
-            CreateMap<Content, PostDeletedEvent_Content>();
-            CreateMap<Media, PostDeletedEvent_Media>();
-            CreateMap<Post, PostDeletedEvent>();
-        }
+        private PostDeletedEvent_Content Map(Content content) =>
+            new(
+                content.Value,
+                content.ModerationResult
+            );
+        private PostDeletedEvent_Media Map(Media media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Type,
+                media.Metadata,
+                media.ModerationResult,
+                media.Thumbnails,
+                media.TranscodedBlobName,
+                media.Instruction
+            );
+        public PostDeletedEvent Map(Post post) =>
+            new(
+                post.Id,
+                post.CreatedAt,
+                post.UpdatedAt,
+                post.UserId,
+                post.Version,
+                post.IsDeleted,
+                post.Content != null ? Map(post.Content) : null,
+                post.Media.Select(Map)
+            );
     }
 }

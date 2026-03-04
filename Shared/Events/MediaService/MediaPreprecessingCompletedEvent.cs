@@ -2,17 +2,14 @@
 
 namespace Shared.Events.MediaService
 {
-    public record MediaPreprecessingCompletedEvent_Media(
+    public record MediaPreprecessingCompletedEvent(
+        Guid Id,
+        string ContainerName,
         string BlobName,
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         string? TranscodedBlobName,
         IEnumerable<Thumbnail> Thumbnails,
         MediaInstruction Instruction
-    );
-    public record MediaPreprecessingCompletedEvent(
-        Guid Id,
-        string ContainerName,
-        IEnumerable<MediaPreprecessingCompletedEvent_Media> Media
     );
 }

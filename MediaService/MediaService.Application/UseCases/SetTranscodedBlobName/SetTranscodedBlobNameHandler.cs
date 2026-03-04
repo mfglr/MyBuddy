@@ -6,17 +6,19 @@ namespace MediaService.Application.UseCases.SetTranscodedBlobName
 {
     internal class SetTranscodedBlobNameHandler(
         SetTranscodedBlobNameMapper mapper,
-        IMediaListRepository mediaListRepository,
+        IMediaRepository mediaRepository,
         IPublishEndpoint publishEndpoint
     ) : IRequestHandler<SetTranscodedBlobNameRequest>
     {
         public async Task Handle(SetTranscodedBlobNameRequest request, CancellationToken cancellationToken)
         {
-            var mediaList = await mediaListRepository.SetTranscodedBlobName(request.Id, request.BlobName, request.TranscodedBlobName, cancellationToken);
+            var media = await mediaRepository.GetByIdAsync(request.Id, cancellationToken) ?? throw new MediaNotFoundException();
+            media.SetTranscodedBlobName(request.TranscodedBlobName);
+            await mediaRepository.UpdateAsync(media, cancellationToken);
 
-            if (mediaList.IsPreprocessingCompleted)
+            if (media.IsPreprocessingCompleted)
             {
-                var @event = mapper.Map(mediaList);
+                var @event = mapper.Map(media);
                 await publishEndpoint.Publish(@event, cancellationToken);
             }
         }

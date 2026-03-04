@@ -7,8 +7,7 @@ namespace MediaService.Worker.Consumers.SetTranscodedBlobName
     {
         public SetTranscodedBlobNameRequest Map(VideoTrascodedEvent @event) =>
             new(
-                new(@event.Id, @event.ContainerName),
-                @event.BlobName,
+                new(@event.ContainerName, @event.BlobName),
                 @event.TranscodedBlobName
             );
     }

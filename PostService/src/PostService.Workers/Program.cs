@@ -1,15 +1,16 @@
 using PostService.Application;
 using PostService.Infrastructure;
+using PostService.Infrastructure.MongoDB;
 using PostService.Workers;
 using PostService.Workers.Consumers;
-using PostService.Workers.ServiceRegistrations;
+
+DbConfigration.Configure();
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
-    .AddAutoMapper(builder.Configuration)
-    .AddApplication(builder.Configuration)
     .AddMassTransit(builder.Configuration)
+    .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddSingleton<IIdentityService,NullIdentityService>();
 

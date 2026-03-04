@@ -7,7 +7,11 @@ using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.UpdatePostContent
 {
-    internal class UpdatePostContentHandler(IUnitOfWork unitOfWork, IPostRepository postRepository, IPublishEndpoint publishEndpoint, IIdentityService identityService) : IRequestHandler<UpdatePostContentRequest>
+    internal class UpdatePostContentHandler(
+        IPostRepository postRepository,
+        IPublishEndpoint publishEndpoint,
+        IIdentityService identityService
+    ) : IRequestHandler<UpdatePostContentRequest>
     {
         public async Task Handle(UpdatePostContentRequest request, CancellationToken cancellationToken)
         {
@@ -20,11 +24,10 @@ namespace PostService.Application.UseCases.UpdatePostContent
                 throw new UnauthorizedOperationException();
 
             post.UpdateContent(content);
+            await postRepository.UpdateAsync(post, cancellationToken);
 
             var @event = new PostContentUpdatedEvent(post.Id, content.Value);
             await publishEndpoint.Publish(@event, cancellationToken);
-
-            await unitOfWork.CommitAsync(cancellationToken);
         }
     }
 }

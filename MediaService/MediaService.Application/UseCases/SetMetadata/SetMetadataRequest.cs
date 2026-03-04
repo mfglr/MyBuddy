@@ -5,8 +5,7 @@ using Shared.Events.SharedObjects;
 namespace MediaService.Application.UseCases.SetMetadata
 {
     public record SetMetadataRequest(
-        MediaListId Id,
-        string BlobName,
+        MediaId Id,
         Metadata Metadata
     ) : IRequest;
 }
