@@ -1,19 +1,31 @@
-﻿using AutoMapper;
-using Shared.Events.SharedObjects;
-using Shared.Events.UserService;
+﻿using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.CreateUser
 {
-    internal class CreateUserMapper : Profile
+    public class CreateUserMapper
     {
-        public CreateUserMapper()
-        {
-            CreateMap<Media, UserCreatedEvent_Media>();
-            CreateMap<User, UserCreatedEvent>()
-                .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))
-                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name != null ? x.Name.Value : null))
-                .ForCtorParam("Gender", cfg => cfg.MapFrom(x => x.Gender.Value));
-        }
+        public UserCreatedEvent_Media Map(Media media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Type,
+                media.Metadata,
+                media.ModerationResult,
+                media.Thumbnails
+            );
+
+        public UserCreatedEvent Map(User user) =>
+            new(
+                user.Id,
+                user.CreatedAt,
+                user.UpdatedAt,
+                user.Version,
+                user.IsDeleted,
+                user.Name?.Value,
+                user.UserName.Value,
+                user.Gender.Value,
+                user.Media.Select(Map)
+            );
     }
 }

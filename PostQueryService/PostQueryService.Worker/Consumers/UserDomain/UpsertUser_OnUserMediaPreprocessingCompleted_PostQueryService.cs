@@ -11,15 +11,15 @@ namespace PostQueryService.Worker.Consumers.UserDomain
         public UpserUser_OnUserMediaPreproccessingCompleted_Mapper()
         {
             CreateMap<UserMediaPreproccessingCompletedEvent_Media, UpsertUserRequest_Media>();
-            CreateMap<UserMediaPreprocessingCompletedEvent, UpsertUserRequest>();
+            CreateMap<UserMediaSetEvent, UpsertUserRequest>();
         }
     }
 
-    internal class UpsertUser_OnUserMediaPreprocessingCompleted_PostQueryService(ISender sender, IMapper mapper) : IConsumer<UserMediaPreprocessingCompletedEvent>
+    internal class UpsertUser_OnUserMediaPreprocessingCompleted_PostQueryService(ISender sender, IMapper mapper) : IConsumer<UserMediaSetEvent>
     {
-        public Task Consume(ConsumeContext<UserMediaPreprocessingCompletedEvent> context)
+        public Task Consume(ConsumeContext<UserMediaSetEvent> context)
         {
-            var request = mapper.Map<UserMediaPreprocessingCompletedEvent, UpsertUserRequest>(context.Message);
+            var request = mapper.Map<UserMediaSetEvent, UpsertUserRequest>(context.Message);
             return sender.Send(request,context.CancellationToken);
         }
     }

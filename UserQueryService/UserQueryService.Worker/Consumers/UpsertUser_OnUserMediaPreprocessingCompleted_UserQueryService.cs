@@ -11,16 +11,16 @@ namespace UserQueryService.Worker.Consumers
         public UpsertUser_OnUserMediaPreproccessingCompleted_Mapper()
         {
             CreateMap<UserMediaPreproccessingCompletedEvent_Media, UpsertUserRequest_Media>();
-            CreateMap<UserMediaPreprocessingCompletedEvent, UpsertUserRequest>();
+            CreateMap<UserMediaSetEvent, UpsertUserRequest>();
         }
     }
 
-    internal class UpsertUser_OnUserMediaPreprocessingCompleted_UserQueryService(ISender sender, IMapper mapper) : IConsumer<UserMediaPreprocessingCompletedEvent>
+    internal class UpsertUser_OnUserMediaPreprocessingCompleted_UserQueryService(ISender sender, IMapper mapper) : IConsumer<UserMediaSetEvent>
     {
-        public Task Consume(ConsumeContext<UserMediaPreprocessingCompletedEvent> context) =>
+        public Task Consume(ConsumeContext<UserMediaSetEvent> context) =>
             sender
                 .Send(
-                    mapper.Map<UserMediaPreprocessingCompletedEvent, UpsertUserRequest>(context.Message),
+                    mapper.Map<UserMediaSetEvent, UpsertUserRequest>(context.Message),
                     context.CancellationToken
                 );
     }

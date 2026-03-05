@@ -6,7 +6,7 @@ namespace PostLikeQueryService.Worker.Consumers.UpgradeUser_OnUserMediaPreproces
 {
     internal class UpgradeUser_OnUserMediaPreprocessingCompleted_Mapper
     {
-        public UpgradeUserRequest Map(UserMediaPreprocessingCompletedEvent @event)
+        public UpgradeUserRequest Map(UserMediaSetEvent @event)
         {
             var media = @event.Media.FirstOrDefault(x => x.IsActive);
             return new(

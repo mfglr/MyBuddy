@@ -1,19 +1,31 @@
-﻿using AutoMapper;
-using Shared.Events.SharedObjects;
-using Shared.Events.UserService;
+﻿using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.UpdateGender
 {
-    internal class UpdateGenderMapper : Profile
+    internal class UpdateGenderMapper
     {
-        public UpdateGenderMapper()
-        {
-            CreateMap<Media, UserGenderUpdatedEvent_Media>();
-            CreateMap<User, UserGenderUpdatedEvent>()
-                .ForCtorParam("UserName", cfg => cfg.MapFrom(x => x.UserName.Value))
-                .ForCtorParam("Name", cfg => cfg.MapFrom(x => x.Name != null ? x.Name.Value : null))
-                .ForCtorParam("Gender", cfg => cfg.MapFrom(x => x.Gender.Value));
-        }
+        public UserGenderUpdatedEvent_Media Map(Media media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Type,
+                media.Metadata,
+                media.ModerationResult,
+                media.Thumbnails
+            );
+
+        public UserGenderUpdatedEvent Map(User user) =>
+            new(
+                user.Id,
+                user.CreatedAt,
+                user.UpdatedAt,
+                user.Version,
+                user.IsDeleted,
+                user.Name?.Value,
+                user.UserName.Value,
+                user.Gender.Value,
+                user.Media.Select(Map)
+            );
     }
 }

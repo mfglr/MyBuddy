@@ -1,18 +1,13 @@
-﻿using Newtonsoft.Json;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace UserService.Domain
 {
-    [GenerateSerializer]
-    [Alias("UserService.Domain.UserName")]
     public class UserName
     {
         private readonly static string _pattern = @"^(?!.*\.\.)(?!\.)(?!.*\.$)[a-z0-9._]{1,50}$";
 
-        [Id(0)]
         public string Value { get; private set; }
 
-        [JsonConstructor]
         public UserName(string value)
         {
             if (IsNotValid(value))

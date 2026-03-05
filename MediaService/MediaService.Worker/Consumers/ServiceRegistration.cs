@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MediaService.Infrastructure.MongoDB;
 using MediaService.Worker.Consumers;
+using MediaService.Worker.Consumers.CreateMediaOnUserMediaCreated;
 using MongoDB.Driver;
 
 namespace MediaService.Worker.Consumers
@@ -12,6 +13,7 @@ namespace MediaService.Worker.Consumers
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
                 .AddSingleton<CreateMedia_OnPostCreated.Mapper>()
+                .AddSingleton<CreateMediaOnUserMediaCreatedMapper>()
                 .AddSingleton<SetMetadata_OnMetadataExtractionValidated.Mapper>()
                 .AddSingleton<SetMetadata_OnMetadataExtractionInvalidated.Mapper>()
                 .AddSingleton<SetModerationResult_OnClassificationValidated.Mapper>()
@@ -23,6 +25,7 @@ namespace MediaService.Worker.Consumers
                     brc =>
                     {
                         brc.AddConsumer<CreateMedia_OnPostCreated.CreateMedia_OnPostCreated>();
+                        brc.AddConsumer<CreateMediaOnUserMediaCreatedConsumer>();
 
                         brc.AddConsumer<SetMetadata_OnMetadataExtractionValidated.SetMetadata_OnMetadataExtractionValidated>();
                         brc.AddConsumer<SetMetadata_OnMetadataExtractionInvalidated.SetMetadata_OnMetadataExtractionInvalidated>();

@@ -1,12 +1,15 @@
-﻿using AutoMapper;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
-using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.CreateUser
 {
-    public class CreateUserHandler(IMapper mapper, IGrainFactory grainFactory, IAuthService authService, IPublishEndpoint publishEndpoint) : IRequestHandler<CreateUserRequest>
+    public class CreateUserHandler(
+        CreateUserMapper mapper,
+        IUserRepository userRepository,
+        IAuthService authService,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<CreateUserRequest>
     {
         public async Task Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
@@ -18,11 +21,10 @@ namespace UserService.Application.UseCases.CreateUser
                 cancellationToken
             );
 
-            var userGrain = grainFactory.GetGrain<IUserGrain>(userId);
-            await userGrain.Create(username);
+            var user = new User(userId, username);
+            await userRepository.CreateAsync(user, cancellationToken);
 
-            var user = await userGrain.Get();
-            var @event = mapper.Map<User, UserCreatedEvent>(user);
+            var @event = mapper.Map(user);
             await publishEndpoint.Publish(@event,cancellationToken);
         }
     }

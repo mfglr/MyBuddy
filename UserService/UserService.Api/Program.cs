@@ -1,6 +1,10 @@
-using UserService.Api.ServiceRegistrations;
+using UserService.Api.Identity;
+using UserService.Api.MassTransit;
 using UserService.Application;
 using UserService.Infrastructure;
+using UserService.Infrastructure.MongoDB;
+
+DbConfigration.Configure();
 
 var builder = WebApplication.CreateBuilder(args);
 

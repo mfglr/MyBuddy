@@ -1,8 +1,11 @@
 using MassTransit;
-using UserService.Worker.ServiceRegistrations;
-using UserService.Infrastructure;
 using UserService.Application;
+using UserService.Infrastructure;
+using UserService.Infrastructure.MongoDB;
 using UserService.Worker;
+using UserService.Worker.Consumers;
+
+DbConfigration.Configure();
 
 var builder = Host.CreateApplicationBuilder(args);
 

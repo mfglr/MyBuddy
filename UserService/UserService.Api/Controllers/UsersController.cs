@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.UseCases.CreateMedia;
 using UserService.Application.UseCases.CreateUser;
-using UserService.Application.UseCases.SendEmailVerificationMail;
+using UserService.Application.UseCases.DeleteMedia;
 using UserService.Application.UseCases.UpdateGender;
 using UserService.Application.UseCases.UpdateName;
 using UserService.Application.UseCases.UpdateUserName;
@@ -20,15 +20,15 @@ namespace UserService.Api.Controllers
         public Task Create(CreateUserRequest request, CancellationToken cancellationToken)
             => _sender.Send(request, cancellationToken);
 
-        [HttpPost]
+        [HttpPut]
         [Authorize("user")]
         public Task CreateMedia([FromForm]CreateMediaRequest request ,CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
-        [HttpGet]
+        [HttpPut]
         [Authorize("user")]
-        public Task SendEmailVerificationMail(CancellationToken cancellationToken) =>
-            _sender.Send(new SendEmailVeificationMailRequest(), cancellationToken);
+        public Task DeleteMedia(DeleteMediaRequest request, CancellationToken cancellationToken) =>
+            _sender.Send(request, cancellationToken);
 
         [HttpPut]
         [Authorize("user")]

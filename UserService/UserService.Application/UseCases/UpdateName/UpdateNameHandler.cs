@@ -1,21 +1,25 @@
-﻿using AutoMapper;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
-using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.UpdateName
 {
-    internal class UpdateNameHandler(IGrainFactory grainFactory, IPublishEndpoint publishEndpoint, IMapper mapper, IIdentityService identityService) : IRequestHandler<UpdateNameRequest>
+    internal class UpdateNameHandler(
+        IUserRepository userRepository,
+        IPublishEndpoint publishEndpoint,
+        UpdateNameMapper mapper,
+        IIdentityService identityService
+    ) : IRequestHandler<UpdateNameRequest>
     {
         public async Task Handle(UpdateNameRequest request, CancellationToken cancellationToken)
         {
             var userId = identityService.UserId;
             var name = new Name(request.Name);
-            var userGrain = grainFactory.GetGrain<IUserGrain>(userId);
-            await userGrain.UpdateName(name);
-            var user = await userGrain.Get();
-            var @event = mapper.Map<User, NameUpdatedEvent>(user);
+            var user = await userRepository.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
+            user.UpdateName(name);
+            await userRepository.UpdateAsync(user, cancellationToken);
+
+            var @event = mapper.Map(user);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }

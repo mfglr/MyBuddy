@@ -8,9 +8,7 @@ namespace Shared.Events.UserService
         MediaType Type,
         Metadata? Metadata,
         ModerationResult? ModerationResult,
-        IEnumerable<Thumbnail> Thumbnails,
-        bool IsDeleted,
-        bool IsActive
+        IEnumerable<Thumbnail> Thumbnails
     );
     public record UserNameUpdatedEvent(
         Guid Id,

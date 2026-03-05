@@ -1,63 +1,39 @@
-﻿using Newtonsoft.Json;
+﻿using Shared.Events.SharedObjects;
 
 namespace UserService.Domain
 {
-    [GenerateSerializer]
-    [Alias("UserService.Domain.Media")]
-    public class Media
+    public class Media(string blobName, MediaType type, MediaInstruction instruction)
     {
-        [Id(0)]
-        public string ContainerName { get; private set; }
-        [Id(1)]
-        public string BlobName { get; private set; }
-        [Id(2)]
-        public MediaType Type { get; private set; }
-        [Id(3)]
+        public string ContainerName { get; private set; } = User.MediaContainerName;
+        public string BlobName { get; private set; } = blobName;
+        public MediaType Type { get; private set; } = type;
         public Metadata? Metadata { get; private set; }
-        [Id(4)]
         public ModerationResult? ModerationResult { get; private set; }
-        [Id(5)]
-        public List<Thumbnail> Thumbnails { get; private set; }
-        [Id(6)]
-        public bool IsDeleted { get; private set; }
-        [Id(7)]
-        public bool IsActive { get; private set; }
+        public IReadOnlyList<Thumbnail> Thumbnails { get; private set; } = [];
+        public MediaInstruction Instruction { get; private set; } = instruction;
 
-
-        public Media(string blobName)
+        public void Set(
+            Metadata? metadata,
+            ModerationResult? moderationResult,
+            IEnumerable<Thumbnail> thumbnails
+        )
         {
-            ContainerName = User.MediaContainerName;
-            BlobName = blobName;
-            Thumbnails = [];
-            Type = MediaType.Image;
-            IsDeleted = false;
-            IsActive = false;
-        }
-
-        [JsonConstructor]
-        private Media(string containerName, string blobName, MediaType type,  Metadata? metadata, ModerationResult? moderationResult, List<Thumbnail> thumbnails, bool isDeleted, bool isActive)
-        {
-            ContainerName = containerName;
-            BlobName = blobName;
-            Type = type;
             Metadata = metadata;
             ModerationResult = moderationResult;
-            Thumbnails = thumbnails;
-            IsDeleted = isDeleted;
-            IsActive = isActive;
+            Thumbnails = [.. thumbnails];
         }
 
-        public bool IsPreprocessingCompleted() =>
-            ModerationResult != null &&
-            Thumbnails.Count == 4 &&
-            Metadata != null;
-
-        public void SetMetadata(Metadata metadata) => Metadata = metadata;
-        public void SetModerationResult(ModerationResult moderationResult) => ModerationResult = moderationResult;
-        public void AddThumbnail(Thumbnail thumbnail) => Thumbnails.Add(thumbnail);
-        public void Delete() => IsDeleted = true;
-
-        internal void Activate() => IsActive = true;
-        internal void Inactivate() => IsActive = false;
+        public bool IsValid =>
+            Metadata != null &&
+            Instruction.MetadataInstruction.IsValidMetadata(Metadata) &&
+            (
+                Instruction.ModerationInstruction == null ||
+                (
+                    ModerationResult != null &&
+                    Instruction.ModerationInstruction != null &&
+                    Instruction.ModerationInstruction.IsValidModerationResult(ModerationResult)
+                )
+            ) &&
+            Instruction.ThumbnailInstructions.Count == Thumbnails.Count;
     }
 }

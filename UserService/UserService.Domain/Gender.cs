@@ -1,10 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace UserService.Domain
+﻿namespace UserService.Domain
 {
-    [GenerateSerializer]
-    [Alias("UserService.Domain.Gender")]
     public class Gender
     {
         private static class GenderNames
@@ -25,10 +20,8 @@ namespace UserService.Domain
                 
         }
 
-        [Id(0)]
         public string Value { get; private set; }
 
-        [JsonConstructor]
         public Gender(string value)
         {
             if (!GenderNames.IsValid(value))
@@ -45,7 +38,6 @@ namespace UserService.Domain
 
         public override bool Equals(object? obj) =>
             ReferenceEquals(this, obj) || (obj is not null && obj is Gender other && Value == other.Value);
-
         public override int GetHashCode() => Value.GetHashCode();
     }
 }

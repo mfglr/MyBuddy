@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StackExchange.Redis;
-using UserService.Application;
-using UserService.Infrastructure.Grains;
+using UserService.Infrastructure.BlobService;
 using UserService.Infrastructure.Keycloak;
+using UserService.Infrastructure.MongoDB;
 
 namespace UserService.Infrastructure
 {
@@ -11,10 +10,8 @@ namespace UserService.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton(ConnectionMultiplexer.Connect(configuration["Redis:Host"]!))
-                .AddSingleton<IAccessTokenProvider, RedisAccessTokenProvider>()
-                .AddSingleton<IBlobService,LocalBlobService>()
-                .AddKeycloak(configuration)
-                .AddOrleans();
+                .AddMongoDB(configuration)
+                .AddBlobService(configuration)
+                .AddKeycloak(configuration);
     }
 }

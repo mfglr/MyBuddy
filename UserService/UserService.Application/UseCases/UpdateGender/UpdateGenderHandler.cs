@@ -1,20 +1,25 @@
-﻿using AutoMapper;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
-using Shared.Events.UserService;
 using UserService.Domain;
 
 namespace UserService.Application.UseCases.UpdateGender
 {
-    internal class UpdateGenderHandler(IMapper mapper, IGrainFactory grainFactory, IPublishEndpoint publishEndpoint,IIdentityService identityService) : IRequestHandler<UpdateGenderRequest>
+    internal class UpdateGenderHandler(
+        UpdateGenderMapper mapper,
+        IUserRepository userRepository,
+        IPublishEndpoint publishEndpoint,
+        IIdentityService identityService
+    ) : IRequestHandler<UpdateGenderRequest>
     {
         public async Task Handle(UpdateGenderRequest request, CancellationToken cancellationToken)
         {
+            var userId = identityService.UserId;
             var gender = new Gender(request.Gender);
-            var userGrain = grainFactory.GetGrain<IUserGrain>(identityService.UserId);
-            var user = await userGrain.UpdateGender(gender);
+            var user = await userRepository.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
+            user.UpdateGender(gender);
+            await userRepository.UpdateAsync(user, cancellationToken);
 
-            var @event = mapper.Map<User, UserGenderUpdatedEvent>(user);
+            var @event = mapper.Map(user);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }
