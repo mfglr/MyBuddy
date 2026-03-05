@@ -25,7 +25,8 @@ namespace UserService.Application.UseCases.CreateUser
                 user.Name?.Value,
                 user.UserName.Value,
                 user.Gender.Value,
-                user.Media.Select(Map)
+                user.Media.Select(Map),
+                user.IsValidVersion
             );
     }
 }

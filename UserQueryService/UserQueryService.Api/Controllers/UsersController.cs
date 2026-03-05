@@ -1,22 +1,19 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using UserQueryService.Application.UseCases.GetById;
-using UserQueryService.Application.UseCases.GetByUserName;
+﻿using Microsoft.AspNetCore.Mvc;
+using UserQueryService.Shared.Exceptions;
+using UserQueryService.Shared.Model;
 
 namespace UserQueryService.Api.Controllers
 {
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
-    public class UsersController(ISender sender) : ControllerBase
+    public class UsersController(IUserRepository userRepository) : ControllerBase
     {
-        private readonly ISender _sender = sender;
+        [HttpGet("{id:guid}")]
+        public async Task<User?> GetById(Guid id, CancellationToken cancellationToken) =>
+            await userRepository.GetByIdAsync(id, cancellationToken) ?? throw new UserNotFoundException();
 
-        [HttpGet("{id}")]
-        public Task<GetByIdResponse> GetById(string id, CancellationToken cancellationToken) =>
-            _sender.Send(new GetByIdRequest(id), cancellationToken);
-
-        [HttpGet("{userName}")]
-        public Task<GetByUserNameResponse> GetByUserName(string userName, CancellationToken cancellationToken) =>
-            _sender.Send(new GetByUserNameRequest(userName), cancellationToken);
+        [HttpGet]
+        public Task<List<User>> Search([FromQuery] SearchRequest request, CancellationToken cancellationToken) =>
+            userRepository.SearchAsync(request.Key.ToLower().Trim(), request.Cursor, request.PageSize, cancellationToken);
     }
 }

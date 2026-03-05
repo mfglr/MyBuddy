@@ -1,15 +1,14 @@
-using UserQueryService.Api.ServiceRegistrations;
-using UserQueryService.Application;
-using UserQueryService.Infrastructure;
+using UserQueryService.Shared;
+using UserQueryService.Shared.MongoDB;
+
+DbConfigration.Configure();
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services
-    .AddAutoMapper(builder.Configuration)
-    .AddApplication(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
+    .AddShared(builder.Configuration);
 
 var app = builder.Build();
 

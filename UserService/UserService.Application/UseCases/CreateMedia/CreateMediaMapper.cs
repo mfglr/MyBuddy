@@ -31,7 +31,8 @@ namespace UserService.Application.UseCases.CreateMedia
                     createdMedia.BlobName,
                     createdMedia.Type,
                     createdMedia.Instruction
-                )
+                ),
+                user.IsValidVersion
             );
     }
 }

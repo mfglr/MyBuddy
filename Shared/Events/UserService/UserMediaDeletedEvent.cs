@@ -24,6 +24,7 @@ namespace Shared.Events.UserService
         string UserName,
         string Gender,
         IEnumerable<UserMediaDeletedEvent_Media> Media,
-        UserMediaDeletedEvent_MediaDeleted MediaDeleted
+        UserMediaDeletedEvent_MediaDeleted MediaDeleted,
+        bool IsValidVersion
     );
 }

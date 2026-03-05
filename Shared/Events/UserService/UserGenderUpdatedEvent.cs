@@ -20,6 +20,7 @@ namespace Shared.Events.UserService
         string? Name,
         string UserName,
         string Gender,
-        IEnumerable<UserGenderUpdatedEvent_Media> Media
+        IEnumerable<UserGenderUpdatedEvent_Media> Media,
+        bool IsValidVersion
     );
 }
