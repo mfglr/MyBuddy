@@ -22,7 +22,8 @@ namespace PostService.Application.UseCases.CreatePost
                 post.Version,
                 post.IsDeleted,
                 post.Content != null ? new PostCreatedEvent_Content(post.Content.Value) : null,
-                post.Media.Select(Map)
+                post.Media.Select(Map),
+                post.IsValidVersion
             );
     }
 }

@@ -5,7 +5,7 @@ namespace MediaService.Application.UseCases.SetTranscodedBlobName
 {
     internal class SetTranscodedBlobNameMapper
     {
-        public MediaPreprecessingCompletedEvent Map(Media media) =>
+        public MediaPreprocessingCompletedEvent Map(Media media) =>
             new(
                 media.OwnerId,
                 media.Id.ContainerName,

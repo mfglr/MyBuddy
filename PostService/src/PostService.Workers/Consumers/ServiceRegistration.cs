@@ -19,13 +19,13 @@ namespace PostService.Workers.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<SetPostContentModerationResult.Mapper>()
-                .AddSingleton<SetPostMedia.Mapper>()
+                .AddSingleton<SetPostContentModerationResult.SetPostContentModerationResult_PostContentClassified_Mapper>()
+                .AddSingleton<SetPostMedia.SetPostMedia_OnMediaPreprocessingCompleted_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult>();
-                        x.AddConsumer<SetPostMedia.SetPostMedia>();
+                        x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult_PostContentClassified_PostService>();
+                        x.AddConsumer<SetPostMedia.SetPostMedia_OnMediaPreprocessingCompleted_PostService>();
 
                         x.AddMongoDbOutbox(o =>
                         {

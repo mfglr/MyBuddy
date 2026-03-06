@@ -5,7 +5,7 @@ namespace MediaService.Application.UseCases.SetMetadata
 {
     internal class SetMetadataMapper
     {
-        public MediaPreprecessingCompletedEvent Map(Media media) =>
+        public MediaPreprocessingCompletedEvent Map(Media media) =>
             new(
                 media.OwnerId,
                 media.Id.ContainerName,

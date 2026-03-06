@@ -12,13 +12,13 @@ namespace UserService.Worker.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<SetUserMediaMapper>()
-                .AddSingleton<ValidateSPICreationMapper>()
+                .AddSingleton<SetUserMedia_OnMediaPreprocessingCompleted_Mapper>()
+                .AddSingleton<ValidateSPICreation_SPICreated_Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<SetUserMediaConsumer>();
-                        brc.AddConsumer<ValidateSPICreationConsumer>();
+                        brc.AddConsumer<SetUserMedia_OnMediaPreprocessingCompleted_UserService>();
+                        brc.AddConsumer<ValidateSPICreation_SPICreated_UserService>();
 
                         brc.AddMongoDbOutbox(o =>
                         {

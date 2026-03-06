@@ -30,7 +30,8 @@ namespace PostService.Application.UseCases.RestorePost
                 post.Version,
                 post.IsDeleted,
                 post.Content != null ? Map(post.Content) : null,
-                post.Media.Select(Map)
+                post.Media.Select(Map),
+                post.IsValidVersion
             );
     }
 }

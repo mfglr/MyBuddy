@@ -1,7 +1,15 @@
 ﻿using MassTransit;
 using MediaService.Infrastructure.MongoDB;
 using MediaService.Worker.Consumers;
+using MediaService.Worker.Consumers.CreateMedia_OnPostCreated;
 using MediaService.Worker.Consumers.CreateMediaOnUserMediaCreated;
+using MediaService.Worker.Consumers.DeleteMedia;
+using MediaService.Worker.Consumers.SetMetadata_OnMetadataExtractionInvalidated;
+using MediaService.Worker.Consumers.SetMetadata_OnMetadataExtractionValidated;
+using MediaService.Worker.Consumers.SetModerationResult_OnClassificationInvalidated;
+using MediaService.Worker.Consumers.SetModerationResult_OnClassificationValidated;
+using MediaService.Worker.Consumers.SetThumbnails;
+using MediaService.Worker.Consumers.SetTranscodedBlobName;
 using MongoDB.Driver;
 
 namespace MediaService.Worker.Consumers
@@ -12,32 +20,32 @@ namespace MediaService.Worker.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<CreateMedia_OnPostCreated.Mapper>()
-                .AddSingleton<CreateMediaOnUserMediaCreatedMapper>()
-                .AddSingleton<SetMetadata_OnMetadataExtractionValidated.Mapper>()
-                .AddSingleton<SetMetadata_OnMetadataExtractionInvalidated.Mapper>()
-                .AddSingleton<SetModerationResult_OnClassificationValidated.Mapper>()
-                .AddSingleton<SetModerationResult_OnClassificationInvalidated.Mapper>()
-                .AddSingleton<SetThumbnails.Mapper>()
-                .AddSingleton<SetTranscodedBlobName.Mapper>()
-                .AddSingleton<DeleteMedia.Mapper>()
+                .AddSingleton<CreateMedia_OnPostCreated_Mapper>()
+                .AddSingleton<CreateMedia_OnUserMediaCreated_Mapper>()
+                .AddSingleton<SetMetadata_OnMetadataExtractionValidated_Mapper>()
+                .AddSingleton<SetMetadata_OnMetadataExtractionInvalidated_Mapper>()
+                .AddSingleton<SetModerationResult_OnClassificationValidated_Mapper>()
+                .AddSingleton<SetModerationResult_OnClassificationInvalidated_Mapper>()
+                .AddSingleton<SetThumbnails_OnThumbnailsGenerated_Mapper>()
+                .AddSingleton<SetTranscodedBlobName_VideoTrascoded_Mapper>()
+                .AddSingleton<DeleteMedia_OnMediaPreprocessingCompleted_Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<CreateMedia_OnPostCreated.CreateMedia_OnPostCreated>();
-                        brc.AddConsumer<CreateMediaOnUserMediaCreatedConsumer>();
+                        brc.AddConsumer<CreateMedia_OnPostCreated_MediaService>();
+                        brc.AddConsumer<CreateMedia_OnUserMediaCreated_MediaService>();
 
-                        brc.AddConsumer<SetMetadata_OnMetadataExtractionValidated.SetMetadata_OnMetadataExtractionValidated>();
-                        brc.AddConsumer<SetMetadata_OnMetadataExtractionInvalidated.SetMetadata_OnMetadataExtractionInvalidated>();
+                        brc.AddConsumer<SetMetadata_OnMetadataExtractionValidated_MediaService>();
+                        brc.AddConsumer<SetMetadata_OnMetadataExtractionInvalidated_MediaService>();
                         
-                        brc.AddConsumer<SetModerationResult_OnClassificationValidated.SetModerationResult_OnClassificationValidated>();
-                        brc.AddConsumer<SetModerationResult_OnClassificationInvalidated.SetModerationResult_OnClassificationInvalidated>();
+                        brc.AddConsumer<SetModerationResult_OnClassificationValidated_MediaService>();
+                        brc.AddConsumer<SetModerationResult_OnClassificationInvalidated_MediaService>();
                         
-                        brc.AddConsumer<SetThumbnails.SetThumbnails>();
+                        brc.AddConsumer<SetThumbnails_OnThumbnailsGenerated_MediaService>();
                         
-                        brc.AddConsumer<SetTranscodedBlobName.SetTranscodedBlobName>();
+                        brc.AddConsumer<SetTranscodedBlobName_VideoTrascoded_MediaService>();
                         
-                        brc.AddConsumer<DeleteMedia.DeleteMedia>();
+                        brc.AddConsumer<DeleteMedia_OnMediaPreprocessingCompleted_MediaService>();
 
                         brc.AddMongoDbOutbox(o =>
                         {

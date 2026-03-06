@@ -24,6 +24,7 @@ namespace Shared.Events.PostService
         int Version,
         bool IsDeleted,
         PostRestoredEvent_Content? Content,
-        IEnumerable<PostRestoredEvent_Media> Media
+        IEnumerable<PostRestoredEvent_Media> Media,
+        bool IsValidVersion
     );
 }

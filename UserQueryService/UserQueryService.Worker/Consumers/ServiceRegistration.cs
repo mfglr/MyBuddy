@@ -16,19 +16,19 @@ namespace UserQueryService.Worker.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<UpsertUserOnGenderUpdatedMapper>()
-                .AddSingleton<UpsertUserOnNameUpdatedMapper>()
-                .AddSingleton<UpsertUserOnUserCreatedMapper>()
-                .AddSingleton<UpsertUserOnUserMediaSetMapper>()
-                .AddSingleton<UpsertUserOnUserNameUpdatedMapper>()
+                .AddSingleton<UpsertUser_OnGenderUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnUserCreated_Mapper>()
+                .AddSingleton<UpsertUser_OnUserMediaSet_Mapper>()
+                .AddSingleton<UpsertUser_OnUserNameUpdated_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddConsumer<UpsertUserOnGenderUpdatedConsumer>();
-                        x.AddConsumer<UpsertUserOnNameUpdatedConsumer>();
-                        x.AddConsumer<UpsertUserOnUserCreatedConsumer>();
-                        x.AddConsumer<UpsertUserOnUserMediaSetConsumer>();
-                        x.AddConsumer<UpsertUserOnUserNameUpdatedConsumer>();
+                        x.AddConsumer<UpsertUser_OnGenderUpdated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnNameUpdated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnUserCreated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnUserMediaSet_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnUserNameUpdated_UserQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

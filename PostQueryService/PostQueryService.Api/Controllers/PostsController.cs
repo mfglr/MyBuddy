@@ -1,16 +1,14 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using PostQueryService.Application.QueryRepositories;
-using PostQueryService.Application.UseCases.GetPostsByUserId;
+﻿using Microsoft.AspNetCore.Mvc;
+using PostQueryService.Shared.Model;
 
 namespace PostQueryService.Api.Controllers
 {
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
-    public class PostsController(ISender sender) : ControllerBase
+    public class PostsController(IPostQueryRepository postQueryRepository) : ControllerBase
     {
         [HttpGet]
-        public Task<IEnumerable<PostResponse>> GetByUserId([FromQuery] GetPostsByUserIdRequest request, CancellationToken cancellationToken) =>
-            sender.Send(request, cancellationToken);
+        public Task<List<PostResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
+            postQueryRepository.GetByUserId(request.UserId, request.Cursor, request.PageSize, cancellationToken);
     }
 }

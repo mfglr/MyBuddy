@@ -8,14 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="9.0.0" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
+    <PackageReference Include="MassTransit" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\PostQueryService.Application\PostQueryService.Application.csproj" />
-    <ProjectReference Include="..\PostQueryService.Infrastructure\PostQueryService.Infrastructure.csproj" />
+    <ProjectReference Include="..\PostQueryService.Shared\PostQueryService.Shared.csproj" />
   </ItemGroup>
 </Project>
