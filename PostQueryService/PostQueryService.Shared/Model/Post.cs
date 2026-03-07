@@ -28,5 +28,10 @@ namespace PostQueryService.Shared.Model
             LikeCount = 0;
             CommentCount = 0;
         }
+
+        public void Update(int version)
+        {
+            Version = version;
+        }
     }
 }

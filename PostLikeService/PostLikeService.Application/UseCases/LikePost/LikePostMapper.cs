@@ -1,16 +1,18 @@
-﻿using AutoMapper;
-using PostLikeService.Domain;
+﻿using PostLikeService.Domain;
 using Shared.Events.PostLikeService;
 
 namespace PostLikeService.Application.UseCases.LikePost
 {
-    internal class LikePostMapper : Profile
+    internal class LikePostMapper
     {
-        public LikePostMapper()
-        {
-            CreateMap<PostLike, PostLikedEvent>()
-                .ForCtorParam("UserId", x => x.MapFrom(x => x.Id.UserId))
-                .ForCtorParam("PostId", x => x.MapFrom(x => x.Id.PostId));
-        }
+        public PostLikedEvent Map(PostLike like) =>
+            new(
+                like.Id.UserId,
+                like.Id.PostId,
+                like.CreatedAt,
+                like.Version,
+                like.IsDeleted,
+                like.DeletedAt
+            );
     }
 }

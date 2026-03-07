@@ -1,9 +1,10 @@
-﻿using MongoDB.Driver;
+﻿using MassTransit.MongoDbIntegration;
+using MongoDB.Driver;
 using PostLikeService.Domain;
 
 namespace PostLikeService.Infrastructure.MongoDb
 {
-    internal class PostLikeRepository(MongoContext context) : IPostLikeRepository
+    internal class PostLikeRepository(MongoContext context, MongoDbContext mongoDbContext) : IPostLikeRepository
     {
         public Task<PostLike?> GetAsync(PostLikeId id, CancellationToken cancellationToken) =>
             context.PostLikes
@@ -22,17 +23,14 @@ namespace PostLikeService.Infrastructure.MongoDb
 
         public Task CreateAsync(PostLike postLike, CancellationToken cancellationToken = default) =>
             context.PostLikes
-                .InsertOneAsync(postLike, cancellationToken: cancellationToken);
+                .InsertOneAsync(mongoDbContext.Session,postLike, cancellationToken: cancellationToken);
 
         public Task DeleteAsync(PostLike postLike, CancellationToken cancellationToken = default) =>
             context.PostLikes
-                .DeleteOneAsync(Builders<PostLike>.Filter.Eq(x => x.Id, postLike.Id), cancellationToken);
+                .DeleteOneAsync(mongoDbContext.Session, Builders<PostLike>.Filter.Eq(x => x.Id, postLike.Id), cancellationToken: cancellationToken);
 
         public async Task UpdateAsync(IEnumerable<PostLike> postLikes, CancellationToken cancellationToken = default)
         {
-            using var session = await context.Client.StartSessionAsync(cancellationToken: cancellationToken);
-            session.StartTransaction();
-
             var updates = new List<WriteModel<PostLike>>();
             foreach (var like in postLikes)
             {
@@ -42,17 +40,16 @@ namespace PostLikeService.Infrastructure.MongoDb
                 );
                 updates.Add(new ReplaceOneModel<PostLike>(filter, like));
             }
-            var result = await context.PostLikes.BulkWriteAsync(session, updates, cancellationToken: cancellationToken);
+            var result = await context.PostLikes.BulkWriteAsync(mongoDbContext.Session, updates, cancellationToken: cancellationToken);
             if (result.ModifiedCount < postLikes.Count())
                 throw new ConcurrencyException();
-
-            await session.CommitTransactionAsync(cancellationToken);
         }
 
         public async Task UpdateAsync(PostLike postLike, CancellationToken cancellationToken = default)
         {
             var result = await context.PostLikes
                 .ReplaceOneAsync(
+                    mongoDbContext.Session,
                     Builders<PostLike>.Filter.Eq(x => x.Id, postLike.Id) &
                     Builders<PostLike>.Filter.Eq(x => x.Version, postLike.Version - 1),
                     postLike,
@@ -62,7 +59,5 @@ namespace PostLikeService.Infrastructure.MongoDb
             if(result.ModifiedCount < 1)
                 throw new ConcurrencyException();
         }
-            
-
     }
 }

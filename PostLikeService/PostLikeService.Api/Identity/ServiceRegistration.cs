@@ -2,16 +2,9 @@
 using PostLikeService.Application;
 using System.Security.Claims;
 
-namespace PostLikeService.Api.ServiceRegistrations
+namespace PostLikeService.Api.Identity
 {
-    internal class IdentityOptions
-    {
-        public required string Issuer { get; set; }
-        public required string BaseUrl { get; set; }
-        public required string Audience { get; set; }
-    }
-
-    internal static class IdentityRegistrar
+    internal static class ServiceRegistration
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {

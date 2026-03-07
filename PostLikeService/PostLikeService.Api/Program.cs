@@ -1,6 +1,10 @@
-using PostLikeService.Api.ServiceRegistrations;
+using PostLikeService.Api.Identity;
+using PostLikeService.Api.MassTransit;
 using PostLikeService.Application;
 using PostLikeService.Infrastructure;
+using PostLikeService.Infrastructure.MongoDb;
+
+DbConfiguration.Configure();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,6 @@ builder.Services
     .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
-
 
 app.UseAuthentication();
 app.UseAuthorization();

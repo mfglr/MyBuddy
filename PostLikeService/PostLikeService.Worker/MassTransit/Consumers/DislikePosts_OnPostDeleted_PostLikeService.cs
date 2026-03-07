@@ -3,7 +3,7 @@ using MediatR;
 using PostLikeService.Application.UseCases.DislikePosts;
 using Shared.Events.PostService;
 
-namespace PostLikeService.Worker.Consumers
+namespace PostLikeService.Worker.MassTransit.Consumers
 {
     internal class DislikePosts_OnPostDeleted_PostLikeService(ISender sender) : IConsumer<PostDeletedEvent>
     {

@@ -65,5 +65,8 @@ namespace PostQueryService.Shared.PostgreSql
                         .SetProperty(x => x.CommentCount, x => x.CommentCount - 1),
                     cancellationToken
                 );
+
+        public Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
+            context.Posts.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 }

@@ -1,21 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using PostLikeService.Domain;
 
 namespace PostLikeService.Infrastructure.MongoDb
 {
-    internal class MongoContext
+    internal class MongoContext(IMongoDatabase database)
     {
-        public IMongoClient Client { get; private set; }
-        public IMongoDatabase Database { get; private set; }
-        public IMongoCollection<PostLike> PostLikes { get; private set; }
-
-        public MongoContext(IConfiguration configuration)
-        {
-            Client = new MongoClient(configuration["MongoDbSettings:ConnectionString"]);
-            Database = Client.GetDatabase(configuration["MongoDbSettings:DatabaseName"]);
-            PostLikes = Database.GetCollection<PostLike>("postLikes");
-        }
-
+        public IMongoCollection<PostLike> PostLikes = database.GetCollection<PostLike>("PostLikes");
     }
 }

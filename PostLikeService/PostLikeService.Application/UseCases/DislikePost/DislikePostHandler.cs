@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
 using PostLikeService.Domain;
-using Shared.Events.PostLikeService;
 
 namespace PostLikeService.Application.UseCases.DislikePost
 {
-    internal class DislikePostHandler(IPostLikeRepository postLikeRepository, IPublishEndpoint publishEndpoint, IMapper mapper, IIdentityService identiytService) : IRequestHandler<DislikePostRequest>
+    internal class DislikePostHandler(IPostLikeRepository postLikeRepository, IPublishEndpoint publishEndpoint, DislikePostMapper mapper, IIdentityService identiytService) : IRequestHandler<DislikePostRequest>
     {
         public async Task Handle(DislikePostRequest request, CancellationToken cancellationToken)
         {
@@ -17,7 +15,7 @@ namespace PostLikeService.Application.UseCases.DislikePost
             like.Dislike();
             await postLikeRepository.UpdateAsync(like, cancellationToken);
 
-            var @event = mapper.Map<PostLike, PostDislikedEvent>(like);
+            var @event = mapper.Map(like);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }

@@ -2,6 +2,7 @@
 {
     public interface IPostRepository
     {
+        Task<Post?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task UpsertAsync(Post post, CancellationToken cancellationToken);
         Task<int> IncreaseLikeCount(Guid id, CancellationToken cancellationToken);
         Task<int> DecreaseLikeCount(Guid id, CancellationToken cancellationToken);

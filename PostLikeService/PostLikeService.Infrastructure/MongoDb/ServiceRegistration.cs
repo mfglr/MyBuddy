@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
+using PostLikeService.Application;
 using PostLikeService.Domain;
 
 namespace PostLikeService.Infrastructure.MongoDb
@@ -8,12 +10,16 @@ namespace PostLikeService.Infrastructure.MongoDb
     {
         public static IServiceCollection AddMongoDb(this IServiceCollection services,IConfiguration configuration)
         {
-            DbConfiguration.Configure();
-            var context = new MongoContext(configuration);
-            
             return services
-                .AddSingleton(context)
-                .AddSingleton<IPostLikeRepository, PostLikeRepository>();
+                .AddSingleton<IMongoClient>(new MongoClient(configuration["MongoOptions:ConnectionString"]))
+                .AddSingleton(sp =>
+                {
+                    var client = sp.GetRequiredService<IMongoClient>();
+                    return client.GetDatabase(configuration["MongoOptions:DatabaseName"]);
+                })
+                .AddScoped<MongoContext>()
+                .AddScoped<IUnitOfWork, UnitOfWork>()
+                .AddScoped<IPostLikeRepository, PostLikeRepository>();
         }
             
     }

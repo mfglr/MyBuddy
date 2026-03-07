@@ -1,7 +1,10 @@
 using PostLikeService.Application;
 using PostLikeService.Infrastructure;
+using PostLikeService.Infrastructure.MongoDb;
 using PostLikeService.Worker;
-using PostLikeService.Worker.ServiceRegistrations;
+using PostLikeService.Worker.MassTransit;
+
+DbConfiguration.Configure();
 
 var builder = Host.CreateApplicationBuilder(args);
 

@@ -1,6 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using PostQueryService.Worker.Consumers;
+using PostQueryService.Worker.Consumers.DecreasePostLikeCount;
+using PostQueryService.Worker.Consumers.IncreasePostLikeCount;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostContentModerationResultSet;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostDeleted;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostMediaSet;
@@ -39,6 +41,8 @@ namespace PostQueryService.Worker.Consumers
                         x.AddConsumer<UpsertUser_OnUserNameUpdated_PostQueryService>();
                         x.AddConsumer<UpsertUser_OnNameUpdated_PostQueryService>();
                         x.AddConsumer<UpsertUser_OnUserMediaSet_PostQueryService>();
+                        x.AddConsumer<IncreasePostLikeCount_OnPostLiked_PostQueryService>();
+                        x.AddConsumer<DecreasePostLikeCount_OnPostDisliked_PostQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

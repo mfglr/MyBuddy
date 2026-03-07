@@ -3,7 +3,7 @@ using MediatR;
 using PostLikeService.Application.UseCases.LikePosts;
 using Shared.Events.PostService;
 
-namespace PostLikeService.Worker.Consumers
+namespace PostLikeService.Worker.MassTransit.Consumers
 {
     internal class LikePosts_OnPostRestored_PostLikeService(ISender sender) : IConsumer<PostRestoredEvent>
     {

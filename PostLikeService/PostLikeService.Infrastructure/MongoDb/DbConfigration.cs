@@ -5,7 +5,7 @@ using PostLikeService.Domain;
 
 namespace PostLikeService.Infrastructure.MongoDb
 {
-    internal static class DbConfiguration
+    public static class DbConfiguration
     {
         public static void Configure()
         {
@@ -16,6 +16,7 @@ namespace PostLikeService.Infrastructure.MongoDb
                 cm.MapMember(x => x.CreatedAt);
                 cm.MapMember(x => x.Version);
                 cm.MapMember(x => x.IsDeleted);
+                cm.MapMember(x => x.DeletedAt);
             });
         }
     }
