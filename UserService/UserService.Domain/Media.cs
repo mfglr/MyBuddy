@@ -24,16 +24,24 @@ namespace UserService.Domain
         }
 
         public bool IsValid =>
-            Metadata != null &&
-            Instruction.MetadataInstruction.IsValidMetadata(Metadata) &&
+            (
+                Instruction.MetadataInstruction == null ||
+                (   
+                    Metadata != null &&
+                    Instruction.MetadataInstruction.IsValid(Metadata)
+                )
+            ) &&
             (
                 Instruction.ModerationInstruction == null ||
                 (
                     ModerationResult != null &&
                     Instruction.ModerationInstruction != null &&
-                    Instruction.ModerationInstruction.IsValidModerationResult(ModerationResult)
+                    Instruction.ModerationInstruction.IsValid(ModerationResult)
                 )
             ) &&
-            Instruction.ThumbnailInstructions.Count == Thumbnails.Count;
+            (
+                Instruction.ThumbnailInstructions == null ||
+                Instruction.ThumbnailInstructions.Count == Thumbnails.Count
+            );
     }
 }

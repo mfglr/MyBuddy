@@ -5,6 +5,8 @@ using MediatR;
 namespace MediaService.Application.UseCases.SetMetadata
 {
     internal class SetMetadataHandler(
+        SetMetadata_MessageGenerator messageGenerator,
+        MediaPreprocessingCompletionEvaluator mediaPreprocessingCompletionEvaluator,
         SetMetadataMapper mapper,
         IMediaRepository mediaRepository,
         IPublishEndpoint publishEndpoint
@@ -12,15 +14,15 @@ namespace MediaService.Application.UseCases.SetMetadata
     {
         public async Task Handle(SetMetadataRequest request, CancellationToken cancellationToken)
         {
-            var media = await mediaRepository.GetByIdAsync(request.Id, cancellationToken) ?? throw new MediaNotFoundException();
-            media.SetMetadata(request.Metadata);
-            await mediaRepository.UpdateAsync(media, cancellationToken);
+            var media = 
+                await mediaRepository.SetMetadata(request.ContainerName,request.BlobName, request.Metadata, cancellationToken) ??
+                throw new MediaNotFoundException();
 
-            if (media.IsPreprocessingCompleted)
-            {
-                var @event = mapper.Map(media);
-                await publishEndpoint.Publish(@event, cancellationToken);
-            }
+            var events = new List<object>();
+            if (mediaPreprocessingCompletionEvaluator.IsPreprocessingCompleted(media))
+                events.Add(mapper.Map(media));
+            events.AddRange(messageGenerator.GenerateMessages(media));
+            await publishEndpoint.PublishBatch(events, cancellationToken);
         }
     }
 }

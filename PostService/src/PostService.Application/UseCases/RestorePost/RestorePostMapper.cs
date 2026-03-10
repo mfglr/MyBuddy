@@ -18,7 +18,7 @@ namespace PostService.Application.UseCases.RestorePost
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                media.TranscodedBlobName,
+                media.Transcodings,
                 media.Instruction
             );
         public PostRestoredEvent Map(Post post) =>

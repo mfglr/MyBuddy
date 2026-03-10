@@ -7,8 +7,8 @@ namespace MediaService.Application.UseCases.DeleteMedia
     {
         public async Task Handle(DeleteMediaRequest request, CancellationToken cancellationToken)
         {
-            var media = await mediaRepository.GetByIdAsync(request.Id, cancellationToken) ?? throw new MediaNotFoundException();
-            await mediaRepository.DeleteAsync(media, cancellationToken);
+            var media = await mediaRepository.GetByIdAsync(request.ContainerName, request.BlobName, cancellationToken) ?? throw new MediaNotFoundException();
+            mediaRepository.Delete(media);
         }
     }
 }

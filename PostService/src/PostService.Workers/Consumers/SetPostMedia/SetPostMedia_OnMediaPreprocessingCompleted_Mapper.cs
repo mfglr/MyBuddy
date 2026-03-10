@@ -12,7 +12,7 @@ namespace PostService.Workers.Consumers.SetPostMedia
                 @event.Metadata,
                 @event.ModerationResult,
                 @event.Thumbnails,
-                @event.TranscodedBlobName
+                @event.Transcodings
             );
     }
 }

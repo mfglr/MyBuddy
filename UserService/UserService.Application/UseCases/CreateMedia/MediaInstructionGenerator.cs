@@ -5,19 +5,28 @@ namespace UserService.Application.UseCases.CreateMedia
     internal class MediaInstructionGenerator
     {
         public MediaInstruction Generate() =>
-            new(
-                new(1)
-            )
-            {
-                ModerationInstruction = new ModerationInstruction(
-                    720,
-                    1,
-                    MaxSexual: 0
-                ),
+            new() {
+                MetadataInstruction = new()
+                {
+                    Constraints = new()
+                    {
+                        MaxDuration = 180
+                    }
+                },
+                ModerationInstruction = new()
+                {
+                    Constraints = new()
+                    {
+                        MaxSexual = 0
+                    }
+                },
                 ThumbnailInstructions = [
-                    new ThumbnailInstruction(1080,false),
-                    new ThumbnailInstruction(120,true),
-                    new ThumbnailInstruction(240,true)
+                    new (1080,false),
+                    new (120, true),
+                    new (240, true)
+                ],
+                TranscodingInstructions = [
+                    new(720)
                 ]
             };
     }

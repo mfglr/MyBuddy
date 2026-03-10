@@ -1,8 +1,8 @@
-﻿using MediaService.Application.UseCases.CreateMedia;
+﻿using MediaService.Application.UseCases.AddThumbnail;
+using MediaService.Application.UseCases.AddTranscoding;
+using MediaService.Application.UseCases.CreateMedia;
 using MediaService.Application.UseCases.SetMetadata;
 using MediaService.Application.UseCases.SetModerationResult;
-using MediaService.Application.UseCases.SetThumbnails;
-using MediaService.Application.UseCases.SetTranscodedBlobName;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,11 +14,15 @@ namespace MediaService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
+                .AddSingleton<MediaPreprocessingCompletionEvaluator>()
+                .AddSingleton<CreateMedia_MessageGenerator>()
+                .AddSingleton<SetMetadata_MessageGenerator>()
+                .AddSingleton<SetModerationResult_MessageGenerator>()
                 .AddSingleton<CreateMediaMapper>()
                 .AddSingleton<SetMetadataMapper>()
                 .AddSingleton<SetModerationResultMapper>()
-                .AddSingleton<SetThumbnailsMapper>()
-                .AddSingleton<SetTranscodedBlobNameMapper>()
+                .AddSingleton<AddThumbnailMapper>()
+                .AddSingleton<AddTrascodingMapper>()
                 .AddMediatR(x =>
                 {
                     x.LicenseKey = configuration["LuckPenny:LicenseKey"];

@@ -4,10 +4,7 @@ using Shared.Events.SharedObjects;
 namespace MetadataExtractor.Application.UseCases.ExtractMetadata
 {
     public record ExtractMetadataRequest(
-        Guid Id,
         string ContainerName,
-        string BlobName,
-        MediaType Type,
-        MediaInstruction Instruction
+        string BlobName
     ) : IRequest;
 }

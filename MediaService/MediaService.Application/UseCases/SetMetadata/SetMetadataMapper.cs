@@ -8,11 +8,11 @@ namespace MediaService.Application.UseCases.SetMetadata
         public MediaPreprocessingCompletedEvent Map(Media media) =>
             new(
                 media.OwnerId,
-                media.Id.ContainerName,
-                media.Id.BlobName,
+                media.ContainerName,
+                media.BlobName,
                 media.Metadata,
                 media.ModerationResult,
-                media.TranscodedBlobName,
+                media.Transcodings,
                 media.Thumbnails,
                 media.Instruction
             );

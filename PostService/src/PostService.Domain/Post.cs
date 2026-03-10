@@ -86,17 +86,17 @@ namespace PostService.Domain
 
         public void SetMedia(
             string blobName,
-            Metadata metadata,
+            Metadata? metadata,
             ModerationResult? moderationResult,
             IEnumerable<Thumbnail> thumbnails,
-            string? transcodedBlobName
+            IEnumerable<Transcoding> transcodings
         )
         {
             if (IsDeleted)
                 throw new PostNotFoundException();
 
             var media = Media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new PostMediaNotFoundException();
-            media.Set(metadata,moderationResult,thumbnails,transcodedBlobName);
+            media.Set(metadata,moderationResult,thumbnails, transcodings);
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

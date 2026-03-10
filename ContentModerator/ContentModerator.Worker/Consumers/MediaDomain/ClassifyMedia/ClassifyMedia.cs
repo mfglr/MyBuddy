@@ -4,9 +4,9 @@ using Shared.Events.MediaService;
 
 namespace ContentModerator.Worker.Consumers.MediaDomain.ClassifyMedia
 {
-    internal class ClassifyMedia(ISender sender, Mapper mapper) : IConsumer<MetadataExtractionValidatedEvent>
+    internal class ClassifyMedia(ISender sender, Mapper mapper) : IConsumer<ClassifyMediaMessage>
     {
-        public Task Consume(ConsumeContext<MetadataExtractionValidatedEvent> context) =>
+        public Task Consume(ConsumeContext<ClassifyMediaMessage> context) =>
             sender.Send(mapper.Map(context.Message), context.CancellationToken);
     }
 }

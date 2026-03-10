@@ -1,4 +1,5 @@
 ﻿using Shared.Events.SharedObjects;
+using System.Collections;
 
 namespace Shared.Events.PostService
 {
@@ -13,7 +14,7 @@ namespace Shared.Events.PostService
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName,
+        IEnumerable<Transcoding> Transcodings,
         MediaInstruction Instruction
     );
     public record PostRestoredEvent(

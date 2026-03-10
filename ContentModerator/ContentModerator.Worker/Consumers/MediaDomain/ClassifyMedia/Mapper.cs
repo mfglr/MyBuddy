@@ -5,13 +5,12 @@ namespace ContentModerator.Worker.Consumers.MediaDomain.ClassifyMedia
 {
     internal class Mapper
     {
-        public ClassifyMediaRequest Map(MetadataExtractionValidatedEvent @event) =>
+        public ClassifyMediaRequest Map(ClassifyMediaMessage message) =>
             new (
-                @event.Id,
-                @event.ContainerName,
-                @event.BlobName,
-                @event.Type,
-                @event.Instruction
+                message.ContainerName,
+                message.BlobName,
+                message.Type,
+                message.Instruction
             );
     }
 }

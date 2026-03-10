@@ -1,16 +1,15 @@
 ﻿using Shared.Events.MediaService;
-using ThumbnailGenerator.Application.UseCases.GenerateThumbnails;
+using ThumbnailGenerator.Application.UseCases.GenerateThumbnail;
 
 namespace ThumbnailGenerator.Workers.Consumers.MediaDomain
 {
     internal class Mapper
     {
-        public GenerateThumbnailsRequest Map(MediaClassificationValidatedEvent @event) =>
+        public GenerateThumbnailRequest Map(GenerateThumbnailMessage message) =>
             new(
-                @event.Id,
-                @event.ContainerName,
-                @event.BlobName,
-                @event.Instruction.ThumbnailInstructions
+                message.ContainerName,
+                message.BlobName,
+                message.Instruction
             );
     }
 }

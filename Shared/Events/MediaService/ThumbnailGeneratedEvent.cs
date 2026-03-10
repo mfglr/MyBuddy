@@ -3,8 +3,8 @@
 namespace Shared.Events.MediaService
 {
     public record ThumbnailGeneratedEvent(
-        string ConatinerName,
+        string ContainerName,
         string BlobName,
-        Thumbnail ThumbnailBlobName
+        Thumbnail Thumbnail
     );
 }

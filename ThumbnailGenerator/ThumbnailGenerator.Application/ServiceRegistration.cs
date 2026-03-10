@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using ThumbnailGenerator.Application.UseCases.GenerateThumbnails;
+using ThumbnailGenerator.Application.UseCases.GenerateThumbnail;
 
 namespace ThumbnailGenerator.Application
 {
@@ -9,7 +9,7 @@ namespace ThumbnailGenerator.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<GenerateThumbnailsMapper>()
+                .AddSingleton<GenerateThumbnailMapper>()
                 .AddScoped<TempDirectoryManager>()
                 .AddMediatR(
                     cfg =>

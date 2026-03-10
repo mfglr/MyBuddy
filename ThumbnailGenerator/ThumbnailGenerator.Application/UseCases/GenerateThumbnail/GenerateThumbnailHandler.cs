@@ -1,11 +1,17 @@
-﻿using MediatR;
-using Shared.Events.SharedObjects;
+﻿using MassTransit;
+using MediatR;
 
 namespace ThumbnailGenerator.Application.UseCases.GenerateThumbnail
 {
-    internal class GenerateThumbnailHandler(IThumbnailGenerator thumbnailGenerator, IBlobService blobService, TempDirectoryManager tempDirectoryManager) : IRequestHandler<GenerateThumbnailRequest, Thumbnail>
+    internal class GenerateThumbnailHandler(
+        GenerateThumbnailMapper mapper,
+        IThumbnailGenerator thumbnailGenerator,
+        IBlobService blobService,
+        TempDirectoryManager tempDirectoryManager,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<GenerateThumbnailRequest>
     {
-        public async Task<Thumbnail> Handle(GenerateThumbnailRequest request, CancellationToken cancellationToken)
+        public async Task Handle(GenerateThumbnailRequest request, CancellationToken cancellationToken)
         {
             string? blobName = null;
             try
@@ -19,7 +25,13 @@ namespace ThumbnailGenerator.Application.UseCases.GenerateThumbnail
                 }
 
                 var outputPath = tempDirectoryManager.GenerateUniqPath("jpeg");
-                await thumbnailGenerator.GenerateAsync(inputPath, outputPath, request.Resulation, request.IsSquare, cancellationToken);
+                await thumbnailGenerator.GenerateAsync(
+                    inputPath,
+                    outputPath,
+                    request.Instruction.Resolution,
+                    request.Instruction.IsSquare,
+                    cancellationToken
+                );
 
                 using (var fileStream = File.OpenRead(outputPath))
                 {
@@ -28,7 +40,8 @@ namespace ThumbnailGenerator.Application.UseCases.GenerateThumbnail
 
                 tempDirectoryManager.Delete();
 
-                return new(blobName, request.Resulation, request.IsSquare);
+                var @event = mapper.Map(request, blobName);
+                await publishEndpoint.Publish(@event, cancellationToken);
             }
             catch (Exception)
             {

@@ -8,7 +8,7 @@ namespace Shared.Events.MediaService
         string BlobName,
         Metadata? Metadata,
         ModerationResult? ModerationResult,
-        string? TranscodedBlobName,
+        IEnumerable<Transcoding> Transcodings,
         IEnumerable<Thumbnail> Thumbnails,
         MediaInstruction Instruction
     );

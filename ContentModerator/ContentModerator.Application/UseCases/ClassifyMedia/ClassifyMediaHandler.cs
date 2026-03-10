@@ -8,16 +8,6 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
     {
         public async Task Handle(ClassifyMediaRequest request, CancellationToken cancellationToken)
         {
-            if(request.Instruction.ModerationInstruction is null)
-            {
-                var @event = mapper.MapValidatedEvent(request, null);
-                await publishEndpoint.Publish(@event, cancellationToken);
-                return;
-            }
-                
-            double resolution = request.Instruction.ModerationInstruction.Resolution;
-            double fps = request.Instruction.ModerationInstruction.Fps;
-
             try
             {
                 tempDirectoryManager.Create();
@@ -31,24 +21,22 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
                 var tempPath = tempDirectoryManager.GenerateUniqPath();
                 IEnumerable<string> outputPaths;
                 if(request.Type == MediaType.Video)
-                    outputPaths = await videoFrameExtractor.ExtractAsync(inputPath, tempPath, resolution, fps, cancellationToken);
+                    outputPaths = await videoFrameExtractor.ExtractAsync(
+                        inputPath,
+                        tempPath,
+                        request.Instruction.Resolution,
+                        request.Instruction.Fps,
+                        cancellationToken
+                    );
                 else
-                    outputPaths = [await imageFrameExtractor.ExtractAsync(inputPath, tempPath, resolution, cancellationToken)];
+                    outputPaths = [await imageFrameExtractor.ExtractAsync(inputPath, tempPath, request.Instruction.Resolution, cancellationToken)];
                 var tasks = outputPaths.Select(path => moderator.ClassifyImageAsync(path, cancellationToken));
                 var moderationResult = ModerationResult.Max(await Task.WhenAll(tasks));
 
                 tempDirectoryManager.Delete();
 
-                if (request.Instruction.ModerationInstruction.IsValidModerationResult(moderationResult))
-                {
-                    var @event = mapper.MapValidatedEvent(request, moderationResult);
-                    await publishEndpoint.Publish(@event, cancellationToken);
-                }
-                else
-                {
-                    var @event = mapper.MapInvalidatedEvent(request, moderationResult);
-                    await publishEndpoint.Publish(@event, cancellationToken);
-                }
+                var @event = mapper.Map(request, moderationResult);
+                await publishEndpoint.Publish(@event, cancellationToken);
             }
             catch (Exception)
             {

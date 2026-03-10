@@ -1,16 +1,20 @@
 ﻿using MediaService.Domain;
 using Shared.Events.MediaService;
+using Shared.Events.SharedObjects;
 
 namespace MediaService.Application.UseCases.CreateMedia
 {
     internal class CreateMediaMapper
     {
-        public MediaCreatedEvent Map(Guid id, Media media) =>
+        public MediaPreprocessingCompletedEvent Map(Media media) =>
             new(
-                id,
-                media.Id.ContainerName,
-                media.Id.BlobName,
-                media.Type,
+                media.OwnerId,
+                media.ContainerName,
+                media.BlobName,
+                media.Metadata,
+                media.ModerationResult,
+                media.Transcodings,
+                media.Thumbnails,
                 media.Instruction
             );
     }

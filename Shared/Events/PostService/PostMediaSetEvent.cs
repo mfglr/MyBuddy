@@ -13,7 +13,7 @@ namespace Shared.Events.PostService
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName,
+        IEnumerable<Transcoding> Transcodings,
         MediaInstruction Instuction
     );
     public record PostMediaSetEvent(

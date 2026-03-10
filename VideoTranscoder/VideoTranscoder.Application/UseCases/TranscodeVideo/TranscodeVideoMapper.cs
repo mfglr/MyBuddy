@@ -4,12 +4,11 @@ namespace VideoTranscoder.Application.UseCases.TranscodeVideo
 {
     internal class TranscodeVideoMapper
     {
-        public VideoTrascodedEvent Map(TranscodeVideoRequest request, string trascodedBlobName) =>
+        public VideoTrascodedEvent Map(TranscodeVideoRequest request,string blobName) =>
             new(
-                request.Id,
                 request.ContainerName,
                 request.BlobName,
-                trascodedBlobName
+                new (blobName,request.Instruction.Resolution)
             );
     }
 }

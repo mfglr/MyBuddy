@@ -18,7 +18,7 @@ namespace PostService.Application.UseCases.SetPostContentModerationResult
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                media.TranscodedBlobName,
+                media.Transcodings,
                 media.Instruction
             );
         public PostContentModerationResultSetEvent Map(Post post) =>

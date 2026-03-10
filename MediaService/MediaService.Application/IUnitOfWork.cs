@@ -3,6 +3,6 @@
     public interface IUnitOfWork
     {
         Task CreateTransactionAsync(CancellationToken cancellationToken);
-        Task CommitTransactionAsync(CancellationToken cancellationToken);
+        Task CommitAsync(CancellationToken cancellationToken);
     }
 }

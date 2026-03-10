@@ -19,7 +19,7 @@ namespace VideoTranscoder.Application.UseCases.TranscodeVideo
                 }
 
                 var trancodedBlobPath = tempDirectoryManager.GenerateUniqPath("mp4");
-                await videoTranscoder.Transcode(inputPath, trancodedBlobPath, request.Resolution, cancellationToken);
+                await videoTranscoder.Transcode(inputPath, trancodedBlobPath, request.Instruction.Resolution, cancellationToken);
 
                 using (var transcodedBlobStream = File.OpenRead(trancodedBlobPath))
                 {

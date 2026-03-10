@@ -17,7 +17,7 @@ namespace PostService.Application.UseCases.SetPostMedia
                 await postRepository.GetByIdAsync(request.Id, cancellationToken) ??
                 throw new PostNotFoundException();
 
-            post.SetMedia(request.BlobName, request.Metadata, request.ModerationResult,request.Thumbnails, request.TranscodedBlobName);
+            post.SetMedia(request.BlobName, request.Metadata, request.ModerationResult,request.Thumbnails, request.Transcodings);
             await postRepository.UpdateAsync(post, cancellationToken);
 
             var @event = mapper.Map(post);

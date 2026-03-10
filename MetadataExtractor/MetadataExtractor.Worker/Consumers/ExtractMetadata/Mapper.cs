@@ -5,13 +5,10 @@ namespace MetadataExtractor.Worker.Consumers.ExtractMetadata
 {
     internal class Mapper
     {
-        public ExtractMetadataRequest Map(MediaCreatedEvent @event) =>
+        public ExtractMetadataRequest Map(ExtractMediaMetadataMessage message) =>
             new(
-                @event.Id,
-                @event.ContainerName,
-                @event.BlobName,
-                @event.Type,
-                @event.Instruction
+                message.ContainerName,
+                message.BlobName
             );
     }
 }

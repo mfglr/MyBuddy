@@ -6,9 +6,9 @@ namespace PostService.Application.UseCases.SetPostMedia
     public record SetPostMediaRequest(
         Guid Id,
         string BlobName,
-        Metadata Metadata,
+        Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName
+        IEnumerable<Transcoding> Transcodings
     ) : IRequest;
 }

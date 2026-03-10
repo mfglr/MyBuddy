@@ -5,19 +5,8 @@ namespace ContentModerator.Application.UseCases.ClassifyMedia
 {
     internal class ClassifyMediaMapper
     {
-        public MediaClassificationValidatedEvent MapValidatedEvent(ClassifyMediaRequest request, ModerationResult? moderationResult) =>
+        public MediaClassifiedEvent Map(ClassifyMediaRequest request, ModerationResult moderationResult) =>
             new(
-                request.Id,
-                request.ContainerName,
-                request.BlobName,
-                request.Type,
-                moderationResult,
-                request.Instruction
-            );
-
-        public MediaClassificationInvalidatedEvent MapInvalidatedEvent(ClassifyMediaRequest request, ModerationResult moderationResult) =>
-            new(
-                request.Id,
                 request.ContainerName,
                 request.BlobName,
                 moderationResult

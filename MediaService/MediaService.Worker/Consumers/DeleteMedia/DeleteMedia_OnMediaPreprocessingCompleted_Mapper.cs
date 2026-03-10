@@ -7,7 +7,8 @@ namespace MediaService.Worker.Consumers.DeleteMedia
     {
         public DeleteMediaRequest Map(MediaPreprocessingCompletedEvent @event) =>
             new(
-                new(@event.ContainerName,@event.BlobName)
+                @event.ContainerName,
+                @event.BlobName
             );
     }
 }

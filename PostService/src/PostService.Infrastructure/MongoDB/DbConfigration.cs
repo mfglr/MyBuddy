@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using PostService.Domain;
+using Shared.Events.SharedObjects;
 
 namespace PostService.Infrastructure.MongoDB
 {
@@ -29,8 +30,15 @@ namespace PostService.Infrastructure.MongoDB
                 cm.MapMember(q => q.Metadata);
                 cm.MapMember(q => q.ModerationResult);
                 cm.MapMember(q => q.Thumbnails);
-                cm.MapMember(q => q.TranscodedBlobName);
+                cm.MapMember(q => q.Transcodings);
                 cm.MapMember(q => q.Instruction);
+            });
+            BsonClassMap.RegisterClassMap<MediaInstruction>(cm =>
+            {
+                cm.MapMember(q => q.MetadataInstruction);
+                cm.MapMember(q => q.ModerationInstruction);
+                cm.MapMember(q => q.ThumbnailInstructions);
+                cm.MapMember(q => q.TranscodingInstructions);
             });
         }
     }

@@ -1,9 +1,10 @@
-﻿namespace Shared.Events.MediaService
+﻿using Shared.Events.SharedObjects;
+
+namespace Shared.Events.MediaService
 {
     public record VideoTrascodedEvent(
-        Guid Id,
         string ContainerName,
         string BlobName,
-        string TranscodedBlobName
+        Transcoding Transcoding
     );
 }

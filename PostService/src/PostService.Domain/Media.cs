@@ -10,7 +10,7 @@ namespace PostService.Domain
         public Metadata? Metadata { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
         public IReadOnlyList<Thumbnail> Thumbnails { get; private set; }
-        public string? TranscodedBlobName { get; private set; }
+        public IReadOnlyCollection<Transcoding> Transcodings { get; private set; }
         public MediaInstruction Instruction { get; private set; }
 
         public Media(
@@ -19,7 +19,7 @@ namespace PostService.Domain
             Metadata? metadata,
             ModerationResult? moderationResult,
             IEnumerable<Thumbnail> thumbnails,
-            string? transcodedBlobName,
+            IEnumerable<Transcoding> transcodings,
             MediaInstruction instruction
         )
         {
@@ -28,7 +28,7 @@ namespace PostService.Domain
             Metadata = metadata;
             ModerationResult = moderationResult;
             Thumbnails = [.. thumbnails];
-            TranscodedBlobName = transcodedBlobName;
+            Transcodings = [.. transcodings];
             Instruction = instruction;
         }
 
@@ -38,38 +38,44 @@ namespace PostService.Domain
             BlobName = blobName;
             Type = type;
             Thumbnails = [];
+            Transcodings = [];
             Instruction = instruction;
         }
+
         public void Set(
-            Metadata metadata,
+            Metadata? metadata,
             ModerationResult? moderationResult, 
             IEnumerable<Thumbnail> thumbnails,
-            string? transcodedBlobName
+            IEnumerable<Transcoding> transcodings
         )
         {
             Metadata = metadata;
             ModerationResult = moderationResult;
             Thumbnails = [.. thumbnails];
-            TranscodedBlobName = transcodedBlobName;
+            Transcodings = [.. transcodings];
         }
 
-
         public bool IsValid =>
-            Metadata != null &&
-            Instruction.MetadataInstruction.IsValidMetadata(Metadata) &&
+            Instruction.MetadataInstruction == null ||
+            (
+                Metadata != null &&
+                Instruction.MetadataInstruction.IsValid(Metadata)
+            ) &&
             (
                 Instruction.ModerationInstruction == null ||
                 (
                     ModerationResult != null &&
-                    Instruction.ModerationInstruction != null &&
-                    Instruction.ModerationInstruction.IsValidModerationResult(ModerationResult)
+                    Instruction.ModerationInstruction.IsValid(ModerationResult)
                 )
             ) &&
-            Instruction.ThumbnailInstructions.Count == Thumbnails.Count &&
+            (
+                Instruction.ThumbnailInstructions == null ||
+                Instruction.ThumbnailInstructions.Count == Thumbnails.Count
+            ) &&
             (
                 Type == MediaType.Image ||
-                Instruction.TranscodingInstruction == null ||
-                TranscodedBlobName != null
+                Instruction.TranscodingInstructions == null ||
+                Instruction.TranscodingInstructions.Count == Transcodings.Count
             );
     }
 }

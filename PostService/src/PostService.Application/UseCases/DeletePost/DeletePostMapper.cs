@@ -18,7 +18,7 @@ namespace PostService.Application.UseCases.DeletePost
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                media.TranscodedBlobName,
+                media.Transcodings,
                 media.Instruction
             );
         public PostDeletedEvent Map(Post post) =>

@@ -5,7 +5,8 @@ using Shared.Events.SharedObjects;
 namespace MediaService.Application.UseCases.SetModerationResult
 {
     public record SetModerationResultRequest(
-        MediaId Id,
-        ModerationResult? ModerationResult
+        string ContainerName,
+        string BlobName,
+        ModerationResult ModerationResult
     ) : IRequest;
 }

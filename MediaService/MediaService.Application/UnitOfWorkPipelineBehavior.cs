@@ -8,7 +8,7 @@ namespace MediaService.Application
         {
             await unitOfWork.CreateTransactionAsync(cancellationToken);
             var response = await next(cancellationToken);
-            await unitOfWork.CommitTransactionAsync(cancellationToken);
+            await unitOfWork.CommitAsync(cancellationToken);
             return response;
         }
     }

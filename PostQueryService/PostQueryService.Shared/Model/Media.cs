@@ -1,4 +1,5 @@
 ﻿using Shared.Events.SharedObjects;
+using System.Collections;
 using System.Text.Json.Serialization;
 
 namespace PostQueryService.Shared.Model
@@ -11,6 +12,6 @@ namespace PostQueryService.Shared.Model
         Metadata? Metadata,
         ModerationResult? ModerationResult,
         IEnumerable<Thumbnail> Thumbnails,
-        string? TranscodedBlobName
+        IEnumerable<Transcoding> Transcodings
     );
 }

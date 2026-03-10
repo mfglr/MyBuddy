@@ -18,7 +18,7 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostMediaSet
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                media.TranscodedBlobName
+                media.Transcodings
             );
         public Post Map(PostMediaSetEvent @event) =>
             new(

@@ -1,18 +1,9 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Shared.Events.SharedObjects
+﻿namespace Shared.Events.SharedObjects
 {
     public class MetadataInstruction
     {
-        public double Duration { get; private set; }
-
-        [JsonConstructor]
-        public MetadataInstruction(double duration)
-        {
-            if (duration < 0)
-                throw new InvalidMetadataInstruction();
-            Duration = duration;
-        }
-        public bool IsValidMetadata(Metadata metadata) => metadata.Duration < Duration;
+        public MetadataConstraints? Constraints { get; set; }
+        
+        public bool IsValid(Metadata metadata) => Constraints?.IsValid(metadata) ?? true;
     }
 }

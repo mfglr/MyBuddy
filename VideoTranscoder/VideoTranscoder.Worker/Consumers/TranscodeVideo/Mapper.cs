@@ -5,12 +5,11 @@ namespace VideoTranscoder.Worker.Consumers.TranscodeVideo
 {
     internal class Mapper
     {
-        public TranscodeVideoRequest Map(MediaClassificationValidatedEvent @event) =>
+        public TranscodeVideoRequest Map(TranscodeVideoMessage @event) =>
             new(
-                @event.Id,
                 @event.ContainerName,
                 @event.BlobName,
-                @event.Instruction.TranscodingInstruction!.Resolution
+                @event.Instruction
             );
     }
 }
