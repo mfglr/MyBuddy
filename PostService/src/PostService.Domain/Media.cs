@@ -56,10 +56,12 @@ namespace PostService.Domain
         }
 
         public bool IsValid =>
-            Instruction.MetadataInstruction == null ||
             (
-                Metadata != null &&
-                Instruction.MetadataInstruction.IsValid(Metadata)
+                Instruction.MetadataInstruction == null ||
+                (
+                    Metadata != null &&
+                    Instruction.MetadataInstruction.IsValid(Metadata)
+                )
             ) &&
             (
                 Instruction.ModerationInstruction == null ||
