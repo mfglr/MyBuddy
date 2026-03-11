@@ -14,7 +14,7 @@ namespace PostQueryService.Worker.Consumers.UpsertUserOnUserNameUpdated
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                null
+                []
             );
 
         public User Map(UserNameUpdatedEvent @event) =>

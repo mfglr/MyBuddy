@@ -2,6 +2,6 @@
 {
     public interface IUserRepository
     {
-        Task UpsertAsync(User user, CancellationToken cancellationToken);
+        Task<int> UpsertAsync(User user, CancellationToken cancellationToken);
     }
 }

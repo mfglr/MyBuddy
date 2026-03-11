@@ -12,7 +12,6 @@ using PostQueryService.Worker.Consumers.UpsertUserOnNameUpdated;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserCreated;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserMediaSet;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserNameUpdated;
-using Shared.Events.PostService;
 
 namespace PostQueryService.Worker.Consumers
 {

@@ -15,7 +15,7 @@ namespace PostQueryService.Worker.Consumers.UpsertUserOnUserMediaSet
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                null
+                []
             );
 
         public User Map(UserMediaSetEvent @event) =>

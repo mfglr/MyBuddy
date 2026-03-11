@@ -1,28 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PostQueryService.Shared.Model;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace PostQueryService.Shared.PostgreSql
 {
     internal class UserRepository(SqlContext context) : IUserRepository
     {
-        public async Task UpsertAsync(User user, CancellationToken cancellationToken)
+        public Task<int> UpsertAsync(User user, CancellationToken cancellationToken)
         {
-            if(!await context.Users.AnyAsync(x => x.Id == user.Id, cancellationToken))
-            {
-                await context.Users.AddAsync(user, cancellationToken);
-                await context.SaveChangesAsync(cancellationToken);
-                return;
-            }
-            await context.Users
-                .Where(x => x.Id == user.Id && x.Version < user.Version)
-                .ExecuteUpdateAsync(
-                    setters => setters
-                        .SetProperty(x => x.Version, user.Version)
-                        .SetProperty(x => x.UserName, user.UserName)
-                        .SetProperty(x => x.Name, user.Name)
-                        .SetProperty(x => x.Media, user.Media),
-                    cancellationToken
-                );
+            var media = JsonSerializer.Serialize(user.Media);
+            var sql = FormattableStringFactory.Create(
+                @"
+                    INSERT INTO ""Posts""  AS p
+                    (
+                        ""Id"",
+                        ""Version"",
+                        ""Name"",
+                        ""UserName"",
+                        ""Media""
+                    )
+                    VALUES ({0}, {1}, {2}, {3}, {4}::jsonb)
+                    ON CONFLICT (""Id"")
+                    DO UPDATE SET
+                         ""Id"" = {0},
+                        ""Version"" = {1},
+                        ""Name"" = {2},
+                        ""UserName"" = {3},
+                        ""Media"" = {4}::jsonb
+                    WHERE p.""Id"" = {0} and p.""Version"" < {1};
+                ",
+                user.Id,
+                user.Version,
+                user.Name,
+                user.UserName,
+                media
+            );
+            return context.Database.ExecuteSqlAsync(sql, cancellationToken);
         }
     }
 }

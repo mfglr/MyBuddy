@@ -1,6 +1,5 @@
 ﻿using PostQueryService.Shared.Model;
 using Shared.Events.UserService;
-using System.Text.Json;
 
 namespace PostQueryService.Worker.Consumers.UpsertUserOnUserCreated
 {
@@ -14,7 +13,7 @@ namespace PostQueryService.Worker.Consumers.UpsertUserOnUserCreated
                 media.Metadata,
                 media.ModerationResult,
                 media.Thumbnails,
-                null
+                []
             );
 
         public User Map(UserCreatedEvent @event) =>
