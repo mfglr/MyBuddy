@@ -21,11 +21,14 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostMediaSet
                 media.Transcodings
             );
         public Post Map(PostMediaSetEvent @event) =>
-            new(
+            new (
                 @event.Id,
                 @event.CreatedAt,
                 @event.UpdatedAt,
+                @event.DeletedAt,
+                @event.IsDeleted,
                 @event.Version,
+                @event.IsValidVersion,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
                 @event.Media.Select(Map)

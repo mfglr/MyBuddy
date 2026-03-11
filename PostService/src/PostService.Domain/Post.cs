@@ -11,8 +11,9 @@ namespace PostService.Domain
         public Guid Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public Guid UserId { get; private set; }
+        public DateTime? DeletedAt { get; private set; }
         public bool IsDeleted { get; private set; }
+        public Guid UserId { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; }
@@ -50,6 +51,7 @@ namespace PostService.Domain
                 throw new PostNotFoundException();
 
             IsDeleted = true;
+            DeletedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
@@ -59,6 +61,7 @@ namespace PostService.Domain
                 throw new PostAlreadyAvailableException();
 
             IsDeleted = false;
+            DeletedAt = null;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

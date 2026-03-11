@@ -13,11 +13,12 @@ namespace Shared.Events.PostService
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        Guid UserId,
-        int Version,
+        DateTime? DeletedAt,
         bool IsDeleted,
+        int Version,
+        bool IsValidVersion,
+        Guid UserId,
         PostCreatedEvent_Content? Content,
-        IEnumerable<PostCreatedEvent_Media> Media,
-        bool IsValidVersion
+        IEnumerable<PostCreatedEvent_Media> Media
     );
 }

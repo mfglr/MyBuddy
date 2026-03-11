@@ -1,5 +1,4 @@
 ﻿using Shared.Events.SharedObjects;
-using System.Collections;
 
 namespace Shared.Events.PostService
 {
@@ -21,11 +20,12 @@ namespace Shared.Events.PostService
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        Guid UserId,
-        int Version,
+        DateTime? DeletedAt,
         bool IsDeleted,
+        int Version,
+        bool IsValidVersion,
+        Guid UserId,
         PostDeletedEvent_Content? Content,
-        IEnumerable<PostDeletedEvent_Media> Media,
-        bool IsValidVersion
+        IEnumerable<PostDeletedEvent_Media> Media
     );
 }

@@ -7,7 +7,6 @@ namespace PostQueryService.Shared.PostgreSql.QuerRepositories
     {
         public static IServiceCollection AddQueryRepositories(this IServiceCollection services) =>
             services
-                .AddSingleton<PostResponseMapper>()
                 .AddScoped<IPostQueryRepository, PostQueryRepository>();
     }
 }

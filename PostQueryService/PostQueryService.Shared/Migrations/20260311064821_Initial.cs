@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
+using PostQueryService.Shared.Model;
+using Shared.Events.SharedObjects;
 
 #nullable disable
 
@@ -18,14 +21,14 @@ namespace PostQueryService.Shared.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Version = table.Column<int>(type: "integer", nullable: false),
+                    IsValidVersion = table.Column<bool>(type: "boolean", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Content_Value = table.Column<string>(type: "text", nullable: true),
-                    Content_ModerationResult_Hate = table.Column<int>(type: "integer", nullable: true),
-                    Content_ModerationResult_SelfHarm = table.Column<int>(type: "integer", nullable: true),
-                    Content_ModerationResult_Sexual = table.Column<int>(type: "integer", nullable: true),
-                    Content_ModerationResult_Violence = table.Column<int>(type: "integer", nullable: true),
-                    Media = table.Column<string>(type: "text", nullable: false),
+                    Content_ModerationResult = table.Column<ModerationResult>(type: "jsonb", nullable: true),
+                    Media = table.Column<IReadOnlyList<Media>>(type: "jsonb", nullable: false),
                     LikeCount = table.Column<int>(type: "integer", nullable: false),
                     CommentCount = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -41,8 +44,7 @@ namespace PostQueryService.Shared.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Version = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    UserName = table.Column<string>(type: "text", nullable: false),
-                    Media = table.Column<string>(type: "text", nullable: true)
+                    UserName = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,27 +1,26 @@
-﻿using PostService.Domain;
+﻿using PostQueryService.Shared.Model;
 using Shared.Events.PostService;
 
-namespace PostService.Application.UseCases.DeletePost
+namespace PostQueryService.Worker.Consumers.UpserPostOnPostCreated
 {
-    internal class DeletePostMapper
+    internal class UpsertPost_OnPostCreated_Mapper
     {
-        private PostDeletedEvent_Content Map(Content content) =>
+        public Content Map(PostCreatedEvent_Content content) =>
             new(
                 content.Value,
-                content.ModerationResult
+                null
             );
-        private PostDeletedEvent_Media Map(Media media) =>
+        public Media Map(PostCreatedEvent_Media media) =>
             new(
                 media.ContainerName,
                 media.BlobName,
                 media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                media.Transcodings,
-                media.Instruction
+                null,
+                null,
+                [],
+                []
             );
-        public PostDeletedEvent Map(Post post) =>
+        public Post Map(PostCreatedEvent post) =>
             new(
                 post.Id,
                 post.CreatedAt,

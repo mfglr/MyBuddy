@@ -18,12 +18,13 @@ namespace PostService.Application.UseCases.CreatePost
                 post.Id,
                 post.CreatedAt,
                 post.UpdatedAt,
-                post.UserId,
-                post.Version,
+                post.DeletedAt,
                 post.IsDeleted,
+                post.Version,
+                post.IsValidVersion,
+                post.UserId,
                 post.Content != null ? new PostCreatedEvent_Content(post.Content.Value) : null,
-                post.Media.Select(Map),
-                post.IsValidVersion
+                post.Media.Select(Map)
             );
     }
 }

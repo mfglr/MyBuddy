@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using PostQueryService.Worker.Consumers;
 using PostQueryService.Worker.Consumers.DecreasePostLikeCount;
 using PostQueryService.Worker.Consumers.IncreasePostLikeCount;
-using PostQueryService.Worker.Consumers.UpsertPostOnPostContentModerationResultSet;
+using PostQueryService.Worker.Consumers.UpdatePostOnPostContentModerationResultSet;
+using PostQueryService.Worker.Consumers.UpserPostOnPostCreated;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostDeleted;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostMediaSet;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostRestored;
@@ -11,6 +12,7 @@ using PostQueryService.Worker.Consumers.UpsertUserOnNameUpdated;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserCreated;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserMediaSet;
 using PostQueryService.Worker.Consumers.UpsertUserOnUserNameUpdated;
+using Shared.Events.PostService;
 
 namespace PostQueryService.Worker.Consumers
 {
@@ -20,7 +22,8 @@ namespace PostQueryService.Worker.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<UpsertPost_OnPostContentModerationResultSet_Mapper>()
+                .AddSingleton<UpsertPost_OnPostCreated_Mapper>()
+                .AddSingleton<UpdatePost_OnPostContentModerationResultSet_Mapper>()
                 .AddSingleton<UpsertPost_OnPostDeleted_Mapper>()
                 .AddSingleton<UpsertPost_OnPostRestored_Mapper>()
                 .AddSingleton<UpsertPost_OnPostMediaSet_Mapper>()
@@ -32,8 +35,9 @@ namespace PostQueryService.Worker.Consumers
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddConsumer<UpsertPost_OnPostContentModerationResultSet_PostQueryService>();
-                        x.AddConsumer<Upsert_PostOnPostDeleted_PostQueryService>();
+                        x.AddConsumer<UpsertPost_OnPostCreated_PostQueryService>();
+                        x.AddConsumer<UpdatePost_OnPostContentModerationResultSet_PostQueryService>();
+                        x.AddConsumer<UpsertPost_OnPostDeleted_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostRestored_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostMediaSet_PostQueryService>();
 

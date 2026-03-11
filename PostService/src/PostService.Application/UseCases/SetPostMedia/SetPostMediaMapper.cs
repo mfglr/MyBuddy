@@ -26,12 +26,13 @@ namespace PostService.Application.UseCases.SetPostMedia
                 post.Id,
                 post.CreatedAt,
                 post.UpdatedAt,
-                post.UserId,
-                post.Version,
+                post.DeletedAt,
                 post.IsDeleted,
+                post.Version,
+                post.IsValidVersion,
+                post.UserId,
                 post.Content != null ? Map(post.Content) : null,
-                post.Media.Select(Map),
-                post.IsValidVersion
+                post.Media.Select(Map)
             );
     }
 }

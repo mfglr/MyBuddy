@@ -2,18 +2,18 @@
 
 namespace PostQueryService.Shared.PostgreSql.QuerRepositories
 {
-    internal static class InternPostResponseQueryMapper
+    internal static class PostResponseQueryMapper
     {
-        public static IQueryable<InternalPostResponse> ToInternalPostResponse(this IQueryable<Post> query, SqlContext context) =>
+        public static IQueryable<PostResponse> ToPostResponse(this IQueryable<Post> query, SqlContext context) =>
             query
                 .Join(
                     context.Users,
                     post => post.UserId,
                     user => user.Id,
-                    (post, user) => new InternalPostResponse(
+                    (post, user) => new PostResponse(
                         user.Id,
-                        user.Name,
                         user.UserName,
+                        user.Name,
                         user.Media,
                         post.Id,
                         post.CreatedAt,

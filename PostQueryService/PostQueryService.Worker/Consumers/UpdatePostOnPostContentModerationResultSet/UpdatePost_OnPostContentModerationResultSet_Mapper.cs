@@ -1,9 +1,9 @@
 ﻿using PostQueryService.Shared.Model;
 using Shared.Events.PostService;
 
-namespace PostQueryService.Worker.Consumers.UpsertPostOnPostContentModerationResultSet
+namespace PostQueryService.Worker.Consumers.UpdatePostOnPostContentModerationResultSet
 {
-    internal class UpsertPost_OnPostContentModerationResultSet_Mapper
+    internal class UpdatePost_OnPostContentModerationResultSet_Mapper
     {
         private Content Map(PostContentModerationResultSetEvent_Content content) =>
             new(
@@ -25,7 +25,10 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostContentModerationRes
                 @event.Id,
                 @event.CreatedAt,
                 @event.UpdatedAt,
+                @event.DeletedAt,
+                @event.IsDeleted,
                 @event.Version,
+                @event.IsValidVersion,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
                 @event.Media.Select(Map)

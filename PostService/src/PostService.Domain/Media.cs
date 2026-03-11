@@ -16,6 +16,7 @@ namespace PostService.Domain
         public Media(
             string containerName,
             string blobName,
+            MediaType type,
             Metadata? metadata,
             ModerationResult? moderationResult,
             IEnumerable<Thumbnail> thumbnails,
@@ -25,6 +26,7 @@ namespace PostService.Domain
         {
             ContainerName = containerName;
             BlobName = blobName;
+            Type = type;
             Metadata = metadata;
             ModerationResult = moderationResult;
             Thumbnails = [.. thumbnails];

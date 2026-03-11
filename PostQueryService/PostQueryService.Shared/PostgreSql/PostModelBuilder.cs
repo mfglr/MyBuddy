@@ -8,10 +8,9 @@ namespace PostQueryService.Shared.PostgreSql
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder
-                .HasIndex(x => new { x.UserId, x.Id })
-                .IsDescending(false, true);
-            builder.OwnsOne(p => p.Content, b => b.OwnsOne(c => c.ModerationResult));
+            builder.HasIndex(x => new { x.UserId, x.Id }).IsDescending(false, true);
+            builder.OwnsOne(p => p.Content, b => b.Property(x => x.ModerationResult).HasColumnType("jsonb").IsRequired(false));
+            builder.Property(x => x.Media).HasColumnType("jsonb");
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace PostQueryService.Shared.Model
+﻿namespace PostQueryService.Shared.Model
 {
     public class User
     {
@@ -8,7 +6,7 @@ namespace PostQueryService.Shared.Model
         public int Version { get; private set; }
         public string? Name { get; private set; }
         public string UserName { get; private set; } = null!;
-        public string? Media { get; private set; }
+        public Media? Media { get; private set; }
 
         public User(){}
 
@@ -18,7 +16,7 @@ namespace PostQueryService.Shared.Model
             Version = version;
             Name = name;
             UserName = userName;
-            Media = media != null ? JsonSerializer.Serialize(media) : null;
+            Media = media;
         }
     }
 }
