@@ -1,0 +1,9 @@
+﻿namespace AuthServer.Api.Auth
+{
+    internal class AuthOptions
+    {
+        public required string Issuer { get; set; }
+        public required string BaseUrl { get; set; }
+        public required string Audience { get; set; }
+    }
+}

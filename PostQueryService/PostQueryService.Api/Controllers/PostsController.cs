@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PostQueryService.Shared.Model;
 
 namespace PostQueryService.Api.Controllers
@@ -7,6 +8,7 @@ namespace PostQueryService.Api.Controllers
     [ApiController]
     public class PostsController(IPostQueryRepository postQueryRepository) : ControllerBase
     {
+        [Authorize("read")]
         [HttpGet]
         public Task<List<PostResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
             postQueryRepository.GetByUserId(request.UserId, request.Cursor, request.PageSize, cancellationToken);

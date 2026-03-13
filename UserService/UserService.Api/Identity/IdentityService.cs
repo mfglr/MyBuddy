@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using UserService.Application;
 
-namespace UserService.Api
+namespace UserService.Api.Identity
 {
     public class IdentityService(IHttpContextAccessor httpContextAccessor) : IIdentityService
     {

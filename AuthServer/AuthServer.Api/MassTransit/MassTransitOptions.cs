@@ -1,4 +1,4 @@
-﻿namespace PostQueryService.Api.MassTransit
+﻿namespace AuthServer.Api.MassTransit
 {
     internal class MassTransitOptions
     {
