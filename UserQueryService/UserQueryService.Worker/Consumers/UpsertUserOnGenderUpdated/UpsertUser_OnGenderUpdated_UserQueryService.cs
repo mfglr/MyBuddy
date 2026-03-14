@@ -10,8 +10,6 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnGenderUpdated
     ) : IConsumer<UserGenderUpdatedEvent>
     {
         public Task Consume(ConsumeContext<UserGenderUpdatedEvent> context) =>
-            context.Message.IsValidVersion
-                ? userRepository.UpsertAsync(mapper.Map(context.Message), context.CancellationToken)
-                : Task.CompletedTask;
+            userRepository.UpsertAsync(mapper.Map(context.Message), context.CancellationToken);
     }
 }

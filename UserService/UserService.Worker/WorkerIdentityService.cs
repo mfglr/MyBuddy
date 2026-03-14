@@ -2,7 +2,7 @@
 
 namespace UserService.Worker
 {
-    internal class WorkerIdentityService : IIdentityService
+    internal class WorkerIdentityService : IAuthService
     {
         public Guid UserId => Guid.NewGuid();
         public bool IsAdmin => false;

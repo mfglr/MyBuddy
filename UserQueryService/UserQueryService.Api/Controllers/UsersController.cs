@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using UserQueryService.Shared.Dto;
 using UserQueryService.Shared.Exceptions;
 using UserQueryService.Shared.Model;
 
 namespace UserQueryService.Api.Controllers
 {
+    [Authorize("user_query")]
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class UsersController(IUserRepository userRepository) : ControllerBase

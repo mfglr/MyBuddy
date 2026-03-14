@@ -10,6 +10,7 @@ using UserService.Application.UseCases.UpdateUserName;
 
 namespace UserService.Api.Controllers
 {
+    [Authorize("user")]
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class UsersController(ISender sender) : ControllerBase
@@ -21,27 +22,22 @@ namespace UserService.Api.Controllers
             => _sender.Send(request, cancellationToken);
 
         [HttpPut]
-        [Authorize("user")]
         public Task CreateMedia([FromForm]CreateMediaRequest request ,CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
         [HttpPut]
-        [Authorize("user")]
         public Task DeleteMedia(DeleteMediaRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
         [HttpPut]
-        [Authorize("user")]
         public Task UpdateName(UpdateNameRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
         [HttpPut]
-        [Authorize("user")]
         public Task UpdateUserName(UpdateUserNameRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
 
         [HttpPut]
-        [Authorize("user")]
         public Task UpdateGender(UpdateGenderRequest request, CancellationToken cancellationToken) =>
             _sender.Send(request, cancellationToken);
     }

@@ -14,7 +14,7 @@ namespace AuthServer.Infrastructure.IdentityServer
                 .AddIdentityServer()
                 .AddIdentityServerContexts(configuration)
                 .AddAspNetIdentity<Account>()
-                .AddResourceOwnerValidator<PasswordValidator>()
+                .AddProfileService<CustomProfileService>()
                 .AddDeveloperSigningCredential();
             return services;
         }

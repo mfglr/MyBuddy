@@ -1,4 +1,5 @@
-using PostService.Api.ServiceRegistrations;
+using PostService.Api.Auth;
+using PostService.Api.MassTransit;
 using PostService.Application;
 using PostService.Infrastructure;
 using PostService.Infrastructure.MongoDB;

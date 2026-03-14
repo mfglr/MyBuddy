@@ -3,6 +3,7 @@
     public interface IUserRepository
     {
         Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<bool> ExistAsync(UserName userName, CancellationToken cancellationToken);
         Task CreateAsync(User user, CancellationToken cancellationToken);
         Task UpdateAsync(User user, CancellationToken cancellationToken);
         Task DeleteAsync(User user, CancellationToken cancellationToken);

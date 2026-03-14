@@ -1,3 +1,4 @@
+using UserQueryService.Api.Auth;
 using UserQueryService.Shared;
 using UserQueryService.Shared.MongoDB;
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services
+    .AddAuthenticationAndAuthorization(builder.Configuration)
     .AddShared(builder.Configuration);
 
 var app = builder.Build();

@@ -12,7 +12,7 @@ builder.Services
     .AddMassTransit(builder.Configuration)
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
-    .AddSingleton<IIdentityService,NullIdentityService>();
+    .AddSingleton<IAuthService,NullIdentityService>();
 
 var host = builder.Build();
 host.Run();

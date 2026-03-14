@@ -8,7 +8,7 @@ namespace PostService.Application.UseCases.CreatePost
         IPostRepository postRepository,
         IBlobService blobService,
         CreatePostMapper mapper,
-        IIdentityService identityService,
+        IAuthService authService,
         IPublishEndpoint publishEndpoint
     ) : IRequestHandler<CreatePostRequest, CreatePostResponse>
     {
@@ -20,7 +20,7 @@ namespace PostService.Application.UseCases.CreatePost
             var media = CreatePostHelpers.GenerateMedia(types, blobNames);
             try
             {
-                var post = new Post(identityService.UserId, content, media);
+                var post = new Post(authService.UserId, content, media);
                 await postRepository.CreateAsync(post, cancellationToken);
 
                 var @event = mapper.Map(post);

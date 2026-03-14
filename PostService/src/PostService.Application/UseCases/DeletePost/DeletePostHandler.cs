@@ -9,7 +9,7 @@ namespace PostService.Application.UseCases.DeletePost
     internal class DeletePostHandler(
         IPostRepository postRepository,
         DeletePostMapper mapper,
-        IIdentityService identityService,
+        IAuthService authService,
         IPublishEndpoint publishEndpoint
     ) : IRequestHandler<DeletePostRequest>
     {
@@ -19,7 +19,7 @@ namespace PostService.Application.UseCases.DeletePost
                  await postRepository.GetByIdAsync(request.Id, cancellationToken) ??
                  throw new PostNotFoundException();
 
-            if (!identityService.IsAdminOrOwner(post.UserId))
+            if (authService.UserId != post.UserId)
                 throw new UnauthorizedOperationException();
 
             post.Delete();

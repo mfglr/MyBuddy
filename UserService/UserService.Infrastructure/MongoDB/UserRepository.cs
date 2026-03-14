@@ -12,6 +12,13 @@ namespace UserService.Infrastructure.MongoDB
             return await result.FirstOrDefaultAsync(cancellationToken);
         }
 
+        public async Task<bool> ExistAsync(UserName userName, CancellationToken cancellationToken)
+        {
+            var filter = Builders<User>.Filter.Eq(x => x.UserName, userName);
+            var result = await context.Users.FindAsync(filter, cancellationToken: cancellationToken);
+            return await result.AnyAsync(cancellationToken);
+        }
+
         public Task CreateAsync(User user, CancellationToken cancellationToken) =>
             context.Users.InsertOneAsync(mongoDbContext.Session, user, cancellationToken: cancellationToken);
 
@@ -29,5 +36,7 @@ namespace UserService.Infrastructure.MongoDB
                 Builders<User>.Filter.Eq(x => x.Id, post.Id),
                 cancellationToken: cancellationToken
             );
+
+        
     }
 }

@@ -11,20 +11,20 @@ namespace BlobService.Api.Controllers
     {
         private readonly IBlobService _blobService = blobService;
 
-        [Authorize("client", Roles = "media-write")]
-        [RequestSizeLimit(104857600)]
-        [HttpPost]
-        public Task<IEnumerable<string>> Upload([FromForm]string containerName, [FromForm]IFormFileCollection media, CancellationToken cancellationToken) =>
-            _blobService.UploadAsync(containerName, media, cancellationToken);
-
-        [Authorize("client", Roles = "media-delete")]
-        [HttpPost]
-        public Task Delete(DeleteBlobRequest request, CancellationToken cancellationToken) =>
-            _blobService.DeleteAsync(request.ContainerName, request.BlobNames, cancellationToken);
-
-        [Authorize("client", Roles = "media-read")]
+        [Authorize("read")]
         [HttpGet("{containerName}/{blobName}")]
         public Task<Stream> Get(string containerName, string blobName, CancellationToken cancellationToken) =>
             _blobService.ReadAsync(containerName, blobName, cancellationToken);
+
+        [Authorize("write")]
+        [RequestSizeLimit(104857600)]
+        [HttpPost]
+        public Task<IEnumerable<string>> Upload([FromForm]UploadRequest request, CancellationToken cancellationToken) =>
+            _blobService.UploadAsync(request.ContainerName, request.Media, cancellationToken);
+
+        [Authorize("delete")]
+        [HttpPost]
+        public Task Delete(DeleteBlobRequest request, CancellationToken cancellationToken) =>
+            _blobService.DeleteAsync(request.ContainerName, request.BlobNames, cancellationToken);
     }
 }

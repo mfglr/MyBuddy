@@ -1,6 +1,7 @@
-using UserService.Api.Identity;
+using UserService.Api.Auth;
 using UserService.Api.MassTransit;
 using UserService.Application;
+using UserService.Domain;
 using UserService.Infrastructure;
 using UserService.Infrastructure.MongoDB;
 
@@ -11,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services
-    .AddIdentity(builder.Configuration)
+    .AddAuthenticationAndAuthorization(builder.Configuration)
+    .AddDomain()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddMassTransit(builder.Configuration);

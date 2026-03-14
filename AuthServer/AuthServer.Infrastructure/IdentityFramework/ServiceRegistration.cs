@@ -19,7 +19,8 @@ namespace AuthServer.Infrastructure.IdentityFramework
                 })
                 .AddEntityFrameworkStores<SqlContext>()
                 .AddDefaultTokenProviders();
-            return services;
+            return services
+                .AddScoped<IAccountRepository, AccountRepository>();
         }
     }
 }

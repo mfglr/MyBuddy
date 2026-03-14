@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MongoDB.Driver;
 using UserService.Worker.Consumers;
+using UserService.Worker.Consumers.CreateUser;
 using UserService.Worker.Consumers.SetUserMedia;
 using UserService.Worker.Consumers.ValidateSPICreation;
 
@@ -17,6 +18,7 @@ namespace UserService.Worker.Consumers
                 .AddMassTransit(
                     brc =>
                     {
+                        brc.AddConsumer<CreateUser_OnAccountCreated_UserService>();
                         brc.AddConsumer<SetUserMedia_OnMediaPreprocessingCompleted_UserService>();
                         brc.AddConsumer<ValidateSPICreation_SPICreated_UserService>();
 

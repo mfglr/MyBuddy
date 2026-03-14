@@ -6,10 +6,11 @@ namespace UserQueryService.Shared.MongoDB
 {
     internal class UserRepository(MongoContext context) : IUserRepository
     {
-        public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
-            context.Users
-                .Find(Builders<User>.Filter.Eq(x => x.Id, id))
-                .FirstOrDefaultAsync(cancellationToken);
+        public async Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var result = await context.Users.FindAsync(Builders<User>.Filter.Eq(x => x.Id, id), cancellationToken: cancellationToken);
+            return await result.FirstOrDefaultAsync(cancellationToken);
+        }
 
         public Task<List<User>> SearchAsync(string key, Guid? cursor, int pageSize, CancellationToken cancellationToken)
         {

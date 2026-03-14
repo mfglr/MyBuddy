@@ -10,7 +10,7 @@ namespace PostService.Application.UseCases.UpdatePostContent
     internal class UpdatePostContentHandler(
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
-        IIdentityService identityService
+        IAuthService authService
     ) : IRequestHandler<UpdatePostContentRequest>
     {
         public async Task Handle(UpdatePostContentRequest request, CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace PostService.Application.UseCases.UpdatePostContent
                 await postRepository.GetByIdAsync(request.Id, cancellationToken) ??
                 throw new PostNotFoundException();
 
-            if (identityService.UserId != post.UserId)
+            if (authService.UserId != post.UserId)
                 throw new UnauthorizedOperationException();
 
             post.UpdateContent(content);

@@ -14,7 +14,7 @@ namespace AuthServer.Api.Auth
                     JwtBearerDefaults.AuthenticationScheme,
                     options =>
                     {
-                        options.Authority = option.BaseUrl;
+                        options.Authority = option.Issuer;
                         options.Audience = option.Audience;
                         options.RequireHttpsMetadata = false;
 
@@ -39,7 +39,7 @@ namespace AuthServer.Api.Auth
                                 {
                                     p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
                                     p.RequireAuthenticatedUser();
-                                    p.RequireClaim("Scope", ["account"]);
+                                    p.RequireClaim("scope", ["account"]);
                                 }
                             );
                     }

@@ -43,9 +43,6 @@ namespace PostQueryService.Shared.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsValidVersion")
-                        .HasColumnType("boolean");
-
                     b.Property<int>("LikeCount")
                         .HasColumnType("integer");
 
@@ -75,6 +72,9 @@ namespace PostQueryService.Shared.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<Media>("Media")
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

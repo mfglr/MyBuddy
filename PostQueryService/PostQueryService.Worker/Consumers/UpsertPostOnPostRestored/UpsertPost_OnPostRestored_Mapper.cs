@@ -28,7 +28,6 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostRestored
                 @event.DeletedAt,
                 @event.IsDeleted,
                 @event.Version,
-                @event.IsValidVersion,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
                 @event.Media.Select(Map)

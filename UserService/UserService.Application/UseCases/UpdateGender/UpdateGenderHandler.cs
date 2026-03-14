@@ -8,12 +8,12 @@ namespace UserService.Application.UseCases.UpdateGender
         UpdateGenderMapper mapper,
         IUserRepository userRepository,
         IPublishEndpoint publishEndpoint,
-        IIdentityService identityService
+        IAuthService authService
     ) : IRequestHandler<UpdateGenderRequest>
     {
         public async Task Handle(UpdateGenderRequest request, CancellationToken cancellationToken)
         {
-            var userId = identityService.UserId;
+            var userId = authService.UserId;
             var gender = new Gender(request.Gender);
             var user = await userRepository.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
             user.UpdateGender(gender);

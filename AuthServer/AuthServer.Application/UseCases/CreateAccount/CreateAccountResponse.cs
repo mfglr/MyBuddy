@@ -1,4 +1,4 @@
 ﻿namespace AuthServer.Application.UseCases.CreateAccount
 {
-    public record CreateAccountResponse(Guid Id,string UserName);
+    public record CreateAccountResponse(Guid Id);
 }

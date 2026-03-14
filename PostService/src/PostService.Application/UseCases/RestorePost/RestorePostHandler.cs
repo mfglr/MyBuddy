@@ -2,7 +2,6 @@
 using MediatR;
 using PostService.Domain;
 using PostService.Domain.Exceptions;
-using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.RestorePost
 {

@@ -23,7 +23,6 @@ namespace Shared.Events.PostService
         DateTime? DeletedAt,
         bool IsDeleted,
         int Version,
-        bool IsValidVersion,
         Guid UserId,
         PostContentModerationResultSetEvent_Content? Content,
         IEnumerable<PostContentModerationResultSetEvent_Media> Media

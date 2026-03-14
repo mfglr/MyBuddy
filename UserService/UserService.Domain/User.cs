@@ -27,7 +27,7 @@ namespace UserService.Domain
             Version++;
         }
 
-        public void UpdateUserName(UserName userName)
+        internal void UpdateUserName(UserName userName)
         {
             if (IsDeleted)
                 throw new UserNotFoundException();

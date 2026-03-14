@@ -12,7 +12,7 @@ namespace PostQueryService.Shared.PostgreSql
             var media = JsonSerializer.Serialize(user.Media);
             var sql = FormattableStringFactory.Create(
                 @"
-                    INSERT INTO ""Posts""  AS p
+                    INSERT INTO ""Users"" AS u
                     (
                         ""Id"",
                         ""Version"",
@@ -28,7 +28,7 @@ namespace PostQueryService.Shared.PostgreSql
                         ""Name"" = {2},
                         ""UserName"" = {3},
                         ""Media"" = {4}::jsonb
-                    WHERE p.""Id"" = {0} and p.""Version"" < {1};
+                    WHERE u.""Id"" = {0} and u.""Version"" < {1};
                 ",
                 user.Id,
                 user.Version,

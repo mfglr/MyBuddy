@@ -56,30 +56,5 @@ namespace PostService.Domain
             Thumbnails = [.. thumbnails];
             Transcodings = [.. transcodings];
         }
-
-        public bool IsValid =>
-            (
-                Instruction.MetadataInstruction == null ||
-                (
-                    Metadata != null &&
-                    Instruction.MetadataInstruction.IsValid(Metadata)
-                )
-            ) &&
-            (
-                Instruction.ModerationInstruction == null ||
-                (
-                    ModerationResult != null &&
-                    Instruction.ModerationInstruction.IsValid(ModerationResult)
-                )
-            ) &&
-            (
-                Instruction.ThumbnailInstructions == null ||
-                Instruction.ThumbnailInstructions.Count == Thumbnails.Count
-            ) &&
-            (
-                Type == MediaType.Image ||
-                Instruction.TranscodingInstructions == null ||
-                Instruction.TranscodingInstructions.Count == Transcodings.Count
-            );
     }
 }

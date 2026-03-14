@@ -21,7 +21,6 @@ namespace PostQueryService.Shared.PostgreSql
                         ""DeletedAt"",
                         ""IsDeleted"",
                         ""Version"",
-                        ""IsValidVersion"",
                         ""UserId"",
                         ""Content_Value"",
                         ""Content_ModerationResult"",
@@ -29,17 +28,16 @@ namespace PostQueryService.Shared.PostgreSql
                         ""LikeCount"",
                         ""CommentCount""
                     )
-                    VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}::jsonb, {10}::jsonb, {11}, {12})
+                    VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}::jsonb, {9}::jsonb, {10}, {11})
                     ON CONFLICT (""Id"")
                     DO UPDATE SET
                         ""UpdatedAt"" = {2},
                         ""DeletedAt"" = {3},
                         ""IsDeleted"" = {4},
                         ""Version"" = {5},
-                        ""IsValidVersion"" = {6},
-                        ""Content_Value"" = {8},
-                        ""Content_ModerationResult"" = {9}::jsonb,
-                        ""Media"" = {10}::jsonb
+                        ""Content_Value"" = {7},
+                        ""Content_ModerationResult"" = {8}::jsonb,
+                        ""Media"" = {9}::jsonb
                     WHERE p.""Id"" = {0} and p.""Version"" < {5};
                 ",
                 post.Id,
@@ -48,7 +46,6 @@ namespace PostQueryService.Shared.PostgreSql
                 post.DeletedAt,
                 post.IsDeleted,
                 post.Version,
-                post.IsValidVersion,
                 post.UserId,
                 post.Content?.Value,
                 contentModerationResult,

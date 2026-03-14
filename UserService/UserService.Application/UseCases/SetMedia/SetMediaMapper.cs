@@ -25,8 +25,7 @@ namespace UserService.Application.UseCases.SetMedia
                 user.Name?.Value,
                 user.UserName.Value,
                 user.Gender.Value,
-                user.Media.Select(Map),
-                user.IsValidVersion
+                user.Media.Select(Map)
             );
     }
 }

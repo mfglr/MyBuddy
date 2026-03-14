@@ -1,6 +1,5 @@
 ﻿using PostQueryService.Shared.Model;
 using Shared.Events.UserService;
-using System.Text.Json;
 
 namespace PostQueryService.Worker.Consumers.UpsertUserOnUserMediaSet
 {

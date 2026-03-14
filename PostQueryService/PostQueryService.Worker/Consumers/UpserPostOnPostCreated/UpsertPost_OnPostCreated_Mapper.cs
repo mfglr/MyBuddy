@@ -28,7 +28,6 @@ namespace PostQueryService.Worker.Consumers.UpserPostOnPostCreated
                 post.DeletedAt,
                 post.IsDeleted,
                 post.Version,
-                post.IsValidVersion,
                 post.UserId,
                 post.Content != null ? Map(post.Content) : null,
                 post.Media.Select(Map)

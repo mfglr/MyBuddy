@@ -8,12 +8,12 @@ namespace UserService.Application.UseCases.DeleteMedia
         IUserRepository userRepsitory,
         IPublishEndpoint publishEndpoint,
         DeleteMediaMapper mapper,
-        IIdentityService identityService
+        IAuthService authService
     ) : IRequestHandler<DeleteMediaRequest>
     {
         public async Task Handle(DeleteMediaRequest request, CancellationToken cancellationToken)
         {
-            var userId = identityService.UserId;
+            var userId = authService.UserId;
             var user = await userRepsitory.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
 
             var mediaDeleted = user.DeleteMedia(request.BlobName);

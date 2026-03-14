@@ -2,7 +2,7 @@
 
 namespace PostService.Workers
 {
-    internal class NullIdentityService : IIdentityService
+    internal class NullIdentityService : IAuthService
     {
         public Guid UserId => Guid.NewGuid();
 

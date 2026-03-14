@@ -29,8 +29,7 @@ namespace UserService.Application.UseCases.DeleteMedia
                 new UserMediaDeletedEvent_MediaDeleted(
                     mediaDeleted.ContainerName,
                     mediaDeleted.BlobName
-                ),
-                user.IsValidVersion
+                )
             );
     }
 }

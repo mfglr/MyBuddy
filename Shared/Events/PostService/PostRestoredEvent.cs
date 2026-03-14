@@ -1,5 +1,4 @@
 ﻿using Shared.Events.SharedObjects;
-using System.Collections;
 
 namespace Shared.Events.PostService
 {
@@ -24,7 +23,6 @@ namespace Shared.Events.PostService
         DateTime? DeletedAt,
         bool IsDeleted,
         int Version,
-        bool IsValidVersion,
         Guid UserId,
         PostRestoredEvent_Content? Content,
         IEnumerable<PostRestoredEvent_Media> Media

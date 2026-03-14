@@ -1,6 +1,5 @@
 ﻿using AuthServer.Application.UseCases.CreateAccount;
 using AuthServer.Application.UseCases.DeleteAccount;
-using AuthServer.Application.UseCases.UpdateUserName;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,6 @@ namespace AuthServer.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddSingleton<CreateAccountMapper>()
-                .AddSingleton<UpdateUserNameMapper>()
                 .AddSingleton<DeleteAccountMapper>()
                 .AddMediatR(
                     cfg => {

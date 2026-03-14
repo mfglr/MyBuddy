@@ -8,8 +8,6 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnNameUpdated
     internal class UpsertUser_OnNameUpdated_UserQueryService(IUserRepository userRepository, UpsertUser_OnNameUpdated_Mapper mapper) : IConsumer<NameUpdatedEvent>
     {
         public Task Consume(ConsumeContext<NameUpdatedEvent> context) =>
-            context.Message.IsValidVersion
-                ? userRepository.UpsertAsync(mapper.Map(context.Message), context.CancellationToken)
-                : Task.CompletedTask;
+            userRepository.UpsertAsync(mapper.Map(context.Message), context.CancellationToken);
     }
 }

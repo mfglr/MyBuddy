@@ -5,11 +5,11 @@ using UserService.Domain;
 namespace UserService.Application.UseCases.UpdateUserName
 {
     internal class UpdateUserNameHandler(
-        IAuthService authService,
+        UserNameUpdaterDomainService userNameUpdater,
         IUserRepository userRepository,
         IPublishEndpoint publishEndpoint,
         UpdateUserNameMapper mapper,
-        IIdentityService identityService
+        IAuthService identityService
     ) : IRequestHandler<UpdateUserNameRequest>
     {
         public async Task Handle(UpdateUserNameRequest request, CancellationToken cancellationToken)
@@ -17,9 +17,8 @@ namespace UserService.Application.UseCases.UpdateUserName
             var userId = identityService.UserId;
             var userName = new UserName(request.UserName);
             var user = await userRepository.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
+            await userNameUpdater.UpdateAsync(user, userName,cancellationToken);
 
-            await authService.UpdateUserName(userId, userName.Value, cancellationToken);
-            user.UpdateUserName(userName);
             await userRepository.UpdateAsync(user, cancellationToken);
 
             var @event = mapper.Map(user);

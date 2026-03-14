@@ -9,6 +9,8 @@ namespace PostLikeService.Application.UseCases.DislikePosts
         public async Task Handle(DislikesPostsRequest request, CancellationToken cancellationToken)
         {
             var likes = await postLikeRepository.GetByPostIdAsync(request.PostId, cancellationToken);
+            if (likes.Count == 0) return;
+
             foreach (var like in likes)
                 like.Dislike();
             await postLikeRepository.UpdateAsync(likes, cancellationToken);

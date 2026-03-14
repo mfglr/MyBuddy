@@ -8,7 +8,7 @@ namespace PostQueryService.Api.Controllers
     [ApiController]
     public class PostsController(IPostQueryRepository postQueryRepository) : ControllerBase
     {
-        [Authorize("read")]
+        [Authorize("post_query")]
         [HttpGet]
         public Task<List<PostResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
             postQueryRepository.GetByUserId(request.UserId, request.Cursor, request.PageSize, cancellationToken);

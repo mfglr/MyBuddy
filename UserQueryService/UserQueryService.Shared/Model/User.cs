@@ -1,6 +1,15 @@
 ﻿namespace UserQueryService.Shared.Model
 {
-    public class User(Guid id, DateTime createdAt, DateTime? updatedAt, int version, string? name, string userName, string gender, IEnumerable<Media> media)
+    public class User(
+        Guid id,
+        DateTime createdAt,
+        DateTime? updatedAt,
+        int version,
+        string? name,
+        string userName,
+        string gender,
+        IEnumerable<Media> media
+    )
     {
         public Guid Id { get; private set; } = id;
         public DateTime CreatedAt { get; private set; } = createdAt;

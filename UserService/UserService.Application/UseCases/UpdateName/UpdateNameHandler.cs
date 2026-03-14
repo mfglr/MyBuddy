@@ -8,12 +8,12 @@ namespace UserService.Application.UseCases.UpdateName
         IUserRepository userRepository,
         IPublishEndpoint publishEndpoint,
         UpdateNameMapper mapper,
-        IIdentityService identityService
+        IAuthService authService
     ) : IRequestHandler<UpdateNameRequest>
     {
         public async Task Handle(UpdateNameRequest request, CancellationToken cancellationToken)
         {
-            var userId = identityService.UserId;
+            var userId = authService.UserId;
             var name = new Name(request.Name);
             var user = await userRepository.GetByIdAsync(userId, cancellationToken) ?? throw new UserNotFoundException();
             user.UpdateName(name);

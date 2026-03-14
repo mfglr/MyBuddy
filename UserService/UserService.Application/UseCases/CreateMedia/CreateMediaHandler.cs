@@ -10,13 +10,13 @@ namespace UserService.Application.UseCases.CreateMedia
         IUserRepository userRepository,
         IPublishEndpoint publishEndpoint,
         MediaTypeExtractor mediaTypeExtractor,
-        IIdentityService idendityService,
+        IAuthService authService,
         MediaInstructionGenerator mediaInstructionGenerator
     ) : IRequestHandler<CreateMediaRequest>
     {
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
-            var userId = idendityService.UserId;
+            var userId = authService.UserId;
             var user = await userRepository.GetByIdAsync(userId,cancellationToken) ?? throw new UserNotFoundException();
 
             string? blobName = null;

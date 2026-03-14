@@ -8,7 +8,6 @@
         public DateTime? DeletedAt { get; private set; }
         public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
-        public bool IsValidVersion { get; private set; }
         public Guid UserId { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; } = null!;
@@ -24,7 +23,6 @@
             DateTime? deletedAt,
             bool isDeleted,
             int version,
-            bool isValidVersion,
             Guid userId,
             Content? content,
             IEnumerable<Media> media
@@ -36,7 +34,6 @@
             DeletedAt = deletedAt;
             IsDeleted = isDeleted;
             Version = version;
-            IsValidVersion = isValidVersion;
             UserId = userId;
             Content = content;
             Media = [..media];

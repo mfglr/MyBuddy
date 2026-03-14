@@ -1,5 +1,5 @@
-using BlobService.Api;
 using BlobService.Api.Abstracts;
+using BlobService.Api.Auth;
 using BlobService.Api.Concretes;
 
 var builder = WebApplication.CreateBuilder(args);

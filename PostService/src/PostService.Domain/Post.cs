@@ -18,14 +18,6 @@ namespace PostService.Domain
         public Content? Content { get; private set; }
         public IReadOnlyList<Media> Media { get; private set; }
 
-        public bool IsValidVersion =>
-            (
-                Content == null ||
-                Content.ModerationResult != null
-            ) &&
-            !Media.Any(x => !x.IsValid);
-
-
         public Post(Guid userId, Content? content, IReadOnlyList<Media> media)
         {
             if (!media.Any())
@@ -67,7 +59,7 @@ namespace PostService.Domain
         }
         public void UpdateContent(Content content)
         {
-            if (!IsDeleted)
+            if (IsDeleted)
                 throw new PostNotFoundException();
 
             Content = content;

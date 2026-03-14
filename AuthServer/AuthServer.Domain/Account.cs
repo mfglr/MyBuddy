@@ -15,7 +15,7 @@ namespace AuthServer.Domain
         internal Account(Email email) : base()
         {
             Email = email.Value;
-            UserName = email.GenerateUserName();
+            UserName = email.Value;
             CreatedAt = DateTime.UtcNow;
             Version = 1;
             IsDeleted = false;
@@ -40,16 +40,5 @@ namespace AuthServer.Domain
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
-
-        public void UpdateUserName(UserName userName)
-        {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
-            UserName = userName.Value;
-            UpdatedAt = DateTime.UtcNow;
-            Version++;
-        }
-
     }
 }

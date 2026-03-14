@@ -1,16 +1,7 @@
 ﻿using Comment.Api;
-using Comment.Api.Options;
 using CommentService.Application;
-using CommentService.Application.UseCases.CreateComment;
-using CommentService.Application.UseCases.DeleteComment;
-using CommentService.Application.UseCases.RestoreComment;
-using CommentService.Application.UseCases.UpdateCommentContent;
-using CommentService.Domain;
-using CommentService.Infrastructure;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using System.Security.Claims;
 
 namespace Comment.Api
