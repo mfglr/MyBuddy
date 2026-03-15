@@ -25,6 +25,17 @@ namespace AuthServer.Infrastructure.IdentityServer
                     ]
                 },
 
+                new("post_like.api"){
+                    Scopes = [
+                        "post_like"
+                    ]
+                },
+                new("post_like_query.api"){
+                    Scopes = [
+                        "post_like_query"
+                    ]
+                },
+
                 new("user.api"){
                     Scopes = [
                         "user"
@@ -52,6 +63,9 @@ namespace AuthServer.Infrastructure.IdentityServer
                 new("post"),
                 new("post_query"),
 
+                new("post_like"),
+                new("post_like_query"),
+
                 new("user"),
                 new("user_query"),    
 
@@ -74,6 +88,9 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                         "post",
                         "post_query",
+
+                        "post_like",
+                        "post_like_query",
 
                         "user",
                         "user_query",

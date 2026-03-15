@@ -9,7 +9,7 @@ DbConfiguration.Configure();
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
-    .AddSingleton<IIdentityService,IdentityService>()
+    .AddSingleton<IAuthService,IdentityService>()
     .AddMassTransit(builder.Configuration)
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);

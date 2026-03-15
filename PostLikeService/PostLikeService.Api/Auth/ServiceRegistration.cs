@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using PostLikeService.Api.Auth;
 using PostLikeService.Application;
 using System.Security.Claims;
 
@@ -8,14 +9,14 @@ namespace PostLikeService.Api.Identity
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            var option = configuration.GetSection(nameof(IdentityOptions)).Get<IdentityOptions>()!;
+            var option = configuration.GetSection(nameof(AuthOptions)).Get<AuthOptions>()!;
             services
                 .AddAuthentication()
                 .AddJwtBearer(
                     JwtBearerDefaults.AuthenticationScheme,
                     options =>
                     {
-                        options.Authority = option.BaseUrl;
+                        options.Authority = option.Issuer;
                         options.Audience = option.Audience;
                         options.RequireHttpsMetadata = false;
 
@@ -40,7 +41,6 @@ namespace PostLikeService.Api.Identity
                                 {
                                     p.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
                                     p.RequireAuthenticatedUser();
-                                    p.RequireClaim(ClaimTypes.Email);
                                     p.RequireRole("user");
                                 }
                             );
@@ -48,7 +48,7 @@ namespace PostLikeService.Api.Identity
                 );
             return services
                 .AddHttpContextAccessor()
-                .AddScoped<IIdentityService,IdentityService>();
+                .AddScoped<IAuthService,AuthService>();
         }
     }
 }

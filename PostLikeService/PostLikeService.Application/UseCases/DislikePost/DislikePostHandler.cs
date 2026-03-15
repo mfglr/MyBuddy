@@ -4,11 +4,16 @@ using PostLikeService.Domain;
 
 namespace PostLikeService.Application.UseCases.DislikePost
 {
-    internal class DislikePostHandler(IPostLikeRepository postLikeRepository, IPublishEndpoint publishEndpoint, DislikePostMapper mapper, IIdentityService identiytService) : IRequestHandler<DislikePostRequest>
+    internal class DislikePostHandler(
+        IPostLikeRepository postLikeRepository,
+        IPublishEndpoint publishEndpoint,
+        DislikePostMapper mapper,
+        IAuthService authService
+    ) : IRequestHandler<DislikePostRequest>
     {
         public async Task Handle(DislikePostRequest request, CancellationToken cancellationToken)
         {
-            var id = new PostLikeId(identiytService.UserId, request.PostId);
+            var id = new PostLikeId(authService.UserId, request.PostId);
             var like =
                 await postLikeRepository.GetAsync(id, cancellationToken) ??
                 throw new PostNotLikedBeforeException();

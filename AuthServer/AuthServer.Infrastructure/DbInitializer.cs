@@ -39,17 +39,41 @@ namespace AuthServer.Infrastructure
 
         private static void SeedConfiguration(ConfigurationDbContext context)
         {
-            if (!context.ApiResources.Any())
-                context.ApiResources.AddRange(IdentityServerConfigration.GetApiResources().Select(x => x.ToEntity()));
+            foreach(var next in IdentityServerConfigration.GetApiResources())
+            {
+                var prev = context.ApiResources.FirstOrDefaultAsync(x => x.Name == next.Name);
+                if (prev == null)
+                    context.ApiResources.Add(next.ToEntity());
+                else
+                    context.ApiResources.Update(next.ToEntity());
+            }
 
-            if (!context.ApiScopes.Any())
-                context.ApiScopes.AddRange(IdentityServerConfigration.GetApiScopes().Select(x => x.ToEntity()));
+            foreach (var next in IdentityServerConfigration.GetApiScopes())
+            {
+                var prev = context.ApiScopes.FirstOrDefaultAsync(x => x.Name == next.Name);
+                if (prev == null)
+                    context.ApiScopes.Add(next.ToEntity());
+                else
+                    context.ApiScopes.Update(next.ToEntity());
+            }
 
-            if (!context.Clients.Any())
-                context.Clients.AddRange(IdentityServerConfigration.GetClients().Select(x => x.ToEntity()));
+            foreach (var next in IdentityServerConfigration.GetClients())
+            {
+                var prev = context.Clients.FirstOrDefaultAsync(x => x.ClientName == next.ClientName);
+                if (prev == null)
+                    context.Clients.Add(next.ToEntity());
+                else
+                    context.Clients.Update(next.ToEntity());
+            }
 
-            if (!context.IdentityResources.Any())
-                context.IdentityResources.AddRange(IdentityServerConfigration.GetIdentityResources().Select(x => x.ToEntity()));
+            foreach (var next in IdentityServerConfigration.GetIdentityResources())
+            {
+                var prev = context.IdentityResources.FirstOrDefaultAsync(x => x.Name == next.Name);
+                if (prev == null)
+                    context.IdentityResources.Add(next.ToEntity());
+                else
+                    context.IdentityResources.Update(next.ToEntity());
+            }
 
             context.SaveChanges();
         }

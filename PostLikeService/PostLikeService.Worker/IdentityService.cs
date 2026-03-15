@@ -2,7 +2,7 @@
 
 namespace PostLikeService.Worker
 {
-    public class IdentityService : IIdentityService
+    public class IdentityService : IAuthService
     {
         public Guid UserId => Guid.NewGuid();
     }

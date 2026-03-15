@@ -1,9 +1,9 @@
 ﻿using PostLikeService.Application;
 using System.Security.Claims;
 
-namespace PostLikeService.Api
+namespace PostLikeService.Api.Auth
 {
-    public class IdentityService(IHttpContextAccessor httpContextAccessor) : IIdentityService
+    public class AuthService(IHttpContextAccessor httpContextAccessor) : IAuthService
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 

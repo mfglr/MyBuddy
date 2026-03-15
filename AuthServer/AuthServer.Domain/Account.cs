@@ -14,6 +14,8 @@ namespace AuthServer.Domain
 
         internal Account(Email email) : base()
         {
+
+            Id = Guid.CreateVersion7().ToString();
             Email = email.Value;
             UserName = email.Value;
             CreatedAt = DateTime.UtcNow;
