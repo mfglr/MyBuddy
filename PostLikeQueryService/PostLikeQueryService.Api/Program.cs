@@ -1,18 +1,19 @@
-using PostLikeQueryService.Application;
-using PostLikeQueryService.Infrastructure;
-using PostLikeQueryService.Infrastructure.PostgreSql;
+using PostLikeQueryService.Api.Auth;
+using PostLikeQueryService.Shared;
+using PostLikeQueryService.Shared.PostgreSql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services
-    .AddApplication(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
+    .AddAuthenticationAndAuthorization(builder.Configuration)
+    .AddShared(builder.Configuration);
 
-DbInitiliazer.Init(builder.Services);
+DbInitializer.Init(builder.Services);
 
 var app = builder.Build();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

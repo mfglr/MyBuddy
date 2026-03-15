@@ -1,6 +1,6 @@
 ﻿using Shared.Events.SharedObjects;
 
-namespace PostQueryService.Shared.Model
+namespace PostLikeQueryService.Shared.Model
 {
     public class Media
     {

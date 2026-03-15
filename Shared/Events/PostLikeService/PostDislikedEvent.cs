@@ -3,6 +3,7 @@
     public record PostDislikedEvent(
         Guid UserId,
         Guid PostId,
+        Guid SequenceId,
         DateTime CreatedAt,
         int Version,
         bool IsDeleted,

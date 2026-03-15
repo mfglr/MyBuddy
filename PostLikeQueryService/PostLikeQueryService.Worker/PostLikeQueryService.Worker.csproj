@@ -10,12 +10,11 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="9.0.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\PostLikeQueryService.Application\PostLikeQueryService.Application.csproj" />
-    <ProjectReference Include="..\PostLikeQueryService.Infrastructure\PostLikeQueryService.Infrastructure.csproj" />
+    <ProjectReference Include="..\PostLikeQueryService.Shared\PostLikeQueryService.Shared.csproj" />
   </ItemGroup>
 </Project>

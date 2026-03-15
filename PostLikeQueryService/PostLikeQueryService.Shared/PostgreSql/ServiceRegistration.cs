@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using PostQueryService.Shared.Model;
-using PostQueryService.Shared.PostgreSql.QuerRepositories;
+using PostLikeQueryService.Shared.Model;
+using PostLikeQueryService.Shared.PostgreSql.QuerRepositories;
 using System.Text.Json;
 
-namespace PostQueryService.Shared.PostgreSql
+namespace PostLikeQueryService.Shared.PostgreSql
 {
     internal static class ServiceRegistration
     {
@@ -25,7 +25,7 @@ namespace PostQueryService.Shared.PostgreSql
             services
                 .AddDbContext<SqlContext>(x => x.UseNpgsql(dataSource))
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<IPostRepository, PostRepository>()
+                .AddScoped<IPostUserLikeRepository, PostUserLikeRepository>()
                 .AddQueryRepositories();
             return services;
         }

@@ -3,6 +3,7 @@
     public class PostLike(PostLikeId id)
     {
         public PostLikeId Id { get; private set; } = id;
+        public Guid SequenceId { get; private set; } = Guid.CreateVersion7();
         public int Version { get; private set; } = 1;
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
         public bool IsDeleted { get; private set; } = false;

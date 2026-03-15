@@ -39,41 +39,15 @@ namespace AuthServer.Infrastructure
 
         private static void SeedConfiguration(ConfigurationDbContext context)
         {
-            foreach(var next in IdentityServerConfigration.GetApiResources())
-            {
-                var prev = context.ApiResources.FirstOrDefaultAsync(x => x.Name == next.Name);
-                if (prev == null)
-                    context.ApiResources.Add(next.ToEntity());
-                else
-                    context.ApiResources.Update(next.ToEntity());
-            }
+            context.ApiResources.RemoveRange(context.ApiResources.ToList());
+            context.ApiScopes.RemoveRange(context.ApiScopes.ToList());
+            context.Clients.RemoveRange(context.Clients.ToList());
+            context.IdentityResources.RemoveRange(context.IdentityResources.ToList());
 
-            foreach (var next in IdentityServerConfigration.GetApiScopes())
-            {
-                var prev = context.ApiScopes.FirstOrDefaultAsync(x => x.Name == next.Name);
-                if (prev == null)
-                    context.ApiScopes.Add(next.ToEntity());
-                else
-                    context.ApiScopes.Update(next.ToEntity());
-            }
-
-            foreach (var next in IdentityServerConfigration.GetClients())
-            {
-                var prev = context.Clients.FirstOrDefaultAsync(x => x.ClientName == next.ClientName);
-                if (prev == null)
-                    context.Clients.Add(next.ToEntity());
-                else
-                    context.Clients.Update(next.ToEntity());
-            }
-
-            foreach (var next in IdentityServerConfigration.GetIdentityResources())
-            {
-                var prev = context.IdentityResources.FirstOrDefaultAsync(x => x.Name == next.Name);
-                if (prev == null)
-                    context.IdentityResources.Add(next.ToEntity());
-                else
-                    context.IdentityResources.Update(next.ToEntity());
-            }
+            context.ApiResources.AddRange(IdentityServerConfigration.GetApiResources().Select(x => x.ToEntity()));
+            context.ApiScopes.AddRange(IdentityServerConfigration.GetApiScopes().Select(x => x.ToEntity()));
+            context.Clients.AddRange(IdentityServerConfigration.GetClients().Select(x => x.ToEntity()));
+            context.IdentityResources.AddRange(IdentityServerConfigration.GetIdentityResources().Select(x => x.ToEntity()));
 
             context.SaveChanges();
         }

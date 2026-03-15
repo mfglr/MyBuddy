@@ -9,6 +9,7 @@ namespace PostLikeService.Application.UseCases.DislikePosts
             new(
                 like.Id.UserId,
                 like.Id.PostId,
+                like.SequenceId,
                 like.CreatedAt,
                 like.Version,
                 like.IsDeleted,

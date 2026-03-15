@@ -13,6 +13,7 @@ namespace PostLikeService.Infrastructure.MongoDb
             BsonClassMap.RegisterClassMap<PostLike>(cm =>
             {
                 cm.MapIdMember(x => x.Id);
+                cm.MapMember(x => x.SequenceId);
                 cm.MapMember(x => x.CreatedAt);
                 cm.MapMember(x => x.Version);
                 cm.MapMember(x => x.IsDeleted);
