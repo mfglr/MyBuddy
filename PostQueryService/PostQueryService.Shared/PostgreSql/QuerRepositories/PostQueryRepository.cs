@@ -9,6 +9,7 @@ namespace PostQueryService.Shared.PostgreSql.QuerRepositories
             context.Posts
                 .AsNoTracking()
                 .Where(x => x.UserId == userId && (cursor == null || x.Id < cursor))
+                .OrderByDescending(x => x.Id)
                 .Take(pageSize)
                 .ToPostResponse(context)
                 .ToListAsync(cancellationToken);
