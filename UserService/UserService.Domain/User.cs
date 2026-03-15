@@ -15,7 +15,6 @@ namespace UserService.Domain
         public UserName UserName { get; private set; } = userName;
         public Gender Gender { get; private set; } = Gender.Unknown();
         public IReadOnlyList<Media> Media { get; private set; } = [];
-        public bool IsValidVersion => !Media.Any(m => !m.IsValid);
 
         public void UpdateName(Name name)
         {

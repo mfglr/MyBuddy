@@ -22,26 +22,5 @@ namespace UserService.Domain
             ModerationResult = moderationResult;
             Thumbnails = [.. thumbnails];
         }
-
-        public bool IsValid =>
-            (
-                Instruction.MetadataInstruction == null ||
-                (   
-                    Metadata != null &&
-                    Instruction.MetadataInstruction.IsValid(Metadata)
-                )
-            ) &&
-            (
-                Instruction.ModerationInstruction == null ||
-                (
-                    ModerationResult != null &&
-                    Instruction.ModerationInstruction != null &&
-                    Instruction.ModerationInstruction.IsValid(ModerationResult)
-                )
-            ) &&
-            (
-                Instruction.ThumbnailInstructions == null ||
-                Instruction.ThumbnailInstructions.Count == Thumbnails.Count
-            );
     }
 }
