@@ -1,6 +1,8 @@
 ﻿using CommentQueryService.Worker.MassTransit;
 using CommentQueryService.Worker.MassTransit.Consumers.DecreaseChildCount_OnCommentDeleted;
+using CommentQueryService.Worker.MassTransit.Consumers.DecreaseLikeCount_OnCommentDisliked;
 using CommentQueryService.Worker.MassTransit.Consumers.IncreaseChildCount_OnCommentCreated;
+using CommentQueryService.Worker.MassTransit.Consumers.IncreaseLikeCount_OnCommentLiked;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnCommentCreated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnCommentDeleted;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnContentUpdated;
@@ -37,6 +39,8 @@ namespace CommentQueryService.Worker.MassTransit
                         x.AddConsumer<UpsertComment_OnContentUpdated_CommentQueryService>();
                         x.AddConsumer<UpsertComment_OnCommentDeleted_CommentQueryService>();
                         x.AddConsumer<DecreaseChildCount_OnCommentDeleted_CommentQueryService>();
+                        x.AddConsumer<IncreaseLikeCount_OnCommentLiked_CommentQueryService>();
+                        x.AddConsumer<DecreaseLikeCount_OnCommentDisliked_CommentQueryService>();
 
                         x.AddConsumer<UpsertUser_OnUserCreated_CommentQueryService>();
                         x.AddConsumer<UpsertUser_OnUserNameUpdated_CommentQueryService>();
