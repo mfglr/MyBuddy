@@ -2,7 +2,7 @@
 
 namespace CommentQueryService.Shared.Model
 {
-    internal interface ICommentQueryRepository
+    public interface ICommentQueryRepository
     {
         Task<List<CommentResponse>> GetByPostIdAsync(Guid postId, Guid? cursor, int pageSize, CancellationToken cancellationToken);
         Task<List<CommentResponse>> GetByParentIdAsync(Guid parentId, Guid? cursor, int pageSize, CancellationToken cancellationToken);
