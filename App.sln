@@ -229,6 +229,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentQueryService.Worker"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentQueryService.Api", "CommentQueryService\CommentQueryService.Api\CommentQueryService.Api.csproj", "{BAD72AD0-2EEF-4173-AFCD-FCEE6D710084}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommentLikeService", "CommentLikeService", "{239E6144-A8BB-462E-9BC6-266ADDE1DDCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeService.Domain", "CommentLikeService\CommentLikeService.Domain\CommentLikeService.Domain.csproj", "{EDF106F9-F82E-4B2A-A4FA-239938A3E569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeService.Application", "CommentLikeService\CommentLikeService.Application\CommentLikeService.Application.csproj", "{1B2C7F31-05FA-4DE3-B902-6059C2929455}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeService.Infrastructure", "CommentLikeService\CommentLikeService.Infrastructure\CommentLikeService.Infrastructure.csproj", "{742FE56D-AC7F-44D3-B9D6-606D61416D79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeService.Api", "CommentLikeService\CommentLikeService.Api\CommentLikeService.Api.csproj", "{0EF8273F-048E-40E4-B7B1-12DFED417903}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -587,6 +597,22 @@ Global
 		{BAD72AD0-2EEF-4173-AFCD-FCEE6D710084}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD72AD0-2EEF-4173-AFCD-FCEE6D710084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD72AD0-2EEF-4173-AFCD-FCEE6D710084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF106F9-F82E-4B2A-A4FA-239938A3E569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF106F9-F82E-4B2A-A4FA-239938A3E569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF106F9-F82E-4B2A-A4FA-239938A3E569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF106F9-F82E-4B2A-A4FA-239938A3E569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2C7F31-05FA-4DE3-B902-6059C2929455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2C7F31-05FA-4DE3-B902-6059C2929455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2C7F31-05FA-4DE3-B902-6059C2929455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2C7F31-05FA-4DE3-B902-6059C2929455}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742FE56D-AC7F-44D3-B9D6-606D61416D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742FE56D-AC7F-44D3-B9D6-606D61416D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742FE56D-AC7F-44D3-B9D6-606D61416D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742FE56D-AC7F-44D3-B9D6-606D61416D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF8273F-048E-40E4-B7B1-12DFED417903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF8273F-048E-40E4-B7B1-12DFED417903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF8273F-048E-40E4-B7B1-12DFED417903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF8273F-048E-40E4-B7B1-12DFED417903}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -680,6 +706,10 @@ Global
 		{3A3DD9B3-DE54-48E0-A58C-727C926BA003} = {024837C8-BA00-489D-8659-09D8688541CF}
 		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5} = {024837C8-BA00-489D-8659-09D8688541CF}
 		{BAD72AD0-2EEF-4173-AFCD-FCEE6D710084} = {024837C8-BA00-489D-8659-09D8688541CF}
+		{EDF106F9-F82E-4B2A-A4FA-239938A3E569} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
+		{1B2C7F31-05FA-4DE3-B902-6059C2929455} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
+		{742FE56D-AC7F-44D3-B9D6-606D61416D79} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
+		{0EF8273F-048E-40E4-B7B1-12DFED417903} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

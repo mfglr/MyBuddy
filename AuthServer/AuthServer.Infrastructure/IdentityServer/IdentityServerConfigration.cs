@@ -58,6 +58,12 @@ namespace AuthServer.Infrastructure.IdentityServer
                     ]
                 },
 
+                new("comment_like.api"){
+                    Scopes = [
+                        "comment_like"
+                    ]
+                },
+
                 new("blob.api"){
                     Scopes = [
                         "blob.read",
@@ -82,6 +88,8 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                 new("comment"),
                 new("comment_query"),
+
+                new("comment_like"),
 
                 new("blob.read"),
                 new("blob.write"),
@@ -111,7 +119,9 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                         "comment",
                         "comment_query",
-                        
+
+                        "comment_like",
+
                         "blob.read",
 
                         IdentityServerConstants.StandardScopes.OfflineAccess,
