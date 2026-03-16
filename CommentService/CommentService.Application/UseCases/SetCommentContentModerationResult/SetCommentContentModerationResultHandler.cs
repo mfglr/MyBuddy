@@ -14,7 +14,7 @@ namespace CommentService.Application.UseCases.SetCommentContentModerationResult
         public async Task Handle(SetCommentContentModerationResultRequest request, CancellationToken cancellationToken)
         {
             var comment =
-                await commentRepository.GetByIdAsync(request.Id, cancellationToken) ??
+                await commentRepository.GetCommentByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
             comment.SetModerationResult(request.ModerationResult);
             await commentRepository.UpdateAsync(comment, cancellationToken);

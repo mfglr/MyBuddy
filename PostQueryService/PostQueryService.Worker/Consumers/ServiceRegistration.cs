@@ -39,13 +39,13 @@ namespace PostQueryService.Worker.Consumers
                         x.AddConsumer<UpsertPost_OnPostDeleted_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostRestored_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostMediaSet_PostQueryService>();
+                        x.AddConsumer<IncreasePostLikeCount_OnPostLiked_PostQueryService>();
+                        x.AddConsumer<DecreasePostLikeCount_OnPostDisliked_PostQueryService>();
 
                         x.AddConsumer<UpsertUser_OnUserCreated_PostQueryService>();
                         x.AddConsumer<UpsertUser_OnUserNameUpdated_PostQueryService>();
                         x.AddConsumer<UpsertUser_OnNameUpdated_PostQueryService>();
                         x.AddConsumer<UpsertUser_OnUserMediaSet_PostQueryService>();
-                        x.AddConsumer<IncreasePostLikeCount_OnPostLiked_PostQueryService>();
-                        x.AddConsumer<DecreasePostLikeCount_OnPostDisliked_PostQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

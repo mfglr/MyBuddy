@@ -16,7 +16,7 @@ namespace CommentService.Application.UseCases.UpdateCommentContent
         public async Task Handle(UpdateCommentContentRequest request, CancellationToken cancellationToken)
         {
             var comment =
-                await commentRepository.GetByIdAsync(request.Id, cancellationToken) ??
+                await commentRepository.GetCommentExceptDeletedByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
 
             if (comment.UserId != authService.UserId)

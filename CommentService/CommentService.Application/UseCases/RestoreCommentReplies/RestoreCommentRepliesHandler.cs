@@ -12,7 +12,7 @@ namespace CommentService.Application.UseCases.RestoreCommentReplies
     {
         public async Task Handle(RestoreCommentRepliesRequest request, CancellationToken cancellationToken)
         {
-            var replies = await commentRepository.GetByRepliedIdAsync(request.Id, cancellationToken);
+            var replies = await commentRepository.GetCommentsByRepliedIdAsync(request.Id, cancellationToken);
             if (replies.Count == 0) return;
             foreach (var reply in replies)
                 reply.Restore();

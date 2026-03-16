@@ -3,9 +3,15 @@
     public interface ICommentRepository
     {
         Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken);
-        Task<Comment?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<List<Comment>> GetByRepliedIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<List<Comment>> GetByPostIdAsync(Guid id, CancellationToken cancellationToken);
+        
+        Task<Comment?> GetCommentByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<Comment?> GetCommentExceptDeletedByIdAsync(Guid id, CancellationToken cancellationToken);
+        
+        Task<List<Comment>> GetCommentsByRepliedIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<List<Comment>> GetCommentsExceptDeletedByRepliedIdAsync(Guid id, CancellationToken cancellationToken);
+
+        Task<List<Comment>> GetCommentsByPostIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<List<Comment>> GetCommentsExceptDeletedByPostIdAsync(Guid id, CancellationToken cancellationToken);
 
         Task CreateAsync(Comment comment, CancellationToken cancellationToken);
         Task UpdateAsync(Comment comment, CancellationToken cancellationToken);

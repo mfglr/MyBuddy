@@ -15,23 +15,51 @@ namespace CommentService.Infrastructure.MongoDb
             return await result.AnyAsync(cancellationToken);
         }
 
-        public async Task<Comment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Comment?> GetCommentByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var filter = Builders<Comment>.Filter.Eq(x => x.Id, id);
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.FirstOrDefaultAsync(cancellationToken);
         }
-        
-        public async Task<List<Comment>> GetByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Comment?> GetCommentExceptDeletedByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter = Builders<Comment>.Filter.Eq(x => x.RepliedId, id);
+            var filter = 
+                Builders<Comment>.Filter.Eq(x => x.Id, id) &
+                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
+            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
+            return await result.FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<List<Comment>> GetCommentsByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter =
+                Builders<Comment>.Filter.Eq(x => x.RepliedId, id);
+            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
+            return await result.ToListAsync(cancellationToken);
+        }
+        public async Task<List<Comment>> GetCommentsExceptDeletedByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = 
+                Builders<Comment>.Filter.Eq(x => x.RepliedId, id) &
+                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.ToListAsync(cancellationToken);
         }
 
-        public async Task<List<Comment>> GetByPostIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<List<Comment>> GetCommentsByPostIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter = Builders<Comment>.Filter.Eq(x => x.PostId, id);
+            var filter =
+                Builders<Comment>.Filter.Eq(x => x.PostId, id);
+
+            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
+            return await result.ToListAsync(cancellationToken);
+        }
+        public async Task<List<Comment>> GetCommentsExceptDeletedByPostIdAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = 
+                Builders<Comment>.Filter.Eq(x => x.PostId, id) &
+                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
+            
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.ToListAsync(cancellationToken);
         }

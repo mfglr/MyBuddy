@@ -10,7 +10,7 @@ namespace CommentService.Domain
             if (repliedId != null)
             {
                 var replied =
-                    await commentRepository.GetByIdAsync((Guid)repliedId, cancellationToken) ??
+                    await commentRepository.GetCommentExceptDeletedByIdAsync((Guid)repliedId, cancellationToken) ??
                     throw new CommentNotFoundException();
 
                 if (replied.ParentId != null)

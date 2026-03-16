@@ -14,7 +14,7 @@ namespace CommentService.Application.UseCases.RestoreComment
         public async Task Handle(RestoreCommentRequest request, CancellationToken cancellationToken)
         {
             var comment =
-                await commentRepository.GetByIdAsync(request.Id, cancellationToken) ??
+                await commentRepository.GetCommentByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
             comment.Restore();
             await commentRepository.UpdateAsync(comment, cancellationToken);

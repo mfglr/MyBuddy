@@ -221,6 +221,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostLikeQueryService.Shared", "PostLikeQueryService\PostLikeQueryService.Shared\PostLikeQueryService.Shared.csproj", "{A4CFC726-C092-4D13-B35B-363D7CEB6A96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommentQueryService", "CommentQueryService", "{024837C8-BA00-489D-8659-09D8688541CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentQueryService.Shared", "CommentQueryService\CommentQueryService.Shared\CommentQueryService.Shared.csproj", "{3A3DD9B3-DE54-48E0-A58C-727C926BA003}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentQueryService.Worker", "CommentQueryService\CommentQueryService.Worker\CommentQueryService.Worker.csproj", "{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -567,6 +573,14 @@ Global
 		{A4CFC726-C092-4D13-B35B-363D7CEB6A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4CFC726-C092-4D13-B35B-363D7CEB6A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4CFC726-C092-4D13-B35B-363D7CEB6A96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A3DD9B3-DE54-48E0-A58C-727C926BA003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A3DD9B3-DE54-48E0-A58C-727C926BA003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A3DD9B3-DE54-48E0-A58C-727C926BA003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A3DD9B3-DE54-48E0-A58C-727C926BA003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -657,6 +671,8 @@ Global
 		{4557A18A-C0AC-4C8C-A7D6-7EE6A4DD84E6} = {4C405AB7-6504-49AC-96F5-778EB92769D1}
 		{8AD8C02C-2261-463F-AFFA-CA766C311DE5} = {4C405AB7-6504-49AC-96F5-778EB92769D1}
 		{A4CFC726-C092-4D13-B35B-363D7CEB6A96} = {7DA59ED2-7F0E-4C6F-842D-E0377D4A4A2C}
+		{3A3DD9B3-DE54-48E0-A58C-727C926BA003} = {024837C8-BA00-489D-8659-09D8688541CF}
+		{FE35BC6E-FA0C-4CE4-AC28-1D312CC075F5} = {024837C8-BA00-489D-8659-09D8688541CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

@@ -1,10 +1,10 @@
-﻿using MassTransit;
-using PostQueryService.Shared.Model;
+﻿using CommentQueryService.Shared.Model;
+using MassTransit;
 using Shared.Events.UserService;
 
-namespace PostQueryService.Worker.Consumers.UpsertUserOnUserCreated
+namespace CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnUserCreated
 {
-    internal class UpsertUser_OnUserCreated_PostQueryService(
+    internal class UpsertUser_OnUserCreated_CommentQueryService(
         UpsertUser_OnUserCreated_Mapper mapper,
         IUserRepository userRepository
     ) : IConsumer<UserCreatedEvent>
