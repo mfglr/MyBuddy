@@ -1,9 +1,8 @@
-﻿namespace Comment.Api.Options
+﻿namespace Comment.Api.Auth
 {
-    public class IdentityOptions
+    public class AuthOptions
     {
         public required string Issuer { get; set; }
-        public required string BaseUrl { get; set; }
         public required string Audience { get; set; }
     }
 }

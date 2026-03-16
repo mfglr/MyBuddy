@@ -2,6 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        Task CommitAsync(CancellationToken cancellationToken);
+        Task CreateTransactionAsync(CancellationToken cancellationToken);
+        Task CommitTransactionAsync(CancellationToken cancellationToken);
     }
 }

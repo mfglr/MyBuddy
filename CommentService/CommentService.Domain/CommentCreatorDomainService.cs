@@ -4,23 +4,25 @@ namespace CommentService.Domain
 {
     public class CommentCreatorDomainService(ICommentRepository commentRepository)
     {
-        private readonly ICommentRepository _commentRepository = commentRepository;
-
-        public async Task CreateAsync(Comment comment,  CancellationToken cancellationToken)
+        public async Task<Comment> CreateAsync(Guid userId, Guid? postId, Guid? repliedId, Content content,  CancellationToken cancellationToken)
         {
-            if (
-                    comment.ParentId != null &&
-                    !await _commentRepository.ExistAsync((Guid)comment.ParentId, cancellationToken)
-            )
-                throw new CommentNotFoundException();
+            Guid? parentId = null;
+            if (repliedId != null)
+            {
+                var replied =
+                    await commentRepository.GetByIdAsync((Guid)repliedId, cancellationToken) ??
+                    throw new CommentNotFoundException();
 
-            if (
-                comment.RepliedId != null &&
-                !await _commentRepository.ExistAsync((Guid)comment.RepliedId, cancellationToken)
-            )
-                throw new CommentNotFoundException();
-
-            comment.Create();
+                if (replied.ParentId != null)
+                {
+                    if (!await commentRepository.ExistAsync((Guid)replied.ParentId, cancellationToken))
+                        throw new CommentNotFoundException();
+                    parentId = replied.ParentId;
+                }
+                else
+                    parentId = repliedId;
+            }
+            return new (userId, postId, parentId, repliedId, content);
         }
     }
 }

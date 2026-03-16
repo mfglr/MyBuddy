@@ -47,6 +47,12 @@ namespace AuthServer.Infrastructure.IdentityServer
                     ]
                 },
 
+                new("comment.api"){
+                    Scopes = [
+                        "comment"
+                    ]
+                },
+
                 new("blob.api"){
                     Scopes = [
                         "blob.read",
@@ -68,6 +74,8 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                 new("user"),
                 new("user_query"),    
+
+                new("comment"),
 
                 new("blob.read"),
                 new("blob.write"),
@@ -94,8 +102,11 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                         "user",
                         "user_query",
+
+                        "comment",
                         
                         "blob.read",
+
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                     ]
                 },

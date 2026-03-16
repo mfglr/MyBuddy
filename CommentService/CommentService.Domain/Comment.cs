@@ -8,18 +8,24 @@ namespace CommentService.Domain
         public Guid Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
+        public DateTime? DeletedAt { get; private set; }
         public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
         public Guid UserId { get; private set; }
-        public Guid PostId  { get; private set; }
+        public Guid? PostId { get; private set; }
         public Guid? ParentId { get; private set; }
         public Guid? RepliedId { get; private set; }
-        public Content Content { get; private set; } = null!;
+        public Content Content { get; private set; }
 
-        private Comment() { }
-
-        public Comment(Guid userId, Guid postId, Guid? parentId, Guid? repliedId, Content content)
+        internal Comment(Guid userId, Guid? postId, Guid? parentId, Guid? repliedId, Content content)
         {
+            if (postId == null && repliedId == null)
+                throw new CommentTargetRequiredException();
+
+            Id = Guid.CreateVersion7();
+            CreatedAt = DateTime.UtcNow;
+            IsDeleted = false;
+            Version = 1;
             UserId = userId;
             PostId = postId;
             ParentId = parentId;
@@ -27,40 +33,39 @@ namespace CommentService.Domain
             Content = content ?? throw new ContentRequiredException();
         }
 
-        internal void Create()
-        {
-            Version = 1;
-            Id = Guid.CreateVersion7();
-            CreatedAt = DateTime.UtcNow;
-        }
-        public void Update()
-        {
-            UpdatedAt = DateTime.UtcNow;
-            Version++;
-        }
         public void Delete()
         {
+            if (IsDeleted)
+                throw new CommentNotFoundException();
             IsDeleted = true;
-            Update();
+            UpdatedAt = DeletedAt = DateTime.UtcNow;
+            Version++;
         }
+
         public void Restore()
         {
             if(!IsDeleted)
                 throw new CommentAlreadyAvailableException();
-
             IsDeleted = false;
-            Update();
+            DeletedAt = null;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
 
         public void SetModerationResult(ModerationResult result)
         {
             Content.ModerationResult = result;
-            Update();
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
+
         public void UpdateContent(Content content)
         {
+            if (IsDeleted)
+                throw new CommentNotFoundException();
             Content = content;
-            Update();
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
         }
     }
 }

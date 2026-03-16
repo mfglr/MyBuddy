@@ -1,6 +1,6 @@
 ﻿namespace CommentService.Application
 {
-    public interface IIdentityService
+    public interface IAuthService
     {
         Guid UserId { get; }
     }

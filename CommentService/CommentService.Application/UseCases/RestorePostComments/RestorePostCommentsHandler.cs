@@ -1,29 +1,25 @@
-﻿using AutoMapper;
-using CommentService.Domain;
+﻿using CommentService.Domain;
 using MassTransit;
 using MediatR;
-using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.RestorePostComments
 {
-    public class RestorePostCommentsHandler(ICommentRepository commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IPublishEndpoint publishEndpoint) : IRequestHandler<RestorePostCommentsRequest>
+    internal class RestorePostCommentsHandler(
+        ICommentRepository commentRepository,
+        RestorePostCommentsMapper mapper,
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<RestorePostCommentsRequest>
     {
-        private readonly ICommentRepository _commentRepository = commentRepository;
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
-        private readonly IMapper _mapper = mapper;
-        private readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
-        
         public async Task Handle(RestorePostCommentsRequest request, CancellationToken cancellationToken)
         {
-            var comments = await _commentRepository.GetByPostIdAsync(request.PostId, cancellationToken);
+            var comments = await commentRepository.GetByPostIdAsync(request.PostId, cancellationToken);
             if (comments.Count == 0) return;
-
             foreach (var comment in comments)
                 comment.Restore();
-            await _unitOfWork.CommitAsync(cancellationToken);
+            await commentRepository.UpdateAsync(comments, cancellationToken);
 
-            var events = _mapper.Map<List<Comment>, List<CommentRestoredEvent>>(comments);
-            await _publishEndpoint.Publish(events, cancellationToken);
+            var events = comments.Select(mapper.Map);
+            await publishEndpoint.Publish(events, cancellationToken);
         }
     }
 }

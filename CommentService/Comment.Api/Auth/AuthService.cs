@@ -1,9 +1,10 @@
 ﻿using CommentService.Application;
+using Shared.Exceptions;
 using System.Security.Claims;
 
-namespace Comment.Api
+namespace Comment.Api.Auth
 {
-    public class IdentityService(IHttpContextAccessor httpContextAccessor) : IIdentityService
+    public class AuthService(IHttpContextAccessor httpContextAccessor) : IAuthService
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
@@ -15,7 +16,7 @@ namespace Comment.Api
                     .Claims
                     .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?
                     .Value ??
-                string.Empty
+                throw new AuthorizationException()
             );
     }
 }

@@ -1,15 +1,29 @@
-﻿using AutoMapper;
-using CommentService.Domain;
+﻿using CommentService.Domain;
 using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.UpdateCommentContent
 {
-    internal class UpdateCommentContentMapper : Profile
+    internal class UpdateCommentContentMapper
     {
-        public UpdateCommentContentMapper()
-        {
-            CreateMap<Content, CommentContentUpdatedEvent_Content>();
-            CreateMap<Comment, CommentContentUpdatedEvent>();
-        }
+        public CommentContentUpdatedEvent_Content Map(Content content) =>
+            new(
+                content.Value,
+                content.ModerationResult
+            );
+
+        public CommentContentUpdatedEvent Map(Comment comment) =>
+            new(
+                comment.Id,
+                comment.CreatedAt,
+                comment.UpdatedAt,
+                comment.DeletedAt,
+                comment.IsDeleted,
+                comment.Version,
+                comment.UserId,
+                comment.PostId,
+                comment.ParentId,
+                comment.RepliedId,
+                Map(comment.Content)
+            );
     }
 }

@@ -2,8 +2,8 @@
 
 namespace CommetService.Workers
 {
-    internal class WorkerIdentiyService : IIdentityService
+    internal class WorkerIdentiyService : IAuthService
     {
-        public Guid UserId => Guid.NewGuid();
+        public Guid UserId => default;
     }
 }

@@ -1,6 +1,4 @@
-﻿using CommentService.Application;
-using CommentService.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using CommentService.Infrastructure.MongoDb;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,15 +6,7 @@ namespace CommentService.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) =>
-            services
-                .AddDbContext<MongoContext>(
-                    x => x.UseMongoDB(
-                        configuration["MongoDbSettings:ConnectionString"]!,
-                        configuration["MongoDbSettings:DatabaseName"]!
-                    )
-                )
-                .AddScoped<IUnitOfWork, UnitOfWork>()
-                .AddScoped<ICommentRepository, CommentRepository>();
+        public static IServiceCollection AddInfrastructure(this IServiceCollection service, IConfiguration configuration) =>
+            service.AddMongoDB(configuration);
     }
 }

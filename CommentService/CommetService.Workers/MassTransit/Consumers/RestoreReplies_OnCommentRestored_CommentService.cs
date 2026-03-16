@@ -3,14 +3,12 @@ using MassTransit;
 using MediatR;
 using Shared.Events.Comment;
 
-namespace CommetService.Workers.Consumers
+namespace CommetService.Workers.MassTransit.Consumers
 {
-    internal class RestoreRepliesConsumer_CommentService(ISender sender) : IConsumer<CommentRestoredEvent>
+    internal class RestoreReplies_OnCommentRestored_CommentService(ISender sender) : IConsumer<CommentRestoredEvent>
     {
-        private readonly ISender _sender = sender;
-
         public Task Consume(ConsumeContext<CommentRestoredEvent> context) =>
-            _sender
+            sender
                 .Send(
                     new RestoreCommentRepliesRequest(context.Message.Id),
                     context.CancellationToken
