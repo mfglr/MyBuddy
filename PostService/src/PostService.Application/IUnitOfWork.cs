@@ -4,5 +4,6 @@
     {
         Task CreateTransactionAsync(CancellationToken cancellationToken);
         Task CommitTransactionAsync(CancellationToken cancellationToken);
+        Task AbortTransactionAsync(CancellationToken cancellationToken);
     }
 }

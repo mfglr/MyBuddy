@@ -10,5 +10,8 @@ namespace PostService.Infrastructure.MongoDB
 
         public Task CommitTransactionAsync(CancellationToken cancellationToken) =>
             context.CommitTransaction(cancellationToken);
+
+        public Task AbortTransactionAsync(CancellationToken cancellationToken) =>
+            context.AbortTransaction(cancellationToken);
     }
 }
