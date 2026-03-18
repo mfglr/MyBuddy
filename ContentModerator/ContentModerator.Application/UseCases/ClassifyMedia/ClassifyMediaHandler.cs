@@ -1,6 +1,6 @@
 ﻿using MassTransit;
+using Media.Models;
 using MediatR;
-using Shared.Events.SharedObjects;
 
 namespace ContentModerator.Application.UseCases.ClassifyMedia
 {

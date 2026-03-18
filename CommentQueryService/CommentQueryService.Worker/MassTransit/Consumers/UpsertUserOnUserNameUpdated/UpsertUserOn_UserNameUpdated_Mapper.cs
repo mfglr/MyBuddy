@@ -5,26 +5,13 @@ namespace CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnUserNameU
 {
     internal class UpsertUserOn_UserNameUpdated_Mapper
     {
-        public Media Map(UserNameUpdatedEvent_Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                []
-            );
-
         public User Map(UserNameUpdatedEvent @event) =>
             new(
                 @event.Id,
                 @event.Version,
                 @event.Name,
                 @event.UserName,
-                @event.Media.FirstOrDefault() != null
-                    ? Map(@event.Media.First())
-                    : null
+                @event.Media.FirstOrDefault()
             );
     }
 }

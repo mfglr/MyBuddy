@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-using PostLikeQueryService.Shared.Model;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -37,7 +35,7 @@ namespace PostLikeQueryService.Shared.Migrations
                     Version = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "text", nullable: false),
-                    Media = table.Column<Media>(type: "jsonb", nullable: true)
+                    Media = table.Column<Media.Models.Media>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

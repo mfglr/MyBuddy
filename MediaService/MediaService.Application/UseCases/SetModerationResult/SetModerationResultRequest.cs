@@ -1,6 +1,5 @@
-﻿using MediaService.Domain;
+﻿using Media.Models;
 using MediatR;
-using Shared.Events.SharedObjects;
 
 namespace MediaService.Application.UseCases.SetModerationResult
 {

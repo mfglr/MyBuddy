@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Media.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Shared.Events.SharedObjects;
 
 #nullable disable
 

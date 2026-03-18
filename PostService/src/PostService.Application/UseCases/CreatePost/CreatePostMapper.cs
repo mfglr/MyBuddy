@@ -5,14 +5,6 @@ namespace PostService.Application.UseCases.CreatePost
 {
     internal class CreatePostMapper
     {
-        private PostCreatedEvent_Media Map(Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Instruction
-            );
-
         public PostCreatedEvent Map(Post post) =>
             new(
                 post.Id,
@@ -23,7 +15,7 @@ namespace PostService.Application.UseCases.CreatePost
                 post.Version,
                 post.UserId,
                 post.Content != null ? new PostCreatedEvent_Content(post.Content.Value) : null,
-                post.Media.Select(Map)
+                post.Media
             );
     }
 }

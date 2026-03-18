@@ -10,16 +10,6 @@ namespace PostQueryService.Worker.Consumers.UpdatePostOnPostContentModerationRes
                 content.Value,
                 content.ModerationResult
             );
-        private Media Map(PostContentModerationResultSetEvent_Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                media.Transcodings
-            );
         public Post Map(PostContentModerationResultSetEvent @event) =>
             new(
                 @event.Id,
@@ -30,7 +20,7 @@ namespace PostQueryService.Worker.Consumers.UpdatePostOnPostContentModerationRes
                 @event.Version,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
-                @event.Media.Select(Map)
+                @event.Media
             );
     }
 }

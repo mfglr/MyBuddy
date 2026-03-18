@@ -4,7 +4,7 @@ namespace MediaService.Application.UseCases.SetModerationResult
 {
     internal class SetModerationResultMapper
     {
-        public MediaPreprocessingCompletedEvent Map(Media media) =>
+        public MediaPreprocessingCompletedEvent Map(Domain.Media media) =>
             new(
                 media.OwnerId,
                 media.ContainerName,

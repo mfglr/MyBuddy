@@ -1,6 +1,4 @@
-﻿using PostLikeQueryService.Shared.Model;
-
-namespace PostLikeQueryService.Shared.Dto
+﻿namespace PostLikeQueryService.Shared.Dto
 {
     public record PostUserLikeResponse(
         Guid SequenceId,
@@ -8,6 +6,6 @@ namespace PostLikeQueryService.Shared.Dto
         Guid UserId,
         string UserName,
         string? Name,
-        Media? Media
+        Media.Models.Media? Media
     );
 }

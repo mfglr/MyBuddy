@@ -1,6 +1,4 @@
-﻿using Shared.Events.SharedObjects;
-
-namespace PostService.Domain
+﻿namespace PostService.Domain
 {
     public interface IPostRepository
     {

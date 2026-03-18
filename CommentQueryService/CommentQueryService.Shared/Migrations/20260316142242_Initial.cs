@@ -1,7 +1,5 @@
-﻿using System;
-using CommentQueryService.Shared.Model;
+﻿using Media.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Shared.Events.SharedObjects;
 
 #nullable disable
 
@@ -45,7 +43,7 @@ namespace CommentQueryService.Shared.Migrations
                     Version = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "text", nullable: false),
-                    Media = table.Column<Media>(type: "jsonb", nullable: true)
+                    Media = table.Column<Media.Models.Media>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

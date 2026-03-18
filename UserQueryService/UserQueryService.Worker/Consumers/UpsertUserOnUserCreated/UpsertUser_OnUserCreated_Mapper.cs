@@ -5,16 +5,6 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnUserCreated
 {
     internal class UpsertUser_OnUserCreated_Mapper
     {
-        public Media Map(UserCreatedEvent_Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails
-            );
-
         public User Map(UserCreatedEvent @event) =>
             new(
                 @event.Id,
@@ -24,7 +14,7 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnUserCreated
                 @event.Name,
                 @event.UserName,
                 @event.Gender,
-                @event.Media.Select(Map)
+                @event.Media
             );
     }
 }

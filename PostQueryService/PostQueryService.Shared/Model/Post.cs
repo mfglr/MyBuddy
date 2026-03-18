@@ -10,7 +10,7 @@
         public int Version { get; private set; }
         public Guid UserId { get; private set; }
         public Content? Content { get; private set; }
-        public IReadOnlyList<Media> Media { get; private set; } = null!;
+        public IReadOnlyList<Media.Models.Media> Media { get; private set; } = null!;
         public int LikeCount { get; private set; }
         public int CommentCount { get; private set; }
 
@@ -25,7 +25,7 @@
             int version,
             Guid userId,
             Content? content,
-            IEnumerable<Media> media
+            IEnumerable<Media.Models.Media> media
         )
         {
             Id = id;

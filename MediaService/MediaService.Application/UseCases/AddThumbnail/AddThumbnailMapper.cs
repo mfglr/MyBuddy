@@ -1,11 +1,10 @@
-﻿using MediaService.Domain;
-using Shared.Events.MediaService;
+﻿using Shared.Events.MediaService;
 
 namespace MediaService.Application.UseCases.AddThumbnail
 {
     internal class AddThumbnailMapper
     {
-        public MediaPreprocessingCompletedEvent Map(Media media) =>
+        public MediaPreprocessingCompletedEvent Map(Domain.Media media) =>
             new(
                 media.OwnerId,
                 media.ContainerName,

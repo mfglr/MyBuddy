@@ -1,20 +1,10 @@
-﻿using Shared.Events.SharedObjects;
+﻿using Media.Models;
 
 namespace Shared.Events.PostService
 {
     public record PostMediaSetEvent_Content(
         string Value,
         ModerationResult? ModerationResult
-    );
-    public record PostMediaSetEvent_Media(
-        string ContainerName,
-        string BlobName,
-        MediaType Type,
-        Metadata? Metadata,
-        ModerationResult? ModerationResult,
-        IEnumerable<Thumbnail> Thumbnails,
-        IEnumerable<Transcoding> Transcodings,
-        MediaInstruction Instuction
     );
     public record PostMediaSetEvent(
         Guid Id,
@@ -25,6 +15,6 @@ namespace Shared.Events.PostService
         int Version,
         Guid UserId,
         PostMediaSetEvent_Content? Content,
-        IEnumerable<PostMediaSetEvent_Media> Media
+        IEnumerable<Media.Models.Media> Media
     );
 }

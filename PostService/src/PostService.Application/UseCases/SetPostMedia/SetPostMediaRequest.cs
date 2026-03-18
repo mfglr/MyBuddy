@@ -1,5 +1,5 @@
-﻿using MediatR;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
+using MediatR;
 
 namespace PostService.Application.UseCases.SetPostMedia
 {

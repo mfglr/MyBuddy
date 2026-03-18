@@ -1,5 +1,5 @@
-﻿using Shared.Events.MediaService;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
+using Shared.Events.MediaService;
 
 namespace MetadataExtractor.Application.UseCases.ExtractMetadata
 {

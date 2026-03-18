@@ -1,4 +1,4 @@
-﻿using Shared.Events.SharedObjects;
+﻿using Media.Models;
 
 namespace Shared.Events.Comment
 {

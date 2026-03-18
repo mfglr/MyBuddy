@@ -8,7 +8,7 @@ namespace MediaService.Infrastructure.PostgreSql
 {
     public class SqlContext(DbContextOptions options) : DbContext(options)
     {
-        public DbSet<Media> Media { get; private set; }
+        public DbSet<Domain.Media> Media { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

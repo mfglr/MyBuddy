@@ -1,6 +1,6 @@
 ﻿using Azure.AI.ContentSafety;
 using ContentModerator.Application;
-using Shared.Events.SharedObjects;
+using Media.Models;
 
 namespace ContentModerator.Infrastructure.AzureAIContentModeration
 {

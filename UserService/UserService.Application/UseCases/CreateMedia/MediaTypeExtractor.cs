@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace UserService.Application.UseCases.CreateMedia
 {

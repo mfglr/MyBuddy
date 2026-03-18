@@ -1,6 +1,6 @@
-﻿namespace Shared.Events.SharedObjects
+﻿namespace Media.Models
 {
-    public enum ModerationState
+    public enum MetadataState
     {
         ShouldNotCalculate,
         ShouldCalculateAndNotValidate,

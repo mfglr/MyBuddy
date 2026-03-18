@@ -24,7 +24,7 @@ namespace UserService.Application.UseCases.CreateMedia
             {
                 var type = mediaTypeExtractor.Extract(request.Media);
                 blobName = await blobService.UploadAsync(User.MediaContainerName, request.Media, cancellationToken);
-                var media = new Media(blobName, type, mediaInstructionGenerator.Generate());
+                var media = Media.Models.Media.Create(User.MediaContainerName, blobName, type, mediaInstructionGenerator.Generate());
                 user.CreateMedia(media);
                 await userRepository.UpdateAsync(user, cancellationToken);
 

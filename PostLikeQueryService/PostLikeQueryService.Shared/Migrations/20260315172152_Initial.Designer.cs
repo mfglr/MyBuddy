@@ -60,7 +60,7 @@ namespace PostLikeQueryService.Shared.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Media>("Media")
+                    b.Property<Media.Models.Media>("Media")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Name")

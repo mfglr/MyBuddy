@@ -1,4 +1,4 @@
-﻿namespace Shared.Events.SharedObjects
+﻿namespace Media.Models
 {
     public class MetadataConstraints
     {

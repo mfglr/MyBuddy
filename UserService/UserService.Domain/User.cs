@@ -1,4 +1,4 @@
-﻿using Shared.Events.SharedObjects;
+﻿using Media.Models;
 
 namespace UserService.Domain
 {
@@ -14,7 +14,7 @@ namespace UserService.Domain
         public Name? Name { get; private set; }
         public UserName UserName { get; private set; } = userName;
         public Gender Gender { get; private set; } = Gender.Unknown();
-        public IReadOnlyList<Media> Media { get; private set; } = [];
+        public IReadOnlyList<Media.Models.Media> Media { get; private set; } = [];
 
         public void UpdateName(Name name)
         {
@@ -36,7 +36,7 @@ namespace UserService.Domain
             Version++;
         }
 
-        public void CreateMedia(Media media)
+        public void CreateMedia(Media.Models.Media media)
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
@@ -48,7 +48,7 @@ namespace UserService.Domain
             Version++;
         }
 
-        public Media DeleteMedia(string blobName)
+        public Media.Models.Media DeleteMedia(string blobName)
         {
             if (IsDeleted)
                 throw new UserNotFoundException();
@@ -79,8 +79,7 @@ namespace UserService.Domain
         )
         {
             var media = Media.FirstOrDefault(m => m.BlobName == blobName) ?? throw new MediaNotFoundException();
-            media.Set(metadata, moderationResult, thumbnails);
-
+            Media = [.. Media.Select(x => x == media ? media.Set(metadata, moderationResult, thumbnails, []) : x)];
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

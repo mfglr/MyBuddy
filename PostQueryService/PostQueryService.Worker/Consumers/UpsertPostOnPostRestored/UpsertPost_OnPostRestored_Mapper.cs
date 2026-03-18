@@ -10,16 +10,6 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostRestored
                 content.Value,
                 content.ModerationResult
             );
-        private Media Map(PostRestoredEvent_Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                media.Transcodings
-            );
         public Post Map(PostRestoredEvent @event) =>
             new(
                 @event.Id,
@@ -30,7 +20,7 @@ namespace PostQueryService.Worker.Consumers.UpsertPostOnPostRestored
                 @event.Version,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
-                @event.Media.Select(Map)
+                @event.Media
             );
     }
 }

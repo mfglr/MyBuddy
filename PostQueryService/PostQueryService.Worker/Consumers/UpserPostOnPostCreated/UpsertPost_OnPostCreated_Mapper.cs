@@ -10,16 +10,6 @@ namespace PostQueryService.Worker.Consumers.UpserPostOnPostCreated
                 content.Value,
                 null
             );
-        public Media Map(PostCreatedEvent_Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                null,
-                null,
-                [],
-                []
-            );
         public Post Map(PostCreatedEvent post) =>
             new(
                 post.Id,
@@ -30,7 +20,7 @@ namespace PostQueryService.Worker.Consumers.UpserPostOnPostCreated
                 post.Version,
                 post.UserId,
                 post.Content != null ? Map(post.Content) : null,
-                post.Media.Select(Map)
+                post.Media
             );
     }
 }

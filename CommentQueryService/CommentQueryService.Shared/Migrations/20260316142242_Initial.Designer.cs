@@ -2,12 +2,12 @@
 using System;
 using CommentQueryService.Shared.Model;
 using CommentQueryService.Shared.PostgreSql;
+using Media.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Shared.Events.SharedObjects;
 
 #nullable disable
 
@@ -83,7 +83,7 @@ namespace CommentQueryService.Shared.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Media>("Media")
+                    b.Property<Media.Models.Media>("Media")
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Name")

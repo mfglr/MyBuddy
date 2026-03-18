@@ -1,5 +1,5 @@
-﻿using MetadataExtractor.Application;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
+using MetadataExtractor.Application;
 using Xabe.FFmpeg;
 
 namespace MetadataExtractor.Infrastructure.FFmpegMetadataExtractor

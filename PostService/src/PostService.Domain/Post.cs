@@ -1,5 +1,5 @@
-﻿using PostService.Domain.Exceptions;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
+using PostService.Domain.Exceptions;
 
 namespace PostService.Domain
 {
@@ -16,9 +16,9 @@ namespace PostService.Domain
         public Guid UserId { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
-        public IReadOnlyList<Media> Media { get; private set; }
+        public IReadOnlyList<Media.Models.Media> Media { get; private set; }
 
-        public Post(Guid userId, Content? content, IReadOnlyList<Media> media)
+        public Post(Guid userId, Content? content, IReadOnlyList<Media.Models.Media> media)
         {
             if (!media.Any())
                 throw new PostMediaRequiredException();
@@ -90,8 +90,11 @@ namespace PostService.Domain
             if (IsDeleted)
                 throw new PostNotFoundException();
 
-            var media = Media.FirstOrDefault(x => x.BlobName == blobName) ?? throw new PostMediaNotFoundException();
-            media.Set(metadata,moderationResult,thumbnails, transcodings);
+            var media = 
+                Media.FirstOrDefault(x => x.BlobName == blobName) ??
+                throw new PostMediaNotFoundException();
+            
+            Media = [..Media.Select(x => x == media ? media.Set(metadata, moderationResult, thumbnails, transcodings) : x)];
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

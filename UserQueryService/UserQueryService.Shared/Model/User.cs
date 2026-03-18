@@ -8,7 +8,7 @@
         string? name,
         string userName,
         string gender,
-        IEnumerable<Media> media
+        IEnumerable<Media.Models.Media> media
     )
     {
         public Guid Id { get; private set; } = id;
@@ -18,6 +18,6 @@
         public string? Name { get; private set; } = name;
         public string UserName { get; private set; } = userName;
         public string Gender { get; private set; } = gender;
-        public IReadOnlyList<Media> Media { get; private set; } = [..media];
+        public IReadOnlyList<Media.Models.Media> Media { get; private set; } = [..media];
     }
 }

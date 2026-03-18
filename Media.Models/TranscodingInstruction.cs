@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Shared.Events.SharedObjects
+namespace Media.Models
 {
     [method: JsonConstructor]
     public record TranscodingInstruction(double Resolution);

@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Media.Models\Media.Models.csproj" />
-  </ItemGroup>
-
 </Project>

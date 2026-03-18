@@ -10,17 +10,6 @@ namespace PostService.Application.UseCases.RestorePost
                 content.Value,
                 content.ModerationResult
             );
-        private PostRestoredEvent_Media Map(Media media) =>
-            new(
-                media.ContainerName,
-                media.BlobName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                media.Transcodings,
-                media.Instruction
-            );
         public PostRestoredEvent Map(Post post) =>
             new(
                 post.Id,
@@ -31,7 +20,7 @@ namespace PostService.Application.UseCases.RestorePost
                 post.Version,
                 post.UserId,
                 post.Content != null ? Map(post.Content) : null,
-                post.Media.Select(Map)
+                post.Media
             );
     }
 }

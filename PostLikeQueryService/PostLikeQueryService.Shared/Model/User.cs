@@ -6,11 +6,11 @@
         public int Version { get; private set; }
         public string? Name { get; private set; }
         public string UserName { get; private set; } = null!;
-        public Media? Media { get; private set; }
+        public Media.Models.Media? Media { get; private set; }
 
         public User(){}
 
-        public User(Guid id, int version, string? name, string userName, Media? media)
+        public User(Guid id, int version, string? name, string userName, Media.Models.Media? media)
         {
             Id = id;
             Version = version;

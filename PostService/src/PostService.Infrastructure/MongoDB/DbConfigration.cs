@@ -1,8 +1,8 @@
-﻿using MongoDB.Bson;
+﻿using Media.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using PostService.Domain;
-using Shared.Events.SharedObjects;
 
 namespace PostService.Infrastructure.MongoDB
 {
@@ -23,7 +23,7 @@ namespace PostService.Infrastructure.MongoDB
                 cm.MapMember(q => q.Content);
                 cm.MapMember(q => q.Media);
             });
-            BsonClassMap.RegisterClassMap<Media>(cm =>
+            BsonClassMap.RegisterClassMap<Media.Models.Media>(cm =>
             {
                 cm.MapMember(q => q.ContainerName);
                 cm.MapMember(q => q.BlobName);

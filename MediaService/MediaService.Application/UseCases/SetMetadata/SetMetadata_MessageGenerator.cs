@@ -1,12 +1,11 @@
-﻿using MediaService.Domain;
+﻿using Media.Models;
 using Shared.Events.MediaService;
-using Shared.Events.SharedObjects;
 
 namespace MediaService.Application.UseCases.SetMetadata
 {
     internal class SetMetadata_MessageGenerator
     {
-        private readonly Func<Media, List<object>>[,] _funcs = new Func<Media, List<object>>[
+        private readonly Func<Domain.Media, List<object>>[,] _funcs = new Func<Domain.Media, List<object>>[
             Enum.GetValues<MetadataState>().Length,
             Enum.GetValues<ModerationState>().Length
         ];
@@ -24,12 +23,12 @@ namespace MediaService.Application.UseCases.SetMetadata
             _funcs[(int)MetadataState.ShouldCalculateAndValidate, (int)ModerationState.ShouldCalculateAndValidate] = Func22;
         }
 
-        public List<object> GenerateMessages(Media media) => _funcs[(int)media.Instruction.MetadataState, (int)media.Instruction.ModerationState](media);
+        public List<object> GenerateMessages(Domain.Media media) => _funcs[(int)media.Instruction.MetadataState, (int)media.Instruction.ModerationState](media);
 
-        private static ClassifyMediaMessage GenerateModerationMessage(Media media) =>
+        private static ClassifyMediaMessage GenerateModerationMessage(Domain.Media media) =>
             new (media.ContainerName, media.BlobName, media.Type, media.Instruction.ModerationInstruction!);
 
-        private static List<object> GenerateThumbnailAndTranscodingMessages(Media media) =>
+        private static List<object> GenerateThumbnailAndTranscodingMessages(Domain.Media media) =>
             [
                 .. media.Instruction.ThumbnailInstructions.Select(x => new GenerateThumbnailMessage(media.ContainerName, media.BlobName, x)),
                 .. media.Type == MediaType.Video
@@ -39,38 +38,38 @@ namespace MediaService.Application.UseCases.SetMetadata
 
         //Metadata State => Should Not Calculate
         //Moderation State => Should Not Calculate
-        private static List<object> Func00(Media media) => [];
+        private static List<object> Func00(Domain.Media media) => [];
 
         //Metadata State => Should Not Calculate
         //Moderation State => Should Calculate And Not Validate
-        private static List<object> Func01(Media media) => [];
+        private static List<object> Func01(Domain.Media media) => [];
 
         //Metadata State => Should Not Calculate
         //Moderation State => Should Calculate And Validate
-        private static List<object> Func02(Media media) => [];
+        private static List<object> Func02(Domain.Media media) => [];
 
         //Metadata State => Should Calculate And Not Validate
         //Moderation State => Should Not Calculate
-        private static List<object> Func10(Media media) => [];
+        private static List<object> Func10(Domain.Media media) => [];
 
         //Metadata State => Should Calculate And Not Validate
         //Moderation State => Should Calculate And Not Validate
-        private static List<object> Func11(Media media) => [];
+        private static List<object> Func11(Domain.Media media) => [];
 
         //Metadata State => Should Calculate And Not Validate
         //Moderation State => Should Calculate And Validate
-        private static List<object> Func12(Media media) => [];
+        private static List<object> Func12(Domain.Media media) => [];
 
         //Metadata State => Should Calculate And Validate
         //Moderation State => Should Not Calculate
-        private static List<object> Func20(Media media) =>
+        private static List<object> Func20(Domain.Media media) =>
             media.Instruction.IsValidMetadata(media.Metadata!)
                 ? [ ..GenerateThumbnailAndTranscodingMessages(media)]
                 : [];
 
         //Metadata State => Should Calculate And Validate
         //Moderation State => Should Calculate And Not Validate
-        private static List<object> Func21(Media media) =>
+        private static List<object> Func21(Domain.Media media) =>
             media.Instruction.IsValidMetadata(media.Metadata!)
                 ? [
                     GenerateModerationMessage(media),
@@ -80,7 +79,7 @@ namespace MediaService.Application.UseCases.SetMetadata
         
         //Metadata State => Should Calculate And Validate
         //Moderation State => Should Calculate And Validate
-        private static List<object> Func22(Media media) =>
+        private static List<object> Func22(Domain.Media media) =>
             media.Instruction.IsValidMetadata(media.Metadata!)
             ? [GenerateModerationMessage(media)]
             : [];

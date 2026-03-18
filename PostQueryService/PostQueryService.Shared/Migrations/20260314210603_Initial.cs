@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Media.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
-using PostQueryService.Shared.Model;
-using Shared.Events.SharedObjects;
 
 #nullable disable
 
@@ -27,7 +24,7 @@ namespace PostQueryService.Shared.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Content_Value = table.Column<string>(type: "text", nullable: true),
                     Content_ModerationResult = table.Column<ModerationResult>(type: "jsonb", nullable: true),
-                    Media = table.Column<IReadOnlyList<Media>>(type: "jsonb", nullable: false),
+                    Media = table.Column<IReadOnlyList<Media.Models.Media>>(type: "jsonb", nullable: false),
                     LikeCount = table.Column<int>(type: "integer", nullable: false),
                     CommentCount = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -44,7 +41,7 @@ namespace PostQueryService.Shared.Migrations
                     Version = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "text", nullable: false),
-                    Media = table.Column<Media>(type: "jsonb", nullable: true)
+                    Media = table.Column<Media.Models.Media>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

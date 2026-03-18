@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Shared.Events.SharedObjects;
 
 namespace MetadataExtractor.Application.UseCases.ExtractMetadata
 {

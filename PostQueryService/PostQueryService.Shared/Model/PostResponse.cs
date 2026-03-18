@@ -4,12 +4,12 @@
         Guid UserId,
         string UserName,
         string? Name,
-        Media? ProfilePhoto,
+        Media.Models.Media? ProfilePhoto,
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         Content? Content,
-        IEnumerable<Media> Media,
+        IEnumerable<Media.Models.Media> Media,
         int LikeCount,
         int CommentCount
     );

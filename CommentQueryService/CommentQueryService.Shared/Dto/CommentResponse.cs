@@ -1,5 +1,4 @@
-﻿using CommentQueryService.Shared.Model;
-using Shared.Events.SharedObjects;
+﻿using Media.Models;
 
 namespace CommentQueryService.Shared.Dto
 {
@@ -22,6 +21,6 @@ namespace CommentQueryService.Shared.Dto
         Guid UserId,
         string UserName,
         string? Name,
-        Media? Media
+        Media.Models.Media? Media
     );
 }

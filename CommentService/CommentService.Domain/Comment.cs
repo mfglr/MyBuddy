@@ -1,5 +1,5 @@
 ﻿using CommentService.Domain.Exceptions;
-using Shared.Events.SharedObjects;
+using Media.Models;
 
 namespace CommentService.Domain
 {

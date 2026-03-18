@@ -14,7 +14,7 @@ namespace MediaService.Application.UseCases.CreateMedia
     {
         public async Task Handle(CreateMediaRequest request, CancellationToken cancellationToken)
         {
-            var media = request.Media.Select(x => new Media(x.ContainerName, x.BlobName, request.Id, x.Type, x.Instruction));
+            var media = request.Media.Select(x => new Domain.Media(x.ContainerName, x.BlobName, request.Id, x.Type, x.Instruction));
             await mediaRepository.CreateAsync(media, cancellationToken);
 
             var events = new List<object>();
