@@ -9,14 +9,17 @@ namespace AuthServer.Infrastructure.IdentityFramework
         public Task CreateAsync(Account account, string password) =>
             userManager.CreateAsync(account, password);
 
+        public Task UpdateAsync(Account account) =>
+            userManager.UpdateAsync(account);
+
         public Task<Account?> GetByIdAsync(Guid id) =>
             userManager.FindByIdAsync(id.ToString());
 
         public async Task<Account?> GetByEmailOrUserName(string key) =>
             await userManager.FindByEmailAsync(key) ?? await userManager.FindByNameAsync(key);
 
-        public async Task<bool> ExistAsync(string email) =>
-            await userManager.FindByEmailAsync(email) != null;
+        public async Task<bool> ExistAsync(Email email) =>
+            await userManager.FindByEmailAsync(email.Value) != null;
 
         public Task<bool> CheckPasswordAsync(Account account, string password) =>
             userManager.CheckPasswordAsync(account, password);

@@ -35,7 +35,7 @@ namespace AuthServer.Domain
             Version++;
         }
 
-        public void UpdateEmail(Email email)
+        internal void UpdateEmail(Email email)
         {
             if (IsDeleted)
                 throw new AccountNotFoundException();

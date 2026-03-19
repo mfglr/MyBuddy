@@ -8,6 +8,7 @@ namespace AuthServer.Application.UseCases.UpdateEmail
         IPublishEndpoint publishEndpoint,
         IAccountRepository accountRepository,
         UpdateEmailMapper mapper,
+        EmailUpdaterDomainService emailUpdater,
         IAuthService authService
     ) : IRequestHandler<UpdateEmailRequest>
     {
@@ -17,8 +18,10 @@ namespace AuthServer.Application.UseCases.UpdateEmail
             var account = 
                 await accountRepository.GetByIdAsync(authService.UserId) ??
                 throw new AccountNotFoundException();
-            
-            account.UpdateEmail(email);
+
+            await emailUpdater.UpdateAsync(account, email);
+
+            await accountRepository.UpdateAsync(account);
 
             var @event = mapper.Map(account);
             await publishEndpoint.Publish(@event, cancellationToken);

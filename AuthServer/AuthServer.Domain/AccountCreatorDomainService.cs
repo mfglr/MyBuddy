@@ -4,7 +4,7 @@
     {
         public async Task<Account> Create(Email email, string password)
         {
-            if (await accountRepository.ExistAsync(email.Value))
+            if (await accountRepository.ExistAsync(email))
                 throw new EmailAlreadyTakenException();
 
             var account = new Account(email);

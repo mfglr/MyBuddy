@@ -6,6 +6,7 @@ namespace AuthServer.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection services) =>
             services
-                .AddScoped<AccountCreatorDomainService>();
+                .AddScoped<AccountCreatorDomainService>()
+                .AddScoped<EmailUpdaterDomainService>();
     }
 }
