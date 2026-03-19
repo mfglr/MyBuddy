@@ -5,10 +5,9 @@ namespace CommentQueryService.Shared.PostgreSql
 {
     public class DbInitializer
     {
-        public static void Init(IServiceCollection services)
+        public static void Init(IServiceProvider serviceProvider)
         {
-            using var scope = services.BuildServiceProvider().CreateScope();
-            var context = scope.ServiceProvider.GetService<SqlContext>()!;
+            var context = serviceProvider.GetRequiredService<SqlContext>();
             context.Database.Migrate();
         }
     }
