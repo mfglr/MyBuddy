@@ -3,6 +3,7 @@ using AuthServer.Application.UseCases.DeleteAccount;
 using AuthServer.Application.UseCases.UpdateEmail;
 using AuthServer.Application.UseCases.UpdateGender;
 using AuthServer.Application.UseCases.UpdateName;
+using AuthServer.Application.UseCases.UpdateUserName;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ namespace AuthServer.Application
             services
                 .AddSingleton<CreateAccountMapper>()
                 .AddSingleton<UpdateEmailMapper>()
+                .AddSingleton<UpdateUserNameMapper>()
                 .AddSingleton<UpdateNameMapper>()
                 .AddSingleton<UpdateGenderMapper>()
                 .AddSingleton<DeleteAccountMapper>()

@@ -45,6 +45,16 @@ namespace AuthServer.Domain
             Version++;
         }
 
+        internal void UpdateUserName(UserName userName)
+        {
+            if (IsDeleted)
+                throw new AccountNotFoundException();
+
+            UserName = userName.Value;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
         public void UpdateName(Name name)
         {
             if (IsDeleted)

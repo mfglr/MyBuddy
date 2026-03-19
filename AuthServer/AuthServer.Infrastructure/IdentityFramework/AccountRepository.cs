@@ -21,6 +21,9 @@ namespace AuthServer.Infrastructure.IdentityFramework
         public async Task<bool> ExistAsync(Email email) =>
             await userManager.FindByEmailAsync(email.Value) != null;
 
+        public async Task<bool> ExistAsync(UserName userName) =>
+            await userManager.FindByNameAsync(userName.Value) != null;
+
         public Task<bool> CheckPasswordAsync(Account account, string password) =>
             userManager.CheckPasswordAsync(account, password);
 
