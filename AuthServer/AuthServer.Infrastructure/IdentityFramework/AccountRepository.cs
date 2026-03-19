@@ -1,4 +1,5 @@
 ﻿using AuthServer.Domain;
+using Duende.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
@@ -37,9 +38,9 @@ namespace AuthServer.Infrastructure.IdentityFramework
 
             list.AddRange(roles.Select(x => new Claim(ClaimTypes.Role, x)));
             list.Add(new Claim(ClaimTypes.Gender, account.Gender.Value));
+            list.Add(new Claim(JwtClaimTypes.PreferredUserName, account.UserName!));
             if (account.Name != null)
                 list.Add(new Claim(ClaimTypes.Name, account.Name.Value));
-            
             return list;
         }
     }
