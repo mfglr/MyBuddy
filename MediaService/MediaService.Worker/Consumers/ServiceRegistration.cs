@@ -3,6 +3,7 @@ using MediaService.Infrastructure.PostgreSql;
 using MediaService.Worker.Consumers;
 using MediaService.Worker.Consumers.AddThumbnails;
 using MediaService.Worker.Consumers.AddTranscoding;
+using MediaService.Worker.Consumers.CreateMedia_OnAccountMediaCreated;
 using MediaService.Worker.Consumers.CreateMedia_OnPostCreated;
 using MediaService.Worker.Consumers.CreateMediaOnUserMediaCreated;
 using MediaService.Worker.Consumers.DeleteMedia;
@@ -19,6 +20,7 @@ namespace MediaService.Worker.Consumers
             return services
                 .AddSingleton<CreateMedia_OnPostCreated_Mapper>()
                 .AddSingleton<CreateMedia_OnUserMediaCreated_Mapper>()
+                .AddSingleton<CreateMedia_OnAccountMediaCreated_Mapper>()
                 .AddSingleton<SetMetadata_OnMetadataExtracted_Mapper>()
                 .AddSingleton<SetModerationResult_OnMediaClassified_Mapper>()
                 .AddSingleton<AddThumbnails_OnThumbnailsGenerated_Mapper>()
@@ -29,6 +31,7 @@ namespace MediaService.Worker.Consumers
                     {
                         brc.AddConsumer<CreateMedia_OnPostCreated_MediaService>();
                         brc.AddConsumer<CreateMedia_OnUserMediaCreated_MediaService>();
+                        brc.AddConsumer<CreateMedia_OnAccountMediaCreated_MediaService>();
                         brc.AddConsumer<SetMetadata_OnMetadataExtracted_MediaService>();
                         brc.AddConsumer<SetModerationResult_OnMediaClassified_MediaService>();
                         brc.AddConsumer<AddThumbnails_OnThumbnailsGenerated_MediaService>();

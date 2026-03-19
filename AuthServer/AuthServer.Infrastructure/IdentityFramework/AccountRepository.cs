@@ -2,11 +2,33 @@
 using Duende.IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace AuthServer.Infrastructure.IdentityFramework
 {
     internal class AccountRepository(UserManager<Account> userManager) : IAccountRepository
     {
+        private static JsonSerializerOptions _options = new()
+        {
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver
+            {
+                Modifiers = { typeInfo => {
+                    if (typeInfo.Type == typeof(Media.Models.Media))
+                    {
+                        var prop1 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Type));
+                        prop1?.ShouldSerialize = (_, _) => false;
+
+                        var prop2 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Transcodings));
+                        prop2?.ShouldSerialize = (_, _) => false;
+
+                        var prop3 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Instruction));
+                        prop3?.ShouldSerialize = (_, _) => false;
+                    }
+                }}
+            }
+        };
+
         public Task CreateAsync(Account account, string password) =>
             userManager.CreateAsync(account, password);
 
@@ -39,8 +61,14 @@ namespace AuthServer.Infrastructure.IdentityFramework
             list.AddRange(roles.Select(x => new Claim(ClaimTypes.Role, x)));
             list.Add(new Claim(ClaimTypes.Gender, account.Gender.Value));
             list.Add(new Claim(JwtClaimTypes.PreferredUserName, account.UserName!));
+            
             if (account.Name != null)
                 list.Add(new Claim(ClaimTypes.Name, account.Name.Value));
+            if (account.Picture != null)
+                list.Add(new Claim(
+                    JwtClaimTypes.Picture,
+                    JsonSerializer.Serialize(account.Picture,options: _options)
+                ));
             return list;
         }
     }

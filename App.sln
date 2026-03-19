@@ -241,6 +241,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeService.Api", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media.Models", "Media.Models\Media.Models.csproj", "{1FC93646-2E22-4A6D-B480-878A876E8E63}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Worker", "AuthServer\AuthServer.Worker\AuthServer.Worker.csproj", "{1D87B214-2A98-4B49-AFD9-5194F17267CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -619,6 +621,10 @@ Global
 		{1FC93646-2E22-4A6D-B480-878A876E8E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FC93646-2E22-4A6D-B480-878A876E8E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FC93646-2E22-4A6D-B480-878A876E8E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D87B214-2A98-4B49-AFD9-5194F17267CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D87B214-2A98-4B49-AFD9-5194F17267CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D87B214-2A98-4B49-AFD9-5194F17267CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D87B214-2A98-4B49-AFD9-5194F17267CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -716,6 +722,7 @@ Global
 		{1B2C7F31-05FA-4DE3-B902-6059C2929455} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
 		{742FE56D-AC7F-44D3-B9D6-606D61416D79} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
 		{0EF8273F-048E-40E4-B7B1-12DFED417903} = {239E6144-A8BB-462E-9BC6-266ADDE1DDCD}
+		{1D87B214-2A98-4B49-AFD9-5194F17267CF} = {4C405AB7-6504-49AC-96F5-778EB92769D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}

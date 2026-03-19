@@ -1,6 +1,7 @@
 ﻿using AuthServer.Application.UseCases.CreateAccount;
 using AuthServer.Application.UseCases.CreateMedia;
 using AuthServer.Application.UseCases.DeleteAccount;
+using AuthServer.Application.UseCases.SetMedia;
 using AuthServer.Application.UseCases.UpdateEmail;
 using AuthServer.Application.UseCases.UpdateGender;
 using AuthServer.Application.UseCases.UpdateName;
@@ -24,6 +25,7 @@ namespace AuthServer.Application
                 .AddSingleton<UpdateNameMapper>()
                 .AddSingleton<UpdateGenderMapper>()
                 .AddSingleton<CreateMediaMapper>()
+                .AddSingleton<SetMediaMapper>()
                 .AddSingleton<DeleteAccountMapper>()
                 .AddMediatR(
                     cfg => {

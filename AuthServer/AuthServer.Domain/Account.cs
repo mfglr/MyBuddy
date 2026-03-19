@@ -15,6 +15,7 @@ namespace AuthServer.Domain
         public Name? Name { get; private set; }
         public Gender Gender { get; private set; } = null!;
         public IReadOnlyList<Media.Models.Media> Media { get; private set; } = null!;
+        public Media.Models.Media? Picture => Media.FirstOrDefault();
 
         private Account() { }
 
