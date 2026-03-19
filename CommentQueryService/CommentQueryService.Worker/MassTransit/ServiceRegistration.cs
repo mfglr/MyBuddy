@@ -7,10 +7,11 @@ using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnCommentCr
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnCommentDeleted;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnContentUpdated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertComment_OnModerationResultSet;
-using CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnNameUpdated;
+using CommentQueryService.Worker.MassTransit.Consumers.UpsertUser_OnAccountCreated;
+using CommentQueryService.Worker.MassTransit.Consumers.UpsertUser_OnAccountMediaSet;
+using CommentQueryService.Worker.MassTransit.Consumers.UpsertUser_OnAccountNameUpdated;
+using CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnAccountUserNameUpdated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnUserCreated;
-using CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnUserMediaSet;
-using CommentQueryService.Worker.MassTransit.Consumers.UpsertUserOnUserNameUpdated;
 using MassTransit;
 
 namespace CommentQueryService.Worker.MassTransit
@@ -26,10 +27,10 @@ namespace CommentQueryService.Worker.MassTransit
                 .AddSingleton<UpsertComment_OnContentUpdated_Mapper>()
                 .AddSingleton<UpsertComment_OnCommentDeleted_Mapper>()
 
-                .AddSingleton<UpsertUser_OnUserCreated_Mapper>()
-                .AddSingleton<UpsertUserOn_UserNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserMediaSet_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountCreated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountUserNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
@@ -42,10 +43,10 @@ namespace CommentQueryService.Worker.MassTransit
                         x.AddConsumer<IncreaseLikeCount_OnCommentLiked_CommentQueryService>();
                         x.AddConsumer<DecreaseLikeCount_OnCommentDisliked_CommentQueryService>();
 
-                        x.AddConsumer<UpsertUser_OnUserCreated_CommentQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserNameUpdated_CommentQueryService>();
-                        x.AddConsumer<UpsertUser_OnNameUpdated_CommentQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserMediaSet_CommentQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountCreated_CommentQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountUserNameUpdated_CommentQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountNameUpdated_CommentQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountMediaSet_CommentQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

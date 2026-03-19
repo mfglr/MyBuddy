@@ -2,10 +2,10 @@
 using PostLikeQueryService.Worker.Consumers;
 using PostLikeQueryService.Worker.Consumers.UpsertPostUserLike_OnPostDisliked;
 using PostLikeQueryService.Worker.Consumers.UpsertPostUserLike_OnPostLiked;
-using PostLikeQueryService.Worker.Consumers.UpsertUser_OnNameUpdated;
-using PostLikeQueryService.Worker.Consumers.UpsertUser_OnUserCreated;
-using PostLikeQueryService.Worker.Consumers.UpsertUser_OnUserMediaSet;
-using PostLikeQueryService.Worker.Consumers.UpsertUser_OnUserNameUpdated;
+using PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountCreated;
+using PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountMediaSet;
+using PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountNameUpdated;
+using PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountUserNameUpdated;
 
 namespace PostLikeQueryService.Worker.Consumers
 {
@@ -17,20 +17,20 @@ namespace PostLikeQueryService.Worker.Consumers
             return services
                 .AddSingleton<UpsertPostUserLike_OnPostDisliked_Mapper>()
                 .AddSingleton<UpsertPostUserLike_OnPostLiked_Mapper>()
-                .AddSingleton<UpsertUser_OnUserCreated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserMediaSet_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountCreated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountUserNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
                 .AddMassTransit(
                     brc =>
                     {
                         brc.AddConsumer<UpsertPostUserLike_OnPostLiked_PostLikeQueryService>();
                         brc.AddConsumer<UpsertPostUserLike_OnPostDisliked_PostLikeQueryService>();
 
-                        brc.AddConsumer<UpsertUser_OnUserCreated_PostLikeQueryService>();
-                        brc.AddConsumer<UpsertUser_OnUserNameUpdated_PostLikeQueryService>();
-                        brc.AddConsumer<UpsertUser_OnNameUpdated_PostLikeQueryService>();
-                        brc.AddConsumer<UpsertUser_OnUserMediaSet__PostLikeQueryService>();
+                        brc.AddConsumer<UpsertUser_OnAccountCreated_PostLikeQueryService>();
+                        brc.AddConsumer<UpsertUser_OnAccountUserNameUpdated_PostLikeQueryService>();
+                        brc.AddConsumer<UpsertUser_OnAccountNameUpdated_PostLikeQueryService>();
+                        brc.AddConsumer<UpsertUser_OnAccountMediaSet__PostLikeQueryService>();
 
                         brc.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

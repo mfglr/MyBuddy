@@ -1,11 +1,11 @@
 ﻿using MediaService.Application.UseCases.CreateMedia;
-using Shared.Events.UserService;
+using Shared.Events.Account;
 
 namespace MediaService.Worker.Consumers.CreateMediaOnUserMediaCreated
 {
     internal class CreateMedia_OnUserMediaCreated_Mapper
     {
-        public CreateMediaRequest Map(UserMediaCreatedEvent @event) =>
+        public CreateMediaRequest Map(AccountCreatedEvent @event) =>
             new(
                 @event.Id,
                 @event.Media

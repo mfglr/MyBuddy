@@ -8,10 +8,10 @@ using PostQueryService.Worker.Consumers.UpserPostOnPostCreated;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostDeleted;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostMediaSet;
 using PostQueryService.Worker.Consumers.UpsertPostOnPostRestored;
-using PostQueryService.Worker.Consumers.UpsertUserOnNameUpdated;
-using PostQueryService.Worker.Consumers.UpsertUserOnUserCreated;
-using PostQueryService.Worker.Consumers.UpsertUserOnUserMediaSet;
-using PostQueryService.Worker.Consumers.UpsertUserOnUserNameUpdated;
+using PostQueryService.Worker.Consumers.UpsertUserOnAccountCreated;
+using PostQueryService.Worker.Consumers.UpsertUserOnAccountMediaSet;
+using PostQueryService.Worker.Consumers.UpsertUserOnAccountNameUpdated;
+using PostQueryService.Worker.Consumers.UpsertUserOnAccountUserNameUpdated;
 
 namespace PostQueryService.Worker.Consumers
 {
@@ -27,10 +27,10 @@ namespace PostQueryService.Worker.Consumers
                 .AddSingleton<UpsertPost_OnPostRestored_Mapper>()
                 .AddSingleton<UpsertPost_OnPostMediaSet_Mapper>()
 
-                .AddSingleton<UpsertUser_OnUserCreated_Mapper>()
-                .AddSingleton<UpsertUserOn_UserNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserMediaSet_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountCreated_Mapper>()
+                .AddSingleton<UpsertUserOn_AccountUserNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
@@ -42,10 +42,10 @@ namespace PostQueryService.Worker.Consumers
                         x.AddConsumer<IncreasePostLikeCount_OnPostLiked_PostQueryService>();
                         x.AddConsumer<DecreasePostLikeCount_OnPostDisliked_PostQueryService>();
 
-                        x.AddConsumer<UpsertUser_OnUserCreated_PostQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserNameUpdated_PostQueryService>();
-                        x.AddConsumer<UpsertUser_OnNameUpdated_PostQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserMediaSet_PostQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountCreated_PostQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountUserNameUpdated_PostQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountNameUpdated_PostQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountMediaSet_PostQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

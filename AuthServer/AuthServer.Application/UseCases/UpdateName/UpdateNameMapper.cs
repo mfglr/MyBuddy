@@ -5,7 +5,7 @@ namespace AuthServer.Application.UseCases.UpdateName
 {
     internal class UpdateNameMapper
     {
-        public AcccountNameUpdatedEvent Map(Account account) =>
+        public AccountNameUpdatedEvent Map(Account account) =>
             new(
                 Guid.Parse(account.Id),
                 account.CreatedAt,

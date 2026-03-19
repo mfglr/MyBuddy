@@ -1,12 +1,10 @@
 ﻿using MassTransit;
-using MongoDB.Driver;
-using UserQueryService.Shared.MongoDB;
 using UserQueryService.Worker.Consumers;
-using UserQueryService.Worker.Consumers.UpsertUserOnGenderUpdated;
-using UserQueryService.Worker.Consumers.UpsertUserOnNameUpdated;
-using UserQueryService.Worker.Consumers.UpsertUserOnUserCreated;
-using UserQueryService.Worker.Consumers.UpsertUserOnUserMediaSet;
-using UserQueryService.Worker.Consumers.UpsertUserOnUserNameUpdated;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountCreated;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountGenderUpdated;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountMediaSet;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountNameUpdated;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountUserNameUpdated;
 
 namespace UserQueryService.Worker.Consumers
 {
@@ -16,19 +14,19 @@ namespace UserQueryService.Worker.Consumers
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<UpsertUser_OnGenderUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnNameUpdated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserCreated_Mapper>()
-                .AddSingleton<UpsertUser_OnUserMediaSet_Mapper>()
-                .AddSingleton<UpsertUser_OnUserNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountGenderUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountCreated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountUserNameUpdated_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddConsumer<UpsertUser_OnGenderUpdated_UserQueryService>();
-                        x.AddConsumer<UpsertUser_OnNameUpdated_UserQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserCreated_UserQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserMediaSet_UserQueryService>();
-                        x.AddConsumer<UpsertUser_OnUserNameUpdated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountGenderUpdated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountNameUpdated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountCreated_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountMediaSet_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountUserNameUpdated_UserQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {
