@@ -16,14 +16,23 @@ namespace AuthServer.Infrastructure.IdentityFramework
                 Modifiers = { typeInfo => {
                     if (typeInfo.Type == typeof(Media.Models.Media))
                     {
-                        var prop1 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Type));
+                        var prop1 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.ContainerName));
                         prop1?.ShouldSerialize = (_, _) => false;
 
-                        var prop2 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Transcodings));
+                        var prop2 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.BlobName));
                         prop2?.ShouldSerialize = (_, _) => false;
 
-                        var prop3 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Instruction));
+                        var prop3 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Type));
                         prop3?.ShouldSerialize = (_, _) => false;
+
+                        var prop4 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Metadata));
+                        prop4?.ShouldSerialize = (_, _) => false;
+
+                        var prop5 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Transcodings));
+                        prop5?.ShouldSerialize = (_, _) => false;
+
+                        var prop6 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Instruction));
+                        prop6?.ShouldSerialize = (_, _) => false;
                     }
                 }}
             }
