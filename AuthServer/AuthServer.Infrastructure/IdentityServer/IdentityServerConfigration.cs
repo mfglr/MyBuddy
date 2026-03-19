@@ -198,7 +198,8 @@ namespace AuthServer.Infrastructure.IdentityServer
 
         public static IEnumerable<IdentityResource> GetIdentityResources() =>
             [
-                new IdentityResources.OpenId()
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
             ];
 
         public static IEnumerable<IdentityRole> GetIdentityRoles() =>

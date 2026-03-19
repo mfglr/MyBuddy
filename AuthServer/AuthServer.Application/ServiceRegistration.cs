@@ -1,5 +1,6 @@
 ﻿using AuthServer.Application.UseCases.CreateAccount;
 using AuthServer.Application.UseCases.DeleteAccount;
+using AuthServer.Application.UseCases.UpdateName;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace AuthServer.Application
             services
                 .AddSingleton<CreateAccountMapper>()
                 .AddSingleton<DeleteAccountMapper>()
+                .AddSingleton<UpdateNameMapper>()
                 .AddMediatR(
                     cfg => {
                         cfg.LicenseKey = configuration.GetSection("LuckPenny:LicenseKey").Value;

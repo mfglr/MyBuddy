@@ -18,6 +18,8 @@ namespace AuthServer.Infrastructure.IdentityServer
 
             foreach (var role in roles)
                 context.IssuedClaims.Add(new Claim(ClaimTypes.Role, role));
+            if (user.Name != null)
+                context.IssuedClaims.Add(new Claim(ClaimTypes.Name, user.Name.Value));
         }
 
         public Task IsActiveAsync(IsActiveContext context)

@@ -14,6 +14,7 @@ namespace AuthServer.Infrastructure.PostgreSql
 
             builder.Entity<Account>().Ignore(x => x.ConcurrencyStamp);
             builder.Entity<Account>().Property(x => x.Version).IsConcurrencyToken();
+            builder.Entity<Account>().OwnsOne(x => x.Name);
 
             builder.AddInboxStateEntity();
             builder.AddOutboxMessageEntity();
