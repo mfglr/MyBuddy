@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace AuthServer.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Intial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,6 +38,8 @@ namespace AuthServer.Infrastructure.Migrations
                     DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     Version = table.Column<int>(type: "integer", nullable: false),
+                    Name_Value = table.Column<string>(type: "text", nullable: true),
+                    Gender_Value = table.Column<string>(type: "text", nullable: false, defaultValue: "unkown"),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -240,6 +244,15 @@ namespace AuthServer.Infrastructure.Migrations
                         column: x => x.OutboxId,
                         principalTable: "OutboxState",
                         principalColumn: "OutboxId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "admin", null, "admin", "ADMIN" },
+                    { "user", null, "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

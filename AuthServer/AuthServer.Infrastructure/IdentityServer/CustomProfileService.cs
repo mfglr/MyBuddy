@@ -1,25 +1,19 @@
 ﻿using AuthServer.Domain;
+using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 
 namespace AuthServer.Infrastructure.IdentityServer
 {
-    internal class CustomProfileService(UserManager<Account> userManager) : IProfileService
+    internal class CustomProfileService(IAccountRepository accountRepository) : IProfileService
     {
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var user = 
-                await userManager.GetUserAsync(context.Subject) ??
-                throw new Exception();
+            var account =
+                await accountRepository.GetByIdAsync(Guid.Parse(context.Subject.GetSubjectId())) ??
+                throw new AccountNotFoundException();
 
-            var roles = await userManager.GetRolesAsync(user);
-
-            foreach (var role in roles)
-                context.IssuedClaims.Add(new Claim(ClaimTypes.Role, role));
-            if (user.Name != null)
-                context.IssuedClaims.Add(new Claim(ClaimTypes.Name, user.Name.Value));
+            context.IssuedClaims.AddRange(await accountRepository.GetClaimsAsync(account));
         }
 
         public Task IsActiveAsync(IsActiveContext context)

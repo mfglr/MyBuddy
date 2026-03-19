@@ -1,4 +1,14 @@
 ﻿namespace Shared.Events.Account
 {
-    public record AccountEmailUpdatedEvent(Guid Id, string Email);
+    public record AccountEmailUpdatedEvent(
+        Guid Id,
+        DateTime CreatedAt,
+        DateTime? UpdatedAt,
+        DateTime? DeletedAt,
+        bool IsDeleted,
+        int Version,
+        string UserName,
+        string? Name,
+        string Gender
+    );
 }

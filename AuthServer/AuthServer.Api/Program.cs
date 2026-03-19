@@ -15,10 +15,12 @@ builder.Services
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);
 
-
-DbInitializer.Init(builder.Services);
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    DbInitializer.Init(scope.ServiceProvider);
+}
 
 app.UseIdentityServer();
 app.UseAuthentication();

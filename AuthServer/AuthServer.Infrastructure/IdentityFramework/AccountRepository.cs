@@ -1,5 +1,6 @@
 ﻿using AuthServer.Domain;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AuthServer.Infrastructure.IdentityFramework
 {
@@ -11,6 +12,9 @@ namespace AuthServer.Infrastructure.IdentityFramework
         public Task<Account?> GetByIdAsync(Guid id) =>
             userManager.FindByIdAsync(id.ToString());
 
+        public async Task<Account?> GetByEmailOrUserName(string key) =>
+            await userManager.FindByEmailAsync(key) ?? await userManager.FindByNameAsync(key);
+
         public async Task<bool> ExistAsync(string email) =>
             await userManager.FindByEmailAsync(email) != null;
 
@@ -19,5 +23,18 @@ namespace AuthServer.Infrastructure.IdentityFramework
 
         public Task AddRoleToAccountAsync(Account account,string role) =>
             userManager.AddToRoleAsync(account, role);
+
+        public async Task<List<Claim>> GetClaimsAsync(Account account)
+        {
+            var list = new List<Claim>();
+            var roles = await userManager.GetRolesAsync(account);
+
+            list.AddRange(roles.Select(x => new Claim(ClaimTypes.Role, x)));
+            list.Add(new Claim(ClaimTypes.Gender, account.Gender.Value));
+            if (account.Name != null)
+                list.Add(new Claim(ClaimTypes.Name, account.Name.Value));
+            
+            return list;
+        }
     }
 }

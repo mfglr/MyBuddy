@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace AuthServer.Infrastructure.IdentityServer
 {
@@ -201,12 +200,5 @@ namespace AuthServer.Infrastructure.IdentityServer
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile()
             ];
-
-        public static IEnumerable<IdentityRole> GetIdentityRoles() =>
-            [
-                new IdentityRole("user"),
-                new IdentityRole("admin")
-            ];
-
     }
 }

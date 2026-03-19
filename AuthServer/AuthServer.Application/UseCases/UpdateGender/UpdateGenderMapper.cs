@@ -1,11 +1,11 @@
 ﻿using AuthServer.Domain;
 using Shared.Events.Account;
 
-namespace AuthServer.Application.UseCases.CreateAccount
+namespace AuthServer.Application.UseCases.UpdateGender
 {
-    internal class CreateAccountMapper
+    internal class UpdateGenderMapper
     {
-        public AccountCreatedEvent Map(Account account) =>
+        public AccountGenderUpdatedEvent Map(Account account) =>
             new(
                 Guid.Parse(account.Id),
                 account.CreatedAt,

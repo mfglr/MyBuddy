@@ -10,17 +10,19 @@ namespace AuthServer.Domain
         public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
         public Name? Name { get; private set; }
+        public Gender Gender { get; private set; }
 
         private Account() { }
 
         internal Account(Email email) : base()
         {
             Id = Guid.CreateVersion7().ToString();
-            Email = email.Value;
-            UserName = email.Value;
             CreatedAt = DateTime.UtcNow;
             Version = 1;
             IsDeleted = false;
+            Email = email.Value;
+            UserName = email.GenerateUserName();
+            Gender = Gender.Unknown();
         }
 
         public void Delete()
@@ -49,6 +51,16 @@ namespace AuthServer.Domain
                 throw new AccountNotFoundException();
 
             Name = name;
+            UpdatedAt = DateTime.UtcNow;
+            Version++;
+        }
+
+        public void UpdateGender(Gender gender)
+        {
+            if (IsDeleted)
+                throw new AccountNotFoundException();
+
+            Gender = gender;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

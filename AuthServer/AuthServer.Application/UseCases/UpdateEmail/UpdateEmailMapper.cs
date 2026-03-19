@@ -1,11 +1,11 @@
 ﻿using AuthServer.Domain;
 using Shared.Events.Account;
 
-namespace AuthServer.Application.UseCases.CreateAccount
+namespace AuthServer.Application.UseCases.UpdateEmail
 {
-    internal class CreateAccountMapper
+    internal class UpdateEmailMapper
     {
-        public AccountCreatedEvent Map(Account account) =>
+        public AccountEmailUpdatedEvent Map(Account account) =>
             new(
                 Guid.Parse(account.Id),
                 account.CreatedAt,

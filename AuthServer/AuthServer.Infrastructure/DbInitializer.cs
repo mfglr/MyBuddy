@@ -2,39 +2,24 @@
 using AuthServer.Infrastructure.PostgreSql;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AuthServer.Infrastructure
 {
-    public class DbInitializer
+    public static class DbInitializer
     {
-        public static void Init(IServiceCollection services)
+        public static void Init(IServiceProvider serviceProvider)
         {
-            using var scope = services.BuildServiceProvider().CreateScope();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var sqlContext = scope.ServiceProvider.GetRequiredService<SqlContext>();
-            var configurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-            var persistedGrantDbContext = scope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+            var sqlContext = serviceProvider.GetRequiredService<SqlContext>();
+            var configurationDbContext = serviceProvider.GetRequiredService<ConfigurationDbContext>();
+            var persistedGrantDbContext = serviceProvider.GetRequiredService<PersistedGrantDbContext>();
 
             sqlContext.Database.Migrate();
             configurationDbContext.Database.Migrate();
             persistedGrantDbContext.Database.Migrate();
 
-            SeedRoles(roleManager);
             SeedConfiguration(configurationDbContext);
-        }
-
-        private static void SeedRoles(RoleManager<IdentityRole> roleManager)
-        {
-            foreach (var role in IdentityServerConfigration.GetIdentityRoles())
-            {
-                var task = roleManager.FindByNameAsync(role.Name!);
-                task.Wait();
-                if (task.Result == null)
-                    roleManager.CreateAsync(role).Wait();
-            }
         }
 
         private static void SeedConfiguration(ConfigurationDbContext context)

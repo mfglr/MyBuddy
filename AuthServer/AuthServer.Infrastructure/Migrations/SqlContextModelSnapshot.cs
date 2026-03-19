@@ -290,6 +290,20 @@ namespace AuthServer.Infrastructure.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "user",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "admin",
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -400,6 +414,25 @@ namespace AuthServer.Infrastructure.Migrations
 
             modelBuilder.Entity("AuthServer.Domain.Account", b =>
                 {
+                    b.OwnsOne("AuthServer.Domain.Gender", "Gender", b1 =>
+                        {
+                            b1.Property<string>("AccountId")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("text")
+                                .HasDefaultValue("unkown");
+
+                            b1.HasKey("AccountId");
+
+                            b1.ToTable("AspNetUsers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AccountId");
+                        });
+
                     b.OwnsOne("AuthServer.Domain.Name", "Name", b1 =>
                         {
                             b1.Property<string>("AccountId")
@@ -416,6 +449,9 @@ namespace AuthServer.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("AccountId");
                         });
+
+                    b.Navigation("Gender")
+                        .IsRequired();
 
                     b.Navigation("Name");
                 });

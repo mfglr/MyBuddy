@@ -7,6 +7,8 @@
         DateTime? DeletedAt,
         bool IsDeleted,
         int Version,
-        string UserName
+        string UserName,
+        string? Name,
+        string Gender
     );
 }

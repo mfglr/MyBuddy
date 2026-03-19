@@ -1,13 +1,13 @@
 ﻿using AuthServer.Domain;
 using MassTransit;
 using MediatR;
-using Shared.Events.Account;
 
 namespace AuthServer.Application.UseCases.UpdateEmail
 {
     internal class UpdateEmailHandler(
         IPublishEndpoint publishEndpoint,
         IAccountRepository accountRepository,
+        UpdateEmailMapper mapper,
         IAuthService authService
     ) : IRequestHandler<UpdateEmailRequest>
     {
@@ -20,7 +20,7 @@ namespace AuthServer.Application.UseCases.UpdateEmail
             
             account.UpdateEmail(email);
 
-            var @event = new AccountEmailUpdatedEvent(authService.UserId, request.Email);
+            var @event = mapper.Map(account);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }

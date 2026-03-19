@@ -14,7 +14,8 @@ namespace AuthServer.Application.UseCases.UpdateName
                 account.IsDeleted,
                 account.Version,
                 account.UserName!,
-                account.Name?.Value
+                account.Name?.Value,
+                account.Gender.Value
             );
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Shared.Events.Account
 {
-    public record AcccountNameUpdatedEvent(
+    public record AccountGenderUpdatedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,

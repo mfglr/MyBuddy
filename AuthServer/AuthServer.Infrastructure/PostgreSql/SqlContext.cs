@@ -3,6 +3,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System.Reflection;
 
 namespace AuthServer.Infrastructure.PostgreSql
 {
@@ -12,9 +13,7 @@ namespace AuthServer.Infrastructure.PostgreSql
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Account>().Ignore(x => x.ConcurrencyStamp);
-            builder.Entity<Account>().Property(x => x.Version).IsConcurrencyToken();
-            builder.Entity<Account>().OwnsOne(x => x.Name);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(SqlContext))!);
 
             builder.AddInboxStateEntity();
             builder.AddOutboxMessageEntity();

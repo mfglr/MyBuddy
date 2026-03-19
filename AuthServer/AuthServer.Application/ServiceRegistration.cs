@@ -1,5 +1,7 @@
 ﻿using AuthServer.Application.UseCases.CreateAccount;
 using AuthServer.Application.UseCases.DeleteAccount;
+using AuthServer.Application.UseCases.UpdateEmail;
+using AuthServer.Application.UseCases.UpdateGender;
 using AuthServer.Application.UseCases.UpdateName;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -13,8 +15,10 @@ namespace AuthServer.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddSingleton<CreateAccountMapper>()
-                .AddSingleton<DeleteAccountMapper>()
+                .AddSingleton<UpdateEmailMapper>()
                 .AddSingleton<UpdateNameMapper>()
+                .AddSingleton<UpdateGenderMapper>()
+                .AddSingleton<DeleteAccountMapper>()
                 .AddMediatR(
                     cfg => {
                         cfg.LicenseKey = configuration.GetSection("LuckPenny:LicenseKey").Value;
