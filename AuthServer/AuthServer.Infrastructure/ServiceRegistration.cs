@@ -1,4 +1,5 @@
-﻿using AuthServer.Infrastructure.IdentityFramework;
+﻿using AuthServer.Infrastructure.BlobService;
+using AuthServer.Infrastructure.IdentityFramework;
 using AuthServer.Infrastructure.IdentityServer;
 using AuthServer.Infrastructure.PostgreSql;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ namespace AuthServer.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) =>
             services
+                .AddBlobService(configuration)
                 .AddPostgreSql(configuration)
                 .AddIdentityFramework()
                 .AddAppIdentityServer(configuration);

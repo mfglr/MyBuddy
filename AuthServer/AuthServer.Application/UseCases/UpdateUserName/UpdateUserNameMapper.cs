@@ -15,7 +15,8 @@ namespace AuthServer.Application.UseCases.UpdateUserName
                 account.Version,
                 account.UserName!,
                 account.Name?.Value,
-                account.Gender.Value
+                account.Gender.Value,
+                account.Media
             );
     }
 }

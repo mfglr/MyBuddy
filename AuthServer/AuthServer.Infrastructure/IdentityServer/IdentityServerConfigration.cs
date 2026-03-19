@@ -139,7 +139,7 @@ namespace AuthServer.Infrastructure.IdentityServer
                 },
 
                 new (){
-                    ClientId = "user.client",
+                    ClientId = "account.client",
                     ClientSecrets = [new Secret("secret".Sha256())],
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AccessTokenLifetime = 600, // 10 minutes

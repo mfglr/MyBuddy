@@ -9,6 +9,7 @@
         int Version,
         string UserName,
         string? Name,
-        string Gender
+        string Gender,
+        IEnumerable<Media.Models.Media> Media
     );
 }

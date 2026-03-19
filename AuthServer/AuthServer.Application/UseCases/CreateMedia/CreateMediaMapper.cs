@@ -1,11 +1,11 @@
 ﻿using AuthServer.Domain;
 using Shared.Events.Account;
 
-namespace AuthServer.Application.UseCases.CreateAccount
+namespace AuthServer.Application.UseCases.CreateMedia
 {
-    internal class CreateAccountMapper
+    internal class CreateMediaMapper
     {
-        public AccountCreatedEvent Map(Account account) =>
+        public AccountMediaCreatedEvent Map(Account account, Media.Models.Media mediaCreated) =>
             new(
                 Guid.Parse(account.Id),
                 account.CreatedAt,
@@ -16,7 +16,8 @@ namespace AuthServer.Application.UseCases.CreateAccount
                 account.UserName!,
                 account.Name?.Value,
                 account.Gender.Value,
-                account.Media
+                account.Media,
+                mediaCreated
             );
     }
 }

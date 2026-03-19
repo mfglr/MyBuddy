@@ -1,6 +1,6 @@
 ﻿namespace Shared.Events.Account
 {
-    public record AccountUserNameUpdatedEvent(
+    public record AccountMediaCreatedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
@@ -10,6 +10,7 @@
         string UserName,
         string? Name,
         string Gender,
-        IEnumerable<Media.Models.Media> Media
+        IEnumerable<Media.Models.Media> Media,
+        Media.Models.Media MediaCreated
     );
 }

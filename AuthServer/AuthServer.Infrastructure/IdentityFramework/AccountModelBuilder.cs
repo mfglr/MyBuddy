@@ -15,6 +15,7 @@ namespace AuthServer.Infrastructure.IdentityFramework
                 x => x.Gender,
                 gender => gender.Property(x => x.Value).HasDefaultValue("unkown")
             );
+            builder.Property(x => x.Media).HasColumnType("jsonb");
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿namespace Media.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Media.Models
 {
+    [method:JsonConstructor]
     public record Media(
         string ContainerName,
         string BlobName,
