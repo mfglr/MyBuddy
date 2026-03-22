@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using UserQueryService.Shared.Model;
 
 namespace UserQueryService.Shared.MongoDB
@@ -32,6 +33,15 @@ namespace UserQueryService.Shared.MongoDB
             var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id) & Builders<User>.Filter.Lt(x => x.Version, user.Version);
             var options = new ReplaceOptions { IsUpsert = true };
             return context.Users.ReplaceOneAsync(filter, user, options, cancellationToken);
+        }
+
+        public Task DeleteHardAsync(TimeSpan timeSpan, CancellationToken cancellationToken)
+        {
+            var dateTime = DateTime.UtcNow.Subtract(timeSpan);
+            var filter =
+                Builders<User>.Filter.Ne(x => x.DeletedAt, null) &
+                Builders<User>.Filter.Lte(x => x.DeletedAt, dateTime);
+            return context.Users.DeleteManyAsync(filter, cancellationToken: cancellationToken);
         }
 
         public Task IncreasePostCount(Guid id, CancellationToken cancellationToken)
