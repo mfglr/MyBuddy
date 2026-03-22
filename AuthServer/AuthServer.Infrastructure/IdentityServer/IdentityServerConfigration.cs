@@ -63,6 +63,12 @@ namespace AuthServer.Infrastructure.IdentityServer
                     ]
                 },
 
+                new("comment_like_query.api"){
+                    Scopes = [
+                        "comment_like_query"
+                    ]
+                },
+
                 new("blob.api"){
                     Scopes = [
                         "blob.read",
@@ -89,6 +95,7 @@ namespace AuthServer.Infrastructure.IdentityServer
                 new("comment_query"),
 
                 new("comment_like"),
+                new("comment_like_query"),
 
                 new("blob.read"),
                 new("blob.write"),
@@ -120,6 +127,7 @@ namespace AuthServer.Infrastructure.IdentityServer
                         "comment_query",
 
                         "comment_like",
+                        "comment_like_query",
 
                         "blob.read",
 

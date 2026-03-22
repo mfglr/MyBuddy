@@ -13,9 +13,9 @@ namespace CommentLikeService.Application.UseCases.DislikeComment
     {
         public async Task Handle(DislikeCommentRequest request, CancellationToken cancellationToken)
         {
-            var commentLikeId = new CommentLikeId(request.CommentId, authService.UserId);
+            var commentLikeId = new CommentLikeId(request.CommentId, authService.CurrentUser.Id);
             var like = 
-                await repository.GetCommentByIdAsync(commentLikeId, cancellationToken) ??
+                await repository.GetByIdAsync(commentLikeId, cancellationToken) ??
                 throw new CommentLikeNotAvailableException();
             like.Dislike();
             await repository.UpdateAsync(like, cancellationToken);

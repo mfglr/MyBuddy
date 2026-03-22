@@ -14,21 +14,25 @@ namespace CommentLikeService.Application.UseCases.LikeComment
     {
         public async Task Handle(LikeCommentRequest request, CancellationToken cancellationToken)
         {
-            var id = new CommentLikeId(request.CommentId, authService.UserId);
-            var like = await repository.GetCommentByIdAsync(id, cancellationToken);
+            var currentUser = authService.CurrentUser;
+            var id = new CommentLikeId(request.CommentId, currentUser.Id);
+            var like = await repository.GetByIdAsync(id, cancellationToken);
             if (like == null)
             {
                 like = new CommentLike(id);
                 await repository.CreateAsync(like, cancellationToken);
+                var @event = mapper.MapCreatedEvent(like, currentUser);
+                await publishEndpoint.Publish(@event, cancellationToken);
             }
             else
             {
                 like.Like();
                 await repository.UpdateAsync(like, cancellationToken);
+                var @event = mapper.MapLikedEvent(like);
+                await publishEndpoint.Publish(@event, cancellationToken);
             }
 
-            var @event = mapper.Map(like);
-            await publishEndpoint.Publish(@event, cancellationToken);
+            
         }
     }
 }

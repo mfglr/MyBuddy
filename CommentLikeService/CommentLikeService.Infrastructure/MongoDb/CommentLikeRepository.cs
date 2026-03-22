@@ -6,7 +6,7 @@ namespace CommentLikeService.Infrastructure.MongoDb
 {
     internal class CommentLikeRepository(MongoContext context, MongoDbContext mongoDbContext) : ICommentLikeRepository
     {
-        public async Task<CommentLike?> GetCommentByIdAsync(CommentLikeId id, CancellationToken cancellationToken)
+        public async Task<CommentLike?> GetByIdAsync(CommentLikeId id, CancellationToken cancellationToken)
         {
             var filter = Builders<CommentLike>.Filter.Eq(x => x.Id, id);
             var result = await context.CommentLikes.FindAsync(filter, cancellationToken: cancellationToken);

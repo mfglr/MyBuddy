@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using CommentQueryService.Domain;
+using MassTransit;
 using MediatR;
 using Shared.Events.Account;
 
@@ -9,7 +10,16 @@ namespace CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountM
         ISender sender
     ) : IConsumer<AccountMediaSetEvent>
     {
-        public Task Consume(ConsumeContext<AccountMediaSetEvent> context) =>
-            sender.Send(mapper.Map(context.Message), context.CancellationToken);
+        public async Task Consume(ConsumeContext<AccountMediaSetEvent> context)
+        {
+            try
+            {
+                await sender.Send(mapper.Map(context.Message), context.CancellationToken);
+            }
+            catch (OutdatedVersionException)
+            {
+                return;
+            }
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using CommentLikeService.Application;
+using Duende.IdentityModel;
+using Shared.Events;
 using Shared.Exceptions;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace CommentLikeService.Api.Auth
 {
@@ -8,7 +11,7 @@ namespace CommentLikeService.Api.Auth
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-        public Guid UserId =>
+        private Guid UserId =>
             Guid.Parse(
                 _httpContextAccessor
                     .HttpContext?
@@ -18,5 +21,51 @@ namespace CommentLikeService.Api.Auth
                     .Value ??
                 throw new AuthorizationException()
             );
+
+        private int Version =>
+            int.Parse(
+                _httpContextAccessor
+                    .HttpContext?
+                    .User
+                    .Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.Version)?
+                    .Value ??
+                throw new AuthorizationException()
+            );
+
+        private string UserName =>
+            _httpContextAccessor
+                .HttpContext?
+                .User
+                .Claims
+                .FirstOrDefault(x => x.Type == JwtClaimTypes.PreferredUserName)?
+                .Value ??
+            throw new AuthorizationException();
+
+        private string? Name =>
+            _httpContextAccessor
+                .HttpContext?
+                .User
+                .Claims
+                .FirstOrDefault(x => x.Type == ClaimTypes.Name)?
+                .Value;
+
+        private CurrentUserMedia? Media
+        {
+            get
+            {
+                var picture = _httpContextAccessor
+                    .HttpContext?
+                    .User
+                    .Claims
+                    .FirstOrDefault(x => x.Type == JwtClaimTypes.Picture)?
+                    .Value;
+
+                return picture != null ? JsonSerializer.Deserialize<CurrentUserMedia>(picture) : null;
+            }
+        }
+
+
+        public CurrentUser CurrentUser => new(UserId, Version, UserName, Name, Media);
     }
 }

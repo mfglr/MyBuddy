@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-CommentLikeQueryService.Worker-81380436-40e3-43fc-8072-67647bd01c14</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="9.0.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\CommentLikeQueryService.Application\CommentLikeQueryService.Application.csproj" />
+    <ProjectReference Include="..\CommentLikeQueryService.Infrastructure\CommentLikeQueryService.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

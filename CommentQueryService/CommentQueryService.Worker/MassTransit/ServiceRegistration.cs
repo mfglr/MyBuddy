@@ -7,6 +7,7 @@ using CommentQueryService.Worker.MassTransit.Consumers.IncreaseLikeCount_OnComme
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateComment_OnCommentDeleted;
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateComment_OnContentUpdated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateComment_OnModerationResultSet;
+using CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountMediaCreated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountMediaSet;
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountNameUpdated;
 using CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountUserNameUpdated;
@@ -27,6 +28,7 @@ namespace CommentQueryService.Worker.MassTransit
 
                 .AddSingleton<UpsertUser_OnAccountUserNameUpdated_Mapper>()
                 .AddSingleton<UpdateUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpdateUser_OnAccountMediaCreated_Mapper>()
                 .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
                 .AddMassTransit(
                     x =>
@@ -42,6 +44,7 @@ namespace CommentQueryService.Worker.MassTransit
 
                         x.AddConsumer<UpdateUser_OnAccountUserNameUpdated_CommentQueryService>();
                         x.AddConsumer<UpdateUser_OnAccountNameUpdated_CommentQueryService>();
+                        x.AddConsumer<UpdateUser_OnAccountMediaCreated_CommentQueryService>();
                         x.AddConsumer<UpdateUser_OnAccountMediaSet_CommentQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>

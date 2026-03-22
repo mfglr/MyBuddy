@@ -1,7 +1,9 @@
-﻿namespace CommentLikeService.Application
+﻿using Shared.Events;
+
+namespace CommentLikeService.Application
 {
     public interface IAuthService
     {
-        Guid UserId { get; }
+        CurrentUser CurrentUser { get; }
     }
 }

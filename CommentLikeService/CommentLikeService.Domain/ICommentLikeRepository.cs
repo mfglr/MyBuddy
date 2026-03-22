@@ -2,7 +2,7 @@
 {
     public interface ICommentLikeRepository
     {
-        Task<CommentLike?> GetCommentByIdAsync(CommentLikeId id, CancellationToken cancellationToken);
+        Task<CommentLike?> GetByIdAsync(CommentLikeId id, CancellationToken cancellationToken);
         Task<List<CommentLike>> GetCommentLikesByCommentIdAsync(Guid commentId, CancellationToken cancellationToken);
         Task<List<CommentLike>> GetCommentLikesExceptDeletedAsync(Guid commentId, CancellationToken cancellationToken);
         Task<bool> ExistAsync(CommentLikeId id, CancellationToken cancellationToken);

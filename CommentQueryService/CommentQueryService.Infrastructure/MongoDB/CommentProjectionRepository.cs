@@ -49,6 +49,8 @@ namespace CommentQueryService.Infrastructure.MongoDB
 
         public async Task UpdateAsync(IEnumerable<CommentProjection> comments, CancellationToken cancellationToken)
         {
+            if (!comments.Any()) return;
+
             var updates = new List<WriteModel<CommentProjection>>();
             foreach (var comment in comments)
             {

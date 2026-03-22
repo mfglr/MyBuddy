@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using CommentQueryService.Domain;
+using MassTransit;
 using MediatR;
 using Shared.Events.Comment;
 
@@ -9,7 +10,16 @@ namespace CommentQueryService.Worker.MassTransit.Consumers.UpdateComment_OnComme
         UpdateComment_OnCommentDeleted_Mapper mapper
     ) : IConsumer<CommentDeletedEvent>
     {
-        public Task Consume(ConsumeContext<CommentDeletedEvent> context) =>
-            sender.Send(mapper.Map(context.Message), context.CancellationToken);
+        public async Task Consume(ConsumeContext<CommentDeletedEvent> context)
+        {
+            try
+            {
+                await sender.Send(mapper.Map(context.Message), context.CancellationToken);
+            }
+            catch (OutdatedVersionException)
+            {
+                return;
+            }
+        }
     }
 }
