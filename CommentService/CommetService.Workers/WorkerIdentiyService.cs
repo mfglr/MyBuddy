@@ -1,9 +1,10 @@
 ﻿using CommentService.Application;
+using Shared.Events;
 
 namespace CommetService.Workers
 {
     internal class WorkerIdentiyService : IAuthService
     {
-        public Guid UserId => default;
+        public CurrentUser CurrentUser => throw new NotImplementedException();
     }
 }

@@ -14,10 +14,10 @@ namespace CommentService.Application.UseCases.CreateComment
     {
         public async Task<CreateCommentResponse> Handle(CreateCommentRequest request, CancellationToken cancellationToken)
         {
-            var userId = authService.UserId;
+            var currentUser = authService.CurrentUser;
             var content = new Content(request.Content);
             var comment = await commentCreatorDomainService.CreateAsync(
-                userId,
+                currentUser.Id,
                 request.PostId,
                 request.RepliedId,
                 content,
@@ -25,7 +25,7 @@ namespace CommentService.Application.UseCases.CreateComment
             );
             await commentRepsitory.CreateAsync(comment, cancellationToken);
 
-            var @event = mapper.Map(comment);
+            var @event = mapper.Map(comment, currentUser);
             await publishEndpoint.Publish(@event, cancellationToken);
 
             return new(comment.Id);

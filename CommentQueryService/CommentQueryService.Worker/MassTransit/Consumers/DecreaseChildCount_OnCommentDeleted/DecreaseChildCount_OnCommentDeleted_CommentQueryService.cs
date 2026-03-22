@@ -1,10 +1,10 @@
-﻿using CommentQueryService.Shared.Model;
+﻿using CommentQueryService.Domain;
 using MassTransit;
 using Shared.Events.Comment;
 
 namespace CommentQueryService.Worker.MassTransit.Consumers.DecreaseChildCount_OnCommentDeleted
 {
-    internal class DecreaseChildCount_OnCommentDeleted_CommentQueryService(ICommentRepository repository) : IConsumer<CommentDeletedEvent>
+    internal class DecreaseChildCount_OnCommentDeleted_CommentQueryService(ICommentProjectionRepository repository) : IConsumer<CommentDeletedEvent>
     {
         public Task Consume(ConsumeContext<CommentDeletedEvent> context) =>
             context.Message.ParentId != null

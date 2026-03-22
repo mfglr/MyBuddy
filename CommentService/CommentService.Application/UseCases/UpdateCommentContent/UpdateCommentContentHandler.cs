@@ -19,7 +19,7 @@ namespace CommentService.Application.UseCases.UpdateCommentContent
                 await commentRepository.GetCommentExceptDeletedByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
 
-            if (comment.UserId != authService.UserId)
+            if (comment.UserId != authService.CurrentUser.Id)
                 throw new ForbiddenOperationException();
 
             var content = new Content(request.Content);

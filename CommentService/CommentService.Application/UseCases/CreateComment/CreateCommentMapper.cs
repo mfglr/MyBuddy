@@ -1,4 +1,5 @@
 ﻿using CommentService.Domain;
+using Shared.Events;
 using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.CreateComment
@@ -11,7 +12,7 @@ namespace CommentService.Application.UseCases.CreateComment
                 content.ModerationResult
             );
 
-        public CommentCreatedEvent Map(Comment comment) =>
+        public CommentCreatedEvent Map(Comment comment,CurrentUser user) =>
             new(
                 comment.Id,
                 comment.CreatedAt,
@@ -23,7 +24,8 @@ namespace CommentService.Application.UseCases.CreateComment
                 comment.PostId,
                 comment.ParentId,
                 comment.RepliedId,
-                Map(comment.Content)
+                Map(comment.Content),
+                user
             );
     }
 }

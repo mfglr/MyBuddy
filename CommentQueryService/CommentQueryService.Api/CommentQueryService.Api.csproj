@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d1d42a20-98fd-488f-8685-f264f60c12c7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommentQueryService.Shared\CommentQueryService.Shared.csproj" />
+    <ProjectReference Include="..\CommentQueryService.Application\CommentQueryService.Application.csproj" />
+    <ProjectReference Include="..\CommentQueryService.Infrastructure\CommentQueryService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
