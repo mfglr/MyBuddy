@@ -2,31 +2,26 @@
 using MongoDB.Driver;
 using PostService.Infrastructure.MongoDB;
 using PostService.Workers.Consumers;
+using PostService.Workers.Consumers.DeletePosts_OnAccountDeleted;
+using PostService.Workers.Consumers.SetPostContentModerationResult;
+using PostService.Workers.Consumers.SetPostMedia;
 
 namespace PostService.Workers.Consumers
 {
-    internal class MassTransitOptions
-    {
-        public required string Host { get; set; }
-        public required string VirtualHost { get; set; }
-        public required string Password { get; set; }
-        public required string UserName { get; set; }
-    }
-
     internal static class ServiceRegistration
     {
         public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
             var option = configuration.GetSection(nameof(MassTransitOptions)).Get<MassTransitOptions>()!;
             return services
-                .AddSingleton<SetPostContentModerationResult.SetPostContentModerationResult_PostContentClassified_Mapper>()
-                .AddSingleton<SetPostMedia.SetPostMedia_OnMediaPreprocessingCompleted_Mapper>()
+                .AddSingleton<SetPostContentModerationResult_PostContentClassified_Mapper>()
+                .AddSingleton<SetPostMedia_OnMediaPreprocessingCompleted_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
-                        x.AddConsumer<SetPostContentModerationResult.SetPostContentModerationResult_PostContentClassified_PostService>();
-                        x.AddConsumer<SetPostMedia.SetPostMedia_OnMediaPreprocessingCompleted_PostService>();
-
+                        x.AddConsumer<SetPostContentModerationResult_PostContentClassified_PostService>();
+                        x.AddConsumer<SetPostMedia_OnMediaPreprocessingCompleted_PostService>();
+                        x.AddConsumer<DeletePosts_OnAccountDeleted_PostService>();
                         x.AddMongoDbOutbox(o =>
                         {
                             o.QueryDelay = TimeSpan.FromSeconds(1);
@@ -62,10 +57,8 @@ namespace PostService.Workers.Consumers
                                 h.Username(option.UserName);
                                 h.Password(option.Password);
                             });
-
                             cfg.ConfigureEndpoints(context);
                         });
-
                     }
                 );
         }

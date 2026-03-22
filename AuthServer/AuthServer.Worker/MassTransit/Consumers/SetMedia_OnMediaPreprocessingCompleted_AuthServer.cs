@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using AuthServer.Domain;
+using MassTransit;
 using MediatR;
 using Shared.Events.MediaService;
 
@@ -10,7 +11,7 @@ namespace AuthServer.Worker.MassTransit.Consumers
     ) : IConsumer<MediaPreprocessingCompletedEvent>
     {
         public Task Consume(ConsumeContext<MediaPreprocessingCompletedEvent> context) =>
-            context.Message.ContainerName == "UserMedia"
+            context.Message.ContainerName == Account.MediaContainerName
             ? sender.Send(mapper.Map(context.Message), context.CancellationToken)
             : Task.CompletedTask;
     }

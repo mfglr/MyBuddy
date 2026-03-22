@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostService.Application.UseCases.CreatePost;
 using PostService.Application.UseCases.DeletePost;
+using PostService.Application.UseCases.DeletePosts;
 using PostService.Application.UseCases.RestorePost;
 using PostService.Application.UseCases.SetPostContentModerationResult;
 using PostService.Application.UseCases.SetPostMedia;
@@ -20,6 +21,7 @@ namespace PostService.Application
                 .AddSingleton<RestorePostMapper>()
                 .AddSingleton<SetPostContentModerationResultMapper>()
                 .AddSingleton<SetPostMediaMapper>()
+                .AddSingleton<DeletePostsMapper>()
                 .AddMediatR(
                     cfg =>
                     {
