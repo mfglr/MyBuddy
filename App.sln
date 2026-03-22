@@ -247,6 +247,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeQueryService.Api
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommentLikeQueryService.Worker", "CommentLikeQueryService\CommentLikeQueryService.Worker\CommentLikeQueryService.Worker.csproj", "{4B5E72FF-98BF-44D0-89C3-1A8C6981DBAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.CleanUp", "AuthServer\AuthServer.CleanUp\AuthServer.CleanUp.csproj", "{817BC4FD-F43F-4E9D-A869-DF4846962245}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -637,6 +639,10 @@ Global
 		{4B5E72FF-98BF-44D0-89C3-1A8C6981DBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B5E72FF-98BF-44D0-89C3-1A8C6981DBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B5E72FF-98BF-44D0-89C3-1A8C6981DBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{817BC4FD-F43F-4E9D-A869-DF4846962245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{817BC4FD-F43F-4E9D-A869-DF4846962245}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{817BC4FD-F43F-4E9D-A869-DF4846962245}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{817BC4FD-F43F-4E9D-A869-DF4846962245}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -737,6 +743,7 @@ Global
 		{61BCC8A8-7D42-4ACF-BBBA-B407CCF9A247} = {F8E9A4AE-6EA4-404E-8418-8F458874B0D6}
 		{226A70CB-31A6-4BEE-98F2-D0E48B3F2791} = {F8E9A4AE-6EA4-404E-8418-8F458874B0D6}
 		{4B5E72FF-98BF-44D0-89C3-1A8C6981DBAD} = {F8E9A4AE-6EA4-404E-8418-8F458874B0D6}
+		{817BC4FD-F43F-4E9D-A869-DF4846962245} = {4C405AB7-6504-49AC-96F5-778EB92769D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E394BB55-5333-4ABF-B4E9-BEAC4395597E}
