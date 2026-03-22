@@ -10,6 +10,8 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnAccountUserNameUpdated
                 @event.Id,
                 @event.CreatedAt,
                 @event.UpdatedAt,
+                @event.DeletedAt,
+                @event.IsDeleted,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

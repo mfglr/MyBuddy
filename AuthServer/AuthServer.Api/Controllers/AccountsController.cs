@@ -41,7 +41,7 @@ namespace AuthServer.Api.Controllers
 
         [Authorize(Policy = "account", Roles = "user")]
         [HttpDelete]
-        public Task Delete(DeleteAccountRequest request, CancellationToken cancellationToken) =>
-            sender.Send(request, cancellationToken);
+        public Task Delete(CancellationToken cancellationToken) =>
+            sender.Send(new DeleteAccountRequest(), cancellationToken);
     }
 }

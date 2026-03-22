@@ -15,6 +15,8 @@ namespace UserQueryService.Shared.MongoDB
                 cm.MapIdMember(q => q.Id);
                 cm.MapMember(q => q.CreatedAt);
                 cm.MapMember(q => q.UpdatedAt);
+                cm.MapMember(q => q.DeletedAt);
+                cm.MapMember(q => q.IsDeleted);
                 cm.MapMember(q => q.Version);
                 cm.MapMember(q => q.Name);
                 cm.MapMember(q => q.UserName);

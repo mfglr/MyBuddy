@@ -4,6 +4,7 @@ using UserQueryService.Worker.Consumers.DecreasePostCountOnPostCreated;
 using UserQueryService.Worker.Consumers.IncreasePostCountOnPostCreated;
 using UserQueryService.Worker.Consumers.IncreasePostCountOnPostRestored;
 using UserQueryService.Worker.Consumers.UpsertUserOnAccountCreated;
+using UserQueryService.Worker.Consumers.UpsertUserOnAccountDeleted;
 using UserQueryService.Worker.Consumers.UpsertUserOnAccountGenderUpdated;
 using UserQueryService.Worker.Consumers.UpsertUserOnAccountMediaSet;
 using UserQueryService.Worker.Consumers.UpsertUserOnAccountNameUpdated;
@@ -22,6 +23,7 @@ namespace UserQueryService.Worker.Consumers
                 .AddSingleton<UpsertUser_OnAccountCreated_Mapper>()
                 .AddSingleton<UpsertUser_OnAccountMediaSet_Mapper>()
                 .AddSingleton<UpsertUser_OnAccountUserNameUpdated_Mapper>()
+                .AddSingleton<UpsertUser_OnAccountDeleted_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
@@ -33,6 +35,7 @@ namespace UserQueryService.Worker.Consumers
                         x.AddConsumer<IncreasePostCount_OnPostCreated_UserQueryService>();
                         x.AddConsumer<DecreasePostCount_OnPostCreated_UserQueryService>();
                         x.AddConsumer<IncreasePostCount_OnPostRestored_UserQueryService>();
+                        x.AddConsumer<UpsertUser_OnAccountDeleted_UserQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

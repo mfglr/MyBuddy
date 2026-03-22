@@ -1,11 +1,11 @@
 ﻿using Shared.Events.Account;
 using UserQueryService.Shared.Model;
 
-namespace UserQueryService.Worker.Consumers.UpsertUserOnAccountGenderUpdated
+namespace UserQueryService.Worker.Consumers.UpsertUserOnAccountDeleted
 {
-    internal class UpsertUser_OnAccountGenderUpdated_Mapper
+    internal class UpsertUser_OnAccountDeleted_Mapper
     {
-        public User Map(AccountGenderUpdatedEvent @event) =>
+        public User Map(AccountDeletedEvent @event) =>
             new(
                 @event.Id,
                 @event.CreatedAt,

@@ -4,6 +4,8 @@
         Guid id,
         DateTime createdAt,
         DateTime? updatedAt,
+        DateTime? deletedAt,
+        bool isDeleted,
         int version,
         string? name,
         string userName,
@@ -14,6 +16,8 @@
         public Guid Id { get; private set; } = id;
         public DateTime CreatedAt { get; private set; } = createdAt;
         public DateTime? UpdatedAt { get; private set; } = updatedAt;
+        public DateTime? DeletedAt { get; private set; } = deletedAt;
+        public bool IsDeleted { get; private set; } = isDeleted;
         public int Version { get; private set; } = version;
         public string? Name { get; private set; } = name;
         public string UserName { get; private set; } = userName;
