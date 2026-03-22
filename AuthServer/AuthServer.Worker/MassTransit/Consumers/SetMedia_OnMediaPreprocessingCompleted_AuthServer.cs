@@ -10,6 +10,8 @@ namespace AuthServer.Worker.MassTransit.Consumers
     ) : IConsumer<MediaPreprocessingCompletedEvent>
     {
         public Task Consume(ConsumeContext<MediaPreprocessingCompletedEvent> context) =>
-            sender.Send(mapper.Map(context.Message), context.CancellationToken);
+            context.Message.ContainerName == "UserMedia"
+            ? sender.Send(mapper.Map(context.Message), context.CancellationToken)
+            : Task.CompletedTask;
     }
 }

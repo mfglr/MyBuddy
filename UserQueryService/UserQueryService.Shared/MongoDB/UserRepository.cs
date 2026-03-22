@@ -33,5 +33,19 @@ namespace UserQueryService.Shared.MongoDB
             var options = new ReplaceOptions { IsUpsert = true };
             return context.Users.ReplaceOneAsync(filter, user, options, cancellationToken);
         }
+
+        public Task IncreasePostCount(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<User>.Filter.Eq(x => x.Id, id);
+            var update = Builders<User>.Update.Inc(x => x.PostCount, 1);
+            return context.Users.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+        }
+
+        public Task DecreasePostCount(Guid id, CancellationToken cancellationToken)
+        {
+            var filter = Builders<User>.Filter.Eq(x => x.Id, id);
+            var update = Builders<User>.Update.Inc(x => x.PostCount, -1);
+            return context.Users.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+        }
     }
 }

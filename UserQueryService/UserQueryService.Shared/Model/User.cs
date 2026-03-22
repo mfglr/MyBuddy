@@ -19,5 +19,6 @@
         public string UserName { get; private set; } = userName;
         public string Gender { get; private set; } = gender;
         public IReadOnlyList<Media.Models.Media> Media { get; private set; } = [..media];
+        public int PostCount { get; private set; } = 0;
     }
 }

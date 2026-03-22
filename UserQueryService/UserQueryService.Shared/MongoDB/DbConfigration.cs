@@ -20,6 +20,7 @@ namespace UserQueryService.Shared.MongoDB
                 cm.MapMember(q => q.UserName);
                 cm.MapMember(q => q.Gender);
                 cm.MapMember(q => q.Media);
+                cm.MapMember(q => q.PostCount);
             });
             BsonClassMap.RegisterClassMap<Media.Models.Media>(cm =>
             {
