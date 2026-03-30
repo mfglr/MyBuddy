@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PostQueryService.Shared\PostQueryService.Shared.csproj" />
+    <ProjectReference Include="..\PostQueryService.Application\PostQueryService.Application.csproj" />
+    <ProjectReference Include="..\PostQueryService.Infrastructure\PostQueryService.Infrastructure.csproj" />
   </ItemGroup>
 </Project>
