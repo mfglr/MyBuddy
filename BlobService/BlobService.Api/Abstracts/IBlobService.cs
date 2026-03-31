@@ -11,5 +11,8 @@
         Task UploadAsync(IFormFile media, string containerName, string blobName, CancellationToken cancellationToken);
         Task UploadAsync(Stream stream, string containerName, string blobName, CancellationToken cancellationToken);
         Task<bool> Exist(string containerName, string blobName, CancellationToken cancellationToken);
+
+
+        Task<string?> MovePrevUploadNextAsync(IFormFile media, string containerName, string blobName, CancellationToken cancellationToken);
     }
 }

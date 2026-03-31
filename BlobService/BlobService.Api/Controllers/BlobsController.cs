@@ -22,6 +22,12 @@ namespace BlobService.Api.Controllers
         public Task<IEnumerable<string>> Upload([FromForm]UploadRequest request, CancellationToken cancellationToken) =>
             _blobService.UploadAsync(request.ContainerName, request.Media, cancellationToken);
 
+        [Authorize("write")]
+        [RequestSizeLimit(104857600)]
+        [HttpPost]
+        public Task<string?> MovePrevUploadNext([FromForm] MovePrevUploadNextRequest request, CancellationToken cancellationToken) =>
+            _blobService.MovePrevUploadNextAsync(request.Media, request.ContainerName, request.BlobName, cancellationToken);
+
         [Authorize("delete")]
         [HttpPost]
         public Task Delete(DeleteBlobRequest request, CancellationToken cancellationToken) =>

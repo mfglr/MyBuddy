@@ -115,5 +115,23 @@ namespace BlobService.Api.Concretes
             return blobName;
         }
 
+        public async Task<string?> MovePrevUploadNextAsync(IFormFile media, string containerName, string blobName, CancellationToken cancellationToken)
+        {
+            CheckContainer(containerName);
+            string? nextBlobName = null;
+            string prev = _pathFinder.GetPath(containerName, blobName);
+
+            if (File.Exists(prev))
+            {
+                nextBlobName = _uniqNameGenerator.Generate();
+                var next = _pathFinder.GetPath(containerName, nextBlobName);
+                File.Move(prev, next);
+            }
+
+            using var stream = media.OpenReadStream();
+            using var file = File.OpenWrite(prev);
+            await stream.CopyToAsync(file, cancellationToken);
+            return nextBlobName;
+        }
     }
 }
