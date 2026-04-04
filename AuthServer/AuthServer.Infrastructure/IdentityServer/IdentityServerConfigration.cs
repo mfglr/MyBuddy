@@ -199,6 +199,17 @@ namespace AuthServer.Infrastructure.IdentityServer
                         "blob.write",
                         "blob.delete"
                     ]
+                },
+
+
+                new (){
+                    ClientId = "post_query.client",
+                    ClientSecrets = [new Secret("secret".Sha256())],
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AccessTokenLifetime = 600, // 10 minutes
+                    AllowedScopes = [
+                        "account"
+                    ]
                 }
 
             ];

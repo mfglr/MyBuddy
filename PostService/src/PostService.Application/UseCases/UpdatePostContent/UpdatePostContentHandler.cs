@@ -3,14 +3,14 @@ using MediatR;
 using PostService.Application.Exceptions;
 using PostService.Domain;
 using PostService.Domain.Exceptions;
-using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.UpdatePostContent
 {
     internal class UpdatePostContentHandler(
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
-        IAuthService authService
+        IAuthService authService,
+        UpdatePostContentMapper mapper
     ) : IRequestHandler<UpdatePostContentRequest>
     {
         public async Task Handle(UpdatePostContentRequest request, CancellationToken cancellationToken)
@@ -26,7 +26,7 @@ namespace PostService.Application.UseCases.UpdatePostContent
             post.UpdateContent(content);
             await postRepository.UpdateAsync(post, cancellationToken);
 
-            var @event = new PostContentUpdatedEvent(post.Id, content.Value);
+            var @event = mapper.Map(post);
             await publishEndpoint.Publish(@event, cancellationToken);
         }
     }

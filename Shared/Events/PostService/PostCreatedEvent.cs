@@ -1,6 +1,11 @@
-﻿namespace Shared.Events.PostService
+﻿using Media.Models;
+
+namespace Shared.Events.PostService
 {
-    public record PostCreatedEvent_Content(string Value);
+    public record PostCreatedEvent_Content(
+        string Value,
+        ModerationResult? ModerationResult
+    );
     public record PostCreatedEvent(
         Guid Id,
         DateTime CreatedAt,

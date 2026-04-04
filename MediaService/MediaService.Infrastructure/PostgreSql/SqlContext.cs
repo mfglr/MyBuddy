@@ -25,7 +25,7 @@ namespace MediaService.Infrastructure.PostgreSql
         public SqlContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<SqlContext>();
-            builder.UseNpgsql("Host=localhost;Port=2345;Username=postgres;Password=123456789Abc*;Database=MediaDB;");
+            builder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=123456789Abc*;Database=MediaDB;");
             return new SqlContext(builder.Options);
         }
     }

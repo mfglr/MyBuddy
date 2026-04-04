@@ -1,87 +1,48 @@
 ﻿using Elastic.Clients.Elasticsearch;
-using PostQueryService.Domain;
+using PostQueryService.Domain.PostProjectionAggregate;
 
 namespace PostQueryService.Infrastructure.ElastichSearch
 {
-    internal class PostProjectionRepository(ElasticsearchClient client, ElasticSearchOptions options, VersionMapper mapper) : IPostProjectionRepository
+    internal class PostProjectionRepository(ElasticsearchClient client, ElasticSearchOptions options) : IPostProjectionRepository
     {
-        public async Task<PostProjection?> GetByIdAsync(string id, CancellationToken cancellationToken)
+        public async Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var result = await client.GetAsync<PostProjection>(id, x => x.Index(options.IndexName), cancellationToken);
-            return result.Found ? mapper.Map(result) : null;
+            var response = await client.GetAsync<PostProjection>(options.PostIndexName, id, cancellationToken: cancellationToken);
+
+            if (!response.IsSuccess())
+                throw new ElasticSearchException();
+
+            if (!response.Found)
+                return default;
+
+            return (response.Source, response.PrimaryTerm, response.SeqNo);
         }
 
-        public async Task<IReadOnlyCollection<PostProjection>> GetByUserAsync(User user, CancellationToken cancellationToken)
+        public async Task CreateAsync(PostProjection postProjection, CancellationToken cancellationToken)
         {
-            var result = await client.SearchAsync<PostProjection>(s => s
-                .Indices(options.IndexName)
-                .Query(q => q.Term(t => t.Field(f => f.User.Id).Value(user.Id))),
-                cancellationToken: cancellationToken
-            );
-
-            if (!result.IsSuccess())
-                throw new Exception();
-
-            return mapper.Map(result);
-        }
-
-        public Task CreateAsync(PostProjection postProjection, CancellationToken cancellationToken) =>
-            client.IndexAsync(
+            var response = await client.IndexAsync(
                 postProjection,
                 postProjection.Id,
-                x => x.Index(options.IndexName),
+                x => x.Index(options.PostIndexName),
                 cancellationToken: cancellationToken
             );
 
-        public Task DeleteAsync(List<PostProjection> postProjections, CancellationToken cancellationToken) =>
-            client.BulkAsync(brd =>
-                brd
-                    .Index(options.IndexName)
-                    .DeleteMany(
-                        postProjections,
-                        (descriptor, postProjection) => descriptor
-                            .Id(postProjection.Id)
-                            .IfPrimaryTerm((postProjection.Version as Version)?.PrimaryTerm)
-                            .IfSequenceNumber((postProjection.Version as Version)?.SeqNo)
-                    ),
-                cancellationToken:cancellationToken
-            );
+            if (!response.IsSuccess())
+                throw new ElasticSearchException();
+        }
 
-        public async Task UpdateAsync(PostProjection postProjection, CancellationToken cancellationToken)
+        public async Task UpdateAsync(PostProjection postProjection, long? primaryTerm, long? sequenceNumber, CancellationToken cancellationToken)
         {
             var response = await client.UpdateAsync<PostProjection, PostProjection>(
-                options.IndexName,
+                options.PostIndexName,
                 postProjection.Id,
-                x => x
-                    .Doc(postProjection)
-                    .IfPrimaryTerm((postProjection.Version as Version)?.PrimaryTerm)
-                    .IfSeqNo((postProjection.Version as Version)?.SeqNo),
+                x => x.Doc(postProjection).IfPrimaryTerm(primaryTerm).IfSeqNo(sequenceNumber),
                 cancellationToken: cancellationToken
             );
+            if (response.ApiCallDetails.HttpStatusCode == 409)
+                throw new ConcurrencyException();
             if (!response.IsSuccess())
                 throw new ElasticSearchException();
         }
-
-
-        public async Task UpdateAsync(List<PostProjection> postProjections, CancellationToken cancellationToken)
-        {
-            var response = await client.BulkAsync(brd =>
-                brd
-                    .Index(options.IndexName)
-                    .UpdateMany(
-                        postProjections,
-                        (descriptor, postProjection) => descriptor
-                            .Id(postProjection.Id)
-                            .Doc(postProjection)
-                            .IfPrimaryTerm((postProjection.Version as Version)?.PrimaryTerm)
-                            .IfSequenceNumber((postProjection.Version as Version)?.SeqNo)
-                    ),
-                cancellationToken: cancellationToken
-            );
-
-            if (!response.IsSuccess())
-                throw new ElasticSearchException();
-        }
-            
     }
 }

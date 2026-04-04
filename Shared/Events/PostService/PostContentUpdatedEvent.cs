@@ -1,4 +1,20 @@
-﻿namespace Shared.Events.PostService
+﻿using Media.Models;
+
+namespace Shared.Events.PostService
 {
-    public record PostContentUpdatedEvent(Guid Id,string Content);
+    public record PostContentUpdatedEvent_Content(
+        string Value,
+        ModerationResult? ModerationResult
+    );
+    public record PostContentUpdatedEvent(
+        Guid Id,
+        DateTime CreatedAt,
+        DateTime? UpdatedAt,
+        DateTime? DeletedAt,
+        bool IsDeleted,
+        int Version,
+        Guid UserId,
+        PostContentUpdatedEvent_Content? Content,
+        IEnumerable<Media.Models.Media> Media
+    );
 }

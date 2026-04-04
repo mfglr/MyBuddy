@@ -7,6 +7,7 @@ using PostService.Application.UseCases.DeletePosts;
 using PostService.Application.UseCases.RestorePost;
 using PostService.Application.UseCases.SetPostContentModerationResult;
 using PostService.Application.UseCases.SetPostMedia;
+using PostService.Application.UseCases.UpdatePostContent;
 using System.Reflection;
 
 namespace PostService.Application
@@ -22,6 +23,7 @@ namespace PostService.Application
                 .AddSingleton<SetPostContentModerationResultMapper>()
                 .AddSingleton<SetPostMediaMapper>()
                 .AddSingleton<DeletePostsMapper>()
+                .AddSingleton<UpdatePostContentMapper>()
                 .AddMediatR(
                     cfg =>
                     {

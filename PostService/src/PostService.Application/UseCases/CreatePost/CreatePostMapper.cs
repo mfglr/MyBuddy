@@ -5,6 +5,12 @@ namespace PostService.Application.UseCases.CreatePost
 {
     internal class CreatePostMapper
     {
+        private PostCreatedEvent_Content Map(Content content) =>
+            new(
+                content.Value,
+                content.ModerationResult
+            );   
+
         public PostCreatedEvent Map(Post post) =>
             new(
                 post.Id,
@@ -14,7 +20,7 @@ namespace PostService.Application.UseCases.CreatePost
                 post.IsDeleted,
                 post.Version,
                 post.UserId,
-                post.Content != null ? new PostCreatedEvent_Content(post.Content.Value) : null,
+                post.Content != null ? Map(post.Content) : null,
                 post.Media
             );
     }

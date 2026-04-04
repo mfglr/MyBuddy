@@ -2,6 +2,9 @@
 {
     internal record ElasticSearchOptions(
         string Host,
-        string IndexName
+        string PostIndexName,
+        string UserIndexName,
+        string UserName,
+        string Password
     );
 }

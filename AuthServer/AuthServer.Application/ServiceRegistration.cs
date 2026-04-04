@@ -1,6 +1,7 @@
 ﻿using AuthServer.Application.UseCases.CreateAccount;
 using AuthServer.Application.UseCases.CreateMedia;
 using AuthServer.Application.UseCases.DeleteAccount;
+using AuthServer.Application.UseCases.GetById;
 using AuthServer.Application.UseCases.SetMedia;
 using AuthServer.Application.UseCases.UpdateEmail;
 using AuthServer.Application.UseCases.UpdateGender;
@@ -17,6 +18,7 @@ namespace AuthServer.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
+                .AddSingleton<GetByIdMapper>()
                 .AddSingleton<MediaInstructionGenerator>()
                 .AddSingleton<MediaTypeExtractor>()
                 .AddSingleton<CreateAccountMapper>()
