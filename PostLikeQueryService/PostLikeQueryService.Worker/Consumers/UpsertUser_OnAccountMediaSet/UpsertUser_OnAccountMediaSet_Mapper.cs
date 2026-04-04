@@ -1,13 +1,14 @@
-﻿using PostLikeQueryService.Shared.Model;
+﻿using PostLikeQueryService.Application.UseCases.UpsertUser;
 using Shared.Events.Account;
 
 namespace PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountMediaSet
 {
     internal class UpsertUser_OnAccountMediaSet_Mapper
     {
-        public User Map(AccountMediaSetEvent @event) =>
-            new(
+        public UpsertUserRequest Map(AccountMediaSetEvent @event) =>
+             new(
                 @event.Id,
+                @event.DeletedAt,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

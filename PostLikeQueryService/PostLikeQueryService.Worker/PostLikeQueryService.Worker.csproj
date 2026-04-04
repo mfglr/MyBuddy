@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\PostLikeQueryService.Shared\PostLikeQueryService.Shared.csproj" />
+    <ProjectReference Include="..\PostLikeQueryService.Application\PostLikeQueryService.Application.csproj" />
+    <ProjectReference Include="..\PostLikeQueryService.Infrastructure\PostLikeQueryService.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

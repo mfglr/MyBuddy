@@ -14,6 +14,8 @@ namespace PostService.Application.UseCases.DeletePosts
         public async Task Handle(DeletePostsRequest request, CancellationToken cancellationToken)
         {
             var posts = await postRepository.GetByUserIdAsync(request.UserId, cancellationToken);
+            if (posts.Count == 0) return;
+            
             foreach (var post in posts)
                 post.Delete();
             await postRepository.UpdateAsync(posts, cancellationToken);

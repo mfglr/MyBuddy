@@ -1,12 +1,16 @@
-using PostLikeQueryService.Shared;
+using PostLikeQueryService.Application;
 using PostLikeQueryService.Worker.Consumers;
+using PostLikeQueryService.Infrastructure;
+using PostLikeQueryService.Infrastructure.MongoDB;
+
+DbConfigration.Configure();
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
     .AddMassTransit(builder.Configuration)
-    .AddShared(builder.Configuration);
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration);
 
 var host = builder.Build();
-
 host.Run();

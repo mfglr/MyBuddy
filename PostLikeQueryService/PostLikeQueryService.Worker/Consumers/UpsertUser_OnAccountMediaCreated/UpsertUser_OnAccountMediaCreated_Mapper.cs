@@ -1,11 +1,11 @@
 ﻿using PostLikeQueryService.Application.UseCases.UpsertUser;
 using Shared.Events.Account;
 
-namespace PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountUserNameUpdated
+namespace PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountMediaCreated
 {
-    internal class UpsertUser_OnAccountUserNameUpdated_Mapper
+    internal class UpsertUser_OnAccountMediaCreated_Mapper
     {
-        public UpsertUserRequest Map(AccountUserNameUpdatedEvent @event) =>
+        public UpsertUserRequest Map(AccountMediaCreatedEvent @event) =>
             new(
                 @event.Id,
                 @event.DeletedAt,

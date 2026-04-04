@@ -8,7 +8,7 @@ namespace ElasticSearch.IntegreationTests
     public class PostRepositoryInfrastuctureTests : IClassFixture<ElasticFixture>
     {
         private readonly PostProjectionRepository _repository;
-        private readonly ElasticSearchOptions _options = new ElasticSearchOptions("", "posts", "", "", "");
+        private readonly ElasticSearchOptions _options = new ("", "posts", "", "", "");
         private readonly UserFaker _userFaker = new ();
         private readonly PostContentFaker _postContentFaker = new ();
         private readonly PostFaker _postFaker;
