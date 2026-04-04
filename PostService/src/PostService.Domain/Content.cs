@@ -1,4 +1,5 @@
 ﻿using Media.Models;
+using PostService.Domain.Exceptions;
 
 namespace PostService.Domain
 {
@@ -10,8 +11,6 @@ namespace PostService.Domain
         public string Value { get; private set; }
         public ModerationResult? ModerationResult { get; private set; }
 
-        public bool IsValidVersion => ModerationResult != null;
-
         private Content(string value, ModerationResult? moderationResult)
         {
             Value = value;
@@ -20,12 +19,16 @@ namespace PostService.Domain
 
         public Content(string value)
         {
-            if (value == null || value.Length < MinLength || value.Length > MaxLength)
-                throw new Exception("Content exception");
+            if (string.IsNullOrWhiteSpace(value))
+                throw new PostContentException("Post content cannot be empty!");
+
+            if (value.Length < MinLength || value.Length > MaxLength)
+                throw new PostContentException($"Value length must be between {MinLength} and {MaxLength}.");
+
             Value = value;
             ModerationResult = null;
         }
 
-        public Content SetModerationResult(ModerationResult result) => new(Value, result);
+        public Content SetModerationResult(ModerationResult result) => new (Value, result);
     }
 }

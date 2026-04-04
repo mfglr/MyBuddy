@@ -12,11 +12,12 @@ namespace PostService.Domain
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
         public DateTime? DeletedAt { get; private set; }
-        public bool IsDeleted { get; private set; }
         public Guid UserId { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<Media.Models.Media> Media { get; private set; }
+
+        public bool IsDeleted => DeletedAt != null;
 
         public Post(Guid userId, Content? content, IReadOnlyList<Media.Models.Media> media)
         {
@@ -34,7 +35,7 @@ namespace PostService.Domain
             Content = content;
             CreatedAt = DateTime.UtcNow;
             Version = 1;
-            Media = media;
+            Media = [.. media];
         }
 
         public void Delete()
@@ -42,7 +43,6 @@ namespace PostService.Domain
             if (IsDeleted)
                 throw new PostNotFoundException();
 
-            IsDeleted = true;
             DeletedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -52,7 +52,6 @@ namespace PostService.Domain
             if (!IsDeleted)
                 throw new PostAlreadyAvailableException();
 
-            IsDeleted = false;
             DeletedAt = null;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -90,7 +89,7 @@ namespace PostService.Domain
             if (IsDeleted)
                 throw new PostNotFoundException();
 
-            var media = 
+            var media =
                 Media.FirstOrDefault(x => x.BlobName == blobName) ??
                 throw new PostMediaNotFoundException();
             
