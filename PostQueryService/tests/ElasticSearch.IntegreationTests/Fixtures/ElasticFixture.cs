@@ -1,5 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
+using PostQueryService.Infrastructure.ElastichSearch;
 using Testcontainers.Elasticsearch;
 
 namespace ElasticSearch.IntegreationTests.Fixtures
@@ -13,11 +14,10 @@ namespace ElasticSearch.IntegreationTests.Fixtures
         {
             _container = new ElasticsearchBuilder("docker.elastic.co/elasticsearch/elasticsearch:9.3.2").Build();
             await _container.StartAsync();
-
             var settings = new ElasticsearchClientSettings(new Uri(_container.GetConnectionString()))
                 .ServerCertificateValidationCallback(CertificateValidations.AllowAll);
-
             Client = new ElasticsearchClient(settings);
+            await ElasticSearchInitializer.CreateIndices(Client, new("", "posts", "users", "", ""));
         }
 
         public async Task DisposeAsync()

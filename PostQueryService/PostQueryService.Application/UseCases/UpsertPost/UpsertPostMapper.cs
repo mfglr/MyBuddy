@@ -43,8 +43,8 @@ namespace PostQueryService.Application.UseCases.UpsertPost
 
         public PostProjection Map(UpsertPostRequest request, User user) =>
             new(
-                request.Id,
-                request.UserId,
+                request.Id.ToString(),
+                request.UserId.ToString(),
                 MapPost(request),
                 Map(user)
             );

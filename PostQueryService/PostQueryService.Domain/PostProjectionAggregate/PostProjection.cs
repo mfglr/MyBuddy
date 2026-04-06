@@ -1,12 +1,11 @@
 ﻿namespace PostQueryService.Domain.PostProjectionAggregate
 {
-    public class PostProjection(Guid id, Guid userId, Post post, PostProjectionUser user)
+    public class PostProjection(string id, string userId, Post post, PostProjectionUser user)
     {
-        public Guid Id { get; private set; } = id;
-        public Guid UserId { get; private set; } = userId;
+        public string Id { get; private set; } = id;
+        public string UserId { get; private set; } = userId;
         public Post Post { get; private set; } = post;
         public PostProjectionUser User { get; private set; } = user;
-
 
         public bool TryUpdatePost(Post post)
         {

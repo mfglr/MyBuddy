@@ -2,8 +2,17 @@
 {
     public interface IPostProjectionRepository
     {
-        Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<List<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)>> GetPostByUserAsync(
+            string userId,
+            int version,
+            string? cursor,
+            int pageSize,
+            CancellationToken cancellationToken
+        );
+
+        Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken);
         Task CreateAsync(PostProjection postProjection, CancellationToken cancellationToken);
-        Task UpdateAsync(PostProjection postProjection, long? primaryTerm, long? sequenceNumber, CancellationToken cancellation);
+        Task UpdateAsync((PostProjection postProjection, long? primaryTerm, long? sequenceNumber) tuple, CancellationToken cancellation);
+        Task UpdateManyAsync(IEnumerable<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)> tuples, CancellationToken cancellationToken);
     }
 }

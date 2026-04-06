@@ -27,14 +27,8 @@ namespace PostQueryService.Infrastructure.ElastichSearch
             }
         }
 
-        public static async Task Init(IServiceProvider serviceProvider)
+        public static async Task CreateIndices(ElasticsearchClient client, ElasticSearchOptions options)
         {
-            var client = serviceProvider.GetRequiredService<ElasticsearchClient>();
-            var options = serviceProvider.GetRequiredService<ElasticSearchOptions>();
-            var logger = serviceProvider.GetRequiredService<ILogger<ElasticSearchInitializer>>();
-
-            await EnsureElasticIsReady(client, logger);
-
             await client.Indices
                 .CreateAsync<User>(
                     index => index
@@ -90,14 +84,34 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                                                                     )
                                                             )
                                                         )
-                                                        .Object("media",x => x.Enabled(false))
+                                                        .Object("media", x => x.Enabled(false))
 
                                                 )
                                             )
-                                            .Object(x => x.User,x => x.Enabled(false))
+                                            .Object(
+                                                x => x.User,
+                                                obj => obj
+                                                    .Properties(
+                                                        p => p
+                                                            .IntegerNumber("version")
+                                                            .Keyword("name",x => x.Index(false))
+                                                            .Keyword("userName",x => x.Index(false))
+                                                            .Object("media",x => x.Enabled(false))
+                                                    )
+                                            )
                                 )
                         )
                 );
+        }
+
+        public static async Task Init(IServiceProvider serviceProvider)
+        {
+            var client = serviceProvider.GetRequiredService<ElasticsearchClient>();
+            var options = serviceProvider.GetRequiredService<ElasticSearchOptions>();
+            var logger = serviceProvider.GetRequiredService<ILogger<ElasticSearchInitializer>>();
+
+            await EnsureElasticIsReady(client, logger);
+            await CreateIndices(client, options);
         }
     }
 }

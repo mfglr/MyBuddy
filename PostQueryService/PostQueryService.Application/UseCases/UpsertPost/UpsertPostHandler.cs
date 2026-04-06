@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PostQueryService.Domain;
 using PostQueryService.Domain.PostProjectionAggregate;
 using PostQueryService.Domain.UserAggregate;
 
@@ -13,7 +12,10 @@ namespace PostQueryService.Application.UseCases.UpsertPost
     {
         public async Task Handle(UpsertPostRequest request, CancellationToken cancellationToken)
         {
-            var (postProjection, primaryTerm, sequenceNumber) = await postProjectionRepository.GetByIdAsync(request.Id, cancellationToken);
+            var (postProjection, primaryTerm, sequenceNumber) = await postProjectionRepository.GetByIdAsync(
+                request.Id.ToString(),
+                cancellationToken
+            );
 
             if(postProjection == null)
             {
@@ -28,7 +30,7 @@ namespace PostQueryService.Application.UseCases.UpsertPost
             {
                 var post = mapper.MapPost(request);
                 if(postProjection.TryUpdatePost(post))
-                    await postProjectionRepository.UpdateAsync(postProjection, primaryTerm, sequenceNumber, cancellationToken);
+                    await postProjectionRepository.UpdateAsync((postProjection, primaryTerm, sequenceNumber), cancellationToken);
             }
 
         }

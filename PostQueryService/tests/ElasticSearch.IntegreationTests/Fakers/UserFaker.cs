@@ -19,5 +19,15 @@ namespace ElasticSearch.IntegreationTests.Fakers
         }
 
         public PostProjectionUser GenerateRandomUser() => _faker.Generate();
+        public PostProjectionUser GenerateRandomUser(int version)
+        {
+            var user = _faker.Generate();
+            return new(
+                version,
+                user.Name,
+                user.UserName,
+                user.Media
+            );
+        }
     }
 }

@@ -1,5 +1,9 @@
 ﻿using MassTransit;
 using PostQueryService.Worker.Consumers;
+using PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountMediaCreated;
+using PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountMediaSet;
+using PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountNameUpdated;
+using PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountUserNameUpdated;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostContentModerationResultSetEvent;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostContentUpdated;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostCreated;
@@ -33,6 +37,10 @@ namespace PostQueryService.Worker.Consumers
                 .AddSingleton<UpsertPost_OnPostMediaSet_Mapper>()
                 .AddSingleton<UpsertPost_OnPostDeleted_Mapper>()
 
+                .AddSingleton<UpdatePostUser_OnAccountUserNameUpdated_Mapper>()
+                .AddSingleton<UpdatePostUser_OnAccountNameUpdated_Mapper>()
+                .AddSingleton<UpdatePostUser_OnAccountMediaCreated_Mapper>()
+                .AddSingleton<UpdatePostUser_OnAccountMediaSet_Mapper>()
                 .AddMassTransit(
                     x =>
                     {
@@ -48,6 +56,11 @@ namespace PostQueryService.Worker.Consumers
                         x.AddConsumer<UpsertPost_OnPostCreated_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostMediaSet_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostDeleted_PostQueryService>();
+
+                        x.AddConsumer<UpdatePostUser_OnAccountUserNameUpdated_PostQueryService>();
+                        x.AddConsumer<UpdatePostUser_OnAccountNameUpdated_PostQueryService>();
+                        x.AddConsumer<UpdatePostUser_OnAccountMediaCreated_PostQueryService>();
+                        x.AddConsumer<UpdatePostUser_OnAccountMediaSet_PostQueryService>();
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {
