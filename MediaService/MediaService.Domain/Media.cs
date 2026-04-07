@@ -7,23 +7,21 @@ namespace MediaService.Domain
         public string ContainerName { get; private set; } = null!;
         public string BlobName { get; private set; } = null!;
         public Guid OwnerId { get; private set; }
-        public int Version { get; private set; } = 1;
-        public MediaType Type { get; private set; }
-        public Metadata? Metadata { get; private set; }
-        public ModerationResult? ModerationResult { get; private set; }
-        public IReadOnlyList<Thumbnail> Thumbnails { get; private set; } = [];
-        public IReadOnlyList<Transcoding> Transcodings { get; private set; } = [];
-        public MediaInstruction Instruction { get; private set; } = null!;
+        public MediaProcessingContext Context { get; private set; } = null!;
+
+        public void SetMetadata(Metadata metadata) => Context = Context.SetMetadata(metadata);
+        public void SetModerationResult(ModerationResult moderationResult) => Context = Context.SetModerationResult(moderationResult);
+        public void AddThumbnail(Thumbnail thumbnail) => Context = Context.AddThumbnail(thumbnail);
+        public void AddTranscoding(Transcoding transcoding) => Context = Context.AddTranscoding(transcoding);
 
         private Media(){}
 
-        public Media(string containerName, string blobName, Guid ownerId, MediaType type, MediaInstruction instruction)
+        public Media(string containerName, string blobName, Guid ownerId, MediaProcessingContext context)
         {
             ContainerName = containerName;
             BlobName = blobName;
             OwnerId = ownerId;
-            Type = type;
-            Instruction = instruction;
+            Context = context;
         }
     }
 }

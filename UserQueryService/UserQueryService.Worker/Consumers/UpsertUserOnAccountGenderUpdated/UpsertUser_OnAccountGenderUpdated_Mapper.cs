@@ -1,10 +1,18 @@
-﻿using Shared.Events.Account;
+﻿using Shared.Events;
+using Shared.Events.Account;
 using UserQueryService.Shared.Model;
 
 namespace UserQueryService.Worker.Consumers.UpsertUserOnAccountGenderUpdated
 {
     internal class UpsertUser_OnAccountGenderUpdated_Mapper
     {
+        public UserMedia Map(MediaMessage media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Context
+            );
+
         public User Map(AccountGenderUpdatedEvent @event) =>
             new(
                 @event.Id,
@@ -16,7 +24,7 @@ namespace UserQueryService.Worker.Consumers.UpsertUserOnAccountGenderUpdated
                 @event.Name,
                 @event.UserName,
                 @event.Gender,
-                @event.Media
+                @event.Media.Select(Map)
             );
     }
 }

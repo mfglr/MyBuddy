@@ -14,8 +14,8 @@ namespace AuthServer.Domain
         public int Version { get; private set; }
         public Name? Name { get; private set; }
         public Gender Gender { get; private set; } = null!;
-        public IReadOnlyList<Media.Models.Media> Media { get; private set; } = null!;
-        public Media.Models.Media? Picture => Media.FirstOrDefault();
+        public IReadOnlyList<AccountMedia> Media { get; private set; } = null!;
+        public AccountMedia? Picture => Media.FirstOrDefault();
 
         private Account() { }
 
@@ -81,11 +81,11 @@ namespace AuthServer.Domain
             Version++;
         }
 
-        public void CreateMedia(Media.Models.Media media)
+        public void CreateMedia(AccountMedia media)
         {
             if (IsDeleted)
                 throw new AccountNotFoundException();
-            if (media.Type != MediaType.Image)
+            if (media.Context.Type != MediaType.Image)
                 throw new InvalidMediaTypeException();
 
             Media = [media, .. Media];
@@ -93,15 +93,10 @@ namespace AuthServer.Domain
             Version++;
         }
 
-        public void SetMedia(
-            string blobName,
-            Metadata? metadata,
-            ModerationResult? moderationResult,
-            IEnumerable<Thumbnail> thumbnails
-        )
+        public void SetMedia(string blobName,MediaProcessingContext context)
         {
             var media = Media.FirstOrDefault(m => m.BlobName == blobName) ?? throw new MediaNotFoundException();
-            Media = [.. Media.Select(x => x == media ? media.Set(metadata, moderationResult, thumbnails, []) : x)];
+            Media = [.. Media.Select(x => x == media ? media.Set(context) : x)];
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

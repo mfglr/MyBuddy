@@ -14,7 +14,6 @@ namespace MediaService.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
-                .AddSingleton<MediaPreprocessingCompletionEvaluator>()
                 .AddSingleton<CreateMedia_MessageGenerator>()
                 .AddSingleton<SetMetadata_MessageGenerator>()
                 .AddSingleton<SetModerationResult_MessageGenerator>()

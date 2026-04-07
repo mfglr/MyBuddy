@@ -15,6 +15,6 @@ namespace Shared.Events.PostService
         int Version,
         Guid UserId,
         PostRestoredEvent_Content? Content,
-        IEnumerable<Media.Models.Media> Media
+        IEnumerable<MediaMessage> Media
     );
 }

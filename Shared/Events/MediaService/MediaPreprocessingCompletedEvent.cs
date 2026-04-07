@@ -6,10 +6,6 @@ namespace Shared.Events.MediaService
         Guid Id,
         string ContainerName,
         string BlobName,
-        Metadata? Metadata,
-        ModerationResult? ModerationResult,
-        IEnumerable<Transcoding> Transcodings,
-        IEnumerable<Thumbnail> Thumbnails,
-        MediaInstruction Instruction
+        MediaProcessingContext Context
     );
 }

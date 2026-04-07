@@ -1,15 +1,16 @@
 ﻿using CommentQueryService.Application.UseCases.UpdateUser;
 using CommentQueryService.Domain;
+using Shared.Events;
 using Shared.Events.Account;
 
 namespace CommentQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountMediaSet
 {
     internal class UpsertUser_OnAccountMediaSet_Mapper
     {
-        private UserMedia Map(Media.Models.Media media) =>
+        private UserMedia Map(MediaMessage media) =>
             new(
-                media.ModerationResult,
-                media.Thumbnails
+                media.Context.ModerationResult,
+                media.Context.Thumbnails
             );
         
         public UpdateUserRequest Map(AccountMediaSetEvent @event) =>

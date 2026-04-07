@@ -9,10 +9,7 @@ namespace AuthServer.Worker.MassTransit.Consumers
             new(
                 @event.Id,
                 @event.BlobName,
-                @event.Metadata,
-                @event.ModerationResult,
-                @event.Thumbnails,
-                @event.Transcodings
+                @event.Context
             );
     }
 }

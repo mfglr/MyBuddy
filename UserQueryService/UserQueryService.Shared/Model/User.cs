@@ -10,7 +10,7 @@
         string? name,
         string userName,
         string gender,
-        IEnumerable<Media.Models.Media> media
+        IEnumerable<UserMedia> media
     )
     {
         public Guid Id { get; private set; } = id;
@@ -22,7 +22,7 @@
         public string? Name { get; private set; } = name;
         public string UserName { get; private set; } = userName;
         public string Gender { get; private set; } = gender;
-        public IReadOnlyList<Media.Models.Media> Media { get; private set; } = [..media];
+        public IReadOnlyList<UserMedia> Media { get; private set; } = [..media];
         public int PostCount { get; private set; } = 0;
     }
 }

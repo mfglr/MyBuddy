@@ -24,14 +24,11 @@ namespace UserQueryService.Shared.MongoDB
                 cm.MapMember(q => q.Media);
                 cm.MapMember(q => q.PostCount);
             });
-            BsonClassMap.RegisterClassMap<Media.Models.Media>(cm =>
+            BsonClassMap.RegisterClassMap<UserMedia>(cm =>
             {
                 cm.MapMember(q => q.ContainerName);
                 cm.MapMember(q => q.BlobName);
-                cm.MapMember(q => q.Type);
-                cm.MapMember(q => q.Metadata);
-                cm.MapMember(q => q.ModerationResult);
-                cm.MapMember(q => q.Thumbnails);
+                cm.MapMember(q => q.Context);
             });
         }
     }

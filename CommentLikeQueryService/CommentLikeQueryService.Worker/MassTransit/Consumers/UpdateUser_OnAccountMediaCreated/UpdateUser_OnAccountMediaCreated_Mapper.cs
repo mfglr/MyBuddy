@@ -1,15 +1,16 @@
 ﻿using CommentLikeQueryService.Application.UseCases.UpdateUser;
 using CommentLikeQueryService.Domain;
+using Shared.Events;
 using Shared.Events.Account;
 
 namespace CommentLikeQueryService.Worker.MassTransit.Consumers.UpdateUser_OnAccountMediaCreated
 {
     internal class UpdateUser_OnAccountMediaCreated_Mapper
     {
-        public UserMedia Map(Media.Models.Media media) =>
+        public UserMedia Map(MediaMessage media) =>
             new(
-                media.ModerationResult,
-                media.Thumbnails
+                media.Context.ModerationResult,
+                media.Context.Thumbnails
             );
 
         public UpdateUserRequest Map(AccountMediaCreatedEvent @event) =>

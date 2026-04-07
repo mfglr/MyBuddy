@@ -54,7 +54,7 @@ namespace AuthServer.Infrastructure.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<IReadOnlyList<Media.Models.Media>>("Media")
+                    b.Property<IReadOnlyList<Media.Models.MediaProcessingContext>>("Media")
                         .IsRequired()
                         .HasColumnType("jsonb");
 

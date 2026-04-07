@@ -11,35 +11,6 @@ namespace AuthServer.Infrastructure.IdentityFramework
 {
     internal class AccountRepository(UserManager<Account> userManager, SqlContext context) : IAccountRepository
     {
-        private static JsonSerializerOptions _options = new()
-        {
-            TypeInfoResolver = new DefaultJsonTypeInfoResolver
-            {
-                Modifiers = { typeInfo => {
-                    if (typeInfo.Type == typeof(Media.Models.Media))
-                    {
-                        var prop1 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.ContainerName));
-                        prop1?.ShouldSerialize = (_, _) => false;
-
-                        var prop2 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.BlobName));
-                        prop2?.ShouldSerialize = (_, _) => false;
-
-                        var prop3 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Type));
-                        prop3?.ShouldSerialize = (_, _) => false;
-
-                        var prop4 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Metadata));
-                        prop4?.ShouldSerialize = (_, _) => false;
-
-                        var prop5 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Transcodings));
-                        prop5?.ShouldSerialize = (_, _) => false;
-
-                        var prop6 = typeInfo.Properties.FirstOrDefault(p => p.Name == nameof(Media.Models.Media.Instruction));
-                        prop6?.ShouldSerialize = (_, _) => false;
-                    }
-                }}
-            }
-        };
-
         public Task CreateAsync(Account account, string password) =>
             userManager.CreateAsync(account, password);
 
@@ -77,18 +48,7 @@ namespace AuthServer.Infrastructure.IdentityFramework
         {
             var list = new List<Claim>();
             var roles = await userManager.GetRolesAsync(account);
-
             list.AddRange(roles.Select(x => new Claim(ClaimTypes.Role, x)));
-            list.Add(new Claim(ClaimTypes.Gender, account.Gender.Value));
-            list.Add(new Claim(JwtClaimTypes.PreferredUserName, account.UserName!));
-            list.Add(new Claim(ClaimTypes.Version, account.Version.ToString()));
-            if (account.Name != null)
-                list.Add(new Claim(ClaimTypes.Name, account.Name.Value));
-            if (account.Picture != null)
-                list.Add(new Claim(
-                    JwtClaimTypes.Picture,
-                    JsonSerializer.Serialize(account.Picture,options: _options)
-                ));
             return list;
         }
     }

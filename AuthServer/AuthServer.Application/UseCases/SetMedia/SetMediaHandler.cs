@@ -15,7 +15,7 @@ namespace AuthServer.Application.UseCases.SetMedia
             var account = 
                 await accountRepository.GetByIdAsync(request.Id) ??
                 throw new AccountNotFoundException();
-            account.SetMedia(request.BlobName, request.Metadata, request.ModerationResult, request.Thumbnails);
+            account.SetMedia(request.BlobName, request.Context);
 
             var @event = mapper.Map(account);
             await publishEndpoint.Publish(@event, cancellationToken);

@@ -1,10 +1,10 @@
 ﻿using Media.Models;
 
-namespace PostService.Application
+namespace PostService.Application.UseCases.CreatePost
 {
-    internal static class MediaInstructionCreator
+    internal class MediaInstructionCreator
     {
-        public static MediaInstruction Create() =>
+        public MediaInstruction Create() =>
             new (){
                 MetadataInstruction = new()
                 {
@@ -21,8 +21,12 @@ namespace PostService.Application
                     }
                 },
                 ThumbnailInstructions = [
-                    new(720,false),
-                    new(360,true)
+                    new(1080, false),
+                    new(720, false),
+                    new(360, true),
+                    new(240, true),
+                    new(120, true),
+                    new(60, true),
                 ],
                 TranscodingInstructions = [
                     new(720)

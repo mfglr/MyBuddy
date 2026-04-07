@@ -7,17 +7,20 @@ namespace PostService.Application.UseCases.CreatePost
     internal class CreatePostHandler(
         IPostRepository postRepository,
         IBlobService blobService,
-        CreatePostMapper mapper,
         IAuthService authService,
-        IPublishEndpoint publishEndpoint
+        IPublishEndpoint publishEndpoint,
+        CreatePostMapper mapper,
+        MediaTypeExtractor mediaTypeExtractor,
+        MediaGenerator mediaGenerator
     ) : IRequestHandler<CreatePostRequest, CreatePostResponse>
     {
         public async Task<CreatePostResponse> Handle(CreatePostRequest request, CancellationToken cancellationToken)
         {
-            var types = CreatePostHelpers.GetMediaTypes(request.Media);
             var content = request.Content != null ? new Content(request.Content) : null;
+
+            var types = mediaTypeExtractor.GetMediaTypes(request.Media);
             var blobNames = await blobService.UploadAsync(Post.MediaContainerName, request.Media, cancellationToken);
-            var media = CreatePostHelpers.GenerateMedia(types, blobNames);
+            var media = mediaGenerator.Generate(types, blobNames);
             try
             {
                 var post = new Post(authService.UserId, content, media);

@@ -10,7 +10,7 @@ namespace AuthServer.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<IReadOnlyList<Media.Models.Media>>(
+            migrationBuilder.AddColumn<IReadOnlyList<Media.Models.MediaProcessingContext>>(
                 name: "Media",
                 table: "AspNetUsers",
                 type: "jsonb",

@@ -6,8 +6,7 @@ namespace PostQueryService.Application.UseCases.UpsertUser
 {
     internal class UpsertUserHandler(
         IUserRepository userRepository,
-        UpsertUserMapper userMapper,
-        MediaMapper mediaMapper
+        UpsertUserMapper userMapper
     ) : IRequestHandler<UpsertUserRequest>
     {
         public async Task Handle(UpsertUserRequest request, CancellationToken cancellationToken)
@@ -25,7 +24,7 @@ namespace PostQueryService.Application.UseCases.UpsertUser
                     request.Version,
                     request.Name,
                     request.UserName,
-                    request.Media != null ? mediaMapper.Map(request.Media) : null
+                    request.Media != null ? userMapper.Map(request.Media) : null
                 );
                 if(updated)
                     await userRepository.UpdateAsync(user, primaryTerm, sequenceNumber, cancellationToken);

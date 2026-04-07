@@ -23,16 +23,11 @@ namespace PostService.Infrastructure.MongoDB
                 cm.MapMember(q => q.Content);
                 cm.MapMember(q => q.Media);
             });
-            BsonClassMap.RegisterClassMap<Media.Models.Media>(cm =>
+            BsonClassMap.RegisterClassMap<PostMedia>(cm =>
             {
                 cm.MapMember(q => q.ContainerName);
                 cm.MapMember(q => q.BlobName);
-                cm.MapMember(q => q.Type);
-                cm.MapMember(q => q.Metadata);
-                cm.MapMember(q => q.ModerationResult);
-                cm.MapMember(q => q.Thumbnails);
-                cm.MapMember(q => q.Transcodings);
-                cm.MapMember(q => q.Instruction);
+                cm.MapMember(q => q.Context);
             });
             BsonClassMap.RegisterClassMap<MediaInstruction>(cm =>
             {

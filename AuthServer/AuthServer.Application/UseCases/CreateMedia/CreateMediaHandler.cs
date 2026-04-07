@@ -1,5 +1,6 @@
 ﻿using AuthServer.Domain;
 using MassTransit;
+using Media.Models;
 using MediatR;
 
 namespace AuthServer.Application.UseCases.CreateMedia
@@ -24,7 +25,7 @@ namespace AuthServer.Application.UseCases.CreateMedia
             {
                 var type = mediaTypeExtractor.Extract(request.Media);
                 blobName = await blobService.UploadAsync(Account.MediaContainerName, request.Media, cancellationToken);
-                var media = Media.Models.Media.Create(Account.MediaContainerName, blobName, type, mediaInstructionGenerator.Generate());
+                var media = new AccountMedia(Account.MediaContainerName, blobName, MediaProcessingContext.Create(type,mediaInstructionGenerator.Generate()));
                 account.CreateMedia(media);
 
                 var @event = mapper.Map(account, media);

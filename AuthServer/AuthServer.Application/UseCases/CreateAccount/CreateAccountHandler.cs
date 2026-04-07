@@ -18,11 +18,10 @@ namespace AuthServer.Application.UseCases.CreateAccount
 
             await accountRepository.AddRoleToAccountAsync(account, "user");
 
-            var id = Guid.Parse(account.Id);
             var @event = mapper.Map(account);
             await publishEndpoint.Publish(@event, cancellationToken);
-
-            return new(id);
+            
+            return new(Guid.Parse(account.Id));
         }
     }
 }

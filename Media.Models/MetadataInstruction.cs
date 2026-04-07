@@ -5,5 +5,6 @@
         public MetadataConstraints? Constraints { get; set; }
         
         public bool IsValid(Metadata metadata) => Constraints?.IsValid(metadata) ?? true;
+        public bool IsValidationRequired => Constraints?.IsValidationRequired ?? false;
     }
 }

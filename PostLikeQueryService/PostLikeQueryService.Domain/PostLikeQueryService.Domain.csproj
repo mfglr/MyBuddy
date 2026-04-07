@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PostLikeAggregate\**" />
+    <EmbeddedResource Remove="PostLikeAggregate\**" />
+    <None Remove="PostLikeAggregate\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Media.Models\Media.Models.csproj" />
   </ItemGroup>
 

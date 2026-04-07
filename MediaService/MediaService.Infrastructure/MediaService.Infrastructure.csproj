@@ -17,4 +17,8 @@
     <ProjectReference Include="..\MediaService.Application\MediaService.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="MediaService.Integreation.Tests"/>
+  </ItemGroup>
+
 </Project>

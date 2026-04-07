@@ -22,7 +22,7 @@ namespace MediaService.Infrastructure.PostgreSql
             var metadataValue = JsonSerializer.Serialize(metadata);
             var sql = FormattableStringFactory.Create(@"
                     UPDATE ""Media""
-                    SET ""Metadata"" = {0}::jsonb
+                    SET ""Context.Metadata"" = {0}::jsonb
                     WHERE ""ContainerName"" = {1} and ""BlobName"" = {2}
                     RETURNING *",
                     metadataValue,
@@ -37,7 +37,7 @@ namespace MediaService.Infrastructure.PostgreSql
             var moderationResultValue = JsonSerializer.Serialize(moderationResult);
             var sql = FormattableStringFactory.Create(@"
                     UPDATE ""Media""
-                    SET ""ModerationResult"" = {0}::jsonb
+                    SET ""Context.ModerationResult"" = {0}::jsonb
                     WHERE ""ContainerName"" = {1} and ""BlobName"" = {2}
                     RETURNING *",
                     moderationResultValue,
@@ -52,7 +52,7 @@ namespace MediaService.Infrastructure.PostgreSql
             var thumbnailValue = JsonSerializer.Serialize(thumbnail);
             var sql = FormattableStringFactory.Create(@"
                     UPDATE ""Media""
-                    SET ""Thumbnails"" = ""Thumbnails"" || {0}::jsonb
+                    SET ""Context.Thumbnails"" = ""Thumbnails"" || {0}::jsonb
                     WHERE ""ContainerName"" = {1} and ""BlobName"" = {2}
                     RETURNING *",
                     thumbnailValue,
@@ -67,7 +67,7 @@ namespace MediaService.Infrastructure.PostgreSql
             var transcodingValue = JsonSerializer.Serialize(transcoding);
             var sql = FormattableStringFactory.Create(@"
                     UPDATE ""Media""
-                    SET ""Transcodings"" = ""Transcodings"" || {0}::jsonb
+                    SET ""Context.Transcodings"" = ""Transcodings"" || {0}::jsonb
                     WHERE ""ContainerName"" = {1} and ""BlobName"" = {2}
                     RETURNING *",
                     transcodingValue,
@@ -75,6 +75,20 @@ namespace MediaService.Infrastructure.PostgreSql
                     blobName
             );
             return (await context.Media.FromSqlInterpolated(sql).AsNoTracking().ToListAsync(cancellationToken)).FirstOrDefault();
+        }
+
+        public async Task<Domain.Media?> GetForUpdateByIdAsync(string containerName, string blobName, CancellationToken cancellationToken)
+        {
+            var sql = FormattableStringFactory.Create(
+                @"
+                    SELECT * FROM ""Media""
+                    WHERE ""ContainerName"" = {0} and ""BlobName"" = {1}
+                    FOR UPDATE;
+                ",
+                containerName,
+                blobName
+            );
+            return (await context.Media.FromSqlInterpolated(sql).AsTracking().ToListAsync(cancellationToken)).FirstOrDefault();
         }
     }
 }

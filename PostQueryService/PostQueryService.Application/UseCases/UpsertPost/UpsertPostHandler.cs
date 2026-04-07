@@ -32,7 +32,6 @@ namespace PostQueryService.Application.UseCases.UpsertPost
                 if(postProjection.TryUpdatePost(post))
                     await postProjectionRepository.UpdateAsync((postProjection, primaryTerm, sequenceNumber), cancellationToken);
             }
-
         }
     }
 }

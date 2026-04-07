@@ -8,19 +8,22 @@
         public IReadOnlyList<TranscodingInstruction> TranscodingInstructions { get; set; } = [];
 
         public bool IsValidMetadata(Metadata metadata) => MetadataInstruction?.IsValid(metadata) ?? true;
+        public bool IsMetadataValidationRequired => MetadataInstruction?.IsValidationRequired ?? false;
+
         public bool IsValidModerationResult(ModerationResult moderationResult) => ModerationInstruction?.IsValid(moderationResult) ?? true;
+        public bool IsModerationValidationRequired => ModerationInstruction?.IsValidationRequired ?? false;
 
         public MetadataState MetadataState =>
             MetadataInstruction == null
                 ? MetadataState.ShouldNotCalculate
-                : MetadataInstruction != null && MetadataInstruction.Constraints != null && MetadataInstruction.Constraints.IsValidationRequired
+                : IsMetadataValidationRequired
                     ? MetadataState.ShouldCalculateAndValidate
                     : MetadataState.ShouldCalculateAndNotValidate;
 
         public ModerationState ModerationState =>
             ModerationInstruction == null
                 ? ModerationState.ShouldNotCalculate
-                : ModerationInstruction != null && ModerationInstruction.Constraints != null && ModerationInstruction.Constraints.IsValidationRequired
+                : IsModerationValidationRequired
                     ? ModerationState.ShouldCalculateAndValidate
                     : ModerationState.ShouldCalculateAndNotValidate;
     }

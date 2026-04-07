@@ -6,11 +6,11 @@ namespace PostQueryService.Application.UseCases
         string UserId,
         string? Name,
         string UserName,
-        Media.Models.Media? ProfilePhoto,
+        Media.Models.MediaProcessingContext? ProfilePhoto,
         string Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
         PostContent? Content,
-        IEnumerable<Media.Models.Media> Media
+        IEnumerable<Media.Models.MediaProcessingContext> Media
     );
 }

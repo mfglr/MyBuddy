@@ -1,9 +1,21 @@
-﻿using PostLikeQueryService.Domain.UserAggregate;
+﻿using PostLikeQueryService.Domain;
+using PostLikeQueryService.Domain.UserAggregate;
 
 namespace PostLikeQueryService.Application.UseCases.UpsertUser
 {
-    internal class UpsertUserMapper(MediaMapper mediaMapper)
+    internal class UpsertUserMapper
     {
+        public PostLikeQueryMedia Map(UpsertUserRequest_Media media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Context.Type,
+                media.Context.Metadata,
+                media.Context.ModerationResult,
+                media.Context.Thumbnails,
+                media.Context.Transcodings
+            );
+
         public User Map(UpsertUserRequest request) =>
             new(
                 request.Id,
@@ -11,7 +23,7 @@ namespace PostLikeQueryService.Application.UseCases.UpsertUser
                 request.DeletedAt,
                 request.Name,
                 request.UserName,
-                request.Media != null ? mediaMapper.Map(request.Media) : null
+                request.Media != null ? Map(request.Media) : null
             );
     }
 }

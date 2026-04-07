@@ -10,6 +10,6 @@
         string UserName,
         string? Name,
         string Gender,
-        IEnumerable<Media.Models.Media> Media
+        IEnumerable<MediaMessage> Media
     );
 }

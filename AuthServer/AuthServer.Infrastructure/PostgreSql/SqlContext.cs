@@ -15,7 +15,7 @@ namespace AuthServer.Infrastructure.PostgreSql
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(SqlContext))!);
 
-            builder.Ignore<Media.Models.Media>();
+            builder.Ignore<Media.Models.MediaProcessingContext>();
 
             builder.AddInboxStateEntity();
             builder.AddOutboxMessageEntity();

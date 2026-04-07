@@ -31,6 +31,5 @@
             MaxHeight != null ||
             MinAspectRatio != null ||
             MaxAspectRatio != null;
-
     }
 }

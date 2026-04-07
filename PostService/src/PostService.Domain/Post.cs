@@ -15,16 +15,16 @@ namespace PostService.Domain
         public Guid UserId { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
-        public IReadOnlyList<Media.Models.Media> Media { get; private set; }
+        public IReadOnlyList<PostMedia> Media { get; private set; }
 
         public bool IsDeleted => DeletedAt != null;
 
-        public Post(Guid userId, Content? content, IReadOnlyList<Media.Models.Media> media)
+        public Post(Guid userId, Content? content, IEnumerable<PostMedia> media)
         {
             if (!media.Any())
                 throw new PostMediaRequiredException();
 
-            if (media.Count > MaxMediaCount)
+            if (media.Count() > MaxMediaCount)
                 throw new PostMediaCountException();
 
             if (media.Any(x => x.ContainerName != MediaContainerName))
@@ -80,10 +80,7 @@ namespace PostService.Domain
 
         public void SetMedia(
             string blobName,
-            Metadata? metadata,
-            ModerationResult? moderationResult,
-            IEnumerable<Thumbnail> thumbnails,
-            IEnumerable<Transcoding> transcodings
+            MediaProcessingContext context
         )
         {
             if (IsDeleted)
@@ -93,7 +90,7 @@ namespace PostService.Domain
                 Media.FirstOrDefault(x => x.BlobName == blobName) ??
                 throw new PostMediaNotFoundException();
             
-            Media = [..Media.Select(x => x == media ? media.Set(metadata, moderationResult, thumbnails, transcodings) : x)];
+            Media = [.. Media.Select(x => x == media ? media.Set(context) : x)];
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }

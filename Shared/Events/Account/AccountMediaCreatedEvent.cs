@@ -10,7 +10,7 @@
         string UserName,
         string? Name,
         string Gender,
-        IEnumerable<Media.Models.Media> Media,
-        Media.Models.Media MediaCreated
+        IEnumerable<MediaMessage> Media,
+        MediaMessage MediaCreated
     );
 }

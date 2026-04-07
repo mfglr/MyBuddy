@@ -1,4 +1,5 @@
 ﻿using PostQueryService.Application.UseCases.UpsertPost;
+using Shared.Events;
 using Shared.Events.PostService;
 
 namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostContentModerationResultSetEvent
@@ -11,6 +12,13 @@ namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostContentModerationRe
                 content.ModerationResult
             );
 
+        public UpsertPostRequest_Media Map(MediaMessage media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Context
+            );
+
         public UpsertPostRequest Map(PostContentModerationResultSetEvent @event) =>
             new(
                 @event.Id,
@@ -21,7 +29,7 @@ namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostContentModerationRe
                 @event.Version,
                 @event.UserId,
                 @event.Content != null ? Map(@event.Content) : null,
-                @event.Media
+                @event.Media.Select(Map)
             );
     }
 }

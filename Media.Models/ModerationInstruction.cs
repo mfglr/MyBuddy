@@ -7,5 +7,6 @@
         public ModerationConstraints? Constraints { get; set; }
 
         public bool IsValid(ModerationResult moderationResult) => Constraints?.IsValid(moderationResult) ?? true;
+        public bool IsValidationRequired => Constraints?.IsValidationRequired ?? false;
     }
 }

@@ -1,11 +1,12 @@
 ﻿using MassTransit;
+using Media.Models;
 using MediaService.Domain;
 using MediatR;
 
 namespace MediaService.Application.UseCases.AddTranscoding
 {
     internal class SetTranscodedBlobNameHandler(
-        MediaPreprocessingCompletionEvaluator mediaPreprocessingCompletionEvaluator,
+        MediaProcessingCompletionEvaluator mediaPprocessingCompletionEvaluator,
         AddTrascodingMapper mapper,
         IMediaRepository mediaRepository,
         IPublishEndpoint publishEndpoint
@@ -14,10 +15,12 @@ namespace MediaService.Application.UseCases.AddTranscoding
         public async Task Handle(AddTrascodingRequest request, CancellationToken cancellationToken)
         {
             var media = 
-                await mediaRepository.AddTranscoding(request.ContainerName, request.BlobName, request.Transcoding, cancellationToken) ??
+                await mediaRepository.GetForUpdateByIdAsync(request.ContainerName, request.BlobName, cancellationToken) ??
                 throw new MediaNotFoundException();
 
-            if (mediaPreprocessingCompletionEvaluator.IsPreprocessingCompleted(media))
+            media.AddTranscoding(request.Transcoding);
+
+            if (mediaPprocessingCompletionEvaluator.IsProcessingCompleted(media.Context))
             {
                 var @event = mapper.Map(media);
                 await publishEndpoint.Publish(@event, cancellationToken);

@@ -5,6 +5,7 @@ namespace MediaService.Domain
     public interface IMediaRepository
     {
         Task<Media?> GetByIdAsync(string containerName, string blobName, CancellationToken cancellationToken);
+        Task<Media?> GetForUpdateByIdAsync(string containerName, string blobName, CancellationToken cancellationToken);
         Task CreateAsync(IEnumerable<Media> media, CancellationToken cancellationToken);
         void Delete(Media media);
 

@@ -9,11 +9,7 @@ namespace MediaService.Application.UseCases.AddThumbnail
                 media.OwnerId,
                 media.ContainerName,
                 media.BlobName,
-                media.Metadata,
-                media.ModerationResult,
-                media.Transcodings,
-                media.Thumbnails,
-                media.Instruction
+                media.Context
             );
     }
 }

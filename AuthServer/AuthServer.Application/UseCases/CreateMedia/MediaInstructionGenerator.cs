@@ -22,8 +22,9 @@ namespace AuthServer.Application.UseCases.CreateMedia
                 },
                 ThumbnailInstructions = [
                     new (1080,false),
+                    new (240, true),
                     new (120, true),
-                    new (240, true)
+                    new (60, true),
                 ],
                 TranscodingInstructions = [
                     new(720)

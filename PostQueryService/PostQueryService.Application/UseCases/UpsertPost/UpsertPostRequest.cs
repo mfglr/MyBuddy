@@ -8,6 +8,12 @@ namespace PostQueryService.Application.UseCases.UpsertPost
         ModerationResult? ModerationResult
     );
 
+    public record UpsertPostRequest_Media(
+        string ContainerName,
+        string BlobName,
+        MediaProcessingContext Context
+    );
+
     public record UpsertPostRequest(
         Guid Id,
         DateTime CreatedAt,
@@ -17,6 +23,6 @@ namespace PostQueryService.Application.UseCases.UpsertPost
         int Version,
         Guid UserId,
         UpsertPostRequest_Content? Content,
-        IEnumerable<Media.Models.Media> Media
+        IEnumerable<UpsertPostRequest_Media> Media
     ) : IRequest;
 }

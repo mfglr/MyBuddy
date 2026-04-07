@@ -12,15 +12,15 @@ namespace PostQueryService.Application.UseCases.UpsertPost
                 content.ModerationResult
             );
 
-        private PostQueryMedia Map(Media.Models.Media media) =>
+        private PostQueryMedia Map(UpsertPostRequest_Media media) =>
             new(
                 media.BlobName,
                 media.ContainerName,
-                media.Type,
-                media.Metadata,
-                media.ModerationResult,
-                media.Thumbnails,
-                media.Transcodings
+                media.Context.Type,
+                media.Context.Metadata,
+                media.Context.ModerationResult,
+                media.Context.Thumbnails,
+                media.Context.Transcodings
             );
 
         public Post MapPost(UpsertPostRequest request) =>

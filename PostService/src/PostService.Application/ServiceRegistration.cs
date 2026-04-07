@@ -17,7 +17,11 @@ namespace PostService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuraiton)
         {
             return services
+                .AddSingleton<MediaGenerator>()
+                .AddSingleton<MediaInstructionCreator>()
+                .AddSingleton<MediaTypeExtractor>()
                 .AddSingleton<CreatePostMapper>()
+
                 .AddSingleton<DeletePostMapper>()
                 .AddSingleton<RestorePostMapper>()
                 .AddSingleton<SetPostContentModerationResultMapper>()

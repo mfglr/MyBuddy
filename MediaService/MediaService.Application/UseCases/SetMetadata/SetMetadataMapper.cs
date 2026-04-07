@@ -1,5 +1,4 @@
-﻿using MediaService.Domain;
-using Shared.Events.MediaService;
+﻿using Shared.Events.MediaService;
 
 namespace MediaService.Application.UseCases.SetMetadata
 {
@@ -10,11 +9,7 @@ namespace MediaService.Application.UseCases.SetMetadata
                 media.OwnerId,
                 media.ContainerName,
                 media.BlobName,
-                media.Metadata,
-                media.ModerationResult,
-                media.Transcodings,
-                media.Thumbnails,
-                media.Instruction
+                media.Context
             );
     }
 }

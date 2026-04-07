@@ -1,5 +1,13 @@
-﻿namespace AuthServer.Application.UseCases.GetById
+﻿using Media.Models;
+
+namespace AuthServer.Application.UseCases.GetById
 {
+    public record GetByIdReponse_Media(
+        string ContainerName,
+        string BlobName,
+        MediaProcessingContext Context
+    );
+
     public record GetByIdReponse(
         Guid Id,
         DateTime? DeletedAt,
@@ -7,6 +15,6 @@
         int Version,
         string? Name,
         string UserName,
-        Media.Models.Media? Media
+        GetByIdReponse_Media? Media
     );
 }

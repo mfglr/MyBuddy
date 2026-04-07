@@ -5,8 +5,7 @@ namespace PostLikeQueryService.Application.UseCases.UpsertUser
 {
     internal class UpsertUserHandler(
         IUserRepository userRepository,
-        UpsertUserMapper userMapper,
-        MediaMapper mediaMapper
+        UpsertUserMapper userMapper
     ) : IRequestHandler<UpsertUserRequest>
     {
         public async Task Handle(UpsertUserRequest request, CancellationToken cancellationToken)
@@ -24,7 +23,7 @@ namespace PostLikeQueryService.Application.UseCases.UpsertUser
                     request.DeletedAt,
                     request.Name,
                     request.UserName,
-                    request.Media != null ? mediaMapper.Map(request.Media) : null
+                    request.Media != null ? userMapper.Map(request.Media) : null
                 );
                 if(updated)
                     await userRepository.UpdateAsync(user, cancellationToken);

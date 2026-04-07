@@ -23,19 +23,22 @@ namespace MediaService.Application.UseCases.CreateMedia
             _funcs[(int)MetadataState.ShouldCalculateAndValidate, (int)ModerationState.ShouldCalculateAndValidate] = Func22;
         }
 
-        public List<object> GenerateMessages(Domain.Media media) => _funcs[(int)media.Instruction.MetadataState, (int)media.Instruction.ModerationState](media);
+        public List<object> GenerateMessages(Domain.Media media) => _funcs[
+            (int)media.Context.Instruction.MetadataState,
+            (int)media.Context.Instruction.ModerationState
+        ](media);
 
         private static object GenerateMetadataExtractionMessage(Domain.Media media) =>
             new ExtractMediaMetadataMessage(media.ContainerName, media.BlobName);
 
         private static object GenerateModerationMessage(Domain.Media media) =>
-            new ClassifyMediaMessage(media.ContainerName, media.BlobName, media.Type, media.Instruction.ModerationInstruction!);
+            new ClassifyMediaMessage(media.ContainerName, media.BlobName, media.Context.Type, media.Context.Instruction.ModerationInstruction!);
 
         private static List<object> GenerateThumbnailAndTranscodingMessages(Domain.Media media) =>
             [
-                .. media.Instruction.ThumbnailInstructions.Select(x => new GenerateThumbnailMessage(media.ContainerName, media.BlobName, x)),
-                .. media.Type == MediaType.Video 
-                    ? media.Instruction.TranscodingInstructions.Select(x => new TranscodeVideoMessage(media.ContainerName, media.BlobName, x))
+                .. media.Context.Instruction.ThumbnailInstructions.Select(x => new GenerateThumbnailMessage(media.ContainerName, media.BlobName, x)),
+                .. media.Context.Type == MediaType.Video 
+                    ? media.Context.Instruction.TranscodingInstructions.Select(x => new TranscodeVideoMessage(media.ContainerName, media.BlobName, x))
                     : []
             ];
 

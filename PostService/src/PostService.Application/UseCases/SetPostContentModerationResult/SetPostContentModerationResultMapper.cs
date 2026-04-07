@@ -1,4 +1,5 @@
 ﻿using PostService.Domain;
+using Shared.Events;
 using Shared.Events.PostService;
 
 namespace PostService.Application.UseCases.SetPostContentModerationResult
@@ -10,6 +11,14 @@ namespace PostService.Application.UseCases.SetPostContentModerationResult
                 content.Value,
                 content.ModerationResult
             );
+
+        public MediaMessage Map(PostMedia media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Context
+            );
+
         public PostContentModerationResultSetEvent Map(Post post) =>
             new(
                 post.Id,
@@ -20,7 +29,7 @@ namespace PostService.Application.UseCases.SetPostContentModerationResult
                 post.Version,
                 post.UserId,
                 post.Content != null ? Map(post.Content) : null,
-                post.Media
+                post.Media.Select(Map)
             );
     }
 }

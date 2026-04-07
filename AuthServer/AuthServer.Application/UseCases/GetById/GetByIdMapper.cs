@@ -4,6 +4,13 @@ namespace AuthServer.Application.UseCases.GetById
 {
     internal class GetByIdMapper
     {
+        public GetByIdReponse_Media Map(AccountMedia media) =>
+            new(
+                media.ContainerName,
+                media.BlobName,
+                media.Context
+            );
+
         public GetByIdReponse Map(Account account) =>
             new(
                 Guid.Parse(account.Id),
@@ -12,7 +19,7 @@ namespace AuthServer.Application.UseCases.GetById
                 account.Version,
                 account.Name?.Value,
                 account.UserName!,
-                account.Media.FirstOrDefault()
+                account.Media.Select(Map).FirstOrDefault()
             );
     }
 }
