@@ -7,7 +7,11 @@ namespace PostQueryService.Infrastructure.ElastichSearch
     {
         public async Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken)
         {
-            var response = await client.GetAsync<PostProjection>(options.PostIndexName, id, cancellationToken: cancellationToken);
+            var response = await client.GetAsync<PostProjection>(
+                options.PostIndexName,
+                id,
+                x => x.Realtime(true),
+                cancellationToken: cancellationToken);
 
             if (!response.IsSuccess())
                 throw new ElasticSearchException();
@@ -36,7 +40,10 @@ namespace PostQueryService.Infrastructure.ElastichSearch
             var response = await client.UpdateAsync<PostProjection, PostProjection>(
                 options.PostIndexName,
                 tuple.postProjection.Id,
-                x => x.Doc(tuple.postProjection).IfPrimaryTerm(tuple.primaryTerm).IfSeqNo(tuple.sequenceNumber),
+                x => x
+                    .Doc(tuple.postProjection)
+                    .IfPrimaryTerm(tuple.primaryTerm)
+                    .IfSeqNo(tuple.sequenceNumber),
                 cancellationToken: cancellationToken
             );
             if (response.ApiCallDetails.HttpStatusCode == 409)
@@ -108,6 +115,10 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                 throw new ElasticSearchException();
         }
 
+        public Task DeleteAsync(PostProjection postProjection, CancellationToken cancellationToken) =>
+            client.DeleteAsync(options.PostIndexName, postProjection.Id,cancellationToken: cancellationToken);
+
         internal Task RefreshAsync() => client.Indices.RefreshAsync(options.PostIndexName);
+
     }
 }

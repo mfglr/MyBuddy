@@ -6,13 +6,13 @@ namespace PostQueryService.Application.UseCases.UpsertPost
 {
     internal class UpsertPostMapper
     {
-        private PostContent Map(UpsertPostRequest_Content content) =>
+        public PostContent Map(UpsertPostRequest_Content content) =>
             new(
                 content.Value,
                 content.ModerationResult
             );
 
-        private PostQueryMedia Map(UpsertPostRequest_Media media) =>
+        public PostQueryMedia Map(UpsertPostRequest_Media media) =>
             new(
                 media.BlobName,
                 media.ContainerName,
@@ -23,17 +23,7 @@ namespace PostQueryService.Application.UseCases.UpsertPost
                 media.Context.Transcodings
             );
 
-        public Post MapPost(UpsertPostRequest request) =>
-            new(
-                request.CreatedAt,
-                request.UpdatedAt,
-                request.DeletedAt,
-                request.Version,
-                request.Content is not null ? Map(request.Content) : null,
-                request.Media.Select(Map)
-            );
-
-        private PostProjectionUser Map(User user) =>
+        public PostProjectionUser Map(User user) =>
             new(
                 user.Version,
                 user.Name,
@@ -45,7 +35,12 @@ namespace PostQueryService.Application.UseCases.UpsertPost
             new(
                 request.Id.ToString(),
                 request.UserId.ToString(),
-                MapPost(request),
+                request.CreatedAt,
+                request.UpdatedAt,
+                request.SoftDeletedAt,
+                request.Version,
+                request.Content != null ? Map(request.Content) : null,
+                [..request.Media.Select(Map)],
                 Map(user)
             );
     }

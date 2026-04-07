@@ -8,6 +8,6 @@
         Task CreateAsync(Post post, CancellationToken cancellationToken);
         Task UpdateAsync(Post post, CancellationToken cancellationToken);
         Task UpdateAsync(IEnumerable<Post> posts, CancellationToken cancellationToken);
-        Task Delete(Post post, CancellationToken cancellationToken);
+        Task DeleteAsync(Post post, CancellationToken cancellationToken);
     }
 }

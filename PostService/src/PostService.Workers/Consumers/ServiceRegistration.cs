@@ -2,9 +2,9 @@
 using MongoDB.Driver;
 using PostService.Infrastructure.MongoDB;
 using PostService.Workers.Consumers;
-using PostService.Workers.Consumers.DeletePosts_OnAccountDeleted;
 using PostService.Workers.Consumers.SetPostContentModerationResult;
 using PostService.Workers.Consumers.SetPostMedia;
+using PostService.Workers.Consumers.SoftDeleteUserPosts_OnAccountDeleted;
 
 namespace PostService.Workers.Consumers
 {
@@ -21,7 +21,7 @@ namespace PostService.Workers.Consumers
                     {
                         x.AddConsumer<SetPostContentModerationResult_PostContentClassified_PostService>();
                         x.AddConsumer<SetPostMedia_OnMediaPreprocessingCompleted_PostService>();
-                        x.AddConsumer<DeletePosts_OnAccountDeleted_PostService>();
+                        x.AddConsumer<SoftDeleteUserPosts_OnAccountDeleted_PostService>();
                         x.AddMongoDbOutbox(o =>
                         {
                             o.QueryDelay = TimeSpan.FromSeconds(1);

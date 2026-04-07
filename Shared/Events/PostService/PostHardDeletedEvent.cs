@@ -2,11 +2,11 @@
 
 namespace Shared.Events.PostService
 {
-    public record PostContentUpdatedEvent_Content(
+    public record PostHardDeletedEvent_Content(
         string Value,
         ModerationResult? ModerationResult
     );
-    public record PostContentUpdatedEvent(
+    public record PostHardDeletedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
@@ -14,7 +14,7 @@ namespace Shared.Events.PostService
         bool IsHardDeleted,
         int Version,
         Guid UserId,
-        PostContentUpdatedEvent_Content? Content,
+        PostHardDeletedEvent_Content? Content,
         IEnumerable<MediaMessage> Media
     );
 }

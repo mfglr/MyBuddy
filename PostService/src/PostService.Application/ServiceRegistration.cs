@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostService.Application.UseCases.CreatePost;
-using PostService.Application.UseCases.DeletePost;
-using PostService.Application.UseCases.DeletePosts;
+using PostService.Application.UseCases.HardDeletePost;
 using PostService.Application.UseCases.RestorePost;
 using PostService.Application.UseCases.SetPostContentModerationResult;
 using PostService.Application.UseCases.SetPostMedia;
+using PostService.Application.UseCases.SoftDeleteUserPosts;
 using PostService.Application.UseCases.UpdatePostContent;
 using System.Reflection;
 
@@ -22,12 +22,12 @@ namespace PostService.Application
                 .AddSingleton<MediaTypeExtractor>()
                 .AddSingleton<CreatePostMapper>()
 
-                .AddSingleton<DeletePostMapper>()
                 .AddSingleton<RestorePostMapper>()
                 .AddSingleton<SetPostContentModerationResultMapper>()
                 .AddSingleton<SetPostMediaMapper>()
-                .AddSingleton<DeletePostsMapper>()
+                .AddSingleton<SoftDeleteUserPostsMapper>()
                 .AddSingleton<UpdatePostContentMapper>()
+                .AddSingleton<HardDeletePostMapper>()
                 .AddMediatR(
                     cfg =>
                     {

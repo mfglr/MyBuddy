@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostService.Application.UseCases.CreatePost;
-using PostService.Application.UseCases.DeletePost;
+using PostService.Application.UseCases.HardDeletePost;
 using PostService.Application.UseCases.UpdatePostContent;
 
 namespace PostService.Api.Controllers
@@ -22,6 +22,6 @@ namespace PostService.Api.Controllers
 
         [HttpDelete("{id:guid}")]
         public Task Delete(Guid id, CancellationToken cancellationToken) =>
-            sender.Send(new DeletePostRequest(id), cancellationToken);
+            sender.Send(new HardDeletePostRequest(id), cancellationToken);
     }
 }

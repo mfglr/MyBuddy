@@ -14,5 +14,6 @@
         Task CreateAsync(PostProjection postProjection, CancellationToken cancellationToken);
         Task UpdateAsync((PostProjection postProjection, long? primaryTerm, long? sequenceNumber) tuple, CancellationToken cancellation);
         Task UpdateManyAsync(IEnumerable<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)> tuples, CancellationToken cancellationToken);
+        Task DeleteAsync(PostProjection postProjection, CancellationToken cancellationToken);
     }
 }

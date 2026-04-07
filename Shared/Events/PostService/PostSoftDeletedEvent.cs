@@ -6,12 +6,12 @@ namespace Shared.Events.PostService
         string Value,
         ModerationResult? ModerationResult
     );
-    public record PostDeletedEvent(
+    public record PostSoftDeletedEvent(
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        DateTime? DeletedAt,
-        bool IsDeleted,
+        DateTime? SoftDeletedAt,
+        bool IsHardDeleted,
         int Version,
         Guid UserId,
         PostDeletedEvent_Content? Content,

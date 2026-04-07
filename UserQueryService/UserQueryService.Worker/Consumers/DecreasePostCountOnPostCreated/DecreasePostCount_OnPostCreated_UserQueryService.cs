@@ -4,9 +4,9 @@ using UserQueryService.Shared.Model;
 
 namespace UserQueryService.Worker.Consumers.DecreasePostCountOnPostCreated
 {
-    internal class DecreasePostCount_OnPostCreated_UserQueryService(IUserRepository userRepository) : IConsumer<PostDeletedEvent>
+    internal class DecreasePostCount_OnPostCreated_UserQueryService(IUserRepository userRepository) : IConsumer<PostSoftDeletedEvent>
     {
-        public Task Consume(ConsumeContext<PostDeletedEvent> context) =>
+        public Task Consume(ConsumeContext<PostSoftDeletedEvent> context) =>
             userRepository.DecreasePostCount(context.Message.UserId, context.CancellationToken);
     }
 }

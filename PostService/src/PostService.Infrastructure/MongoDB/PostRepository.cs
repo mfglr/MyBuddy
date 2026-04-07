@@ -9,8 +9,7 @@ namespace PostService.Infrastructure.MongoDB
         public Task<List<Post>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
         {
             var filter =
-                Builders<Post>.Filter.Eq(x => x.UserId, userId) &
-                Builders<Post>.Filter.Eq(x => x.IsDeleted, false);
+                Builders<Post>.Filter.Eq(x => x.UserId, userId);
             return context.Posts.Find(filter).ToListAsync(cancellationToken);
         }
 
@@ -31,7 +30,7 @@ namespace PostService.Infrastructure.MongoDB
                 throw new ConflictDetectedException();
         }
 
-        public Task Delete(Post post, CancellationToken cancellationToken) =>
+        public Task DeleteAsync(Post post, CancellationToken cancellationToken) =>
             context.Posts.DeleteOneAsync(
                 mongoDbContext.Session,
                 Builders<Post>.Filter.Eq(x => x.Id, post.Id),

@@ -58,36 +58,29 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                                         props
                                             .Keyword(x => x.Id)
                                             .Keyword(x => x.UserId)
+                                            .Date("createdAt")
+                                            .Date("updatedAt")
+                                            .Date("softDeletedAt")
+                                            .IntegerNumber("version")
                                             .Object(
-                                                x => x.Post,
+                                                "content",
                                                 obj => obj.Properties(
                                                     props => props
-                                                        .Date("createdAt")
-                                                        .Date("updatedAt")
-                                                        .Date("deletedAt")
-                                                        .Boolean("isDeleted")
-                                                        .IntegerNumber("version")
+                                                        .Text("value")
                                                         .Object(
-                                                            "content",
+                                                            "moderationResult",
                                                             obj => obj.Properties(
                                                                 props => props
-                                                                    .Text("value")
-                                                                    .Object(
-                                                                        "moderationResult",
-                                                                        obj => obj.Properties(
-                                                                            props => props
-                                                                                .DoubleNumber("hate")
-                                                                                .DoubleNumber("selfHarm")
-                                                                                .DoubleNumber("sexual")
-                                                                                .DoubleNumber("violence")
-                                                                        )
-                                                                    )
+                                                                    .DoubleNumber("hate")
+                                                                    .DoubleNumber("selfHarm")
+                                                                    .DoubleNumber("sexual")
+                                                                    .DoubleNumber("violence")
                                                             )
                                                         )
-                                                        .Object("media", x => x.Enabled(false))
-
                                                 )
                                             )
+                                            .Object("media", x => x.Enabled(false))
+                                            .IntegerNumber("processedVersions", x => x.Index(false))
                                             .Object(
                                                 x => x.User,
                                                 obj => obj

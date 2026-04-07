@@ -11,13 +11,14 @@ namespace PostService.Domain
         public Guid Id { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public DateTime? DeletedAt { get; private set; }
+        public DateTime? SoftDeletedAt { get; private set; }
         public Guid UserId { get; private set; }
         public int Version { get; private set; }
         public Content? Content { get; private set; }
         public IReadOnlyList<PostMedia> Media { get; private set; }
+        
+        private bool IsSoftDeleted => SoftDeletedAt != null;
 
-        public bool IsDeleted => DeletedAt != null;
 
         public Post(Guid userId, Content? content, IEnumerable<PostMedia> media)
         {
@@ -40,25 +41,25 @@ namespace PostService.Domain
 
         public void Delete()
         {
-            if (IsDeleted)
+            if (IsSoftDeleted)
                 throw new PostNotFoundException();
 
-            DeletedAt = DateTime.UtcNow;
+            SoftDeletedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
         public void Restore()
         {
-            if (!IsDeleted)
+            if (!IsSoftDeleted)
                 throw new PostAlreadyAvailableException();
 
-            DeletedAt = null;
+            SoftDeletedAt = null;
             UpdatedAt = DateTime.UtcNow;
             Version++;
         }
         public void UpdateContent(Content content)
         {
-            if (IsDeleted)
+            if (IsSoftDeleted)
                 throw new PostNotFoundException();
 
             Content = content;
@@ -68,7 +69,7 @@ namespace PostService.Domain
 
         public void SetContentModerationResult(ModerationResult moderationResult)
         {
-            if (IsDeleted)
+            if (IsSoftDeleted)
                 throw new PostNotFoundException();
 
             if (Content == null)
@@ -83,7 +84,7 @@ namespace PostService.Domain
             MediaProcessingContext context
         )
         {
-            if (IsDeleted)
+            if (IsSoftDeleted)
                 throw new PostNotFoundException();
 
             var media =

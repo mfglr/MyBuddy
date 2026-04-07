@@ -2,11 +2,11 @@
 using Shared.Events;
 using Shared.Events.PostService;
 
-namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostCreated
+namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostSoftDeleted
 {
-    internal class UpsertPost_OnPostCreated_Mapper
+    internal class UpsertPost_OnPostSoftDeleted_Mapper
     {
-        public UpsertPostRequest_Content Map(PostCreatedEvent_Content content) =>
+        public UpsertPostRequest_Content Map(PostDeletedEvent_Content content) =>
             new(
                 content.Value,
                 content.ModerationResult
@@ -19,7 +19,7 @@ namespace PostQueryService.Worker.Consumers.UpsertPost_OnPostCreated
                 media.Context
             );
 
-        public UpsertPostRequest Map(PostCreatedEvent @event) =>
+        public UpsertPostRequest Map(PostSoftDeletedEvent @event) =>
             new(
                 @event.Id,
                 @event.CreatedAt,

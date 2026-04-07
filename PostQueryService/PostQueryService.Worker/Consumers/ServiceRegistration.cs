@@ -7,8 +7,9 @@ using PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountUserNameUpdated;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostContentModerationResultSetEvent;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostContentUpdated;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostCreated;
-using PostQueryService.Worker.Consumers.UpsertPost_OnPostDeleted;
+using PostQueryService.Worker.Consumers.UpsertPost_OnPostHardDeleted;
 using PostQueryService.Worker.Consumers.UpsertPost_OnPostMediaSet;
+using PostQueryService.Worker.Consumers.UpsertPost_OnPostSoftDeleted;
 using PostQueryService.Worker.Consumers.UpsertUser_OnAccountCreated;
 using PostQueryService.Worker.Consumers.UpsertUser_OnAccountDeleted;
 using PostQueryService.Worker.Consumers.UpsertUser_OnAccountMediaCreated;
@@ -35,7 +36,8 @@ namespace PostQueryService.Worker.Consumers
                 .AddSingleton<UpsertPost_OnPostContentUpdated_Mapper>()
                 .AddSingleton<UpsertPost_OnPostCreated_Mapper>()
                 .AddSingleton<UpsertPost_OnPostMediaSet_Mapper>()
-                .AddSingleton<UpsertPost_OnPostDeleted_Mapper>()
+                .AddSingleton<UpsertPost_OnPostSoftDeleted_Mapper>()
+                .AddSingleton<UpsertPost_OnPostHardDeleted_Mapper>()
 
                 .AddSingleton<UpdatePostUser_OnAccountUserNameUpdated_Mapper>()
                 .AddSingleton<UpdatePostUser_OnAccountNameUpdated_Mapper>()
@@ -55,12 +57,14 @@ namespace PostQueryService.Worker.Consumers
                         x.AddConsumer<UpsertPost_OnPostContentUpdated_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostCreated_PostQueryService>();
                         x.AddConsumer<UpsertPost_OnPostMediaSet_PostQueryService>();
-                        x.AddConsumer<UpsertPost_OnPostDeleted_PostQueryService>();
+                        x.AddConsumer<UpsertPost_OnPostSoftDeleted_PostQueryService>();
+                        x.AddConsumer<UpsertPost_OnPostHardDeleted_PostQueryService>();
 
                         x.AddConsumer<UpdatePostUser_OnAccountUserNameUpdated_PostQueryService>();
                         x.AddConsumer<UpdatePostUser_OnAccountNameUpdated_PostQueryService>();
                         x.AddConsumer<UpdatePostUser_OnAccountMediaCreated_PostQueryService>();
                         x.AddConsumer<UpdatePostUser_OnAccountMediaSet_PostQueryService>();
+
 
                         x.AddConfigureEndpointsCallback((context, name, cfg) =>
                         {

@@ -2,16 +2,16 @@
 using MediatR;
 using PostService.Domain;
 
-namespace PostService.Application.UseCases.DeletePosts
+namespace PostService.Application.UseCases.SoftDeleteUserPosts
 {
-    internal class DeletePostsHandler(
+    internal class SoftDeleteUserPostsHandler(
         IPostRepository postRepository,
         IPublishEndpoint publishEndpoint,
-        DeletePostsMapper mapper
+        SoftDeleteUserPostsMapper mapper
         
-    ) : IRequestHandler<DeletePostsRequest>
+    ) : IRequestHandler<SoftDeleteUserPostsRequest>
     {
-        public async Task Handle(DeletePostsRequest request, CancellationToken cancellationToken)
+        public async Task Handle(SoftDeleteUserPostsRequest request, CancellationToken cancellationToken)
         {
             var posts = await postRepository.GetByUserIdAsync(request.UserId, cancellationToken);
             if (posts.Count == 0) return;
