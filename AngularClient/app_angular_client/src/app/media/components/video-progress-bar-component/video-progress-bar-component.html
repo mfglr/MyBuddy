@@ -1,0 +1,13 @@
+<div
+  #board
+  class="wrapper"
+  (pointerdown)="update($event)"
+  (pointerup)="update($event)">
+
+  <div class="progress-bar" [style.width.%]="progress * 100">
+  </div>
+
+  <div class="cache-bar" [style.width.%]="cache * 100">
+  </div>
+
+</div>

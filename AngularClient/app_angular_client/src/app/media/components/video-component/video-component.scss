@@ -1,0 +1,23 @@
+.progress-bar-wrapper{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .play-button-wrapper{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .video{
+      object-fit: contain;
+      width: 100%;
+    }
+    .play-button{
+      position: absolute;
+    }
+  }
+  .progress-bar{
+    position: absolute;
+    bottom: 4px;
+    width: 100%;
+  }
+}

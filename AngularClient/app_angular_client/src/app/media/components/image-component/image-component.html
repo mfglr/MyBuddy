@@ -1,0 +1,13 @@
+@if(media instanceof LocalMedia){
+  <app-local-image-component
+    [media]="media"
+    [aspectRatio]="aspectRatio"
+    (dimentionCalculated)="emitDimention($event)">
+  </app-local-image-component>
+}
+@else if(media instanceof RemoteMedia){
+  <app-remote-image-component
+    [media]="media"
+    [aspectRatio]="aspectRatio">
+  </app-remote-image-component>
+}

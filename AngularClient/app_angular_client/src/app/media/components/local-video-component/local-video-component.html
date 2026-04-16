@@ -1,0 +1,14 @@
+<video
+  #video
+  class="video"
+  [src]="url"
+  (ended)="pause()"
+  (timeupdate)="update()"
+  (progress)="update()"
+  (loadedmetadata)="emitDimension()"
+  (click)="paused ? play() : pause();"
+  [autoplay]="autoplay"
+  [loop]="loop"
+  [style.aspectRatio]="aspectRatio"
+>
+</video>

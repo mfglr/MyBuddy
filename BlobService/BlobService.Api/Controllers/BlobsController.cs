@@ -11,10 +11,13 @@ namespace BlobService.Api.Controllers
     {
         private readonly IBlobService _blobService = blobService;
 
-        [Authorize("read")]
+        //[Authorize("read")]
         [HttpGet("{containerName}/{blobName}")]
-        public Task<Stream> Get(string containerName, string blobName, CancellationToken cancellationToken) =>
-            _blobService.ReadAsync(containerName, blobName, cancellationToken);
+        public async Task<FileStreamResult> Get(string containerName, string blobName, CancellationToken cancellationToken)
+        {
+            var stream = await _blobService.ReadAsync(containerName, blobName, cancellationToken);
+            return File(stream, "video/mp4", enableRangeProcessing: true);
+        }
 
         [Authorize("write")]
         [RequestSizeLimit(104857600)]

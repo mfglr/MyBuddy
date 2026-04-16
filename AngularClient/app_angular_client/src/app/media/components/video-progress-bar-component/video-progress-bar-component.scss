@@ -1,0 +1,18 @@
+.wrapper{
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  height: 6px;
+  .progress-bar{
+    position: absolute;
+    height: 4px;
+    background-color: rgba(255,255,255,1);
+  }
+  .cache-bar{
+    position: absolute;
+    height: 4px;
+    background-color: rgba(255,255,255,0.5);
+  }
+}

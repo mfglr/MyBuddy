@@ -1,0 +1,28 @@
+
+<swiper-container
+  pagination="true"
+  pagination-clickable="true"
+  (swiperslidechange)="onSlideChange($event)">
+  @for (mediaItem of media; track $index) {
+    <swiper-slide>
+      @if(mediaItem.type === MediaType.image){
+        <app-image-component
+          #media
+          [media]="mediaItem"
+          [aspectRatio]="aspectRatio"
+          (dimentionsReady)="setDimension($event)">
+        </app-image-component>
+      }
+      @else if(mediaItem.type === MediaType.video){
+        <app-video-component
+          #media
+          [media]="mediaItem"
+          [aspectRatio]="aspectRatio"
+          [autoplay]="$index === 0"
+          [loop]="true"
+          (dimensionsReady)="setDimension($event)">
+        </app-video-component>
+      }
+    </swiper-slide>
+  }
+</swiper-container>

@@ -1,0 +1,46 @@
+<div class="progress-bar-wrapper">
+  <div class="play-button-wrapper">
+    <div class="video">
+      @if(media instanceof LocalMedia){
+        <app-local-video-component
+          #video
+          [media]="media"
+          [autoplay]="autoplay"
+          [aspectRatio]="aspectRatio"
+          [position]="position"
+          [loop]="loop"
+          (dimensionsReady)="emitDimension($event)"
+          (progressChange)="updateProgress($event)"
+          (cacheChange)="updateCache($event)"
+          (playbackStateChange)="updatePlaybackState($event)">
+        </app-local-video-component>
+      }
+      @else if(media instanceof RemoteMedia){
+        <app-remote-video-component
+          #video
+          [media]="media"
+          [autoplay]="autoplay"
+          [aspectRatio]="aspectRatio"
+          [position]="position"
+          [loop]="loop"
+          (progressChange)="updateProgress($event)"
+          (cacheChange)="updateCache($event)"
+          (playbackStateChange)="updatePlaybackState($event)">
+        </app-remote-video-component>
+      }
+    </div>
+    @if(paused){
+      <div class="play-button">
+        <app-video-play-button-component (play)="play()"></app-video-play-button-component>
+      </div>
+    }
+  </div>
+  <div class="progress-bar">
+    <app-video-progress-bar-component
+      (positionChange)="updatePosition($event)"
+      [progress]="progress"
+      [cache]="cache">
+    </app-video-progress-bar-component>
+  </div>
+</div>
+

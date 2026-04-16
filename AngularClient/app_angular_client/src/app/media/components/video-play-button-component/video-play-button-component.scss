@@ -1,0 +1,18 @@
+.button-wrapper{
+  width: 64px;
+  height: 64px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .button{
+    font-size: 24px;
+    border: none;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
