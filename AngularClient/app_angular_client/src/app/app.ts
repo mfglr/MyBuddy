@@ -1,38 +1,39 @@
 import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LocalMedia } from './media-core/local-media';
-import { MediaSlider } from './media-slider/media-slider';
 import { BaseMedia } from './media-core/base-media';
-import { MediaCircular } from './media-circular/media-circular';
-import { RemoteMedia } from './media-core/remote-media';
 import { MediaType } from './media-core/media-type';
-import { Dimension } from './media-core/dimension';
+import { PostUserCardComponent } from './post-read/components/post-user-card-component/post-user-card-component';
+import { Post } from './post-read/models/post';
 
 @Component({
   selector: 'app-root',
   imports: [
     ReactiveFormsModule,
-    MediaSlider,
-    MediaCircular
+    PostUserCardComponent
 ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  media: BaseMedia[] = [
-    new RemoteMedia(
-        "PostMedia",
-        "image",
-        MediaType.image,
-        new Dimension(1187,1599)
-      ),
-    //   new RemoteMedia(
-    //     "PostMedia",
-    //     "video",
-    //     MediaType.video,
-    //     new Dimension(1280,720)
-    //   )
-    ];
+  post: Post = {
+    id: "test",
+    createdAt: new Date(),
+    media: [],
+    userId: "test",
+    userName: "mfgglr",
+    name: "Muhammed Furkan Güler",
+    userMedia:{
+      containerName: "PostMedia",
+      blobName: "image",
+      type: MediaType.image,
+      metadata: {width: 1187,height: 1599,duration: 0},
+      transcodings: [],
+      thumbnails: []
+    }
+  };
+
+  media: Array<BaseMedia> = [];
 
   onFiles(event: Event){
     const input = event.target as HTMLInputElement;

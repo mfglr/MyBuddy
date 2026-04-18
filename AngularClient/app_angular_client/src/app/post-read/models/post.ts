@@ -1,5 +1,5 @@
 import { Media } from "../../media-core/media";
-import { PostContent } from "../../post/domain/post-content/post-content";
+import { PostContent } from "./post-content";
 
 export interface Post{
   id: string;

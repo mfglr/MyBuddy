@@ -1,0 +1,21 @@
+<div class="wrapper">
+  <div class="media">
+    @if(post.userMedia){
+      <app-media-circular
+        [blobServiceUrl]="blobServiceUrl"
+        [diameter]="diameter"
+        [image]="map(post.userMedia)"
+      >
+      </app-media-circular>
+    }
+    @else{
+      <app-no-user-media-component [diameter]="diameter"></app-no-user-media-component>
+    }
+  </div>
+  <div class="names">
+    <span class="userName">{{post.userName}}</span>
+    @if(post.name){
+      <span class="name">{{post.name}}</span>
+    }
+  </div>
+</div>
