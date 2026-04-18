@@ -5,6 +5,21 @@ namespace PostQueryService.Infrastructure.ElastichSearch
 {
     internal class PostProjectionRepository(ElasticsearchClient client, ElasticSearchOptions options) : IPostProjectionRepository
     {
+        public async Task<PostProjection?> GetByIdQueryAsync(string id, CancellationToken cancellationToken)
+        {
+            var response = await client.GetAsync<PostProjection>(
+                options.PostIndexName,
+                id,
+                x => x.Realtime(true),
+                cancellationToken: cancellationToken);
+            
+            if (!response.IsSuccess())
+                throw new ElasticSearchException();
+            
+            return response.Source;
+        }
+
+
         public async Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken)
         {
             var response = await client.GetAsync<PostProjection>(

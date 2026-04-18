@@ -2,6 +2,8 @@
 {
     public interface IPostProjectionRepository
     {
+        Task<PostProjection?> GetByIdQueryAsync(string id, CancellationToken cancellationToken);
+
         Task<List<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)>> GetPostByUserAsync(
             string userId,
             int version,
@@ -9,7 +11,6 @@
             int pageSize,
             CancellationToken cancellationToken
         );
-
         Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken);
         Task CreateAsync(PostProjection postProjection, CancellationToken cancellationToken);
         Task UpdateAsync((PostProjection postProjection, long? primaryTerm, long? sequenceNumber) tuple, CancellationToken cancellation);
