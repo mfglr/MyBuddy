@@ -21,18 +21,18 @@ import { Meta } from '@angular/platform-browser';
 })
 export class App {
   media: Media[] = [
-    new RemoteMedia(
-        "PostMedia",
-        "image",
-        MediaType.image,
-        new Metadata(1187,1599,0)
-      ),
-      new RemoteMedia(
-        "PostMedia",
-        "video",
-        MediaType.video,
-        new Metadata(1280,720,0)
-      )
+    // new RemoteMedia(
+    //     "PostMedia",
+    //     "image",
+    //     MediaType.image,
+    //     new Metadata(1187,1599,0)
+    //   ),
+    //   new RemoteMedia(
+    //     "PostMedia",
+    //     "video",
+    //     MediaType.video,
+    //     new Metadata(1280,720,0)
+    //   )
     ];
   mediaTypeExtractor: MediaTypeExtractor;
 
