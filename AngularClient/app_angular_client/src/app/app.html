@@ -1,11 +1,12 @@
-<input type="file" multiple (change)="onFiles($event)" accept="image/*, video/*" />
+<!-- <input type="file" multiple (change)="onFiles($event)" accept="image/*, video/*" /> -->
 
-<div>
-  <app-post-user-card-component
-    blobServiceUrl="http://localhost:5284/api/v1/blobs/get"
-    [post]="post"
-    [diameter]="48"
-  >
-  </app-post-user-card-component>
 
+<div style="width: 300px;">
+  @if(post$ | async; as post){
+    <app-post-component baseUrl="http://localhost:5284/api/v1/blobs/get"
+      [post]="post">
+    </app-post-component>
+  }
 </div>
+
+

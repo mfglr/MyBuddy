@@ -27,6 +27,7 @@ export class VideoComponent implements OnChanges{
   @Input() aspectRatio: number = 4 / 6;
   @Input() autoplay: boolean = false;
   @Input() loop: boolean = true;
+  @Input() baseUrl?: string;
 
   @Output() dimensionsReady = new EventEmitter<Dimension>();
 

@@ -13,6 +13,7 @@ export class RemoteVideoComponent implements OnChanges{
   @Input() loop: boolean = true;
   @Input() aspectRatio: number = 4 / 6;
   @Input() position: number = 0;
+  @Input() baseUrl!: string;
 
   @Output() progressChange = new EventEmitter<number>();
   @Output() cacheChange = new EventEmitter<number>();
@@ -20,6 +21,10 @@ export class RemoteVideoComponent implements OnChanges{
 
   paused: boolean = !this.autoplay;
   url?: string;
+
+  getMediaUrl(){
+    return `${this.baseUrl}/${this.media.containerName}/${this.media.blobName}`
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes["autoplay"])

@@ -2,7 +2,7 @@
   <div class="media">
     @if(post.userMedia){
       <app-media-circular
-        [blobServiceUrl]="blobServiceUrl"
+        [baseUrl]="baseUrl"
         [diameter]="diameter"
         [image]="map(post.userMedia)"
       >
@@ -13,9 +13,9 @@
     }
   </div>
   <div class="names">
-    <span class="userName">{{post.userName}}</span>
+    <span class="userName">{{post.userName | truncate: 15}}</span>
     @if(post.name){
-      <span class="name">{{post.name}}</span>
+      <span class="name">{{post.name | truncate: 15}}</span>
     }
   </div>
 </div>

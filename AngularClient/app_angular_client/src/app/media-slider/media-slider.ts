@@ -19,6 +19,7 @@ import { MediaType } from '../media-core/media-type';
 export class MediaSlider implements OnChanges {
   @ViewChildren("media") elements!: QueryList<ImageComponent | VideoComponent>;
   @Input() media: BaseMedia[] = [];
+  @Input() baseUrl?: string;
   dimentions: Dimension[] = [];
   MediaType = MediaType;
   aspectRatio: number = 4 / 6;

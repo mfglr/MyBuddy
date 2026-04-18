@@ -5,12 +5,14 @@ import { NoUserMediaComponent } from '../../../shared/components/no-user-media-c
 import { RemoteMedia } from '../../../media-core/remote-media';
 import { Media } from '../../../media-core/media';
 import { Dimension } from '../../../media-core/dimension';
+import { TruncatePipe } from '../../../shared/pipes/truncate-pipe';
 
 @Component({
   selector: 'app-post-user-card-component',
   imports: [
     MediaCircular,
-    NoUserMediaComponent
+    NoUserMediaComponent,
+    TruncatePipe
   ],
   templateUrl: './post-user-card-component.html',
   styleUrl: './post-user-card-component.scss',
@@ -18,7 +20,7 @@ import { Dimension } from '../../../media-core/dimension';
 export class PostUserCardComponent {
   @Input() post!: Post;
   @Input() diameter: number = 32;
-  @Input() blobServiceUrl!: string;
+  @Input() baseUrl!: string;
 
   map(media: Media): RemoteMedia{
     return new RemoteMedia(

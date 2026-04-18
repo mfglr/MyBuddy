@@ -10,4 +10,9 @@ import { RemoteMedia } from '../../../media-core/remote-media';
 export class RemoteImageComponent {
   @Input() media!: RemoteMedia;
   @Input() aspectRatio: number = 4 / 6;
+  @Input() baseUrl!: string;
+
+  url(){
+    return `${this.baseUrl}/${this.media.containerName}/${this.media.blobName}`
+  }
 }

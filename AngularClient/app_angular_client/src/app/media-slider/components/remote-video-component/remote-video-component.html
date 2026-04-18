@@ -1,7 +1,7 @@
 <video
   #video
   class="video"
-  [src]="'http://localhost:5284/api/v1/blobs/get/' + media.containerName + '/' + media.blobName"
+  [src]="getMediaUrl()"
   (ended)="pause()"
   (timeupdate)="update()"
   (progress)="update()"

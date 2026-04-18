@@ -17,7 +17,7 @@ import { LocalMediaCircular } from './components/local-media-circular/local-medi
 export class MediaCircular {
   @Input() diameter : number = 60;
   @Input() image!: BaseMedia;
-  @Input() blobServiceUrl!: string;
+  @Input() baseUrl?: string;
 
   LocalMedia = LocalMedia;
   RemoteMedia = RemoteMedia;

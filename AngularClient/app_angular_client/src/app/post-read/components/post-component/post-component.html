@@ -1,1 +1,10 @@
-<p>post-component works!</p>
+<div class="wrapper card">
+  <div class="header">
+    <app-post-user-card-component
+      [diameter]="userMediaDiameter"
+      [baseUrl]="baseUrl"
+      [post]="post">
+    </app-post-user-card-component>
+  </div>
+  <app-media-slider [baseUrl]="baseUrl" [media]="post.media.map(map)"></app-media-slider>
+</div>

@@ -14,8 +14,8 @@ namespace PostQueryService.Application.UseCases.UpsertPost
 
         public PostQueryMedia Map(UpsertPostRequest_Media media) =>
             new(
-                media.BlobName,
                 media.ContainerName,
+                media.BlobName,
                 media.Context.Type,
                 media.Context.Metadata,
                 media.Context.ModerationResult,

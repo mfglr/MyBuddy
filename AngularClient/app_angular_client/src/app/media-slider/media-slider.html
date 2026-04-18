@@ -10,6 +10,7 @@
           #media
           [media]="mediaItem"
           [aspectRatio]="aspectRatio"
+          [baseUrl]="baseUrl"
           (dimentionsReady)="setDimension($event)">
         </app-image-component>
       }
@@ -20,6 +21,7 @@
           [aspectRatio]="aspectRatio"
           [autoplay]="$index === 0"
           [loop]="true"
+          [baseUrl]="baseUrl"
           (dimensionsReady)="setDimension($event)">
         </app-video-component>
       }

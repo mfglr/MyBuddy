@@ -20,6 +20,7 @@ export class ImageComponent{
   @Output() dimentionsReady = new EventEmitter<Dimension>();
   @Input() aspectRatio: number = 4 / 6;
   @Input() media!: BaseMedia;
+  @Input() baseUrl?: string;
 
   LocalMedia = LocalMedia;
   RemoteMedia = RemoteMedia;
