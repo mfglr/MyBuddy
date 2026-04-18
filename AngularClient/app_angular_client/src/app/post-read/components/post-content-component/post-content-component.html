@@ -1,0 +1,6 @@
+<span class="user-name" >{{post.userName}}</span>
+@if(post.content){
+  <app-extendable-content-component [maxLength]="25" [content]="post.content.value">
+  </app-extendable-content-component>
+}
+

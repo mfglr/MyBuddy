@@ -6,12 +6,14 @@ import { RemoteMedia } from '../../../media-core/remote-media';
 import { Media } from '../../../media-core/media';
 import { Dimension } from '../../../media-core/dimension';
 import { TruncatePipe } from '../../../shared/pipes/truncate-pipe';
+import { PostContentComponent } from '../post-content-component/post-content-component';
 
 @Component({
   selector: 'app-post-component',
   imports: [
     PostUserCardComponent,
     MediaSlider,
+    PostContentComponent
   ],
   templateUrl: './post-component.html',
   styleUrl: './post-component.scss',

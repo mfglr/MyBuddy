@@ -1,7 +1,10 @@
 .wrapper{
   display:flex;
   flex-direction: column;
-  .header{
+  .user{
+    padding: 10px;
+  }
+  .content{
     padding: 10px;
   }
 }

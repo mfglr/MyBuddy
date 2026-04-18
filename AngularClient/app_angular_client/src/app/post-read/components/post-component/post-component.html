@@ -1,5 +1,5 @@
 <div class="wrapper card">
-  <div class="header">
+  <div class="user">
     <app-post-user-card-component
       [diameter]="userMediaDiameter"
       [baseUrl]="baseUrl"
@@ -7,4 +7,10 @@
     </app-post-user-card-component>
   </div>
   <app-media-slider [baseUrl]="baseUrl" [media]="post.media.map(map)"></app-media-slider>
+
+  @if(post.content){
+    <div class="content">
+      <app-post-content-component [post]="post"></app-post-content-component>
+    </div>
+  }
 </div>

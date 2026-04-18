@@ -1,0 +1,8 @@
+<span class="content">
+  {{ extended ? content : (content | truncate:maxLength) }}
+  @if(content.length > maxLength){
+    <span (click)="update()" class="extend-button">
+      {{ extended ? 'Show less' : 'Read more' }}
+    </span>
+  }
+</span>
