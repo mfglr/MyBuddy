@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { LocalMedia } from '../../local-media';
-import { Dimension } from '../../dimension';
+import { Dimension } from '../../models/dimension';
+import { LocalMedia } from '../../models/local-media';
 
 @Component({
   selector: 'app-local-image-component',
-  imports: [],
   templateUrl: './local-image-component.html',
   styleUrl: './local-image-component.scss',
 })

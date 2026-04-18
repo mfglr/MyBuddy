@@ -1,10 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
-import { MediaType } from '../../media-type';
-import { Dimension } from '../../dimension';
-import { ImageComponent } from '../image-component/image-component';
-import { Media } from '../../media';
-import { VideoComponent } from '../video-component/video-component';
-import { RemoteMedia } from '../../remote-media';
+import { ImageComponent } from './components/image-component/image-component';
+import { VideoComponent } from './components/video-component/video-component';
+import { Dimension } from './models/dimension';
+import { Media } from './models/media';
+import { MediaType } from './models/media-type';
+import { RemoteMedia } from './models/remote-media';
 
 @Component({
   selector: 'app-media-slider',
@@ -26,8 +26,8 @@ export class MediaSlider implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.dimentions = [
       ...this.media
-        .filter(media => media instanceof RemoteMedia)
-        .map(media => (media as RemoteMedia).metadata.getDimention())
+          .filter(media => media instanceof RemoteMedia)
+          .map(media => media.dimension)
     ];
     this.aspectRatio = this.dimentions.map(x => x.aspectRatio()).sort().find(() => true)!;
   }

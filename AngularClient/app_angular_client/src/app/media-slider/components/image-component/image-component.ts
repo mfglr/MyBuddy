@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LocalMedia } from '../../local-media';
 import { LocalImageComponent } from '../local-image-component/local-image-component';
 import { RemoteImageComponent } from '../remote-image-component/remote-image-component';
-import { Media } from '../../media';
-import { RemoteMedia } from '../../remote-media';
-import { Dimension } from '../../dimension';
+import { Dimension } from '../../models/dimension';
+import { Media } from '../../models/media';
+import { LocalMedia } from '../../models/local-media';
+import { RemoteMedia } from '../../models/remote-media';
 
 
 @Component({

@@ -1,9 +1,7 @@
-import { Media } from "../../media/media";
-
 export interface PostUser{
   userId: string;
   name?: string;
   userName: string;
-  profileMedia: Media;
+  // profileMedia: Media;
   version: number;
 }

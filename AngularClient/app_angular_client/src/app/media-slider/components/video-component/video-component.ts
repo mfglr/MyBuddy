@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { LocalVideoComponent } from "../local-video-component/local-video-component";
-import { Dimension } from '../../dimension';
-import { Media } from '../../media';
-import { LocalMedia } from '../../local-media';
-import { RemoteMedia } from '../../remote-media';
 import { RemoteVideoComponent } from "../remote-video-component/remote-video-component";
 import { VideoPlayButtonComponent } from '../video-play-button-component/video-play-button-component';
 import { VideoProgressBarComponent } from '../video-progress-bar-component/video-progress-bar-component';
+import { Media } from '../../models/media';
+import { LocalMedia } from '../../models/local-media';
+import { Dimension } from '../../models/dimension';
+import { RemoteMedia } from '../../models/remote-media';
 
 @Component({
   selector: 'app-video-component',

@@ -3,7 +3,6 @@ import { randomUUID } from 'crypto';
 import { PostUser } from '../post-user';
 import { PostMediaRequiredError } from './post-media-required-error';
 import { PostMediaCountError } from './post-media-count-error';
-import { Media } from '../../../media/media';
 
 export class Post {
   static readonly mediaContainerName: string = "PostMedia";
@@ -14,20 +13,18 @@ export class Post {
   createdAt: Date;
   updatedAt?: Date;
   content?: PostContent;
-  media: ReadonlyArray<Media>;
   user: PostUser;
 
-  constructor(media: ReadonlyArray<Media>, user: PostUser, content?: PostContent) {
-    if (media.length <= 0)
-      throw new PostMediaRequiredError();
+  constructor(user: PostUser, content?: PostContent) {
+    // if (media.length <= 0)
+    //   throw new PostMediaRequiredError();
 
-    if (media.length > Post.maxMediaCount)
-      throw new PostMediaCountError();
+    // if (media.length > Post.maxMediaCount)
+    //   throw new PostMediaCountError();
 
     this.localId = randomUUID()
     this.createdAt = new Date();
     this.content = content
-    this.media = media;
     this.user = user;
   }
 
