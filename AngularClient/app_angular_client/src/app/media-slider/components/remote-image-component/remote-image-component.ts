@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RemoteMedia } from '../../models/remote-media';
+import { RemoteMedia } from '../../../media-core/remote-media';
 
 @Component({
   selector: 'app-remote-image-component',

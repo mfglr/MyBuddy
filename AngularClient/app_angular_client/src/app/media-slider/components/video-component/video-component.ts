@@ -3,10 +3,10 @@ import { LocalVideoComponent } from "../local-video-component/local-video-compon
 import { RemoteVideoComponent } from "../remote-video-component/remote-video-component";
 import { VideoPlayButtonComponent } from '../video-play-button-component/video-play-button-component';
 import { VideoProgressBarComponent } from '../video-progress-bar-component/video-progress-bar-component';
-import { Media } from '../../models/media';
-import { LocalMedia } from '../../models/local-media';
-import { Dimension } from '../../models/dimension';
-import { RemoteMedia } from '../../models/remote-media';
+import { BaseMedia } from '../../../media-core/base-media';
+import { LocalMedia } from '../../../media-core/local-media';
+import { Dimension } from '../../../media-core/dimension';
+import { RemoteMedia } from '../../../media-core/remote-media';
 
 @Component({
   selector: 'app-video-component',
@@ -23,7 +23,7 @@ export class VideoComponent implements OnChanges{
 
   @ViewChild("video") video!: LocalVideoComponent | RemoteVideoComponent
 
-  @Input() media!: Media;
+  @Input() media!: BaseMedia;
   @Input() aspectRatio: number = 4 / 6;
   @Input() autoplay: boolean = false;
   @Input() loop: boolean = true;

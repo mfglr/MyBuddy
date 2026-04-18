@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Dimension } from '../../models/dimension';
-import { LocalMedia } from '../../models/local-media';
+import { Dimension } from '../../../media-core/dimension';
+import { LocalMedia } from '../../../media-core/local-media';
 
 @Component({
   selector: 'app-local-video-component',

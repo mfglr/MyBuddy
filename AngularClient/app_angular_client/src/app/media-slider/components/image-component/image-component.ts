@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LocalImageComponent } from '../local-image-component/local-image-component';
 import { RemoteImageComponent } from '../remote-image-component/remote-image-component';
-import { Dimension } from '../../models/dimension';
-import { Media } from '../../models/media';
-import { LocalMedia } from '../../models/local-media';
-import { RemoteMedia } from '../../models/remote-media';
+import { Dimension } from '../../../media-core/dimension';
+import { BaseMedia } from '../../../media-core/base-media';
+import { LocalMedia } from '../../../media-core/local-media';
+import { RemoteMedia } from '../../../media-core/remote-media';
 
 
 @Component({
@@ -19,7 +19,7 @@ import { RemoteMedia } from '../../models/remote-media';
 export class ImageComponent{
   @Output() dimentionsReady = new EventEmitter<Dimension>();
   @Input() aspectRatio: number = 4 / 6;
-  @Input() media!: Media;
+  @Input() media!: BaseMedia;
 
   LocalMedia = LocalMedia;
   RemoteMedia = RemoteMedia;

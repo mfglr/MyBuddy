@@ -1,29 +1,31 @@
 import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Media } from './media-slider/models/media';
-import { MediaType } from './media-slider/models/media-type';
-import { Dimension } from './media-slider/models/dimension';
-import { RemoteMedia } from './media-slider/models/remote-media';
-import { LocalMedia } from './media-slider/models/local-media';
+import { LocalMedia } from './media-core/local-media';
 import { MediaSlider } from './media-slider/media-slider';
+import { BaseMedia } from './media-core/base-media';
+import { MediaCircular } from './media-circular/media-circular';
+import { RemoteMedia } from './media-core/remote-media';
+import { MediaType } from './media-core/media-type';
+import { Dimension } from './media-core/dimension';
 
 @Component({
   selector: 'app-root',
   imports: [
     ReactiveFormsModule,
-    MediaSlider
+    MediaSlider,
+    MediaCircular
 ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  media: Media[] = [
-    // new RemoteMedia(
-    //     "PostMedia",
-    //     "image",
-    //     MediaType.image,
-    //     new Dimension(1187,1599)
-    //   ),
+  media: BaseMedia[] = [
+    new RemoteMedia(
+        "PostMedia",
+        "image",
+        MediaType.image,
+        new Dimension(1187,1599)
+      ),
     //   new RemoteMedia(
     //     "PostMedia",
     //     "video",

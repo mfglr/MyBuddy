@@ -3,3 +3,5 @@
 <div style="width: 300px;margin-bottom: 25px;">
   <app-media-slider [media]="media"></app-media-slider>
 </div>
+
+<app-media-circular [baseUrl]="'http://localhost:5284/api/v1/blobs/get'" [image]="media[0]"></app-media-circular>

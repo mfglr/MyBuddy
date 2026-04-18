@@ -1,10 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, QueryList, SimpleChanges, ViewChildren } from '@angular/core';
 import { ImageComponent } from './components/image-component/image-component';
 import { VideoComponent } from './components/video-component/video-component';
-import { Dimension } from './models/dimension';
-import { Media } from './models/media';
-import { MediaType } from './models/media-type';
-import { RemoteMedia } from './models/remote-media';
+import { Dimension } from '../media-core/dimension';
+import { BaseMedia } from '../media-core/base-media';
+import { RemoteMedia } from '../media-core/remote-media';
+import { MediaType } from '../media-core/media-type';
 
 @Component({
   selector: 'app-media-slider',
@@ -18,7 +18,7 @@ import { RemoteMedia } from './models/remote-media';
 })
 export class MediaSlider implements OnChanges {
   @ViewChildren("media") elements!: QueryList<ImageComponent | VideoComponent>;
-  @Input() media: Media[] = [];
+  @Input() media: BaseMedia[] = [];
   dimentions: Dimension[] = [];
   MediaType = MediaType;
   aspectRatio: number = 4 / 6;

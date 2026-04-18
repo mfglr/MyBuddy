@@ -1,8 +1,8 @@
-import { InvalidMediaTypeError } from "../errors/invalid-media-type-error";
-import { Media } from "./media";
+import { InvalidMediaTypeError } from "./invalid-media-type-error";
+import { BaseMedia } from "./base-media";
 import { MediaType } from "./media-type";
 
-export class LocalMedia extends Media{
+export class LocalMedia extends BaseMedia{
   file: File;
 
   constructor(file:File) {
@@ -12,7 +12,6 @@ export class LocalMedia extends Media{
       super(MediaType.video);
     else
       throw new InvalidMediaTypeError();
-
     this.file = file;
   }
 }

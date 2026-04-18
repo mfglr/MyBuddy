@@ -16,7 +16,7 @@ namespace BlobService.Api.Controllers
         public async Task<FileStreamResult> Get(string containerName, string blobName, CancellationToken cancellationToken)
         {
             var stream = await _blobService.ReadAsync(containerName, blobName, cancellationToken);
-            return File(stream, "video/mp4", enableRangeProcessing: true);
+            return File(stream, "media/extension", enableRangeProcessing: true);
         }
 
         [Authorize("write")]

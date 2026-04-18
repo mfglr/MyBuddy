@@ -1,8 +1,8 @@
 import { Dimension } from "./dimension";
-import { Media } from "./media";
+import { BaseMedia } from "./base-media";
 import { MediaType } from "./media-type";
 
-export class RemoteMedia extends Media{
+export class RemoteMedia extends BaseMedia{
   containerName: string;
   blobName: string;
   dimension: Dimension;

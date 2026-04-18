@@ -1,0 +1,6 @@
+@if(image instanceof LocalMedia){
+  <app-local-media-circular [diameter]="diameter" [image]="image"></app-local-media-circular>
+}
+@else if(image instanceof RemoteMedia){
+  <app-remote-media-circular [baseUrl]="baseUrl" [diameter]="diameter" [image]="image"></app-remote-media-circular>
+}

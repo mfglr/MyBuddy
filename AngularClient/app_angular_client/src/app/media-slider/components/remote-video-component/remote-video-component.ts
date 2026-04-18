@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { RemoteMedia } from '../../models/remote-media';
+import { RemoteMedia } from '../../../media-core/remote-media';
 
 @Component({
   selector: 'app-remote-video-component',
