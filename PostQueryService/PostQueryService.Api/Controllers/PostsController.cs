@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PostQueryService.Application.UseCases;
 using PostQueryService.Application.UseCases.GetById;
 using PostQueryService.Application.UseCases.GetByUserId;
+using PostQueryService.Application.UseCases.SearchPosts;
 
 namespace PostQueryService.Api.Controllers
 {
@@ -16,6 +17,10 @@ namespace PostQueryService.Api.Controllers
 
         [HttpGet]
         public Task<IEnumerable<PostProjectionResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
+            sender.Send(request, cancellationToken);
+
+        [HttpGet]
+        public Task<IEnumerable<PostProjectionResponse>> Search([FromQuery] SearchPostsRequest request,CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
     }
 }

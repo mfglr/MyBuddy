@@ -26,6 +26,7 @@ namespace PostQueryService.Application.UseCases
         string UserId,
         string? Name,
         string UserName,
-        PostProjectionResponse_Media? UserMedia
+        PostProjectionResponse_Media? UserMedia,
+        double? Score = null
     );
 }
