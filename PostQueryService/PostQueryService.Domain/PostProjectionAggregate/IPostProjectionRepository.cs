@@ -3,6 +3,7 @@
     public interface IPostProjectionRepository
     {
         Task<PostProjection?> GetByIdQueryAsync(string id, CancellationToken cancellationToken);
+        Task<IReadOnlyCollection<PostProjection>> GetByUserIdAsync(string userId, string? cursor, int pageSize, CancellationToken cancellationToken);
 
         Task<List<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)>> GetPostByUserAsync(
             string userId,

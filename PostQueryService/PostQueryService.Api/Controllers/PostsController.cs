@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PostQueryService.Application.UseCases;
 using PostQueryService.Application.UseCases.GetById;
+using PostQueryService.Application.UseCases.GetByUserId;
 
 namespace PostQueryService.Api.Controllers
 {
@@ -12,5 +13,9 @@ namespace PostQueryService.Api.Controllers
         [HttpGet("{id}")]
         public Task<PostProjectionResponse> GetById(string id, CancellationToken cancellationToken) =>
             sender.Send(new GetByIdRequest(id), cancellationToken);
+
+        [HttpGet]
+        public Task<IEnumerable<PostProjectionResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
+            sender.Send(request, cancellationToken);
     }
 }

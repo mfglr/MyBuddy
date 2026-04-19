@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostQueryService.Application.UseCases.GetById;
+using PostQueryService.Application.UseCases.GetByUserId;
 using PostQueryService.Application.UseCases.UpdatePostUser;
 using PostQueryService.Application.UseCases.UpsertPost;
 using PostQueryService.Application.UseCases.UpsertUser;
@@ -13,6 +14,7 @@ namespace PostQueryService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .AddSingleton<GetByIdMapper>()
+                .AddSingleton<GetByUserIdMapper>()
                 .AddSingleton<UpsertUserMapper>()
                 .AddSingleton<UpsertPostMapper>()
                 .AddSingleton<UpdatePostUserMapper>()

@@ -18,6 +18,25 @@ namespace PostQueryService.Infrastructure.ElastichSearch
             
             return response.Source;
         }
+        public async Task<IReadOnlyCollection<PostProjection>> GetByUserIdAsync(string userId, string? cursor, int pageSize, CancellationToken cancellationToken)
+        {
+            var response = await client.SearchAsync<PostProjection>(
+                (srd) => {
+                    srd
+                        .Query(x => x.Term(x => x.Field(x => x.UserId).Value(userId)))
+                        .Sort(x => x.Field(x => x.Id, SortOrder.Desc));
+                    if (cursor != null)
+                        srd = srd.SearchAfter(cursor);
+                    srd.Size(pageSize);
+                },
+                cancellationToken
+            );
+
+            if (!response.IsSuccess())
+                throw new ElasticSearchException();
+
+            return response.Documents;
+        }
 
 
         public async Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken)
@@ -135,5 +154,6 @@ namespace PostQueryService.Infrastructure.ElastichSearch
 
         internal Task RefreshAsync() => client.Indices.RefreshAsync(options.PostIndexName);
 
+        
     }
 }
