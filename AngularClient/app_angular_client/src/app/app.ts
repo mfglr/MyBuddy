@@ -6,12 +6,13 @@ import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { PostComponent } from './post-read/components/post-component/post-component';
 import { PaginatinKey } from './pagination/pagination-key';
+import { PostListComponent } from './post-read/components/post-list-component/post-list-component';
 
 @Component({
   selector: 'app-root',
   imports: [
     ReactiveFormsModule,
-    PostComponent,
+    PostListComponent,
     AsyncPipe
 ],
   templateUrl: './app.html',

@@ -1,0 +1,8 @@
+@for(post of posts; track post){
+  <div class="post">
+    <app-post-component baseUrl="http://localhost:5284/api/v1/blobs/get"
+      [post]="post">
+    </app-post-component>
+  </div>
+
+}

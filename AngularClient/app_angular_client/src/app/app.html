@@ -3,11 +3,7 @@
 
 <div style="width: 300px;">
   @if(posts$ | async; as posts){
-    @for(post of posts; track post){
-      <app-post-component baseUrl="http://localhost:5284/api/v1/blobs/get"
-        [post]="post">
-      </app-post-component>
-    }
+    <app-post-list-component [posts]="posts"></app-post-list-component>
   }
 </div>
 
