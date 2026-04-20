@@ -5,6 +5,7 @@ import { PostReadService } from './post-read/services/post-read-service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { PostComponent } from './post-read/components/post-component/post-component';
+import { PaginatinKey } from './pagination/pagination-key';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,9 @@ import { PostComponent } from './post-read/components/post-component/post-compon
 })
 export class App implements OnInit {
 
-  post$: Observable<Post>;
+  posts$: Observable<Post[]>;
   constructor(private postService: PostReadService) {
-    this.post$ = postService.getById("019da210-9e44-7185-af6c-afc1ab71902c")
+    this.posts$ = postService.getByUserId("019da20a-95cb-79f7-9fb5-d97b96445051",20,new PaginatinKey<string>(true))
   }
 
   ngOnInit(): void {
