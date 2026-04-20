@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using PostQueryService.Domain.PostProjectionAggregate;
 
 namespace PostQueryService.Application.UseCases.GetById
 {
     internal class GetByIdHandler(
-        IPostProjectionRepository repository,
+        IPostQueryRepository repository,
         GetByIdMapper mapper
     ) : IRequestHandler<GetByIdRequest, PostProjectionResponse>
     {

@@ -5,68 +5,6 @@ namespace PostQueryService.Infrastructure.ElastichSearch
 {
     internal class PostProjectionRepository(ElasticsearchClient client, ElasticSearchOptions options) : IPostProjectionRepository
     {
-        public async Task<PostProjection?> GetByIdQueryAsync(string id, CancellationToken cancellationToken)
-        {
-            var response = await client.GetAsync<PostProjection>(
-                options.PostIndexName,
-                id,
-                x => x.Realtime(true),
-                cancellationToken: cancellationToken);
-            
-            if (!response.IsSuccess())
-                throw new ElasticSearchException();
-            
-            return response.Source;
-        }
-        public async Task<IEnumerable<PostProjection>> GetByUserIdAsync(string userId, string? cursor, int pageSize, CancellationToken cancellationToken)
-        {
-            var response = await client.SearchAsync<PostProjection>(
-                (srd) => {
-                    srd
-                        .Query(x => x.Term(x => x.Field(x => x.UserId).Value(userId)))
-                        .Sort(x => x.Field(x => x.Id, SortOrder.Desc));
-                    if (cursor != null)
-                        srd = srd.SearchAfter(cursor);
-                    srd.Size(pageSize);
-                },
-                cancellationToken
-            );
-
-            if (!response.IsSuccess())
-                throw new ElasticSearchException();
-
-            return response.Documents;
-        }
-
-        public async Task<IEnumerable<(PostProjection post, double? score)>> SearchAsync(
-            string key,
-            double? score,
-            string? id,
-            int pageSize,
-            CancellationToken cancellationToken
-        )
-        {
-            var response = await client.SearchAsync<PostProjection>(
-                (srd) => {
-                    srd
-                        .Query(x => x.Match(x => x.Field(x => x.Content.Value).Query(key).Fuzziness("AUTO")))
-                        .Sort(
-                            x => x.Score(x => x.Order(SortOrder.Desc)),
-                            x => x.Field(x => x.Id, SortOrder.Desc)
-                        );
-                    if (score != null && id != null)
-                        srd = srd.SearchAfter((double)score, id);
-                    srd.Size(pageSize).TrackScores(true);
-                },
-                cancellationToken
-            );
-
-            if (!response.IsSuccess())
-                throw new ElasticSearchException();
-
-            return response.Hits.Select(x => (x.Source!, x.Score));
-        }
-
         public async Task<(PostProjection? postProjection, long? primaryTerm, long? sequenceNumber)> GetByIdAsync(string id, CancellationToken cancellationToken)
         {
             var response = await client.GetAsync<PostProjection>(

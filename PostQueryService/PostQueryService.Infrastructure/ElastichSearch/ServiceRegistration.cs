@@ -2,6 +2,7 @@
 using Elastic.Transport;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PostQueryService.Application.UseCases;
 using PostQueryService.Domain.PostProjectionAggregate;
 using PostQueryService.Domain.UserAggregate;
 
@@ -32,6 +33,7 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                 .AddSingleton(options)
                 .AddSingleton(new ElasticsearchClient(clientSettings))
                 .AddScoped<IPostProjectionRepository, PostProjectionRepository>()
+                .AddScoped<IPostQueryRepository,PostQueryRepository>()
                 .AddScoped<IUserRepository,UserRepository>();
         }
     }

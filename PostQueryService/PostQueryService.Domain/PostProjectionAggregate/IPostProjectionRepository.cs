@@ -2,16 +2,6 @@
 {
     public interface IPostProjectionRepository
     {
-        Task<PostProjection?> GetByIdQueryAsync(string id, CancellationToken cancellationToken);
-        Task<IEnumerable<PostProjection>> GetByUserIdAsync(string userId, string? cursor, int pageSize, CancellationToken cancellationToken);
-        Task<IEnumerable<(PostProjection post, double? score)>> SearchAsync(
-            string key,
-            double? score,
-            string? id,
-            int pageSize,
-            CancellationToken cancellationToken
-        );
-
         Task<List<(PostProjection postProjection, long? primaryTerm, long? sequenceNumber)>> GetPostByUserAsync(
             string userId,
             int version,

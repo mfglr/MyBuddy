@@ -1,3 +1,3 @@
 import { PaginatinKey } from "./pagination-key";
 
-export type PaginationSelector<E> = (entity: E) => Array<PaginatinKey<any>>;
+export type PaginationSelector<T> = (item?: T) => Array<PaginatinKey<any>>;

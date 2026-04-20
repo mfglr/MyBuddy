@@ -1,9 +1,9 @@
 export class PaginatinKey<T>{
-  property: T;
   isDescending: boolean;
+  key?: T;
 
-  constructor(property: T, isDescending: boolean) {
-    this.property = property;
+  constructor(isDescending: boolean, key?: T) {
     this.isDescending = isDescending;
+    this.key = key;
   }
 }

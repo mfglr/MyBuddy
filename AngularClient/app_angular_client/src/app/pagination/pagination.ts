@@ -1,19 +1,19 @@
 import { Page } from "./page";
 import { PaginationSelector } from "./pagination-selector";
 
-export class Pagination<E>{
-  selector: PaginationSelector<E>;
+export class Pagination<T>{
+  selector: PaginationSelector<T>;
   pageSize: number;
-  items: E[];
+  items: T[];
   hasMore: boolean;
   isLoading: boolean;
 
-  static create<E>(
-    selector: PaginationSelector<E>,
+  static create<T>(
+    selector: PaginationSelector<T>,
     pageSize: number = 20,
-    items: E[] = [],
-  ): Pagination<E>{
-    return new Pagination<E>(
+    items: T[] = [],
+  ): Pagination<T>{
+    return new Pagination<T>(
       selector,
       pageSize,
       items,
@@ -23,9 +23,9 @@ export class Pagination<E>{
   }
 
   private constructor(
-    selector: PaginationSelector<E>,
+    selector: PaginationSelector<T>,
     pageSize: number,
-    items: E[],
+    items: T[],
     hasMore: boolean,
     isLoading: boolean
   ) {
@@ -39,14 +39,12 @@ export class Pagination<E>{
   getNextPage() : Page {
     return new Page(
       this.pageSize,
-      this.items.length === 0
-        ? null
-        : this.selector(this.items[this.items.length - 1])
+      this.selector(this.items[this.items.length - 1])
     )
   }
 
-  markAsLoading() : Pagination<E> {
-    return new Pagination<E>(
+  markAsLoading() : Pagination<T> {
+    return new Pagination<T>(
       this.selector,
       this.pageSize,
       this.items,
@@ -55,8 +53,8 @@ export class Pagination<E>{
     )
   }
 
-  markAsLoaded() : Pagination<E> {
-    return new Pagination<E>(
+  markAsLoaded() : Pagination<T> {
+    return new Pagination<T>(
       this.selector,
       this.pageSize,
       this.items,
@@ -65,8 +63,8 @@ export class Pagination<E>{
     )
   }
 
-  appendPage(items: E[]) : Pagination<E>{
-    return new Pagination<E>(
+  appendPage(items: T[]) : Pagination<T>{
+    return new Pagination<T>(
       this.selector,
       this.pageSize,
       [...this.items, ...items],
@@ -75,8 +73,8 @@ export class Pagination<E>{
     )
   }
 
-  refresh(items: E[]) : Pagination<E>{
-    return new Pagination<E>(
+  refresh(items: T[]) : Pagination<T>{
+    return new Pagination<T>(
       this.selector,
       this.pageSize,
       [...items],

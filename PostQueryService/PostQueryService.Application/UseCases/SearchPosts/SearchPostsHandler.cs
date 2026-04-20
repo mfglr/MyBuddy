@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using PostQueryService.Domain.PostProjectionAggregate;
 
 namespace PostQueryService.Application.UseCases.SearchPosts
 {
     internal class SearchPostsHandler(
-        IPostProjectionRepository repository,
+        IPostQueryRepository repository,
         SearchPostsMapper mapper
     ) : IRequestHandler<SearchPostsRequest, IEnumerable<PostProjectionResponse>>
     {

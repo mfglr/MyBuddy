@@ -15,8 +15,8 @@ namespace PostQueryService.Api.Controllers
         public Task<PostProjectionResponse> GetById(string id, CancellationToken cancellationToken) =>
             sender.Send(new GetByIdRequest(id), cancellationToken);
 
-        [HttpGet]
-        public Task<IEnumerable<PostProjectionResponse>> GetByUserId([FromQuery] GetByUserIdRequest request, CancellationToken cancellationToken) =>
+        [HttpPost]
+        public Task<IEnumerable<PostProjectionResponse>> GetByUserId([FromBody] GetByUserIdRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
         [HttpGet]
