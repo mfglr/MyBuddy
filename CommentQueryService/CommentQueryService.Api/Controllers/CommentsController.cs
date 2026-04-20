@@ -12,8 +12,8 @@ namespace CommentQueryService.Api.Controllers
     [ApiController]
     public class CommentsController(ISender sender) : ControllerBase
     {
-        [HttpGet]
-        public Task<IEnumerable<CommentResponse>> GetByPostId([FromQuery] GetByPostIdRequest request, CancellationToken cancellationToken) =>
+        [HttpPost]
+        public Task<IEnumerable<CommentResponse>> GetByPostId(GetByPostIdRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
         [HttpGet]

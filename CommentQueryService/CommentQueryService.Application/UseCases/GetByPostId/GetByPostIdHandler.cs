@@ -10,7 +10,7 @@ namespace CommentQueryService.Application.UseCases.GetByPostId
     {
         public async Task<IEnumerable<CommentResponse>> Handle(GetByPostIdRequest request, CancellationToken cancellationToken)
         {
-            var comments = await repository.GetByPostIdAsync(request.PostId, request.Cursor, request.PageSize, cancellationToken);
+            var comments = await repository.GetByPostIdAsync(request.PostId, request.PageSize, request.Cursor, cancellationToken);
             return comments.Select(mapper.Map);
         }
     }

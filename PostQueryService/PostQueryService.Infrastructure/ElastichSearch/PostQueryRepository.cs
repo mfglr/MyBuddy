@@ -23,7 +23,7 @@ namespace PostQueryService.Infrastructure.ElastichSearch
         public async Task<IEnumerable<PostProjection>> GetByUserIdAsync(
             string userId,
             int pageSize,
-            PaginationKey<string> cursor,
+            PaginationKey<string?> cursor,
             CancellationToken cancellationToken
         )
         {

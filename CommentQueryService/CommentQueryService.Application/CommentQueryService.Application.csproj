@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
     <ProjectReference Include="..\CommentQueryService.Domain\CommentQueryService.Domain.csproj" />
   </ItemGroup>
 

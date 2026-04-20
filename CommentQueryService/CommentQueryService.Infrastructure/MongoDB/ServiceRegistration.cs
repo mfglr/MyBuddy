@@ -17,7 +17,7 @@ namespace CommentQueryService.Infrastructure.MongoDB
                     return client.GetDatabase(configuration["MongoOptions:DatabaseName"]);
                 })
                 .AddScoped<MongoContext>()
-                .AddScoped<ICommentRepository, CommentProjectionRepository>()
+                .AddScoped<ICommentRepository, CommentRepository>()
                 .AddScoped<IUserRepository, UserRepository>();
     }
 }

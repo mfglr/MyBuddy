@@ -9,7 +9,7 @@ namespace PostQueryService.Application.UseCases
         Task<IEnumerable<PostProjection>> GetByUserIdAsync(
             string userId,
             int pageSize,
-            PaginationKey<string> cursor,
+            PaginationKey<string?> cursor,
             CancellationToken cancellationToken
         );
         Task<IEnumerable<(PostProjection post, double? score)>> SearchAsync(
