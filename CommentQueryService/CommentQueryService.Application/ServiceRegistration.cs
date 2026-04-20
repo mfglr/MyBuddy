@@ -1,4 +1,6 @@
 ﻿using CommentQueryService.Application.UseCases;
+using CommentQueryService.Application.UseCases.UpsertComment;
+using CommentQueryService.Application.UseCases.UpsertUser;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -10,6 +12,8 @@ namespace CommentQueryService.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuraiton)
         {
             return services
+                .AddSingleton<UpsertCommentMapper>()
+                .AddSingleton<UpsertUserMapper>()
                 .AddSingleton<CommentResponseMapper>()
                 .AddMediatR(
                     cfg =>

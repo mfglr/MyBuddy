@@ -9,7 +9,7 @@ namespace CommentService.Domain
         public static readonly int MaxLength = 1024;
 
         public string Value { get; private set; }
-        public ModerationResult? ModerationResult { get; set; }
+        public ModerationResult? ModerationResult { get; internal set; }
 
         public Content(string value)
         {

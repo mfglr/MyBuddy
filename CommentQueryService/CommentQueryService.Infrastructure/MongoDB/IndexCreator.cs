@@ -1,4 +1,4 @@
-﻿using CommentQueryService.Domain;
+﻿using CommentQueryService.Domain.CommentAggregate;
 using MongoDB.Driver;
 
 namespace CommentQueryService.Infrastructure.MongoDB
@@ -9,9 +9,9 @@ namespace CommentQueryService.Infrastructure.MongoDB
         {
             var context = (MongoContext)serviceProvider.GetService(typeof(MongoContext))!;
 
-            List<CreateIndexModel<CommentProjection>> indexes = [
-                new (Builders<CommentProjection>.IndexKeys.Ascending(x => x.Comment.PostId).Descending(x => x.Id)),
-                new (Builders<CommentProjection>.IndexKeys.Ascending(x => x.Comment.RepliedId).Descending(x => x.Id))
+            List<CreateIndexModel<Comment>> indexes = [
+                new (Builders<Comment>.IndexKeys.Ascending(x => x.PostId).Descending(x => x.Id)),
+                new (Builders<Comment>.IndexKeys.Ascending(x => x.ParentId).Descending(x => x.Id))
             ];
             context.Comments.Indexes.CreateMany(indexes);
         }

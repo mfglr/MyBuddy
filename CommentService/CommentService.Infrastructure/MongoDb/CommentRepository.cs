@@ -10,7 +10,7 @@ namespace CommentService.Infrastructure.MongoDb
         {
             var filter = 
                 Builders<Comment>.Filter.Eq(x => x.Id, id) &
-                Builders<Comment>.Filter.Eq(x => x.IsDeleted,false);
+                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.AnyAsync(cancellationToken);
         }
@@ -21,45 +21,17 @@ namespace CommentService.Infrastructure.MongoDb
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<Comment?> GetCommentExceptDeletedByIdAsync(Guid id, CancellationToken cancellationToken)
-        {
-            var filter = 
-                Builders<Comment>.Filter.Eq(x => x.Id, id) &
-                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
-            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
-            return await result.FirstOrDefaultAsync(cancellationToken);
-        }
 
         public async Task<List<Comment>> GetCommentsByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter =
-                Builders<Comment>.Filter.Eq(x => x.RepliedId, id);
-            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
-            return await result.ToListAsync(cancellationToken);
-        }
-        public async Task<List<Comment>> GetCommentsExceptDeletedByRepliedIdAsync(Guid id, CancellationToken cancellationToken)
-        {
-            var filter = 
-                Builders<Comment>.Filter.Eq(x => x.RepliedId, id) &
-                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
+            var filter = Builders<Comment>.Filter.Eq(x => x.RepliedId, id);
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.ToListAsync(cancellationToken);
         }
 
         public async Task<List<Comment>> GetCommentsByPostIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var filter =
-                Builders<Comment>.Filter.Eq(x => x.PostId, id);
-
-            var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
-            return await result.ToListAsync(cancellationToken);
-        }
-        public async Task<List<Comment>> GetCommentsExceptDeletedByPostIdAsync(Guid id, CancellationToken cancellationToken)
-        {
-            var filter = 
-                Builders<Comment>.Filter.Eq(x => x.PostId, id) &
-                Builders<Comment>.Filter.Eq(x => x.IsDeleted, false);
-            
+            var filter = Builders<Comment>.Filter.Eq(x => x.PostId, id);
             var result = await context.Comments.FindAsync(filter, cancellationToken: cancellationToken);
             return await result.ToListAsync(cancellationToken);
         }
@@ -94,14 +66,10 @@ namespace CommentService.Infrastructure.MongoDb
                 throw new ConflictDetectedException();
         }
 
-        public async Task DeleteAsync(Comment comment, CancellationToken cancellationToken)
+        public Task DeleteAsync(Comment comment, CancellationToken cancellationToken)
         {
-            var filter =
-                Builders<Comment>.Filter.Eq(x => x.Id, comment.Id) &
-                Builders<Comment>.Filter.Eq(x => x.Version, comment.Version);
-            var result = await context.Comments.DeleteOneAsync(mongoDbContext.Session, filter, cancellationToken: cancellationToken);
-            if (result.DeletedCount == 0)
-                throw new ConflictDetectedException();
+            var filter = Builders<Comment>.Filter.Eq(x => x.Id, comment.Id);
+            return context.Comments.DeleteOneAsync(mongoDbContext.Session, filter, cancellationToken: cancellationToken);
         }
     }
 }

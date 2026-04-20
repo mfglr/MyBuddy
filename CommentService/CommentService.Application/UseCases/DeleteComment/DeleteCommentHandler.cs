@@ -16,14 +16,14 @@ namespace CommentService.Application.UseCases.DeleteComment
         public async Task Handle(DeleteCommentRequest request, CancellationToken cancellationToken)
         {
             var comment =
-                await commentRepository.GetCommentExceptDeletedByIdAsync(request.Id, cancellationToken) ??
+                await commentRepository.GetCommentByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
 
-            if (comment.UserId != authService.CurrentUser.Id)
+            if (comment.UserId != authService.UserId)
                 throw new ForbiddenOperationException();
 
             comment.Delete();
-            await commentRepository.UpdateAsync(comment, cancellationToken);
+            await commentRepository.DeleteAsync(comment, cancellationToken);
 
             var @event = mapper.Map(comment);
             await publishEndpoint.Publish(@event, cancellationToken);

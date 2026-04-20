@@ -12,7 +12,7 @@ namespace CommentService.Application.UseCases.DeletePostComments
     {
         public async Task Handle(DeletePostCommentsRequest request, CancellationToken cancellationToken)
         {
-            var comments = await commentRepository.GetCommentsExceptDeletedByPostIdAsync(request.PostId, cancellationToken);
+            var comments = await commentRepository.GetCommentsByPostIdAsync(request.PostId, cancellationToken);
             if (comments.Count == 0) return;
             foreach (var comment in comments)
                 comment.Delete();

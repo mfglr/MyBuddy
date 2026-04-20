@@ -12,20 +12,18 @@ namespace CommentService.Application.UseCases.CreateComment
                 content.ModerationResult
             );
 
-        public CommentCreatedEvent Map(Comment comment,CurrentUser user) =>
+        public CommentCreatedEvent Map(Comment comment) =>
             new(
                 comment.Id,
                 comment.CreatedAt,
                 comment.UpdatedAt,
-                comment.DeletedAt,
                 comment.IsDeleted,
                 comment.Version,
                 comment.UserId,
                 comment.PostId,
                 comment.ParentId,
                 comment.RepliedId,
-                Map(comment.Content),
-                user
+                Map(comment.Content)
             );
     }
 }

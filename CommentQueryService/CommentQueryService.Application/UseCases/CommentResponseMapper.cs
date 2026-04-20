@@ -1,26 +1,36 @@
 ﻿using CommentQueryService.Domain;
+using CommentQueryService.Domain.CommentAggregate;
 
 namespace CommentQueryService.Application.UseCases
 {
     internal class CommentResponseMapper
     {
-        private CommentResponse Map(CommentProjection projection) =>
+        private CommentResponse_Media Map(CommentMedia media) =>
             new(
-                projection.User.Id,
-                projection.User.UserName,
-                projection.User.Name,
-                projection.User.Media,
-                projection.Id,
-                projection.Comment.CreatedAt,
-                projection.Comment.UpdatedAt,
-                projection.Comment.PostId,
-                projection.Comment.ParentId,
-                projection.Comment.RepliedId,
-                projection.Comment.Content,
-                projection.LikeCount,
-                projection.ChildCount
+                media.ContainerName,
+                media.BlobName,
+                media.Type,
+                media.Metadata,
+                media.ModerationResult,
+                media.Thumbnails,
+                media.Transcodings
             );
 
-        public IEnumerable<CommentResponse> Map(IEnumerable<CommentProjection> projections) => projections.Select(Map);
+        public CommentResponse Map(Comment comment) =>
+            new(
+                comment.UserId,
+                comment.User.UserName,
+                comment.User.Name,
+                comment.User.Media != null ? Map(comment.User.Media) : null,
+                comment.Id,
+                comment.CreatedAt,
+                comment.UpdatedAt,
+                comment.PostId,
+                comment.ParentId,
+                comment.RepliedId,
+                comment.Content,
+                comment.LikeCount,
+                comment.ChildCount
+            );
     }
 }

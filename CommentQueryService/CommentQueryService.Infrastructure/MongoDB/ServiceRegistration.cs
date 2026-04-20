@@ -1,4 +1,5 @@
-﻿using CommentQueryService.Domain;
+﻿using CommentQueryService.Domain.CommentAggregate;
+using CommentQueryService.Domain.UserAggregate;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
@@ -16,6 +17,7 @@ namespace CommentQueryService.Infrastructure.MongoDB
                     return client.GetDatabase(configuration["MongoOptions:DatabaseName"]);
                 })
                 .AddScoped<MongoContext>()
-                .AddScoped<ICommentProjectionRepository, CommentProjectionRepository>();
+                .AddScoped<ICommentRepository, CommentProjectionRepository>()
+                .AddScoped<IUserRepository, UserRepository>();
     }
 }

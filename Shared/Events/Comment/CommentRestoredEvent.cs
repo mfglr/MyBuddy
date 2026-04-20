@@ -10,7 +10,6 @@ namespace Shared.Events.Comment
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        DateTime? DeletedAt,
         bool IsDeleted,
         int Version,
         Guid UserId,

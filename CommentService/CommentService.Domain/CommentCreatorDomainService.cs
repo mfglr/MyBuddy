@@ -4,13 +4,13 @@ namespace CommentService.Domain
 {
     public class CommentCreatorDomainService(ICommentRepository commentRepository)
     {
-        public async Task<Comment> CreateAsync(Guid userId, Guid? postId, Guid? repliedId, Content content,  CancellationToken cancellationToken)
+        public async Task<Comment> CreateAsync(Guid userId, Guid postId, Guid? repliedId, Content content,  CancellationToken cancellationToken)
         {
             Guid? parentId = null;
             if (repliedId != null)
             {
                 var replied =
-                    await commentRepository.GetCommentExceptDeletedByIdAsync((Guid)repliedId, cancellationToken) ??
+                    await commentRepository.GetCommentByIdAsync((Guid)repliedId, cancellationToken) ??
                     throw new CommentNotFoundException();
 
                 if (replied.ParentId != null)

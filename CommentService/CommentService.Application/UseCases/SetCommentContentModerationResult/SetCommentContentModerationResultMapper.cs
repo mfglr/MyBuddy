@@ -16,7 +16,6 @@ namespace CommentService.Application.UseCases.SetCommentContentModerationResult
                 comment.Id,
                 comment.CreatedAt,
                 comment.UpdatedAt,
-                comment.DeletedAt,
                 comment.IsDeleted,
                 comment.Version,
                 comment.UserId,

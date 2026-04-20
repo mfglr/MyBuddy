@@ -1,11 +1,11 @@
-﻿using CommentQueryService.Domain;
+﻿using CommentQueryService.Domain.CommentAggregate;
 using MassTransit;
 using Shared.Events.Comment;
 
 namespace CommentQueryService.Worker.MassTransit.Consumers.IncreaseChildCount_OnCommentCreated
 {
     internal class IncreaseChildCount_OnCommentCreated_CommentQueryService(
-        ICommentProjectionRepository repository
+        ICommentRepository repository
     ) : IConsumer<CommentCreatedEvent>
     {
         public Task Consume(ConsumeContext<CommentCreatedEvent> context) =>

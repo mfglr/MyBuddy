@@ -10,11 +10,10 @@ namespace Shared.Events.Comment
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        DateTime? DeletedAt,
         bool IsDeleted,
         int Version,
         Guid UserId,
-        Guid? PostId,
+        Guid PostId,
         Guid? ParentId,
         Guid? RepliedId,
         CommentContentModerationResultSetEvent_Content Content

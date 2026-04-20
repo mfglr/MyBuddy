@@ -16,10 +16,10 @@ namespace CommentService.Application.UseCases.UpdateCommentContent
         public async Task Handle(UpdateCommentContentRequest request, CancellationToken cancellationToken)
         {
             var comment =
-                await commentRepository.GetCommentExceptDeletedByIdAsync(request.Id, cancellationToken) ??
+                await commentRepository.GetCommentByIdAsync(request.Id, cancellationToken) ??
                 throw new CommentNotFoundException();
 
-            if (comment.UserId != authService.CurrentUser.Id)
+            if (comment.UserId != authService.UserId)
                 throw new ForbiddenOperationException();
 
             var content = new Content(request.Content);

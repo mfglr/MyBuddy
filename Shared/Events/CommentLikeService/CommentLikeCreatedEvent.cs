@@ -7,7 +7,6 @@
         DateTime CreatedAt,
         DateTime? DeletedAt,
         bool IsDeleted,
-        int Version,
-        CurrentUser CurrentUser
+        int Version
     );
 }

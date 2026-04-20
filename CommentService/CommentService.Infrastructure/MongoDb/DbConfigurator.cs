@@ -15,7 +15,6 @@ namespace CommentService.Infrastructure.MongoDb
                 cm.MapIdMember(q => q.Id);
                 cm.MapMember(q => q.CreatedAt);
                 cm.MapMember(q => q.UpdatedAt);
-                cm.MapMember(q => q.DeletedAt);
                 cm.MapMember(q => q.IsDeleted);
                 cm.MapMember(q => q.Version);
                 cm.MapMember(q => q.UserId);
