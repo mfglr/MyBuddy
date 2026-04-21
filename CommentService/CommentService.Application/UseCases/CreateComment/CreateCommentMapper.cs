@@ -1,5 +1,4 @@
 ﻿using CommentService.Domain;
-using Shared.Events;
 using Shared.Events.Comment;
 
 namespace CommentService.Application.UseCases.CreateComment

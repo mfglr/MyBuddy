@@ -16,8 +16,8 @@ namespace CommentQueryService.Api.Controllers
         public Task<IEnumerable<CommentResponse>> GetByPostId(GetByPostIdRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
 
-        [HttpGet]
-        public Task<IEnumerable<CommentResponse>> GetByParentId([FromQuery] GetByParentIdRequest request, CancellationToken cancellationToken) =>
+        [HttpPost]
+        public Task<IEnumerable<CommentResponse>> GetByParentId(GetByParentIdRequest request, CancellationToken cancellationToken) =>
             sender.Send(request, cancellationToken);
     }
 }

@@ -10,7 +10,7 @@ namespace CommentQueryService.Application.UseCases.GetByParentId
     {
         public async Task<IEnumerable<CommentResponse>> Handle(GetByParentIdRequest request, CancellationToken cancellationToken)
         {
-            var comments = await repository.GetByParentIdAsync(request.ParentId,request.Cursor,request.PageSize,cancellationToken);
+            var comments = await repository.GetByParentIdAsync(request.ParentId, request.PageSize, request.Cursor, cancellationToken);
             return comments.Select(mapper.Map);
         }
     }

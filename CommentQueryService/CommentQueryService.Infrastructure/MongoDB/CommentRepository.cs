@@ -17,12 +17,16 @@ namespace CommentQueryService.Infrastructure.MongoDB
                 ? context.Comments.Find(filter).SortByDescending(x => x.Id).Limit(pageSize).ToListAsync(cancellationToken)
                 : context.Comments.Find(filter).SortBy(x => x.Id).Limit(pageSize).ToListAsync(cancellationToken);
         }
-        public Task<List<Comment>> GetByParentIdAsync(Guid parentId, Guid? cursor, int pageSize, CancellationToken cancellationToken)
+        public Task<List<Comment>> GetByParentIdAsync(Guid parentId, int pageSize, PaginationKey<Guid?> cursor, CancellationToken cancellationToken)
         {
             var filter = Builders<Comment>.Filter.Eq(x => x.ParentId, parentId);
-            if (cursor != null)
-                filter &= Builders<Comment>.Filter.Lt(x => x.Id, cursor);
-            return context.Comments.Find(filter).SortByDescending(x => x.Id).Limit(pageSize).ToListAsync(cancellationToken);
+            if (cursor.Key != null)
+                filter &= cursor.IsDescending
+                    ? Builders<Comment>.Filter.Lt(x => x.Id, cursor.Key)
+                    : Builders<Comment>.Filter.Gt(x => x.Id, cursor.Key);
+            return cursor.IsDescending
+                ? context.Comments.Find(filter).SortByDescending(x => x.Id).Limit(pageSize).ToListAsync(cancellationToken)
+                : context.Comments.Find(filter).SortBy(x => x.Id).Limit(pageSize).ToListAsync(cancellationToken);
         }
 
         public Task<Comment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

@@ -5,7 +5,7 @@ namespace CommentQueryService.Domain.CommentAggregate
     public interface ICommentRepository
     {
         Task<List<Comment>> GetByPostIdAsync(Guid postId, int pageSize, PaginationKey<Guid?> Cursor, CancellationToken cancellationToken);
-        Task<List<Comment>> GetByParentIdAsync(Guid parentId, Guid? cursor, int pageSize, CancellationToken cancellationToken);
+        Task<List<Comment>> GetByParentIdAsync(Guid parentId, int pageSize, PaginationKey<Guid?> Cursor, CancellationToken cancellationToken);
 
         Task<Comment?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<List<Comment>> GetByUserIdAsync(Guid userId, int version, CancellationToken cancellationToken);
