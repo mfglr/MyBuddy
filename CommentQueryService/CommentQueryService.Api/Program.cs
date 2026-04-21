@@ -7,6 +7,17 @@ DbConfigurator.Configure();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularPolicy", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services
     .AddAuthenticationAndAuthorization(builder.Configuration)
@@ -20,6 +31,7 @@ using (var scope = app.Services.CreateScope())
     IndexCreator.Create(scope.ServiceProvider);
 }
 
+app.UseCors("AngularPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

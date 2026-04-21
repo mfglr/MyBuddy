@@ -1,46 +1,27 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Post } from './post-read/models/post';
-import { PostReadService } from './post-read/services/post-read-service';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { PostComponent } from './post-read/components/post-component/post-component';
 import { PaginatinKey } from './pagination/pagination-key';
-import { PostListComponent } from './post-read/components/post-list-component/post-list-component';
+import { CommentService } from './comment-read/services/comment-service';
+import { Comment } from './comment-read/models/comment';
+import { CommentListComponent } from './comment-read/components/comment-list-component/comment-list-component';
 
 @Component({
   selector: 'app-root',
   imports: [
     ReactiveFormsModule,
-    PostListComponent,
-    AsyncPipe
+    AsyncPipe,
+    CommentListComponent
 ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
-
-  posts$: Observable<Post[]>;
-  constructor(private postService: PostReadService) {
-    this.posts$ = postService.getByUserId("019da20a-95cb-79f7-9fb5-d97b96445051",20,new PaginatinKey<string>(true))
+export class App{
+  comments$: Observable<Comment[]>;
+  constructor(private commentService: CommentService) {
+    this.comments$ = commentService.getByPostId("019dac6f-a014-792a-9057-f8ad30b72ba5", 20, new PaginatinKey<string>(true));
   }
-
-  ngOnInit(): void {
-  }
-
-  // onFiles(event: Event){
-  //   const input = event.target as HTMLInputElement;
-  //   if (!input.files || input.files.length === 0) return;
-
-  //   let media: LocalMedia[] = [];
-  //   for(let i = 0; i < input.files.length; i++){
-  //     media[i] = new LocalMedia(input.files[i])
-  //   }
-  //   this.media = [
-  //     ...this.media,
-  //     ...media
-  //   ];
-  // }
 
   protected readonly title = signal('app_angular_client');
 }

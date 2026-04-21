@@ -1,0 +1,8 @@
+@for(comment of comments; track comment; let last = $last){
+  <div class="comment" [style.margin-bottom.px]="last ? null : bottomMargin">
+    <app-comment-component
+      [comment]="comment"
+      baseUrl="http://localhost:5284/api/v1/blobs/get">
+    </app-comment-component>
+  </div>
+}

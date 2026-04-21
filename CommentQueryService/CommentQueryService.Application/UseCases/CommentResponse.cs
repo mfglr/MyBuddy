@@ -21,7 +21,7 @@ namespace CommentQueryService.Application.UseCases
         Guid Id,
         DateTime CreatedAt,
         DateTime? UpdatedAt,
-        Guid? PostId,
+        Guid PostId,
         Guid? ParentId,
         Guid? RepliedId,
         CommentContent Content,

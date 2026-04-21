@@ -2,12 +2,10 @@
 using CommentQueryService.Application.UseCases.GetByParentId;
 using CommentQueryService.Application.UseCases.GetByPostId;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommentQueryService.Api.Controllers
 {
-    [Authorize("comment_query")]
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class CommentsController(ISender sender) : ControllerBase

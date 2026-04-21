@@ -1,0 +1,35 @@
+<div class="user-card">
+  <div class="user-media">
+    @if(comment.userMedia){
+      <app-media-circular
+        [image]="map(comment.userMedia)"
+        [baseUrl]="baseUrl"
+        [diameter]="userMediaDiameter"
+      >
+      </app-media-circular>
+    }
+    @else{
+      <app-no-user-media-component [diameter]="userMediaDiameter">
+      </app-no-user-media-component>
+    }
+  </div>
+
+  <div class="content-wrapper">
+    <div class="content">
+      <span class="user-name">{{comment.userName}}</span>
+      <span class="content-value">{{comment.content.value}}</span>
+    </div>
+    <div class="footer">
+      <span class="date">{{comment.createdAt | date}}</span>
+      @if(comment.likeCount){
+        <span class="like">{{comment.likeCount}} likes</span>
+      }
+      @if(comment.childCount && isParent){
+        <span class="child">{{comment.childCount}} replies</span>
+      }
+    </div>
+  </div>
+
+
+</div>
+
