@@ -71,6 +71,7 @@ namespace AuthServer.Infrastructure.IdentityServer
 
                 new("blob.api"){
                     Scopes = [
+                        "container.write",
                         "blob.read",
                         "blob.write",
                         "blob.delete"
@@ -97,6 +98,7 @@ namespace AuthServer.Infrastructure.IdentityServer
                 new("comment_like"),
                 new("comment_like_query"),
 
+                new("container.write"),
                 new("blob.read"),
                 new("blob.write"),
                 new("blob.delete")
@@ -104,6 +106,17 @@ namespace AuthServer.Infrastructure.IdentityServer
 
         public static IEnumerable<Client> GetClients() =>
             [
+
+                new(){
+                    ClientId = "admin",
+                    ClientSecrets = [new Secret("secret".Sha256())],
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AccessTokenLifetime = 900, // 15 minutes
+                    AllowedScopes = [
+                        "container.write"
+                    ]
+                },
+
                 new (){
                     ClientId = "postman.client",
                     ClientSecrets = [new Secret("secret".Sha256())],

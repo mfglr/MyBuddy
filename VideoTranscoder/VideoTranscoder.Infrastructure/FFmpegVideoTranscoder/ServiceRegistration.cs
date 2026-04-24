@@ -5,11 +5,9 @@ namespace VideoTranscoder.Infrastructure.FFmpegVideoTranscoder
 {
     internal static class ServiceRegistration
     {
-        public static IServiceCollection AddFFmpegVideoTranscoder(this IServiceCollection services)
-        {
-            FFmpegConfigration.Configure();
-            return services
+        public static IServiceCollection AddFFmpegVideoTranscoder(this IServiceCollection services) =>
+            services
+                .AddSingleton<FFmpegInitializer>()
                 .AddScoped<IVideoTranscoder, VideoTranscoder>();
-        }
     }
 }

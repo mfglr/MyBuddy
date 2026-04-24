@@ -14,7 +14,7 @@ namespace Comment.Api.Auth
                     JwtBearerDefaults.AuthenticationScheme,
                     options =>
                     {
-                        options.Authority = option.Issuer;
+                        options.Authority = option.Authority;
                         options.Audience = option.Audience;
                         options.RequireHttpsMetadata = false;
 
@@ -23,6 +23,7 @@ namespace Comment.Api.Auth
                             ValidateAudience = true,
                             ValidateIssuerSigningKey = true,
                             ValidateLifetime = true,
+                            ValidIssuer = option.Issuer,
                             ValidateIssuer = true,
                         };
                     }

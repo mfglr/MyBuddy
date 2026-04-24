@@ -1,9 +1,8 @@
-using AuthServer.Domain;
 using AuthServer.Application;
+using AuthServer.Domain;
 using AuthServer.Infrastructure;
 using AuthServer.Worker.Auth;
 using AuthServer.Worker.MassTransit;
-using Media.Models;
 
 var builder = Host.CreateApplicationBuilder(args);
 

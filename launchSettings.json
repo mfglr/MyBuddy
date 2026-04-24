@@ -4,7 +4,23 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "postlikeservice.api": "StartDebugging"
+        "postlikeservice.api": "StartDebugging",
+        "comment.api": "StartDebugging",
+        "contentmoderator.worker": "StartDebugging",
+        "authserver.api": "StartDebugging",
+        "commetservice.workers": "StartDebugging",
+        "commentqueryservice.api": "StartDebugging",
+        "commentqueryservice.worker": "StartDebugging",
+        "metadataextractor.worker": "StartDebugging",
+        "thumbnailgenerator.workers": "StartDebugging",
+        "videotranscoder.worker": "StartDebugging",
+        "tokenmanager": "StartDebugging",
+        "mediaservice.worker": "StartDebugging",
+        "postservice.api": "StartDebugging",
+        "postservice.workers": "StartDebugging",
+        "authserver.worker": "StartDebugging",
+        "postqueryservice.api": "StartDebugging",
+        "postqueryservice.worker": "StartDebugging"
       }
     }
   }

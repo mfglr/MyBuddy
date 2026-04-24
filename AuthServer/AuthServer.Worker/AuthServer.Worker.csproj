@@ -4,17 +4,20 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-AuthServer.Worker-97a84f50-3001-419b-992a-b2931ebbd9e9</UserSecretsId>
+    <UserSecretsId>dotnet-AuthServer.Worker-5ed3de09-0f4a-4cb0-be50-4d76a8b7ed88</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="9.0.1" />
-    <PackageReference Include="MassTransit.RabbitMQ" Version="9.0.1" />
+    <PackageReference Include="MassTransit" Version="8.5.9" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AuthServer.Application\AuthServer.Application.csproj" />
-    <ProjectReference Include="..\AuthServer.Infrastructure\AuthServer.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\AuthServer\AuthServer.Application\AuthServer.Application.csproj" />
+    <ProjectReference Include="..\..\AuthServer\AuthServer.Infrastructure\AuthServer.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,134 @@
 services:
-  postlikeservice.api:
-    image: ${DOCKER_REGISTRY-}postlikeserviceapi
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.8
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.2.8
+
+  redis:
+    image: redis
+  postgres:
+    image: postgres
+  mongo1:
+    image: mongo
+  mongo2:
+    image: mongo
+  mongo3:
+    image: mongo
+  rabbitmq:
+    image: rabbitmq:management
+
+  mongo-express:
+    image: mongo-express
+
+  authserver.api:
+    image: ${DOCKER_REGISTRY-}authserverapi
     build:
       context: .
-      dockerfile: PostLikeService/PostLikeService.Api/Dockerfile
+      dockerfile: AuthServer/AuthServer.Api/Dockerfile
+
+  authserver.worker:
+    image: ${DOCKER_REGISTRY-}authserverworker
+    build:
+      context: .
+      dockerfile: AuthServer/AuthServer.Worker/Dockerfile
+
+  comment.api:
+    image: ${DOCKER_REGISTRY-}commentapi
+    build:
+      context: .
+      dockerfile: CommentService/Comment.Api/Dockerfile
+  
+  commetservice.workers:
+    image: ${DOCKER_REGISTRY-}commetserviceworkers
+    build:
+      context: .
+      dockerfile: CommentService/CommetService.Workers/Dockerfile
+  
+  commentqueryservice.api:
+    image: ${DOCKER_REGISTRY-}commentqueryserviceapi
+    build:
+      context: .
+      dockerfile: CommentQueryService/CommentQueryService.Api/Dockerfile
+  
+  commentqueryservice.worker:
+    image: ${DOCKER_REGISTRY-}commentqueryserviceworker
+    build:
+      context: .
+      dockerfile: CommentQueryService/CommentQueryService.Worker/Dockerfile
+
+  blobservice.api:
+    image: ${DOCKER_REGISTRY-}blobserviceapi
+    build:
+      context: .
+      dockerfile: BlobService/BlobService.Api/Dockerfile
+  
+  mediaservice.worker:
+    image: ${DOCKER_REGISTRY-}mediaserviceworker
+    build:
+      context: .
+      dockerfile: MediaService/MediaService.Worker/Dockerfile
+  
+  contentmoderator.worker:
+    image: ${DOCKER_REGISTRY-}contentmoderatorworker
+    build:
+      context: .
+      dockerfile: ContentModerator/ContentModerator.Worker/Dockerfile
+
+  metadataextractor.worker:
+    image: ${DOCKER_REGISTRY-}metadataextractorworker
+    build:
+      context: .
+      dockerfile: MetadataExtractor/MetadataExtractor.Worker/Dockerfile
+
+  thumbnailgenerator.workers:
+    image: ${DOCKER_REGISTRY-}thumbnailgeneratorworkers
+    build:
+      context: .
+      dockerfile: ThumbnailGenerator/ThumbnailGenerator.Workers/Dockerfile
+
+  videotranscoder.worker:
+    image: ${DOCKER_REGISTRY-}videotranscoderworker
+    build:
+      context: .
+      dockerfile: VideoTranscoder/VideoTranscoder.Worker/Dockerfile
+
+  tokenmanager:
+    image: ${DOCKER_REGISTRY-}tokenmanager
+    build:
+      context: .
+      dockerfile: TokenManager/TokenManager/Dockerfile
+
+  postservice.api:
+    image: ${DOCKER_REGISTRY-}postserviceapi
+    build:
+      context: .
+      dockerfile: PostService/src/PostService.Api/Dockerfile
+
+  postservice.workers:
+    image: ${DOCKER_REGISTRY-}postserviceworkers
+    build:
+      context: .
+      dockerfile: PostService/src/PostService.Workers/Dockerfile
+
+  postqueryservice.api:
+    image: ${DOCKER_REGISTRY-}postqueryserviceapi
+    build:
+      context: .
+      dockerfile: PostQueryService/PostQueryService.Api/Dockerfile
+
+  postqueryservice.worker:
+    image: ${DOCKER_REGISTRY-}postqueryserviceworker
+    build:
+      context: .
+      dockerfile: PostQueryService/PostQueryService.Worker/Dockerfile
+
+volumes:
+  redis_data:
+  postgres_data:
+  mongo1_data:
+  mongo2_data:
+  mongo3_data:
+  rabbitmq_data:
+  blob_data:
+  es_data:
+

@@ -6,6 +6,5 @@ namespace AuthServer.Worker.Auth
     {
         public static IServiceCollection AddAuth(this IServiceCollection services) =>
             services.AddSingleton<IAuthService, WorkerAuthService>();
-
     }
 }

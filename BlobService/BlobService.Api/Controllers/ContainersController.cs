@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlobService.Api.Controllers
 {
-    [Authorize("admin")]
     [Route("api/v1/[controller]/[action]")]
     [ApiController]
     public class ContainersController(IContainerService containerService) : ControllerBase
     {
         private readonly IContainerService _containerService = containerService;
-        
+
+        [Authorize("container-write")]
         [HttpPost]
         public Task Create(CreateContainerRequest request, CancellationToken cancellationToken) =>
             _containerService.CreateAsync(request.ContainerName, cancellationToken);

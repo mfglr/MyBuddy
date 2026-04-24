@@ -1,10 +1,420 @@
 services:
-  postlikeservice.api:
+  elasticsearch:
+    container_name: elasticsearch
+    restart: on-failure
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTICSEARCH_PASSWORD}
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  kibana:
+    container_name: kibana
+    restart: on-failure
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  redis:
+    container_name: redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  postgres:
+    container_name: postgres
+    restart: on-failure
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  mongo1:
+    container_name: mongo1
+    restart: on-failure
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017"
+    volumes:
+      - mongo1_data:/data/db
+
+  mongo2:
+    container_name: mongo2
+    restart: on-failure
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017"
+    volumes:
+      - mongo2_data:/data/db
+
+  mongo3:
+    container_name: mongo3
+    restart: on-failure
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017"
+    volumes:
+      - mongo3_data:/data/db
+  
+  rabbitmq:
+    container_name: rabbitmq
+    restart: on-failure
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+      RABBITMQ_DEFAULT_VHOST: ${RABBITMQ_VHOST}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+  
+  mongo-express:
+    container_name: mongo-express
+    restart: on-failure
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: ${MONGO_CONNECTION_STRING}
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin
+  
+  authserver.api:
+    container_name: auth-server-api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTP_PORTS=80
+      - BlobService:Host=http://blobservice.api
+      - AuthOptions:Authority=http://authserver.api
+      - ConnectionStrings:PostgreSql=${ACCOUNTDB_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - Redis:Host=redis
+    depends_on:
+      - rabbitmq
+      - postgres
+      - redis
     ports:
-      - "8080"
+      - "5098:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  authserver.worker:
+    container_name: auth-server-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - BlobService:Host=http://blobservice.api
+      - ConnectionStrings:PostgreSql=${ACCOUNTDB_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - Redis:Host=redis
+    depends_on:
+      - rabbitmq
+      - postgres
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  comment.api:
+    container_name: comment-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - LuckPenny:LicenseKey=${Luck_Penny_License_Key}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    depends_on:
+      - rabbitmq
+      - mongo1
+      - mongo2
+      - mongo3
+    ports:
+      - "5290:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  
+  commetservice.workers:
+    container_name: comment-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - LuckPenny:LicenseKey=${Luck_Penny_License_Key}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    depends_on:
+      - rabbitmq
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+   
+  commentqueryservice.api:
+    container_name: comment-query-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    ports:
+      - "5099:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  
+  commentqueryservice.worker:
+    container_name: comment-query-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    depends_on:
+      - rabbitmq
+      - mongo1
+      - mongo2
+      - mongo3
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  
+  blobservice.api:
+    container_name: blob-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - RootPath=/home/app
+    ports:
+      - "5284:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - blob_data:/home/app
+
+  mediaservice.worker:
+    container_name: media-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ConnectionStrings:PostgreSql=${MEDIADB_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      
+  contentmoderator.worker:
+    container_name: content-moderator-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      # - AzureAIContentSafety:ApiKey=${AZURE_API_KEY}
+      # - LuckPenny:LicenseKey=${Luck_Penny_License_Key}
+      - Redis:Host=redis
+      - RabbitMQ:Host=rabbitmq
+      - RabbitMQ:VirtualHost=${RABBITMQ_VHOST}
+      - RabbitMQ:Password=${RABBITMQ_PASSWORD}
+      - RabbitMQ:UserName=${RABBITMQ_USERNAME}
+      - BlobService:Host=http://blobservice.api
+    depends_on:
+      - redis
+      - rabbitmq
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+ 
+  metadataextractor.worker:
+    container_name: metadata-extractor-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Redis:Host=redis
+      - RabbitMQ:Host=rabbitmq
+      - RabbitMQ:VirtualHost=${RABBITMQ_VHOST}
+      - RabbitMQ:Password=${RABBITMQ_PASSWORD}
+      - RabbitMQ:UserName=${RABBITMQ_USERNAME}
+      - BlobService:Host=http://blobservice.api
+    depends_on:
+      - redis
+      - rabbitmq
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+  
+  thumbnailgenerator.workers:
+    container_name: thumbnail-generator-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Redis:Host=redis
+      - RabbitMQ:Host=rabbitmq
+      - RabbitMQ:VirtualHost=${RABBITMQ_VHOST}
+      - RabbitMQ:Password=${RABBITMQ_PASSWORD}
+      - RabbitMQ:UserName=${RABBITMQ_USERNAME}
+      - BlobService:Host=http://blobservice.api
+    depends_on:
+      - redis
+      - rabbitmq
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  videotranscoder.worker:
+    container_name: video-transcoder-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Redis:Host=redis
+      - RabbitMQ:Host=rabbitmq
+      - RabbitMQ:VirtualHost=${RABBITMQ_VHOST}
+      - RabbitMQ:Password=${RABBITMQ_PASSWORD}
+      - RabbitMQ:UserName=${RABBITMQ_USERNAME}
+      - BlobService:Host=http://blobservice.api
+    depends_on:
+      - redis
+      - rabbitmq
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  tokenmanager:
+    container_name: token-manager-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Redis:Host=redis
+      - IdentityServerOpitons:HostName=http://authserver.api
+    depends_on:
+      - redis
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  postservice.api:
+    container_name: post-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - Redis:Host=redis
+      - BlobService:Host=http://blobservice.api
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    depends_on:
+      - redis
+      - rabbitmq
+      - blobservice.api
+    ports:
+      - "5237:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  postservice.workers:
+    container_name: post-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - Redis:Host=redis
+      - BlobService:Host=http://blobservice.api
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    depends_on:
+      - redis
+      - rabbitmq
+      - blobservice.api
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+ 
+  postqueryservice.api:
+    container_name: post-query-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - ElasticSearchOptions:Host=http://elasticsearch:9200
+      - ElasticSearchOptions:Password=${ELASTICSEARCH_PASSWORD}
+      - Redis:Host=redis
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - AuthOptions:Authority=http://authserver.api
+    depends_on:
+      - elasticsearch
+      - redis
+      - rabbitmq
+    ports:
+      - "5024:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  postqueryservice.worker:
+    container_name: post-query-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - ElasticSearchOptions:Host=http://elasticsearch:9200
+      - ElasticSearchOptions:Password=${ELASTICSEARCH_PASSWORD}
+      - Redis:Host=redis
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    depends_on:
+      - elasticsearch
+      - redis
+      - rabbitmq
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
