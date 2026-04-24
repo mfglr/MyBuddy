@@ -10,10 +10,7 @@ namespace CommentLikeService.Application.UseCases.DislikeComment
                 commentLike.Id.CommentId,
                 commentLike.Id.UserId,
                 commentLike.SequenceId,
-                commentLike.CreatedAt,
-                commentLike.DeletedAt,
-                commentLike.IsDeleted,
-                commentLike.Version
+                commentLike.CreatedAt
             );
     }
 }

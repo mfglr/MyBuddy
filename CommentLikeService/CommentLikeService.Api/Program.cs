@@ -1,6 +1,7 @@
 using CommentLikeService.Api.Auth;
 using CommentLikeService.Api.MassTransit;
 using CommentLikeService.Application;
+using CommentLikeService.Domain;
 using CommentLikeService.Infrastructure;
 using CommentLikeService.Infrastructure.MongoDb;
 
@@ -12,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services
     .AddAuthenticationAuthorization(builder.Configuration)
     .AddMassTransit(builder.Configuration)
+    .AddDomain()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);
 

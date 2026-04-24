@@ -20,17 +20,14 @@ namespace CommentLikeService.Infrastructure.MongoDb
 
         public Task<List<CommentLike>> GetCommentLikesExceptDeletedAsync(Guid commentId, CancellationToken cancellationToken)
         {
-            var filter = 
-                Builders<CommentLike>.Filter.Eq(x => x.Id.CommentId, commentId) &
-                Builders<CommentLike>.Filter.Eq(x => x.IsDeleted, false);
+            var filter = Builders<CommentLike>.Filter.Eq(x => x.Id.CommentId, commentId);
             return context.CommentLikes.Find(filter).ToListAsync(cancellationToken);
         }
 
         public Task<bool> ExistAsync(CommentLikeId id, CancellationToken cancellationToken)
         {
             var filter = 
-                Builders<CommentLike>.Filter.Eq(x => x.Id, id) &
-                Builders<CommentLike>.Filter.Eq(x => x.IsDeleted, false);
+                Builders<CommentLike>.Filter.Eq(x => x.Id, id);
             return context.CommentLikes.Find(filter).AnyAsync(cancellationToken);
         }
 
@@ -42,24 +39,15 @@ namespace CommentLikeService.Infrastructure.MongoDb
                     cancellationToken: cancellationToken
                 );
 
-        public async Task DeleteAsync(CommentLike postLike, CancellationToken cancellationToken = default)
+        public Task DeleteAsync(CommentLike postLike, CancellationToken cancellationToken = default)
         {
             var filter = Builders<CommentLike>.Filter.Eq(x => x.Id, postLike.Id);
-            var result = await context.CommentLikes
-                .DeleteOneAsync(
-                    mongoDbContext.Session,
-                    filter,
-                    cancellationToken: cancellationToken
-                );
-            if (result.DeletedCount < 1)
-                throw new ConcurrencyException();
+            return context.CommentLikes.DeleteOneAsync(mongoDbContext.Session,filter,cancellationToken: cancellationToken);
         }
 
         public async Task UpdateAsync(CommentLike commentLike, CancellationToken cancellationToken = default)
         {
-            var filter = 
-                    Builders< CommentLike >.Filter.Eq(x => x.Id, commentLike.Id) &
-                    Builders<CommentLike>.Filter.Eq(x => x.Version, commentLike.Version - 1);
+            var filter = Builders< CommentLike >.Filter.Eq(x => x.Id, commentLike.Id);
 
             var result = await context.CommentLikes
                 .ReplaceOneAsync(
@@ -79,8 +67,7 @@ namespace CommentLikeService.Infrastructure.MongoDb
             foreach (var like in commentLikes)
             {
                 var filter = Builders<CommentLike>.Filter.And(
-                    Builders<CommentLike>.Filter.Eq(c => c.Id, like.Id),
-                    Builders<CommentLike>.Filter.Eq(c => c.Version, like.Version - 1)
+                    Builders<CommentLike>.Filter.Eq(c => c.Id, like.Id)
                 );
                 updates.Add(new ReplaceOneModel<CommentLike>(filter, like));
             }

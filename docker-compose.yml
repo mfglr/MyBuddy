@@ -56,6 +56,12 @@ services:
       context: .
       dockerfile: CommentQueryService/CommentQueryService.Worker/Dockerfile
 
+  commentlikeservice.api:
+    image: ${DOCKER_REGISTRY-}commentlikeserviceapi
+    build:
+      context: .
+      dockerfile: CommentLikeService/CommentLikeService.Api/Dockerfile
+
   blobservice.api:
     image: ${DOCKER_REGISTRY-}blobserviceapi
     build:
@@ -122,6 +128,8 @@ services:
       context: .
       dockerfile: PostQueryService/PostQueryService.Worker/Dockerfile
 
+  
+
 volumes:
   redis_data:
   postgres_data:
@@ -131,4 +139,5 @@ volumes:
   rabbitmq_data:
   blob_data:
   es_data:
+
 

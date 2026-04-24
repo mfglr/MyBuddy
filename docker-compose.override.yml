@@ -201,6 +201,7 @@ services:
     restart: on-failure
     environment:
       - DOTNET_ENVIRONMENT=Development
+      - AuthOptions:Authority=http://authserver.api
       - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
       - MassTransitOptions:Host=rabbitmq
       - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
@@ -215,6 +216,29 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
   
+  commentlikeservice.api:
+    container_name: comment-like-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    depends_on:
+      - rabbitmq
+      - mongo1
+      - mongo2
+      - mongo3
+    ports:
+      - "5088:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
   blobservice.api:
     container_name: blob-api
     restart: on-failure
@@ -418,3 +442,5 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  

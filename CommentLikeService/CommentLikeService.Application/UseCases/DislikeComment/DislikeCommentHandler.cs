@@ -13,12 +13,11 @@ namespace CommentLikeService.Application.UseCases.DislikeComment
     {
         public async Task Handle(DislikeCommentRequest request, CancellationToken cancellationToken)
         {
-            var commentLikeId = new CommentLikeId(request.CommentId, authService.CurrentUser.Id);
-            var like = 
+            var commentLikeId = new CommentLikeId(request.CommentId, authService.UserId);
+            var like =
                 await repository.GetByIdAsync(commentLikeId, cancellationToken) ??
-                throw new CommentLikeNotAvailableException();
-            like.Dislike();
-            await repository.UpdateAsync(like, cancellationToken);
+                throw new CommentLikeNotFoundException();
+            await repository.DeleteAsync(like, cancellationToken);
 
             var @event = mapper.Map(like);
             await publishEndpoint.Publish(@event, cancellationToken);

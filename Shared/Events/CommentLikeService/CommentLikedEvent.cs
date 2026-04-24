@@ -4,9 +4,6 @@
         Guid CommentId,
         Guid UserId,
         Guid SequenceId,
-        DateTime CreatedAt,
-        DateTime? DeletedAt,
-        bool IsDeleted,
-        int Version
+        DateTime CreatedAt
     );
 }
