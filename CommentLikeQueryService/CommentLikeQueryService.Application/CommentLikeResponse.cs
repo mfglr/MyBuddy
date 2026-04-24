@@ -9,6 +9,6 @@ namespace CommentLikeQueryService.Application
         Guid UserId,
         string UserName,
         string? Name,
-        UserMedia? Media
+        CommentLikeMedia? Media
     );
 }

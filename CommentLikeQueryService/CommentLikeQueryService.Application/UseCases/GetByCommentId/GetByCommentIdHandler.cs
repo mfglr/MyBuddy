@@ -1,10 +1,10 @@
-﻿using CommentLikeQueryService.Domain;
+﻿using CommentLikeQueryService.Domain.CommentLikeAggregate;
 using MediatR;
 
 namespace CommentLikeQueryService.Application.UseCases.GetByCommentId
 {
     internal class GetByCommentIdHandler(
-        ICommentLikeProjectionRepository repository,
+        ICommentLikeRepository repository,
         CommentLikeResponseMapper mapper
     ) : IRequestHandler<GetByCommentIdRequest, List<CommentLikeResponse>>
     {
