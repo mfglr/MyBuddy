@@ -16,7 +16,6 @@ namespace PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountUserNameUpda
         public UpdatePostUserRequest Map(AccountUserNameUpdatedEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.UserName,
                 @event.Name,

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using PostQueryService.Domain;
 using PostQueryService.Domain.UserAggregate;
 
 namespace PostQueryService.Application.UseCases.UpsertUser
@@ -20,7 +19,6 @@ namespace PostQueryService.Application.UseCases.UpsertUser
             else
             {
                 var updated = user.TryUpdateUser(
-                    request.DeletedAt,
                     request.Version,
                     request.Name,
                     request.UserName,

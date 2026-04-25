@@ -38,7 +38,6 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                                 .Properties(
                                     props => props
                                         .Keyword(x => x.Id)
-                                        .Date(x => x.DeletedAt)
                                         .IntegerNumber(x => x.Version, x => x.Index(false))
                                         .Keyword(x => x.Name, x => x.Index(false))
                                         .Keyword(x => x.UserName, x => x.Index(false))

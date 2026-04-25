@@ -20,7 +20,6 @@ namespace CommentQueryService.Worker.MassTransit.Consumers.UpsertUser_OnAccountM
         public UpsertUserRequest Map(AccountMediaSetEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

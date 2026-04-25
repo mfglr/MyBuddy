@@ -1,4 +1,4 @@
-﻿namespace AuthServer.Domain
+﻿namespace AuthServer.Application
 {
     public class AccountNotFoundException : Exception;
 }

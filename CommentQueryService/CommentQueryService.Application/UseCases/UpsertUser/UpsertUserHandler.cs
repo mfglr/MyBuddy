@@ -19,7 +19,6 @@ namespace CommentQueryService.Application.UseCases.UpsertUser
             else
             {
                 bool updated = user.TryUpdate(
-                    request.DeletedAt,
                     request.Version,
                     request.Name,
                     request.UserName,

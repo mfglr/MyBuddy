@@ -1,11 +1,7 @@
 ﻿using AuthServer.Domain;
 using AuthServer.Infrastructure.PostgreSql;
-using Duende.IdentityModel;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
 
 namespace AuthServer.Infrastructure.IdentityFramework
 {
@@ -17,14 +13,11 @@ namespace AuthServer.Infrastructure.IdentityFramework
         public Task UpdateAsync(Account account) =>
             userManager.UpdateAsync(account);
 
-        public Task<List<Account>> GetDeletedAccounts(TimeSpan timeSpan, CancellationToken cancellationToken)
-        {
-            var dateTime = DateTime.UtcNow.Subtract(timeSpan);
-            return context.Users.Where(x => x.DeletedAt != null && x.DeletedAt <= dateTime).ToListAsync(cancellationToken);
-        }
-
         public void Delete(IEnumerable<Account> accounts) =>
             context.Users.RemoveRange(accounts);
+
+        public void Delete(Account account) =>
+            context.Users.Remove(account);
 
         public Task<Account?> GetByIdAsync(Guid id) =>
             userManager.FindByIdAsync(id.ToString());

@@ -16,8 +16,8 @@ namespace AuthServer.Application.UseCases.DeleteAccount
             var account =
                 await accountRepository.GetByIdAsync(authService.UserId) ??
                 throw new AccountNotFoundException();
-            account.Delete();
-
+            accountRepository.Delete(account);
+            
             var @event = mapper.Map(account);
             await publishEndpoint.Publish(@event, cancellationToken);
         }

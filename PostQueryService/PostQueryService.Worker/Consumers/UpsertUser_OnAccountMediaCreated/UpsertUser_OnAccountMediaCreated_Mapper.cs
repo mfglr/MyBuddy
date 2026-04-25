@@ -16,7 +16,6 @@ namespace PostQueryService.Worker.Consumers.UpsertUser_OnAccountMediaCreated
         public UpsertUserRequest Map(AccountMediaCreatedEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

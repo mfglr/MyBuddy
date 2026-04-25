@@ -15,7 +15,6 @@ namespace CommentQueryService.Application.UseCases.UpsertUser
 
     public record UpsertUserRequest(
         Guid Id,
-        DateTime? DeletedAt,
         int Version,
         string? Name,
         string UserName,

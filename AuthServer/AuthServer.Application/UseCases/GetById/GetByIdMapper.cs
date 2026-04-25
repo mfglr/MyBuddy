@@ -14,8 +14,6 @@ namespace AuthServer.Application.UseCases.GetById
         public GetByIdReponse Map(Account account) =>
             new(
                 Guid.Parse(account.Id),
-                account.DeletedAt,
-                account.IsDeleted,
                 account.Version,
                 account.Name?.Value,
                 account.UserName!,

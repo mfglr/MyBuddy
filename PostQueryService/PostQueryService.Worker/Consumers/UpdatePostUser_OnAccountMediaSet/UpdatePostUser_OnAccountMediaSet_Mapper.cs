@@ -17,7 +17,6 @@ namespace PostQueryService.Worker.Consumers.UpdatePostUser_OnAccountMediaSet
         public UpdatePostUserRequest Map(AccountMediaSetEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.UserName,
                 @event.Name,

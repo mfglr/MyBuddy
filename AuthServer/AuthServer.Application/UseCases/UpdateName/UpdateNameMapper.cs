@@ -18,8 +18,6 @@ namespace AuthServer.Application.UseCases.UpdateName
                 Guid.Parse(account.Id),
                 account.CreatedAt,
                 account.UpdatedAt,
-                account.DeletedAt,
-                account.IsDeleted,
                 account.Version,
                 account.UserName!,
                 account.Name?.Value,

@@ -16,7 +16,6 @@ namespace PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountDeleted
         public UpsertUserRequest Map(AccountDeletedEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

@@ -35,15 +35,6 @@ namespace UserQueryService.Shared.MongoDB
             return context.Users.ReplaceOneAsync(filter, user, options, cancellationToken);
         }
 
-        public Task DeleteHardAsync(TimeSpan timeSpan, CancellationToken cancellationToken)
-        {
-            var dateTime = DateTime.UtcNow.Subtract(timeSpan);
-            var filter =
-                Builders<User>.Filter.Ne(x => x.DeletedAt, null) &
-                Builders<User>.Filter.Lte(x => x.DeletedAt, dateTime);
-            return context.Users.DeleteManyAsync(filter, cancellationToken: cancellationToken);
-        }
-
         public Task IncreasePostCount(Guid id, CancellationToken cancellationToken)
         {
             var filter = Builders<User>.Filter.Eq(x => x.Id, id);

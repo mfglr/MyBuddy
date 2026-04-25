@@ -20,7 +20,6 @@ namespace PostLikeQueryService.Application.UseCases.UpsertUser
             new(
                 request.Id,
                 request.Version,
-                request.DeletedAt,
                 request.Name,
                 request.UserName,
                 request.Media != null ? Map(request.Media) : null

@@ -19,7 +19,6 @@ namespace PostQueryService.Application.UseCases.UpsertUser
         public User Map(UpsertUserRequest request) =>
             new(
                 request.Id,
-                request.DeletedAt,
                 request.Version,
                 request.Name,
                 request.UserName,

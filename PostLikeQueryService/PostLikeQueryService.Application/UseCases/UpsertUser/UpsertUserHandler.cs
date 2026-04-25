@@ -20,7 +20,6 @@ namespace PostLikeQueryService.Application.UseCases.UpsertUser
             {
                 var updated = user.TryUpdate(
                     request.Version,
-                    request.DeletedAt,
                     request.Name,
                     request.UserName,
                     request.Media != null ? userMapper.Map(request.Media) : null

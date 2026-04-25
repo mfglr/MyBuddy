@@ -13,7 +13,6 @@ namespace PostLikeQueryService.Infrastructure.MongoDB
             BsonClassMap.RegisterClassMap<User>(cm =>
             {
                 cm.MapIdMember(q => q.Id);
-                cm.MapMember(q => q.DeletedAt);
                 cm.MapMember(q => q.Version);
                 cm.MapMember(q => q.Name);
                 cm.MapMember(q => q.UserName);

@@ -9,13 +9,10 @@ namespace AuthServer.Domain
 
         public DateTime CreatedAt { get; private set; }
         public DateTime? UpdatedAt { get; private set; }
-        public DateTime? DeletedAt { get; private set; }
-        public bool IsDeleted { get; private set; }
         public int Version { get; private set; }
         public Name? Name { get; private set; }
         public Gender Gender { get; private set; } = null!;
         public IReadOnlyList<AccountMedia> Media { get; private set; } = null!;
-        public AccountMedia? Picture => Media.FirstOrDefault();
 
         private Account() { }
 
@@ -24,28 +21,14 @@ namespace AuthServer.Domain
             Id = Guid.CreateVersion7().ToString();
             CreatedAt = DateTime.UtcNow;
             Version = 1;
-            IsDeleted = false;
             Email = email.Value;
             UserName = email.GenerateUserName();
             Gender = Gender.Unknown();
             Media = [];
         }
 
-        public void Delete()
-        {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
-            IsDeleted = true;
-            UpdatedAt = DeletedAt = DateTime.UtcNow;
-            Version++;
-        }
-
         internal void UpdateEmail(Email email)
         {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
             Email = email.Value;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -53,9 +36,6 @@ namespace AuthServer.Domain
 
         internal void UpdateUserName(UserName userName)
         {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
             UserName = userName.Value;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -63,9 +43,6 @@ namespace AuthServer.Domain
 
         public void UpdateName(Name name)
         {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
             Name = name;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -73,9 +50,6 @@ namespace AuthServer.Domain
 
         public void UpdateGender(Gender gender)
         {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
-
             Gender = gender;
             UpdatedAt = DateTime.UtcNow;
             Version++;
@@ -83,8 +57,6 @@ namespace AuthServer.Domain
 
         public void CreateMedia(AccountMedia media)
         {
-            if (IsDeleted)
-                throw new AccountNotFoundException();
             if (media.Context.Type != MediaType.Image)
                 throw new InvalidMediaTypeException();
 

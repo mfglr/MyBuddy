@@ -16,7 +16,6 @@ namespace PostLikeQueryService.Worker.Consumers.UpsertUser_OnAccountNameUpdated
         public UpsertUserRequest Map(AccountNameUpdatedEvent @event) =>
             new(
                 @event.Id,
-                @event.DeletedAt,
                 @event.Version,
                 @event.Name,
                 @event.UserName,

@@ -1,4 +1,5 @@
-﻿using AuthServer.Domain;
+﻿using AuthServer.Application;
+using AuthServer.Domain;
 using Duende.IdentityServer.Validation;
 
 namespace AuthServer.Infrastructure.IdentityServer
