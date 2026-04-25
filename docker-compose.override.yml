@@ -239,6 +239,34 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
+  commentlikequeryservice.api:
+    container_name: comment-like-query-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    ports:
+      - "5184:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  commentlikequeryservice.worker:
+    container_name: comment-like-query-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
   blobservice.api:
     container_name: blob-api
     restart: on-failure
@@ -442,5 +470,3 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-
-  

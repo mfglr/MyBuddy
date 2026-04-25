@@ -1,134 +1,226 @@
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:9.2.8
+    profiles:
+      - comment
+      - post
+  
   kibana:
     image: docker.elastic.co/kibana/kibana:9.2.8
+    profiles:
+      - comment
+      - post
 
   redis:
     image: redis
+    profiles:
+      - comment
+      - post
+
   postgres:
     image: postgres
+    profiles:
+      - comment
+      - post
+
   mongo1:
     image: mongo
+    profiles:
+      - comment
+      - post
+
   mongo2:
     image: mongo
+    profiles:
+      - comment
+      - post
+
   mongo3:
     image: mongo
+    profiles:
+      - comment
+      - post
+
   rabbitmq:
     image: rabbitmq:management
+    profiles:
+      - comment
+      - post
 
   mongo-express:
     image: mongo-express
+    profiles:
+      - comment
+      - post
 
   authserver.api:
     image: ${DOCKER_REGISTRY-}authserverapi
     build:
       context: .
       dockerfile: AuthServer/AuthServer.Api/Dockerfile
+    profiles:
+      - comment
+      - post
 
   authserver.worker:
     image: ${DOCKER_REGISTRY-}authserverworker
     build:
       context: .
       dockerfile: AuthServer/AuthServer.Worker/Dockerfile
-
-  comment.api:
-    image: ${DOCKER_REGISTRY-}commentapi
-    build:
-      context: .
-      dockerfile: CommentService/Comment.Api/Dockerfile
-  
-  commetservice.workers:
-    image: ${DOCKER_REGISTRY-}commetserviceworkers
-    build:
-      context: .
-      dockerfile: CommentService/CommetService.Workers/Dockerfile
-  
-  commentqueryservice.api:
-    image: ${DOCKER_REGISTRY-}commentqueryserviceapi
-    build:
-      context: .
-      dockerfile: CommentQueryService/CommentQueryService.Api/Dockerfile
-  
-  commentqueryservice.worker:
-    image: ${DOCKER_REGISTRY-}commentqueryserviceworker
-    build:
-      context: .
-      dockerfile: CommentQueryService/CommentQueryService.Worker/Dockerfile
-
-  commentlikeservice.api:
-    image: ${DOCKER_REGISTRY-}commentlikeserviceapi
-    build:
-      context: .
-      dockerfile: CommentLikeService/CommentLikeService.Api/Dockerfile
+    profiles:
+      - comment
+      - post
 
   blobservice.api:
     image: ${DOCKER_REGISTRY-}blobserviceapi
     build:
       context: .
       dockerfile: BlobService/BlobService.Api/Dockerfile
-  
+    profiles:
+      - comment
+      - post
+
   mediaservice.worker:
     image: ${DOCKER_REGISTRY-}mediaserviceworker
     build:
       context: .
       dockerfile: MediaService/MediaService.Worker/Dockerfile
-  
+    profiles:
+      - comment
+      - post
+
   contentmoderator.worker:
     image: ${DOCKER_REGISTRY-}contentmoderatorworker
     build:
       context: .
       dockerfile: ContentModerator/ContentModerator.Worker/Dockerfile
+    profiles:
+      - comment
+      - post
 
   metadataextractor.worker:
     image: ${DOCKER_REGISTRY-}metadataextractorworker
     build:
       context: .
       dockerfile: MetadataExtractor/MetadataExtractor.Worker/Dockerfile
+    profiles:
+      - comment
+      - post
 
   thumbnailgenerator.workers:
     image: ${DOCKER_REGISTRY-}thumbnailgeneratorworkers
     build:
       context: .
       dockerfile: ThumbnailGenerator/ThumbnailGenerator.Workers/Dockerfile
+    profiles:
+      - comment
+      - post
 
   videotranscoder.worker:
     image: ${DOCKER_REGISTRY-}videotranscoderworker
     build:
       context: .
       dockerfile: VideoTranscoder/VideoTranscoder.Worker/Dockerfile
+    profiles:
+      - comment
+      - post
 
   tokenmanager:
     image: ${DOCKER_REGISTRY-}tokenmanager
     build:
       context: .
       dockerfile: TokenManager/TokenManager/Dockerfile
+    profiles:
+      - comment
+      - post
 
   postservice.api:
     image: ${DOCKER_REGISTRY-}postserviceapi
     build:
       context: .
       dockerfile: PostService/src/PostService.Api/Dockerfile
+    profiles:
+      - post
 
   postservice.workers:
     image: ${DOCKER_REGISTRY-}postserviceworkers
     build:
       context: .
       dockerfile: PostService/src/PostService.Workers/Dockerfile
+    profiles:
+      - post
 
   postqueryservice.api:
     image: ${DOCKER_REGISTRY-}postqueryserviceapi
     build:
       context: .
       dockerfile: PostQueryService/PostQueryService.Api/Dockerfile
+    profiles:
+      - post
 
   postqueryservice.worker:
     image: ${DOCKER_REGISTRY-}postqueryserviceworker
     build:
       context: .
       dockerfile: PostQueryService/PostQueryService.Worker/Dockerfile
+    profiles:
+      - post
 
-  
+  comment.api:
+    image: ${DOCKER_REGISTRY-}commentapi
+    build:
+      context: .
+      dockerfile: CommentService/Comment.Api/Dockerfile
+    profiles:
+      - comment
+
+  commetservice.workers:
+    image: ${DOCKER_REGISTRY-}commetserviceworkers
+    build:
+      context: .
+      dockerfile: CommentService/CommetService.Workers/Dockerfile
+    profiles:
+      - comment
+
+  commentqueryservice.api:
+    image: ${DOCKER_REGISTRY-}commentqueryserviceapi
+    build:
+      context: .
+      dockerfile: CommentQueryService/CommentQueryService.Api/Dockerfile
+    profiles:
+      - comment
+ 
+  commentqueryservice.worker:
+    image: ${DOCKER_REGISTRY-}commentqueryserviceworker
+    build:
+      context: .
+      dockerfile: CommentQueryService/CommentQueryService.Worker/Dockerfile
+    profiles:
+      - comment
+
+  commentlikeservice.api:
+    image: ${DOCKER_REGISTRY-}commentlikeserviceapi
+    build:
+      context: .
+      dockerfile: CommentLikeService/CommentLikeService.Api/Dockerfile
+    profiles:
+      - comment
+
+  commentlikequeryservice.api:
+    image: ${DOCKER_REGISTRY-}commentlikequeryserviceapi
+    build:
+      context: .
+      dockerfile: CommentLikeQueryService/CommentLikeQueryService.Api/Dockerfile
+    profiles:
+      - comment
+
+  commentlikequeryservice.worker:
+    image: ${DOCKER_REGISTRY-}commentlikequeryserviceworker
+    build:
+      context: .
+      dockerfile: CommentLikeQueryService/CommentLikeQueryService.Worker/Dockerfile
+    profiles:
+      - comment
 
 volumes:
   redis_data:
@@ -139,5 +231,3 @@ volumes:
   rabbitmq_data:
   blob_data:
   es_data:
-
-

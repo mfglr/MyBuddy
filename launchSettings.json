@@ -20,7 +20,9 @@
         "postservice.workers": "StartDebugging",
         "authserver.worker": "StartDebugging",
         "postqueryservice.api": "StartDebugging",
-        "postqueryservice.worker": "StartDebugging"
+        "postqueryservice.worker": "StartDebugging",
+        "commentlikequeryservice.api": "StartDebugging",
+        "commentlikequeryservice.worker": "StartDebugging"
       }
     }
   }
