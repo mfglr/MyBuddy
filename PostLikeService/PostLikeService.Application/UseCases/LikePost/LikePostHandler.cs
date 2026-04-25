@@ -8,23 +8,15 @@ namespace PostLikeService.Application.UseCases.LikePost
         LikePostMapper mapper,
         IPublishEndpoint publishEndpoint,
         IAuthService authService,
-        IPostLikeRepository postRepository
+        IPostLikeRepository repository,
+        PostLikeDomainService domainService
     ) : IRequestHandler<LikePostRequest>
     {
         public async Task Handle(LikePostRequest request, CancellationToken cancellationToken)
         {
             var id = new PostLikeId(authService.UserId, request.PostId);
-            var like = await postRepository.GetAsync(id, cancellationToken);
-            if(like != null)
-            {
-                like.Like();
-                await postRepository.UpdateAsync(like, cancellationToken);
-            }
-            else
-            {
-                like = new PostLike(id);
-                await postRepository.CreateAsync(like, cancellationToken);
-            }
+            var like = await domainService.Like(id, cancellationToken);
+            await repository.CreateAsync(like, cancellationToken);
 
             var @event = mapper.Map(like);
             await publishEndpoint.Publish(@event, cancellationToken);

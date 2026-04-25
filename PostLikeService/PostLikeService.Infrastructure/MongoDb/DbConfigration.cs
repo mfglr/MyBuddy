@@ -15,9 +15,6 @@ namespace PostLikeService.Infrastructure.MongoDb
                 cm.MapIdMember(x => x.Id);
                 cm.MapMember(x => x.SequenceId);
                 cm.MapMember(x => x.CreatedAt);
-                cm.MapMember(x => x.Version);
-                cm.MapMember(x => x.IsDeleted);
-                cm.MapMember(x => x.DeletedAt);
             });
         }
     }

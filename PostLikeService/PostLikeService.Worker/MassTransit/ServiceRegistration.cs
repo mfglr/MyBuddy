@@ -14,8 +14,7 @@ namespace PostLikeService.Worker.MassTransit
                 .AddMassTransit(
                     brc =>
                     {
-                        brc.AddConsumer<DislikePosts_OnPostDeleted_PostLikeService>();
-                        brc.AddConsumer<LikePosts_OnPostRestored_PostLikeService>();
+                        brc.AddConsumer<DeletePostLikes_OnPostDeleted_PostLikeService>();
 
                         brc.AddMongoDbOutbox(o =>
                         {

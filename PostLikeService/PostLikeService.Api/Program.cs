@@ -1,6 +1,7 @@
 using PostLikeService.Api.Identity;
 using PostLikeService.Api.MassTransit;
 using PostLikeService.Application;
+using PostLikeService.Domain;
 using PostLikeService.Infrastructure;
 using PostLikeService.Infrastructure.MongoDb;
 
@@ -13,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services
     .AddIdentity(builder.Configuration)
     .AddMassTransit(builder.Configuration)
+    .AddDomain()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);
 

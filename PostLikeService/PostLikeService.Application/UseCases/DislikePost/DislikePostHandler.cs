@@ -15,10 +15,9 @@ namespace PostLikeService.Application.UseCases.DislikePost
         {
             var id = new PostLikeId(authService.UserId, request.PostId);
             var like =
-                await postLikeRepository.GetAsync(id, cancellationToken) ??
-                throw new PostNotLikedBeforeException();
-            like.Dislike();
-            await postLikeRepository.UpdateAsync(like, cancellationToken);
+                await postLikeRepository.GetByIdAsync(id, cancellationToken) ??
+                throw new PostLikeNotFoundException();
+            await postLikeRepository.DeleteAsync(like, cancellationToken);
 
             var @event = mapper.Map(like);
             await publishEndpoint.Publish(@event, cancellationToken);

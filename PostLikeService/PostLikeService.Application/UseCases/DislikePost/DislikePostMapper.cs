@@ -10,10 +10,7 @@ namespace PostLikeService.Application.UseCases.DislikePost
                 like.Id.UserId,
                 like.Id.PostId,
                 like.SequenceId,
-                like.CreatedAt,
-                like.Version,
-                like.IsDeleted,
-                like.DeletedAt
+                like.CreatedAt
             );
     }
 }
