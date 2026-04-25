@@ -470,3 +470,35 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  postlikeservice.api:
+    container_name: post-like-service-api
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - AuthOptions:Authority=http://authserver.api
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    ports:
+      - "5201:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  postlikeservice.worker:
+    container_name: post-like-service-worker
+    restart: on-failure
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+      - MassTransitOptions:Host=rabbitmq
+      - MassTransitOptions:VirtualHost=${RABBITMQ_VHOST}
+      - MassTransitOptions:Password=${RABBITMQ_PASSWORD}
+      - MassTransitOptions:UserName=${RABBITMQ_USERNAME}
+      - MongoOptions:ConnectionString=${MONGO_CONNECTION_STRING}
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

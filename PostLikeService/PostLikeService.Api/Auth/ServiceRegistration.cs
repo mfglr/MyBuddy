@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using PostLikeService.Api.Auth;
 using PostLikeService.Application;
-using System.Security.Claims;
 
-namespace PostLikeService.Api.Identity
+namespace PostLikeService.Api.Auth
 {
     internal static class ServiceRegistration
     {
@@ -16,7 +14,7 @@ namespace PostLikeService.Api.Identity
                     JwtBearerDefaults.AuthenticationScheme,
                     options =>
                     {
-                        options.Authority = option.Issuer;
+                        options.Authority = option.Authority;
                         options.Audience = option.Audience;
                         options.RequireHttpsMetadata = false;
 
@@ -25,6 +23,7 @@ namespace PostLikeService.Api.Identity
                             ValidateAudience = true,
                             ValidateIssuerSigningKey = true,
                             ValidateLifetime = true,
+                            ValidIssuer = option.Issuer,
                             ValidateIssuer = true,
                         };
                     }

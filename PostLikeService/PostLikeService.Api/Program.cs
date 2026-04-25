@@ -1,4 +1,4 @@
-using PostLikeService.Api.Identity;
+using PostLikeService.Api.Auth;
 using PostLikeService.Api.MassTransit;
 using PostLikeService.Application;
 using PostLikeService.Domain;

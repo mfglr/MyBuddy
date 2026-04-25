@@ -22,7 +22,8 @@
         "postqueryservice.api": "StartDebugging",
         "postqueryservice.worker": "StartDebugging",
         "commentlikequeryservice.api": "StartDebugging",
-        "commentlikequeryservice.worker": "StartDebugging"
+        "commentlikequeryservice.worker": "StartDebugging",
+        "postlikeservice.worker": "StartDebugging"
       }
     }
   }

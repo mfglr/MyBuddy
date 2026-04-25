@@ -4,7 +4,7 @@ services:
     profiles:
       - comment
       - post
-  
+
   kibana:
     image: docker.elastic.co/kibana/kibana:9.2.8
     profiles:
@@ -16,42 +16,50 @@ services:
     profiles:
       - comment
       - post
-
+      - post-like
+      
   postgres:
     image: postgres
     profiles:
       - comment
       - post
+      - post-like
 
   mongo1:
     image: mongo
     profiles:
       - comment
       - post
+      - post-like
+
 
   mongo2:
     image: mongo
     profiles:
       - comment
       - post
+      - post-like
 
   mongo3:
     image: mongo
     profiles:
       - comment
       - post
+      - post-like
 
   rabbitmq:
     image: rabbitmq:management
     profiles:
       - comment
       - post
+      - post-like
 
   mongo-express:
     image: mongo-express
     profiles:
       - comment
       - post
+      - post-like
 
   authserver.api:
     image: ${DOCKER_REGISTRY-}authserverapi
@@ -61,6 +69,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   authserver.worker:
     image: ${DOCKER_REGISTRY-}authserverworker
@@ -70,6 +79,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   blobservice.api:
     image: ${DOCKER_REGISTRY-}blobserviceapi
@@ -79,6 +89,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   mediaservice.worker:
     image: ${DOCKER_REGISTRY-}mediaserviceworker
@@ -88,6 +99,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   contentmoderator.worker:
     image: ${DOCKER_REGISTRY-}contentmoderatorworker
@@ -97,6 +109,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   metadataextractor.worker:
     image: ${DOCKER_REGISTRY-}metadataextractorworker
@@ -106,6 +119,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   thumbnailgenerator.workers:
     image: ${DOCKER_REGISTRY-}thumbnailgeneratorworkers
@@ -115,6 +129,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   videotranscoder.worker:
     image: ${DOCKER_REGISTRY-}videotranscoderworker
@@ -124,6 +139,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   tokenmanager:
     image: ${DOCKER_REGISTRY-}tokenmanager
@@ -133,6 +149,7 @@ services:
     profiles:
       - comment
       - post
+      - post-like
 
   postservice.api:
     image: ${DOCKER_REGISTRY-}postserviceapi
@@ -165,6 +182,21 @@ services:
       dockerfile: PostQueryService/PostQueryService.Worker/Dockerfile
     profiles:
       - post
+  
+  postlikeservice.api:
+    image: ${DOCKER_REGISTRY-}postlikeserviceapi
+    build:
+      context: .
+      dockerfile: PostLikeService/PostLikeService.Api/Dockerfile
+    profiles:
+      - post-like
+  postlikeservice.worker:
+    image: ${DOCKER_REGISTRY-}postlikeserviceworker
+    build:
+      context: .
+      dockerfile: PostLikeService/PostLikeService.Worker/Dockerfile
+    profiles:
+      - post-like
 
   comment.api:
     image: ${DOCKER_REGISTRY-}commentapi
@@ -173,7 +205,6 @@ services:
       dockerfile: CommentService/Comment.Api/Dockerfile
     profiles:
       - comment
-
   commetservice.workers:
     image: ${DOCKER_REGISTRY-}commetserviceworkers
     build:
@@ -181,7 +212,6 @@ services:
       dockerfile: CommentService/CommetService.Workers/Dockerfile
     profiles:
       - comment
-
   commentqueryservice.api:
     image: ${DOCKER_REGISTRY-}commentqueryserviceapi
     build:
@@ -189,7 +219,6 @@ services:
       dockerfile: CommentQueryService/CommentQueryService.Api/Dockerfile
     profiles:
       - comment
- 
   commentqueryservice.worker:
     image: ${DOCKER_REGISTRY-}commentqueryserviceworker
     build:
