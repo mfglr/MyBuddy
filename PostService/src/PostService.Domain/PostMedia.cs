@@ -9,6 +9,8 @@ namespace PostService.Domain
     )
     {
 
+        public IEnumerable<string> BlobNames => [BlobName, .. Context.BlobNames];
+
         public PostMedia Set(MediaProcessingContext context) =>
             new(
                 ContainerName,

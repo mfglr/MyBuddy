@@ -11,19 +11,20 @@ namespace PostQueryService.Infrastructure.ElastichSearch
         private static async Task EnsureElasticIsReady(
             ElasticsearchClient client,
             ILogger<ElasticSearchInitializer> logger,
-            int maxRetries = 20,
             int delayMs = 1000
         )
         {
-            PingResponse response;
-            for(int i = 0; i < maxRetries; i++)
+            bool isReady = false;
+            int i = 1;
+            while(!isReady)
             {
-                response = await client.PingAsync();
+                var response = await client.PingAsync();
                 if (response.IsSuccess())
-                    return;
+                    isReady = true;
 
-                logger.LogError($"Elasticsearch not ready. Attempt {i + 1}/{maxRetries}. Retrying in {delayMs}ms...");
+                logger.LogError($"Elasticsearch not ready. Attempt {i}. Retrying in {delayMs}ms...");
                 await Task.Delay(delayMs);
+                i++;
             }
         }
 
@@ -57,29 +58,19 @@ namespace PostQueryService.Infrastructure.ElastichSearch
                                         props
                                             .Keyword(x => x.Id)
                                             .Keyword(x => x.UserId)
-                                            .Date("createdAt")
-                                            .Date("updatedAt")
-                                            .Date("softDeletedAt")
+                                            .Date("createdAt", x => x.Index(false))
+                                            .Date("updatedAt", x => x.Index(false))
+                                            .Boolean("isDeleted")
                                             .IntegerNumber("version")
                                             .Object(
                                                 "content",
                                                 obj => obj.Properties(
                                                     props => props
                                                         .Text("value")
-                                                        .Object(
-                                                            "moderationResult",
-                                                            obj => obj.Properties(
-                                                                props => props
-                                                                    .DoubleNumber("hate")
-                                                                    .DoubleNumber("selfHarm")
-                                                                    .DoubleNumber("sexual")
-                                                                    .DoubleNumber("violence")
-                                                            )
-                                                        )
+                                                        .Object("moderationResult", obj => obj.Enabled(false))
                                                 )
                                             )
                                             .Object("media", x => x.Enabled(false))
-                                            .IntegerNumber("processedVersions", x => x.Index(false))
                                             .Object(
                                                 x => x.User,
                                                 obj => obj

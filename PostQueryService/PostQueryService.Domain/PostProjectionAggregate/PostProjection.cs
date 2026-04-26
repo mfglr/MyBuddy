@@ -2,92 +2,45 @@
 
 namespace PostQueryService.Domain.PostProjectionAggregate
 {
-    public class PostProjection
-    {
-        public string Id { get; private set; }
-        public string UserId { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? UpdatedAt { get; private set; }
-        public DateTime? SoftDeletedAt { get; private set; }
-        public int Version { get; private set; }
-        public PostContent? Content { get; private set; }
-        public IReadOnlyList<PostQueryMedia> Media { get; private set; }
-        public IReadOnlyList<int> ProcessedVersions { get; private set; }
-        public PostProjectionUser User { get; private set; }
-
-        [JsonConstructor]
-        private PostProjection(
-            string id,
-            string userId,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            DateTime? softDeletedAt,
-            int version,
-            PostContent? content,
-            IReadOnlyList<PostQueryMedia> media,
-            IReadOnlyList<int> processedVersions,
-            PostProjectionUser user
+    [method: JsonConstructor]
+    public class PostProjection(
+        string id,
+        string userId,
+        DateTime createdAt,
+        DateTime? updatedAt,
+        bool isDeleted,
+        int version,
+        PostContent? content,
+        IReadOnlyList<PostQueryMedia> media,
+        PostProjectionUser user
         )
-        {
-            Id = id;
-            UserId = userId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-            SoftDeletedAt = softDeletedAt;
-            Version = version;
-            Content = content;
-            Media = media;
-            ProcessedVersions = processedVersions;
-            User = user;
-        }
-
-        public PostProjection(
-            string id,
-            string userId,
-            DateTime createdAt,
-            DateTime? updatedAt,
-            DateTime? softDeletedAt,
-            int version,
-            PostContent? content,
-            IReadOnlyList<PostQueryMedia> media,
-            PostProjectionUser user
-    )
-        {
-            Id = id;
-            UserId = userId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
-            SoftDeletedAt = softDeletedAt;
-            Version = version;
-            Content = content;
-            Media = media;
-            ProcessedVersions = [version];
-            User = user;
-        }
-
-        public bool IsAllEventsProcessed() => ProcessedVersions.Max() == ProcessedVersions.Count;
-
+    {
+        public string Id { get; private set; } = id;
+        public string UserId { get; private set; } = userId;
+        public DateTime CreatedAt { get; private set; } = createdAt;
+        public DateTime? UpdatedAt { get; private set; } = updatedAt;
+        public bool IsDeleted { get; private set; } = isDeleted;
+        public int Version { get; private set; } = version;
+        public PostContent? Content { get; private set; } = content;
+        public IReadOnlyList<PostQueryMedia> Media { get; private set; } = media;
+        public PostProjectionUser User { get; private set; } = user;
 
         public bool TryUpdatePost(
             DateTime? updatedAt,
-            DateTime? softDeletedAt,
+            bool isDeleted,
             int version,
             PostContent? content,
             IReadOnlyList<PostQueryMedia> media
         )
         {
-            if (version == Version)
+            if (version <= Version)
                 return false;
-            
-            ProcessedVersions = [..ProcessedVersions, version];
-            if(version > Version)
-            {
-                UpdatedAt = updatedAt;
-                SoftDeletedAt = softDeletedAt;
-                Version = version;
-                Content = content;
-                Media = media;
-            }
+
+            UpdatedAt = updatedAt;
+            IsDeleted = isDeleted;
+            Version = version;
+            Content = content;
+            Media = media;
             return true;
         }
 

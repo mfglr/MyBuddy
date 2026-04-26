@@ -2,9 +2,9 @@
 using Shared.Events;
 using Shared.Events.PostService;
 
-namespace PostService.Application.UseCases.SoftDeleteUserPosts
+namespace PostService.Application.UseCases.DeletePost
 {
-    internal class SoftDeleteUserPostsMapper
+    internal class DeletePostMapper
     {
         public PostDeletedEvent_Content Map(Content content) =>
             new(
@@ -19,14 +19,12 @@ namespace PostService.Application.UseCases.SoftDeleteUserPosts
                 media.Context
             );
 
-
-        public PostSoftDeletedEvent Map(Post post) =>
+        public PostDeletedEvent Map(Post post) =>
             new(
                 post.Id,
                 post.CreatedAt,
                 post.UpdatedAt,
-                post.SoftDeletedAt,
-                false,
+                post.IsDeleted,
                 post.Version,
                 post.UserId,
                 post.Content != null ? Map(post.Content) : null,

@@ -3,22 +3,23 @@ using MediatR;
 using PostService.Domain;
 using PostService.Domain.Exceptions;
 
-namespace PostService.Application.UseCases.SetPostMedia
+namespace PostService.Application.UseCases.DeletePost
 {
-    internal class SetPostMediaHandler(
+    internal class DeletePostHandler(
         IPostRepository postRepository,
-        IPublishEndpoint publishEndpoint,
+        DeletePostMapper mapper,
         IBlobService blobService,
-        SetPostMediaMapper mapper
-    ) : IRequestHandler<SetPostMediaRequest>
+        IPublishEndpoint publishEndpoint
+    ) : IRequestHandler<DeletePostRequest>
     {
-        public async Task Handle(SetPostMediaRequest request, CancellationToken cancellationToken)
+        public async Task Handle(DeletePostRequest request, CancellationToken cancellationToken)
         {
-            var post =
-                await postRepository.GetByIdAsync(request.Id, cancellationToken) ??
+            var post = 
+                await postRepository.GetByIdAsync(request.Id,cancellationToken) ??
                 throw new PostNotFoundException();
 
-            post.SetMedia(request.BlobName, request.Context);
+            post.Delete();
+
             if (post.ShouldBeDeleted)
             {
                 await postRepository.DeleteAsync(post, cancellationToken);
@@ -28,7 +29,7 @@ namespace PostService.Application.UseCases.SetPostMedia
                 await postRepository.UpdateAsync(post, cancellationToken);
 
             var @event = mapper.Map(post);
-            await publishEndpoint.Publish(@event, cancellationToken);
+            await publishEndpoint.Publish(@event,cancellationToken);
         }
     }
 }

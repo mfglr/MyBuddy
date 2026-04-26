@@ -30,15 +30,10 @@ namespace PostService.Infrastructure.MongoDB
                 throw new ConflictDetectedException();
         }
 
-        public Task DeleteAsync(Post post, CancellationToken cancellationToken) =>
-            context.Posts.DeleteOneAsync(
-                mongoDbContext.Session,
-                Builders<Post>.Filter.Eq(x => x.Id, post.Id),
-                cancellationToken: cancellationToken
-            );
-
         public async Task UpdateAsync(IEnumerable<Post> posts, CancellationToken cancellationToken)
         {
+            if (!posts.Any()) return;
+
             var updates = new List<WriteModel<Post>>();
             foreach (var post in posts)
             {
@@ -52,5 +47,25 @@ namespace PostService.Infrastructure.MongoDB
             if (result.ModifiedCount < posts.Count())
                 throw new ConflictDetectedException();
         }
+
+        public Task DeleteAsync(Post post, CancellationToken cancellationToken) =>
+            context.Posts.DeleteOneAsync(
+                mongoDbContext.Session,
+                Builders<Post>.Filter.Eq(x => x.Id, post.Id),
+                cancellationToken: cancellationToken
+            );
+
+        public Task DeleteAsync(IEnumerable<Post> posts, CancellationToken cancellationToken)
+        {
+            if(!posts.Any()) return Task.CompletedTask;
+
+            return context.Posts
+                .DeleteManyAsync(
+                    mongoDbContext.Session,
+                    Builders<Post>.Filter.In(x => x.Id, posts.Select(p => p.Id)),
+                    cancellationToken: cancellationToken
+                );
+        }
+            
     }
 }

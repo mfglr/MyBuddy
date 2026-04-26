@@ -33,12 +33,17 @@ namespace PostLikeService.Infrastructure.MongoDb
                     cancellationToken: cancellationToken
                 );
 
-        public Task DeleteAsync(IEnumerable<PostLike> postLikes, CancellationToken cancellationToken = default) =>
-            context.PostLikes
+        public Task DeleteAsync(IEnumerable<PostLike> postLikes, CancellationToken cancellationToken = default)
+        {
+            if(!postLikes.Any()) return Task.CompletedTask;
+
+            return context.PostLikes
                 .DeleteManyAsync(
                     mongoDbContext.Session,
                     Builders<PostLike>.Filter.In(x => x.Id, postLikes.Select(x => x.Id)),
                     cancellationToken: cancellationToken
                 );
+        }
+            
     }
 }

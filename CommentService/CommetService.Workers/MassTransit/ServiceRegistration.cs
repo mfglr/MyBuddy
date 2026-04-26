@@ -15,9 +15,7 @@ namespace CommetService.Workers.MassTransit
                 {
                     x.AddConsumer<SetModerationResult_OnCommentContentClassified_CommentService>();
                     x.AddConsumer<DeleteReplies_OnCommentDeleted_CommentService>();
-                    x.AddConsumer<RestoreReplies_OnCommentRestored_CommentService>();
                     x.AddConsumer<DeletePostComments_OnPostDeleted_ComentService>();
-                    x.AddConsumer<RestorePostComments_OnPostRestored_CommentService>();
                     x.AddMongoDbOutbox(o =>
                     {
                         o.QueryDelay = TimeSpan.FromSeconds(1);

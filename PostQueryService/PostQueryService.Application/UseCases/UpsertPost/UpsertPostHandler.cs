@@ -25,25 +25,19 @@ namespace PostQueryService.Application.UseCases.UpsertPost
 
                 postProjection = mapper.Map(request, user);
                 await postProjectionRepository.CreateAsync(postProjection,cancellationToken);
+                return;
             }
-            else
-            {
-                var updated = postProjection.TryUpdatePost(
-                    request.UpdatedAt,
-                    request.SoftDeletedAt,
-                    request.Version,
-                    request.Content != null ? mapper.Map(request.Content) : null,
-                    [..request.Media.Select(mapper.Map)]
-                );
 
-                if (request.IsHardDeleted && postProjection.IsAllEventsProcessed())
-                    await postProjectionRepository.DeleteAsync(postProjection, cancellationToken);
-                else
-                {
-                    if (updated)
-                        await postProjectionRepository.UpdateAsync((postProjection, primaryTerm, sequenceNumber), cancellationToken);
-                }
-            }
+            var updated = postProjection.TryUpdatePost(
+                request.UpdatedAt,
+                request.IsDeleted,
+                request.Version,
+                request.Content != null ? mapper.Map(request.Content) : null,
+                [.. request.Media.Select(mapper.Map)]
+            );
+            
+            if (updated)
+                await postProjectionRepository.UpdateAsync((postProjection, primaryTerm, sequenceNumber), cancellationToken);
         }
     }
 }

@@ -14,6 +14,8 @@ namespace PostService.Infrastructure
 
         public async Task DeleteAsync(string containerName, IEnumerable<string> blobNames, CancellationToken cancellationToken)
         {
+            if (!blobNames.Any()) return;
+
             var client = new HttpClient()
             {
                 BaseAddress = new Uri(_configuration["BlobService:Host"]!),

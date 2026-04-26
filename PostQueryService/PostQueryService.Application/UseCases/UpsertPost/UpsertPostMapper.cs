@@ -37,7 +37,7 @@ namespace PostQueryService.Application.UseCases.UpsertPost
                 request.UserId.ToString(),
                 request.CreatedAt,
                 request.UpdatedAt,
-                request.SoftDeletedAt,
+                request.IsDeleted,
                 request.Version,
                 request.Content != null ? Map(request.Content) : null,
                 [..request.Media.Select(Map)],

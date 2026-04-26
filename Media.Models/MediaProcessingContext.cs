@@ -12,6 +12,10 @@ namespace Media.Models
         MediaInstruction Instruction
     )
     {
+
+        public IEnumerable<string> BlobNames =>
+            [.. Thumbnails.Select(x => x.BlobName), .. Transcodings.Select(x => x.BlobName)];
+
         public MediaProcessingContext SetMetadata(Metadata metadata) =>
             new(
                 Type,

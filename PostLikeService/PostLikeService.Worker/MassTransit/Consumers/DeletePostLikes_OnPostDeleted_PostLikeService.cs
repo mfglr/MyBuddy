@@ -5,9 +5,9 @@ using Shared.Events.PostService;
 
 namespace PostLikeService.Worker.MassTransit.Consumers
 {
-    internal class DeletePostLikes_OnPostDeleted_PostLikeService(ISender sender) : IConsumer<PostSoftDeletedEvent>
+    internal class DeletePostLikes_OnPostDeleted_PostLikeService(ISender sender) : IConsumer<PostDeletedEvent>
     {
-        public Task Consume(ConsumeContext<PostSoftDeletedEvent> context) =>
+        public Task Consume(ConsumeContext<PostDeletedEvent> context) =>
             sender.Send(new DeletePostLikesRequest(context.Message.Id), context.CancellationToken);
     }
 }
